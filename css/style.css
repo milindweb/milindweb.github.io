@@ -915,7 +915,6 @@ responsive area
 }
 
 
-
     /* Your existing CSS styles */
     .col-lg-10, .col-lg-offset-1, .col-md-10, .col-md-offset-1 {
       /* Add your styles here */
@@ -932,13 +931,19 @@ responsive area
     .back-button, .back-to-top {
       /* Add your common button styles here */
       margin: 0 10px; /* Adjust margin as needed */
+      background-color: transparent; /* Set background color to transparent */
+      border: 1px solid #000000; /* Add border to make the button visible */
+      color: #000000; /* Set text color to black */
+      padding: 10px; /* Add padding to the buttons */
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s; /* Add smooth transition */
     }
 
     /* Individual button styles */
-    .back-button {
-      /* Add your back button styles here */
+    .back-button:hover, .back-to-top:hover {
+      background-color: #3498db; /* Change background color on hover */
+      color: #ffffff; /* Change text color on hover */
     }
-
     .back-to-top {
       /* Add your go-to-top button styles here */
     }
