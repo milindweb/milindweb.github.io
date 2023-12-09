@@ -176,8 +176,41 @@
         </div>
     </article>
     <hr>
-	 <!-- End of Post Content ------------------------------------>
+<!-- End of Post Content ------------------------------------>
 
+ <!-- Go Back and Go to Top buttons -->
+  <div class="button-container">
+    <button class="back-button" onclick="goBack()" title="Go back">&#8592; Go Back</button>
+    <button class="back-to-top" onclick="goToTop()" title="Go to Top">&#8679; Top</button>
+  </div>
+
+  <!-- Add this script at the end of your HTML body or in the head section -->
+  <script>
+    // Function to go back to the previous page
+    function goBack() {
+      window.history.back();
+    }
+
+    // Function to scroll to the top of the page
+    function goToTop() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+
+    // Show the "Go to Top" button when scrolling down
+    window.onscroll = function() {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.querySelector('.back-to-top').style.display = 'block';
+      } else {
+        document.querySelector('.back-to-top').style.display = 'none';
+      }
+    }
+  </script>
+	
 	<!-- recent blog lists ---------------------------------->
 	<section id="recent-blog-container">
 		<div class="container">
