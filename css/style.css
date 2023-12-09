@@ -913,3 +913,32 @@ responsive area
   max-width: 100%; /* Ensures responsiveness */
   height: auto;
 }
+
+
+
+    /* Your existing CSS styles */
+    .col-lg-10, .col-lg-offset-1, .col-md-10, .col-md-offset-1 {
+      /* Add your styles here */
+    }
+
+    /* Styles for the buttons */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .back-button, .back-to-top {
+      /* Add your common button styles here */
+      margin: 0 10px; /* Adjust margin as needed */
+    }
+
+    /* Individual button styles */
+    .back-button {
+      /* Add your back button styles here */
+    }
+
+    .back-to-top {
+      /* Add your go-to-top button styles here */
+    }
