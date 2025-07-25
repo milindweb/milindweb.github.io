@@ -9,51 +9,41 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
     header, footer {
-      background-color: #333;
+      background-color: #004466;
       color: #fff;
-      padding: 10px 0;
+      padding: 12px 0;
       text-align: center;
     }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: bold;
-    }
+    header h1 { margin: 0; font-size: 28px; font-weight: bold; }
     nav {
-      margin-top: 5px;
+      margin-top: 8px;
     }
     nav a {
-      margin: 0 15px;
+      margin: 0 12px;
       color: #fff;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 15px;
     }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .search-section, .menu-section, #employeeTableContainer {
-      padding: 20px;
+    nav a:hover { text-decoration: underline; }
+    .container {
       max-width: 1200px;
       margin: auto;
-    }
-    .menu-section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      padding: 20px;
     }
     input[type="text"] {
       padding: 10px;
       width: 300px;
       max-width: 90%;
+      margin-right: 8px;
     }
     button {
-      padding: 10px 15px;
+      padding: 8px 12px;
       cursor: pointer;
       background-color: #0077aa;
       color: white;
       border: none;
       border-radius: 4px;
+      font-size: 14px;
     }
     button:hover {
       background-color: #005577;
@@ -66,11 +56,23 @@
     th, td {
       padding: 8px;
       border: 1px solid #ccc;
-      text-align: left;
       font-size: 14px;
+      text-align: left;
     }
     th {
       background-color: #f0f0f0;
+    }
+    .button-table th {
+      background-color: #0077aa;
+      color: white;
+    }
+    .button-table td {
+      vertical-align: middle;
+    }
+    .count-label {
+      font-weight: bold;
+      margin-left: 10px;
+      color: #333;
     }
   </style>
 </head>
@@ -85,38 +87,106 @@
     </nav>
   </header>
 
-  <div class="search-section">
+  <div class="container">
     <h2>B005 - NAD Employees Seniority List</h2>
+
     <input type="text" id="searchBox" placeholder="Search by Name, Token No, or Location" />
     <button onclick="filterSearch()">Search</button>
-  </div>
 
-  <div class="menu-section">
-    <button onclick="filterByRank('Tradesman Mate')">Tradesman Mate</button>
-    <button onclick="filterByRank('Fitter Electrical')">Fitter Electrical</button>
-    <button onclick="filterByRank('Fitter Electrical SK')">Fitter Electrical SK</button>
-    <button onclick="filterByRank('Fitter Electrical HSK2')">Fitter Electrical HSK2</button>
-    <button onclick="filterByRank('Fitter Electrical HSK1')">Fitter Electrical HSK1</button>
-    <button onclick="filterByRank('MCM')">MCM</button>
-    <button onclick="filterByRank('Fitter Electronics')">Electronics</button>
-    <button onclick="filterByRank('Fitter General Mechanic')">Fitter General Mechanic</button>
-    <button onclick="filterByRank('Fitter Armament')">Fitter Armament</button>
-    <button onclick="filterByRank('Other Fitters')">Other Fitters</button>
-    <button onclick="filterByAll()">All Employees</button>
-    <button onclick="filterByGrade('SK')">All SK</button>
-    <button onclick="filterByGrade('HSK2')">All HSK2</button>
-    <button onclick="filterByGrade('HSK1')">All HSK1</button>
-    <button onclick="filterByGrade('MCM')">All MCM</button>
-    <button onclick="filterByCombined('Electrical+Electronics', 'SK')">Elec+Elec SK</button>
-    <button onclick="filterByCombined('Electrical+Electronics', 'HSK2')">Elec+Elec HSK2</button>
-    <button onclick="filterByCombined('Armament+General', 'SK')">Arm+Gen SK</button>
-  </div>
+    <table class="button-table">
+      <thead>
+        <tr><th>Category</th><th>Filter</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tradesman Mate</td>
+          <td><button onclick="filterByRank('Tradesman Mate')">Tradesman Mate</button></td>
+          <td><span id="count-tradesman"></span></td>
+        </tr>
+        <tr>
+          <td>Fitter Electrical</td>
+          <td>
+            <button onclick="filterByRank('Fitter Electrical SK')">SK</button>
+            <button onclick="filterByRank('Fitter Electrical HSK2')">HSK2</button>
+            <button onclick="filterByRank('Fitter Electrical HSK1')">HSK1</button>
+            <button onclick="filterByRank('Fitter Electrical MCM')">MCM</button>
+          </td>
+          <td><span id="count-ele"></span></td>
+        </tr>
+        <tr>
+          <td>Fitter Electronics</td>
+          <td>
+            <button onclick="filterByRank('Fitter Electronics SK')">SK</button>
+            <button onclick="filterByRank('Fitter Electronics HSK2')">HSK2</button>
+            <button onclick="filterByRank('Fitter Electronics HSK1')">HSK1</button>
+            <button onclick="filterByRank('Fitter Electronics MCM')">MCM</button>
+          </td>
+          <td><span id="count-elec"></span></td>
+        </tr>
+        <tr>
+          <td>Fitter General Mechanic</td>
+          <td>
+            <button onclick="filterByRank('Fitter General Mechanic SK')">SK</button>
+            <button onclick="filterByRank('Fitter General Mechanic HSK2')">HSK2</button>
+            <button onclick="filterByRank('Fitter General Mechanic HSK1')">HSK1</button>
+            <button onclick="filterByRank('Fitter General Mechanic MCM')">MCM</button>
+          </td>
+          <td><span id="count-gen"></span></td>
+        </tr>
+        <tr>
+          <td>Fitter Armament</td>
+          <td>
+            <button onclick="filterByRank('Fitter Armament SK')">SK</button>
+            <button onclick="filterByRank('Fitter Armament HSK2')">HSK2</button>
+            <button onclick="filterByRank('Fitter Armament HSK1')">HSK1</button>
+            <button onclick="filterByRank('Fitter Armament MCM')">MCM</button>
+          </td>
+          <td><span id="count-arm"></span></td>
+        </tr>
+        <tr>
+          <td>Other Engineering Groups</td>
+          <td>
+            <button onclick="filterByRank('Other Fitters SK')">SK</button>
+            <button onclick="filterByRank('Other Fitters HSK2')">HSK2</button>
+            <button onclick="filterByRank('Other Fitters HSK1')">HSK1</button>
+            <button onclick="filterByRank('Other Fitters MCM')">MCM</button>
+          </td>
+          <td><span id="count-other"></span></td>
+        </tr>
+        <tr>
+          <td>Combined Electrical + Electronics</td>
+          <td>
+            <button onclick="filterByCombined('Electrical+Electronics', 'SK')">SK</button>
+            <button onclick="filterByCombined('Electrical+Electronics', 'HSK2')">HSK2</button>
+            <button onclick="filterByCombined('Electrical+Electronics', 'HSK1')">HSK1</button>
+            <button onclick="filterByCombined('Electrical+Electronics', 'MCM')">MCM</button>
+          </td>
+          <td><span id="count-combo1"></span></td>
+        </tr>
+        <tr>
+          <td>Combined Fitter GM + Armament</td>
+          <td>
+            <button onclick="filterByCombined('Armament+General', 'SK')">SK</button>
+            <button onclick="filterByCombined('Armament+General', 'HSK2')">HSK2</button>
+            <button onclick="filterByCombined('Armament+General', 'HSK1')">HSK1</button>
+            <button onclick="filterByCombined('Armament+General', 'MCM')">MCM</button>
+          </td>
+          <td><span id="count-combo2"></span></td>
+        </tr>
+        <tr>
+          <td>Show All</td>
+          <td><button onclick="filterByAll()">All Employees</button></td>
+          <td><span id="count-all"></span></td>
+        </tr>
+      </tbody>
+    </table>
 
-  <div id="employeeTableContainer"></div>
+    <div id="employeeTableContainer"></div>
+  </div>
 
   <footer>
     <p>&copy; 2025 MilindWeb. All Rights Reserved.</p>
-    <p>Maintained by Dr. MAK</p>
+    <p>Maintained by MAKK. MAK</p>
   </footer>
 </body>
 </html>
