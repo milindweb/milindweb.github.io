@@ -1,89 +1,163 @@
-let allEmployees = [];
+// Replace with your live Google Sheets CSV URL
+const SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-.../pub?gid=0&single=true&output=csv";
 
-async function fetchSheetData() {
-  const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTUzccXs1hKfHcoGHyFg0_LsVpKRhzLuAk5GwTZUr_jT4JmOHdPtUGQmAkUOiWY-w/pub?output=csv";
+let employeeData = [];
 
-  const response = await fetch(sheetURL);
-  const data = await response.text();
-  const rows = data.split("\n").map(row => row.split(","));
-  const headers = rows[0];
-  allEmployees = rows.slice(1).map(row => {
-    const obj = {};
-    headers.forEach((header, i) => obj[header.trim()] = row[i]?.trim());
-    return obj;
-  });
-  renderTable(allEmployees);
-  updateButtonCounts();
+// Format dates to dd MMM yyyy
+function formatDate(dateStr) {
+  if (!dateStr || dateStr.trim() === "") return "";
+  const parts = dateStr.split(/[-/]/);
+  let day, month, year;
+
+  if (parts[0].length === 4) {
+    year = parts[0];
+    month = parts[1];
+    day = parts[2];
+  } else {
+    day = parts[0];
+    month = parts[1];
+    year = parts[2];
+  }
+
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${day.padStart(2, "0")} ${months[parseInt(month, 10) - 1]} ${year}`;
 }
 
-function renderTable(data) {
-  const container = document.getElementById("employeeTableContainer");
-  if (!container) return;
+// Fetch data
+function fetchDataAndBuildTable() {
+  Papa.parse(SHEET_URL, {
+    download: true,
+    header: true,
+    complete: function (results) {
+      employeeData = results.data;
+      buildTable(employeeData);
+      updateCounts(employeeData);
+    },
+  });
+}
 
-  const table = document.createElement("table");
-  const thead = document.createElement("thead");
+// Build main employee table
+function buildTable(data) {
+  const table = document.getElementById("employeeTable");
+  table.innerHTML = "";
+
+  if (data.length === 0) {
+    table.innerHTML = "<tr><td colspan='100%'>No records found</td></tr>";
+    document.getElementById("count-total").textContent = "0";
+    return;
+  }
+
   const headers = Object.keys(data[0]);
+  const headerRow = document.createElement("tr");
 
-  thead.innerHTML = `<tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr>`;
-  table.appendChild(thead);
+  headers.forEach((h) => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    headerRow.appendChild(th);
+  });
+  table.appendChild(headerRow);
 
-  const tbody = document.createElement("tbody");
-  data.forEach(row => {
+  data.forEach((row) => {
     const tr = document.createElement("tr");
-    headers.forEach(h => {
+    headers.forEach((key) => {
       const td = document.createElement("td");
-      td.textContent = row[h];
+      const lowerKey = key.toLowerCase();
+      td.textContent = lowerKey.includes("date") ? formatDate(row[key]) : row[key];
       tr.appendChild(td);
     });
-    tbody.appendChild(tr);
+    table.appendChild(tr);
   });
 
-  table.appendChild(tbody);
-  container.innerHTML = "";
-  container.appendChild(table);
+  document.getElementById("count-total").textContent = data.length;
 }
 
-function filterSearch() {
-  const searchValue = document.getElementById("searchBox").value.toLowerCase();
-  const filtered = allEmployees.filter(emp =>
-    emp["Name"].toLowerCase().includes(searchValue) ||
-    emp["Tokan No."].toLowerCase().includes(searchValue) ||
-    emp["Location"].toLowerCase().includes(searchValue)
+// Update rank counters
+function updateCounts(data) {
+  const rankCounters = {
+    "Tradesman Mate": 0,
+    "Fitter Electrical": 0,
+    "Fitter Electronics": 0,
+    "Fitter General Mechanic": 0,
+    "Armament Fitter": 0,
+    "Other Fitters": 0,
+  };
+
+  data.forEach((row) => {
+    const rank = row.Rank || "";
+    if (rankCounters[rank] !== undefined) rankCounters[rank]++;
+  });
+
+  document.getElementById("count-tradesman").textContent = rankCounters["Tradesman Mate"];
+  document.getElementById("count-elec").textContent = rankCounters["Fitter Electrical"];
+  document.getElementById("count-elec-sk").textContent = rankCounters["Fitter Electronics"];
+  document.getElementById("count-gen").textContent = rankCounters["Fitter General Mechanic"];
+  document.getElementById("count-arm").textContent = rankCounters["Armament Fitter"];
+  document.getElementById("count-other").textContent = rankCounters["Other Fitters"];
+
+  // Combined rank groups
+  document.getElementById("count-combined-elec").textContent =
+    rankCounters["Fitter Electrical"] + rankCounters["Fitter Electronics"];
+  document.getElementById("count-combined-arm").textContent =
+    rankCounters["Fitter General Mechanic"] + rankCounters["Armament Fitter"];
+}
+
+// Live search by Name, Rank, or Token
+function searchTable() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const filtered = employeeData.filter((row) =>
+    (row.Name || "").toLowerCase().includes(input) ||
+    (row.Rank || "").toLowerCase().includes(input) ||
+    (row["Tokan No."] || "").toLowerCase().includes(input)
   );
-  renderTable(filtered);
+
+  buildTable(filtered);
 }
 
-function filterByRank(rank) {
-  const filtered = allEmployees.filter(emp => emp["Rank"] === rank);
-  renderTable(filtered);
+// Filter by exact match rank
+function filterByRank(rankName) {
+  const filtered = employeeData.filter((row) => row.Rank === rankName);
+  buildTable(filtered);
 }
 
-function filterByGrade(grade) {
-  const filtered = allEmployees.filter(emp => emp["Rank"].includes(grade));
-  renderTable(filtered);
-}
-
-function filterByCombined(mainDepts, grade) {
-  const depts = mainDepts.split("+");
-  const filtered = allEmployees.filter(emp =>
-    depts.some(d => emp["Rank"].includes(d.trim())) && emp["Rank"].includes(grade)
+// Filter group + sub-level like HSK1 in Electrical
+function filterByPartialRank(group, level) {
+  const filtered = employeeData.filter(
+    (row) => row.Rank.includes(group) && row.Rank.includes(level)
   );
-  renderTable(filtered);
+  buildTable(filtered);
 }
 
-function updateButtonCounts() {
-  const counts = {};
-  allEmployees.forEach(emp => {
-    const rank = emp["Rank"];
-    counts[rank] = (counts[rank] || 0) + 1;
-  });
-
-  document.querySelectorAll(".menu-section button").forEach(btn => {
-    const label = btn.textContent;
-    if (counts[label]) {
-      btn.textContent = `${label} (${counts[label]})`;
-    }
-  });
+// Combined group filter
+function filterByCombined(groups, level) {
+  const filtered = employeeData.filter(
+    (row) => groups.some((g) => row.Rank.includes(g)) && row.Rank.includes(level)
+  );
+  buildTable(filtered);
 }
 
-document.addEventListener("DOMContentLoaded", fetchSheetData);
+// Export to CSV
+function exportToExcel() {
+  let csv = "";
+  const rows = document.querySelectorAll("#employeeTable tr");
+  rows.forEach((row) => {
+    const cols = row.querySelectorAll("td, th");
+    const rowData = [...cols].map((col) => `"${col.innerText}"`).join(",");
+    csv += rowData + "\n";
+  });
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "EmployeeList.csv";
+  link.click();
+}
+
+// Print
+function printTable() {
+  window.print();
+}
+
+// Initialize everything
+fetchDataAndBuildTable();
