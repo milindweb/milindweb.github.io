@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B005 - NAD Employees Seniority List</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/sheetHandler.js" defer></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header, footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    nav {
+      margin-top: 5px;
+    }
+    nav a {
+      margin: 0 15px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .search-section, .menu-section, #employeeTableContainer {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .menu-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 300px;
+      max-width: 90%;
+    }
+    button {
+      padding: 10px 15px;
+      cursor: pointer;
+      background-color: #0077aa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #005577;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #ccc;
+      text-align: left;
+      font-size: 14px;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MILINDWEB</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="project.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="search-section">
+    <h2>B005 - NAD Employees Seniority List</h2>
+    <input type="text" id="searchBox" placeholder="Search by Name, Token No, or Location" />
+    <button onclick="filterSearch()">Search</button>
+  </div>
+
+  <div class="menu-section">
+    <button onclick="filterByRank('Tradesman Mate')">Tradesman Mate</button>
+    <button onclick="filterByRank('Fitter Electrical')">Fitter Electrical</button>
+    <button onclick="filterByRank('Fitter Electrical SK')">Fitter Electrical SK</button>
+    <button onclick="filterByRank('Fitter Electrical HSK2')">Fitter Electrical HSK2</button>
+    <button onclick="filterByRank('Fitter Electrical HSK1')">Fitter Electrical HSK1</button>
+    <button onclick="filterByRank('MCM')">MCM</button>
+    <button onclick="filterByRank('Fitter Electronics')">Electronics</button>
+    <button onclick="filterByRank('Fitter General Mechanic')">Fitter General Mechanic</button>
+    <button onclick="filterByRank('Fitter Armament')">Fitter Armament</button>
+    <button onclick="filterByRank('Other Fitters')">Other Fitters</button>
+    <button onclick="filterByAll()">All Employees</button>
+    <button onclick="filterByGrade('SK')">All SK</button>
+    <button onclick="filterByGrade('HSK2')">All HSK2</button>
+    <button onclick="filterByGrade('HSK1')">All HSK1</button>
+    <button onclick="filterByGrade('MCM')">All MCM</button>
+    <button onclick="filterByCombined('Electrical+Electronics', 'SK')">Elec+Elec SK</button>
+    <button onclick="filterByCombined('Electrical+Electronics', 'HSK2')">Elec+Elec HSK2</button>
+    <button onclick="filterByCombined('Armament+General', 'SK')">Arm+Gen SK</button>
+  </div>
+
+  <div id="employeeTableContainer"></div>
+
+  <footer>
+    <p>&copy; 2025 MilindWeb. All Rights Reserved.</p>
+    <p>Maintained by Dr. MAK</p>
+  </footer>
+</body>
+</html>
