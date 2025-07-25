@@ -3,129 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>B005 - NAD Employees Seniority List</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <script src="js/sheetHandler.js" defer></script>
+  <title>NAD Employee Seniority List</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header, footer {
-      background-color: #333;
-      color: #fff;
-      padding: 10px 0;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    nav {
-      margin-top: 5px;
-    }
-    nav a {
-      margin: 0 15px;
-      color: #fff;
-      text-decoration: none;
-      font-size: 16px;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .search-section, .menu-section, .summary-table, #employeeTableContainer {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-    .summary-table {
-      border: 1px solid #ccc;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    .summary-table th, .summary-table td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      font-size: 14px;
-      text-align: left;
-    }
-    .summary-table th {
-      background-color: #f0f0f0;
-    }
-    input[type="text"] {
-      padding: 10px;
-      width: 300px;
-      max-width: 90%;
-    }
-    button {
-      padding: 8px 12px;
-      margin: 2px;
-      background-color: #0077aa;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #005577;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      padding: 8px;
-      border: 1px solid #ccc;
-      text-align: left;
-      font-size: 14px;
-    }
-    th {
-      background-color: #f0f0f0;
-    }
-    .main-rank {
-      font-weight: bold;
-      background-color: #e0f0ff;
-    }
+    .category-group { margin-bottom: 1rem; }
+    .filter-btn { margin: 0.25rem; }
+    .count { font-weight: bold; color: #0d6efd; margin-left: 4px; }
+    header, footer { background-color: #003366; color: white; padding: 1rem; }
+    table { font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <header>
-    <h1>MILINDWEB</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="project.html">Projects</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
 
-  <div class="search-section">
-    <h2>B005 - NAD Employees Seniority List</h2>
-    <input type="text" id="searchBox" placeholder="Search by Name, Token No, or Location" />
-    <button onclick="filterSearch()">Search</button>
+<header class="text-center">
+  <h4>📋 NAD Employee Seniority List (B005)</h4>
+</header>
+
+<div class="container mt-3">
+
+  <!-- 🔍 Search Section -->
+  <div class="row mb-3">
+    <div class="col-md-9">
+      <input type="text" id="searchInput" class="form-control" placeholder="Search by Name, Token No, Location" />
+    </div>
+    <div class="col-md-3">
+      <button id="searchBtn" class="btn btn-primary w-100">🔎 Search</button>
+    </div>
   </div>
 
-  <div class="summary-section">
-    <table class="summary-table" id="summaryTable">
-      <thead>
-        <tr><th>Group</th><th>Sub Ranks</th><th>Total Count</th></tr>
+  <!-- 📊 Filter Buttons -->
+  <div class="category-group">
+    <button class="btn btn-outline-secondary filter-btn" data-category="Tradesman Mate">Tradesman Mate <span class="count">0</span></button>
+  </div>
+
+  <div class="category-group">
+    <span class="fw-bold">Fitter Electrical:</span>
+    <button class="btn btn-outline-primary filter-btn" data-category="Fitter Electrical SK">SK <span class="count">0</span></button>
+    <button class="btn btn-outline-primary filter-btn" data-category="Fitter Electrical HSK2">HSK2 <span class="count">0</span></button>
+    <button class="btn btn-outline-primary filter-btn" data-category="Fitter Electrical HSK1">HSK1 <span class="count">0</span></button>
+    <button class="btn btn-outline-primary filter-btn" data-category="Fitter Electrical MCM">MCM <span class="count">0</span></button>
+  </div>
+
+  <div class="category-group">
+    <span class="fw-bold">Fitter Electronics:</span>
+    <button class="btn btn-outline-success filter-btn" data-category="Fitter Electronics SK">SK <span class="count">0</span></button>
+    <button class="btn btn-outline-success filter-btn" data-category="Fitter Electronics HSK2">HSK2 <span class="count">0</span></button>
+    <button class="btn btn-outline-success filter-btn" data-category="Fitter Electronics HSK1">HSK1 <span class="count">0</span></button>
+    <button class="btn btn-outline-success filter-btn" data-category="Fitter Electronics MCM">MCM <span class="count">0</span></button>
+  </div>
+
+  <div class="category-group">
+    <span class="fw-bold">Fitter General Mechanic:</span>
+    <button class="btn btn-outline-dark filter-btn" data-category="Fitter General Mechanic">All <span class="count">0</span></button>
+  </div>
+
+  <div class="category-group">
+    <span class="fw-bold">Fitter Armament:</span>
+    <button class="btn btn-outline-dark filter-btn" data-category="Fitter Armament">All <span class="count">0</span></button>
+  </div>
+
+  <div class="category-group">
+    <span class="fw-bold">Other Engineering Groups:</span>
+    <button class="btn btn-outline-warning filter-btn" data-category="Other Engineering Groups">Other <span class="count">0</span></button>
+  </div>
+
+  <div class="category-group">
+    <span class="fw-bold">Combined Electrical & Electronics:</span>
+    <button class="btn btn-outline-info filter-btn" data-category="Combined Electrical Electronics SK">SK <span class="count">0</span></button>
+    <button class="btn btn-outline-info filter-btn" data-category="Combined Electrical Electronics HSK2">HSK2 <span class="count">0</span></button>
+    <button class="btn btn-outline-info filter-btn" data-category="Combined Electrical Electronics HSK1">HSK1 <span class="count">0</span></button>
+    <button class="btn btn-outline-info filter-btn" data-category="Combined Electrical Electronics MCM">MCM <span class="count">0</span></button>
+  </div>
+
+  <div class="category-group">
+    <span class="fw-bold">Combined General & Armament:</span>
+    <button class="btn btn-outline-danger filter-btn" data-category="Combined General Armament SK">SK <span class="count">0</span></button>
+    <button class="btn btn-outline-danger filter-btn" data-category="Combined General Armament HSK2">HSK2 <span class="count">0</span></button>
+    <button class="btn btn-outline-danger filter-btn" data-category="Combined General Armament HSK1">HSK1 <span class="count">0</span></button>
+    <button class="btn btn-outline-danger filter-btn" data-category="Combined General Armament MCM">MCM <span class="count">0</span></button>
+  </div>
+
+  <!-- 📋 Data Table -->
+  <div class="table-responsive">
+    <table id="employeeTable" class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>SrNo.</th>
+          <th>Name</th>
+          <th>Rank</th>
+          <th>Tokan No.</th>
+          <th>Category</th>
+          <th>Location</th>
+          <th>Date of Birth</th>
+          <th>Date of Retirement</th>
+          <th>Date of Appointment</th>
+          <th>Date of Regular</th>
+          <th>Dept Qualify Examination</th>
+          <th>Date of USL</th>
+          <th>Date of SSK</th>
+          <th>Date of SK</th>
+          <th>Date of HSK 2</th>
+          <th>Date of HSK 1</th>
+          <th>Date of MCM</th>
+          <th>Pin</th>
+          <th>Mobile No.</th>
+          <th>Email</th>
+          <th>Remark</th>
+        </tr>
       </thead>
-      <tbody>
-        <!-- Summary rows will be injected by JS -->
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
 
-  <div class="menu-section" id="menuButtons">
-    <!-- Buttons will be inserted here dynamically -->
-  </div>
+</div>
 
-  <div id="employeeTableContainer">
-    <!-- Employee data will appear here -->
-  </div>
+<!-- 🔚 Footer -->
+<footer class="text-center mt-4">
+  <small>Designed by NAD | Project B005 | &copy; 2025</small>
+</footer>
 
-  <footer>
-    <p>&copy; 2025 MilindWeb. All Rights Reserved.</p>
-    <p>Maintained by MAKK. MAK</p>
-  </footer>
+<!-- JS Logic -->
+<script src="sheetHandler.js"></script>
 </body>
 </html>
