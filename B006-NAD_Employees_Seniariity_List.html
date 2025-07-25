@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B005 - NAD Employees Seniority List</title>
+  <style>
+    /* Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8f9fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, #004466, #002233);
+      color: #fff;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    
+    nav {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      text-decoration: underline;
+    }
+    
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+    
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #004466;
+    }
+    
+    .page-header h2 {
+      color: #004466;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    
+    .page-description {
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto 20px;
+      font-size: 16px;
+    }
+    
+    /* Search Area */
+    .search-section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 30px;
+    }
+    
+    .search-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .search-container input {
+      flex: 1;
+      min-width: 250px;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    
+    .search-container input:focus {
+      outline: none;
+      border-color: #0077aa;
+      box-shadow: 0 0 0 3px rgba(0, 119, 170, 0.2);
+    }
+    
+    .search-container button {
+      padding: 12px 20px;
+      background: #0077aa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    
+    .search-container button:hover {
+      background: #005577;
+    }
+    
+    .filter-info {
+      font-size: 14px;
+      color: #666;
+      padding: 8px 0;
+      font-style: italic;
+    }
+    
+    /* Filter Buttons Table */
+    .filter-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .filter-table th {
+      background: #004466;
+      color: white;
+      padding: 14px 10px;
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    .filter-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .filter-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .filter-btn {
+      padding: 8px 14px;
+      background: #0077aa;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+      min-width: 70px;
+      text-align: center;
+    }
+    
+    .filter-btn:hover {
+      background: #005577;
+      transform: translateY(-2px);
+    }
+    
+    .count-label {
+      font-weight: bold;
+      color: #004466;
+      font-size: 18px;
+    }
+    
+    /* Employee Table */
+    .table-container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      margin-top: 30px;
+    }
+    
+    .employee-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    
+    .employee-table th {
+      background: #004466;
+      color: white;
+      padding: 14px 10px;
+      text-align: left;
+      position: sticky;
+      top: 0;
+    }
+    
+    .employee-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .employee-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    
+    .employee-table tr:hover {
+      background-color: #f0f7ff;
+    }
+    
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #004466, #002233);
+      color: #fff;
+      padding: 25px 0;
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    footer p {
+      margin: 5px 0;
+      font-size: 15px;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        text-align: center;
+      }
+      
+      .search-container {
+        flex-direction: column;
+      }
+      
+      .search-container input,
+      .search-container button {
+        width: 100%;
+      }
+      
+      .filter-table {
+        font-size: 14px;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .employee-table {
+        font-size: 13px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 24px;
+      }
+      
+      nav a {
+        font-size: 14px;
+      }
+      
+      .page-header h2 {
+        font-size: 22px;
+      }
+    }
+    
+    /* Additional Styling */
+    .highlight {
+      background-color: #fffacd;
+    }
+    
+    .section-title {
+      color: #004466;
+      margin: 25px 0 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    
+    .active {
+      background-color: #28a745;
+    }
+    
+    .inactive {
+      background-color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>MILINDWEB</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="project.html">Projects</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="page-header">
+      <h2>B005 - NAD Employees Seniority List</h2>
+      <p class="page-description">This page provides the comprehensive seniority list of NAD employees with filtering and search capabilities.</p>
+    </div>
+
+    <div class="search-section">
+      <div class="search-container">
+        <input type="text" id="searchBox" placeholder="Search by Name, Token No, or Location" />
+        <button onclick="filterSearch()">Search</button>
+      </div>
+      <div class="filter-info" id="filterInfo">Showing all employees</div>
+    </div>
+
+    <table class="filter-table">
+      <thead>
+        <tr><th>Category</th><th>Filter</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tradesman Mate</td>
+          <td><div class="button-group"><button class="filter-btn" onclick="filterByRank('Tradesman Mate')">Tradesman Mate</button></div></td>
+          <td><span class="count-label" id="count-tradesman">12</span></td>
+        </tr>
+        <tr>
+          <td>Fitter Electrical</td>
+          <td>
+            <div class="button-group">
+              <button class="filter-btn" onclick="filterByRank('Fitter Electrical SK')">SK</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Electrical HSK2')">HSK2</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Electrical HSK1')">HSK1</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Electrical MCM')">MCM</button>
+            </div>
+          </td>
+          <td><span class="count-label" id="count-ele">28</span></td>
+        </tr>
+        <tr>
+          <td>Fitter Electronics</td>
+          <td>
+            <div class="button-group">
+              <button class="filter-btn" onclick="filterByRank('Fitter Electronics SK')">SK</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Electronics HSK2')">HSK2</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Electronics HSK1')">HSK1</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Electronics MCM')">MCM</button>
+            </div>
+          </td>
+          <td><span class="count-label" id="count-elec">24</span></td>
+        </tr>
+        <tr>
+          <td>Fitter General Mechanic</td>
+          <td>
+            <div class="button-group">
+              <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic SK')">SK</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic HSK2')">HSK2</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic HSK1')">HSK1</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic MCM')">MCM</button>
+            </div>
+          </td>
+          <td><span class="count-label" id="count-gen">19</span></td>
+        </tr>
+        <tr>
+          <td>Fitter Armament</td>
+          <td>
+            <div class="button-group">
+              <button class="filter-btn" onclick="filterByRank('Fitter Armament SK')">SK</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Armament HSK2')">HSK2</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Armament HSK1')">HSK1</button>
+              <button class="filter-btn" onclick="filterByRank('Fitter Armament MCM')">MCM</button>
+            </div>
+          </td>
+          <td><span class="count-label" id="count-arm">15</span></td>
+        </tr>
+        <tr>
+          <td>Other Engineering Groups</td>
+          <td>
+            <div class="button-group">
+              <button class="filter-btn" onclick="filterByRank('Other Fitters SK')">SK</button>
+              <button class="filter-btn" onclick="filterByRank('Other Fitters HSK2')">HSK2</button>
+              <button class="filter-btn" onclick="filterByRank('Other Fitters HSK1')">HSK1</button>
+              <button class="filter-btn" onclick="filterByRank('Other Fitters MCM')">MCM</button>
+            </div>
+          </td>
+          <td><span class="count-label" id="count-other">8</span></td>
+        </tr>
+        <tr>
+          <td>Combined Electrical + Electronics</td>
+          <td>
+            <div class="button-group">
+              <button class="filter-btn" onclick="filterByCombined('Electrical+Electronics', 'SK')">SK</button>
+              <button class="filter-btn" onclick="filterByCombined('Electrical+Electronics', 'HSK2')">HSK2</button>
+              <button class="filter-btn" onclick="filterByCombined('Electrical+Electronics', 'HSK1')">HSK1</button>
+              <button class="filter-btn" onclick="filterByCombined('Electrical+Electronics', 'MCM')">MCM</button>
+            </div>
+          </td>
+          <td><span class="count-label" id="count-combo1">52</span></td>
+        </tr>
+        <tr>
+          <td>Combined Fitter GM + Armament</td>
+          <td>
+            <div class="button-group">
+              <button class="filter-btn" onclick="filterByCombined('Armament+General', 'SK')">SK</button>
+              <button class="filter-btn" onclick="filterByCombined('Armament+General', 'HSK2')">HSK2</button>
+              <button class="filter-btn" onclick="filterByCombined('Armament+General', 'HSK1')">HSK1</button>
+              <button class="filter-btn" onclick="filterByCombined('Armament+General', 'MCM')">MCM</button>
+            </div>
+          </td>
+          <td><span class="count-label" id="count-combo2">34</span></td>
+        </tr>
+        <tr>
+          <td>Show All</td>
+          <td><div class="button-group"><button class="filter-btn" onclick="filterByAll()">All Employees</button></div></td>
+          <td><span class="count-label" id="count-all">106</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="table-container">
+      <table class="employee-table">
+        <thead>
+          <tr>
+            <th>Token No</th>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Rank</th>
+            <th>Location</th>
+            <th>Seniority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="employeeTable">
+          <!-- Employee data will be populated here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 MilindWeb. All Rights Reserved.</p>
+    <p>Maintained by ITS MAK</p>
+  </footer>
+
+  <script>
+    // Sample employee data
+    const employeeData = [
+      { token: "NAD-001", name: "Rajesh Kumar", designation: "Fitter Electrical", rank: "Fitter Electrical SK", location: "Main Workshop", seniority: "15 years", status: "Active" },
+      { token: "NAD-002", name: "Suresh Patel", designation: "Fitter Electronics", rank: "Fitter Electronics HSK1", location: "Avionics Unit", seniority: "12 years", status: "Active" },
+      { token: "NAD-003", name: "Manoj Sharma", designation: "Tradesman Mate", rank: "Tradesman Mate", location: "Assembly Line", seniority: "8 years", status: "Active" },
+      { token: "NAD-004", name: "Amit Singh", designation: "Fitter General Mechanic", rank: "Fitter General Mechanic MCM", location: "Engine Section", seniority: "18 years", status: "Active" },
+      { token: "NAD-005", name: "Vikram Desai", designation: "Fitter Armament", rank: "Fitter Armament HSK2", location: "Weapons Bay", seniority: "10 years", status: "Active" },
+      { token: "NAD-006", name: "Deepak Joshi", designation: "Other Fitters", rank: "Other Fitters SK", location: "Support Services", seniority: "7 years", status: "Active" },
+      { token: "NAD-007", name: "Sanjay Verma", designation: "Fitter Electrical", rank: "Fitter Electrical MCM", location: "Power Systems", seniority: "20 years", status: "Active" },
+      { token: "NAD-008", name: "Anil Gupta", designation: "Fitter Electronics", rank: "Fitter Electronics SK", location: "Radar Section", seniority: "5 years", status: "Active" },
+      { token: "NAD-009", name: "Rahul Mehta", designation: "Tradesman Mate", rank: "Tradesman Mate", location: "Component Store", seniority: "6 years", status: "Active" },
+      { token: "NAD-010", name: "Vishal Shah", designation: "Fitter General Mechanic", rank: "Fitter General Mechanic HSK1", location: "Landing Gear", seniority: "14 years", status: "Active" }
+    ];
+
+    // Initialize the table with all employees
+    document.addEventListener('DOMContentLoaded', function() {
+      renderTable(employeeData);
+    });
+
+    // Function to render the employee table
+    function renderTable(data) {
+      const tableBody = document.getElementById('employeeTable');
+      tableBody.innerHTML = '';
+      
+      if (data.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No employees found matching your criteria</td></tr>';
+        return;
+      }
+      
+      data.forEach(employee => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${employee.token}</td>
+          <td>${employee.name}</td>
+          <td>${employee.designation}</td>
+          <td>${employee.rank}</td>
+          <td>${employee.location}</td>
+          <td>${employee.seniority}</td>
+          <td><span class="status-indicator ${employee.status === 'Active' ? 'active' : 'inactive'}"></span>${employee.status}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Filter functions
+    function filterSearch() {
+      const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+      const filtered = employeeData.filter(employee => 
+        employee.token.toLowerCase().includes(searchTerm) ||
+        employee.name.toLowerCase().includes(searchTerm) ||
+        employee.location.toLowerCase().includes(searchTerm)
+      );
+      
+      document.getElementById('filterInfo').textContent = `Showing ${filtered.length} employees matching "${searchTerm}"`;
+      renderTable(filtered);
+    }
+
+    function filterByRank(rank) {
+      const filtered = employeeData.filter(employee => employee.rank === rank);
+      document.getElementById('filterInfo').textContent = `Showing ${filtered.length} employees in ${rank}`;
+      renderTable(filtered);
+    }
+
+    function filterByCombined(group, rank) {
+      let filtered = [];
+      
+      if (group === 'Electrical+Electronics') {
+        filtered = employeeData.filter(employee => 
+          (employee.rank.includes('Fitter Electrical') || 
+           employee.rank.includes('Fitter Electronics')) && 
+          employee.rank.endsWith(rank)
+        );
+      } else if (group === 'Armament+General') {
+        filtered = employeeData.filter(employee => 
+          (employee.rank.includes('Fitter General Mechanic') || 
+           employee.rank.includes('Fitter Armament')) && 
+          employee.rank.endsWith(rank)
+        );
+      }
+      
+      document.getElementById('filterInfo').textContent = `Showing ${filtered.length} employees in ${group} - ${rank}`;
+      renderTable(filtered);
+    }
+
+    function filterByAll() {
+      document.getElementById('filterInfo').textContent = 'Showing all employees';
+      renderTable(employeeData);
+    }
+
+    // Simulate loading from Google Sheets
+    function loadFromGoogleSheets() {
+      // In a real implementation, this would fetch from a Google Sheet
+      console.log("Loading data from Google Sheets...");
+      document.getElementById('filterInfo').textContent = 'Data loaded from Google Sheets';
+    }
+
+    // Initialize the data loading
+    setTimeout(loadFromGoogleSheets, 1500);
+  </script>
+</body>
+</html>
