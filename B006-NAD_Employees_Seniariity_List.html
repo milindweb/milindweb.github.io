@@ -1,183 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Employee Seniority List</title>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NAD Employees Seniority List</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-      margin: 0;
-    }
-    header, footer {
-      background-color: #003366;
-      color: white;
-      text-align: center;
-      padding: 12px;
-    }
-    h1 { margin: 0; font-size: 22px; }
-    h2 { font-size: 18px; margin-bottom: 5px; }
-
-    .container {
-      padding: 15px;
-    }
-    .rank-group {
-      background-color: #e0e0e0;
-      margin-bottom: 8px;
-      border-radius: 6px;
-      padding: 8px;
-    }
-    .rank-header {
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
-      background-color: #d3d3d3;
-      padding: 6px;
-      border-radius: 5px;
-    }
-    .employee-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
-      font-size: 13px;
-    }
-    .employee-table th, .employee-table td {
-      border: 1px solid #ccc;
-      padding: 6px;
-      text-align: left;
-    }
-    .employee-table th {
-      background-color: #f1f1f1;
-    }
-    .collapsed {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .employee-table {
-        font-size: 11px;
-      }
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; color: #333; }
+    header { background: #002244; color: #fff; padding: 15px; text-align: center; }
+    .groups { display: flex; flex-wrap: wrap; gap: 10px; padding: 20px; background: #fff; }
+    .group { border: 1px solid #ccc; border-radius: 6px; padding: 10px; background: #f9f9f9; flex: 1 1 200px; }
+    .group-title { font-weight: bold; margin-bottom: 6px; }
+    .subranks { margin-left: 15px; color: #555; }
+    .subranks span { display: inline-block; margin-right: 6px; }
+    .container { padding: 20px; overflow-x: auto; background: #fff; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 8px; border: 1px solid #ccc; text-align: left; }
+    thead { background: #004477; color: #fff; position: sticky; top: 0; }
+    .loading { text-align: center; padding: 40px; color: #666; }
+    .loading i { font-size: 36px; animation: spin 1s linear infinite; }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @media (max-width: 768px){ .groups { flex-direction: column; } table th, table td{font-size:12px}}
   </style>
 </head>
 <body>
-  <header>
-    <h1>📋 NAD Employees Seniority List</h1>
-  </header>
 
-  <div class="container" id="employeeContainer">
-    <p>Loading employee data...</p>
+  <header><h1>NAD Employees Seniority List</h1></header>
+
+  <!-- Groups & Sub‑ranks -->
+  <div class="groups">
+    <div class="group">
+      <div class="group-title">Electrical</div>
+      <div class="subranks"><span>SK</span><span>HSK2</span><span>HSK1</span><span>MCM</span></div>
+    </div>
+    <div class="group">
+      <div class="group-title">Electronics</div>
+      <div class="subranks"><span>SK</span><span>HSK2</span><span>HSK1</span><span>MCM</span></div>
+    </div>
+    <div class="group">
+      <div class="group-title">Fitter General Mechanic</div>
+      <div class="subranks"><span>SK</span><span>HSK2</span><span>HSK1</span><span>MCM</span></div>
+    </div>
+    <div class="group">
+      <div class="group-title">Fitter Armament</div>
+      <div class="subranks"><span>SK</span><span>HSK2</span><span>HSK1</span><span>MCM</span></div>
+    </div>
+    <div class="group">
+      <div class="group-title">Other Engineering Group</div>
+      <div class="subranks"><span>SK</span><span>HSK2</span><span>HSK1</span><span>MCM</span></div>
+    </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 NAD Employee Records | <a href="https://milindweb.github.io" style="color: #ddd;">milindweb.github.io</a></p>
-  </footer>
+  <!-- Employee Table -->
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>SrNo.</th><th>Name</th><th>Rank</th><th>Tokan No.</th><th>Category</th>
+          <th>Location</th><th>Date of Birth</th><th>Date of Retirement</th><th>Date of Appointment</th>
+          <th>Date of Regular</th><th>Dept Qualify Examination</th><th>Date of USL</th><th>Date of SSK</th>
+          <th>Date of SK</th><th>Date of HSK 2</th><th>Date of HSK 1</th><th>Date of MCM</th>
+          <th>Pin</th><th>Mobile No.</th><th>Email</th><th>Remark</th>
+        </tr>
+      </thead>
+      <tbody id="employeeTable">
+        <tr><td colspan="21"><div class="loading"><i class="fas fa-spinner"></i> Loading employee data from Google Sheets...</div></td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <script>
-    const sheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTXEY1TLuvDDTVYPqtTP7JwsQ6UTMw03ozLNFtXFLJezmCtvznx3tsdch8Dvm-35zkxMm0Oar40Sn2X/pub?gid=0&single=true&output=csv';
-
-    const container = document.getElementById("employeeContainer");
-
-    function groupByDepartment(data) {
-      const groups = {};
-      data.forEach(row => {
-        const rank = row["Rank"] || "Unknown";
-        let mainDept = "Others";
-        if (rank.includes("Electrical")) mainDept = "Electrical";
-        else if (rank.includes("Electronics")) mainDept = "Electronics";
-        else if (rank.includes("General")) mainDept = "General Mechanic";
-        else if (rank.includes("Armament")) mainDept = "Armament";
-        else if (rank.includes("Tradesman")) mainDept = "Tradesman";
-
-        if (!groups[mainDept]) groups[mainDept] = {};
-        if (!groups[mainDept][rank]) groups[mainDept][rank] = [];
-
-        groups[mainDept][rank].push(row);
-      });
-      return groups;
-    }
-
-    function createTable(employees) {
-      const table = document.createElement("table");
-      table.className = "employee-table";
-
-      const headers = [
-        "SrNo.", "Name", "Rank", "Tokan No.", "Category", "Location", "Date of Birth", "Date of Retirement",
-        "Date of Appointment", "Date of Regular", "Dept Qualify Examination", "Date of USL", "Date of SSK", 
-        "Date of SK", "Date of HSK 2", "Date of HSK 1", "Date of MCM", "Pin", "Mobile No.", "Email", "Remark"
-      ];
-      const thead = document.createElement("thead");
-      const headRow = document.createElement("tr");
-      headers.forEach(h => {
-        const th = document.createElement("th");
-        th.textContent = h;
-        headRow.appendChild(th);
-      });
-      thead.appendChild(headRow);
-      table.appendChild(thead);
-
-      const tbody = document.createElement("tbody");
-      employees.forEach(emp => {
-        const tr = document.createElement("tr");
-        headers.forEach(h => {
-          const td = document.createElement("td");
-          td.textContent = emp[h] || "";
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-
-      return table;
-    }
-
-    function displayAllEmployees(grouped) {
-      container.innerHTML = "";
-
-      Object.entries(grouped).forEach(([mainDept, subranks]) => {
-        const deptSection = document.createElement("div");
-        deptSection.className = "rank-group";
-
-        const deptHeader = document.createElement("h2");
-        deptHeader.textContent = `📁 ${mainDept}`;
-        deptSection.appendChild(deptHeader);
-
-        Object.entries(subranks).forEach(([rank, employees]) => {
-          const subRankHeader = document.createElement("div");
-          subRankHeader.className = "rank-header";
-          subRankHeader.textContent = `▶ ${rank} (${employees.length})`;
-
-          const subRankTable = createTable(employees);
-          subRankTable.classList.add("collapsed");
-
-          subRankHeader.addEventListener("click", () => {
-            subRankTable.classList.toggle("collapsed");
-          });
-
-          deptSection.appendChild(subRankHeader);
-          deptSection.appendChild(subRankTable);
-        });
-
-        container.appendChild(deptSection);
-      });
-    }
-
-    // Load and parse
-    Papa.parse(sheetCSVUrl, {
+    const sheetUrl = 'https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv';
+    const tbody = document.getElementById('employeeTable');
+    Papa.parse(sheetUrl, {
       download: true,
       header: true,
-      complete: function(results) {
-        const data = results.data.filter(r => r["Rank"]); // basic filter
-        const grouped = groupByDepartment(data);
-        displayAllEmployees(grouped);
-      },
-      error: function(err) {
-        container.innerHTML = `<p>Error loading data: ${err.message}</p>`;
+      skipEmptyLines: true,
+      complete: function (results) {
+        const data = results.data.filter(r => r['SrNo.']);
+        render(data);
       }
     });
+    function render(data) {
+      if (!data.length) {
+        tbody.innerHTML = '<tr><td colspan="21" style="text-align:center;padding:40px;">No employees found.</td></tr>';
+        return;
+      }
+      let html = '';
+      data.forEach(emp => {
+        html += '<tr>' +
+          `<td>${emp['SrNo.']||''}</td>` +
+          `<td>${emp['Name']||''}</td>` +
+          `<td>${emp['Rank']||''}</td>` +
+          `<td>${emp['Tokan No.']||''}</td>` +
+          `<td>${emp['Category']||''}</td>` +
+          `<td>${emp['Location']||''}</td>` +
+          `<td>${emp['Date of Birth']||''}</td>` +
+          `<td>${emp['Date of Retirement']||''}</td>` +
+          `<td>${emp['Date of Appointment']||''}</td>` +
+          `<td>${emp['Date of Regular']||''}</td>` +
+          `<td>${emp['Dept Qualify Examination']||''}</td>` +
+          `<td>${emp['Date of USL']||''}</td>` +
+          `<td>${emp['Date of SSK']||''}</td>` +
+          `<td>${emp['Date of SK']||''}</td>` +
+          `<td>${emp['Date of HSK 2']||''}</td>` +
+          `<td>${emp['Date of HSK 1']||''}</td>` +
+          `<td>${emp['Date of MCM']||''}</td>` +
+          `<td>${emp['Pin']||''}</td>` +
+          `<td>${emp['Mobile No.']||''}</td>` +
+          `<td>${emp['Email']||''}</td>` +
+          `<td>${emp['Remark']||''}</td>` +
+        '</tr>';
+      });
+      tbody.innerHTML = html;
+    }
   </script>
+
 </body>
-</html>
+</html
