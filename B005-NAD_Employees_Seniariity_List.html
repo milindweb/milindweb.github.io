@@ -2,48 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>B005 - NAD Employees Seniority List</title>
   <link rel="stylesheet" href="css/style.css" />
   <script src="js/sheetHandler.js" defer></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
     header, footer {
-      background-color: #004466;
+      background-color: #333;
       color: #fff;
-      padding: 12px 0;
+      padding: 10px 0;
       text-align: center;
     }
-    header h1 { margin: 0; font-size: 28px; font-weight: bold; }
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: bold;
+    }
     nav {
-      margin-top: 8px;
+      margin-top: 5px;
     }
     nav a {
-      margin: 0 12px;
+      margin: 0 15px;
       color: #fff;
       text-decoration: none;
-      font-size: 15px;
+      font-size: 16px;
     }
-    nav a:hover { text-decoration: underline; }
-    .container {
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .search-section, .menu-section, .summary-table, #employeeTableContainer {
+      padding: 20px;
       max-width: 1200px;
       margin: auto;
-      padding: 20px;
+    }
+    .summary-table {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .summary-table th, .summary-table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-size: 14px;
+      text-align: left;
+    }
+    .summary-table th {
+      background-color: #f0f0f0;
     }
     input[type="text"] {
       padding: 10px;
       width: 300px;
       max-width: 90%;
-      margin-right: 8px;
     }
     button {
       padding: 8px 12px;
-      cursor: pointer;
+      margin: 2px;
       background-color: #0077aa;
       color: white;
       border: none;
       border-radius: 4px;
-      font-size: 14px;
+      cursor: pointer;
     }
     button:hover {
       background-color: #005577;
@@ -56,23 +75,15 @@
     th, td {
       padding: 8px;
       border: 1px solid #ccc;
-      font-size: 14px;
       text-align: left;
+      font-size: 14px;
     }
     th {
       background-color: #f0f0f0;
     }
-    .button-table th {
-      background-color: #0077aa;
-      color: white;
-    }
-    .button-table td {
-      vertical-align: middle;
-    }
-    .count-label {
+    .main-rank {
       font-weight: bold;
-      margin-left: 10px;
-      color: #333;
+      background-color: #e0f0ff;
     }
   </style>
 </head>
@@ -87,101 +98,29 @@
     </nav>
   </header>
 
-  <div class="container">
+  <div class="search-section">
     <h2>B005 - NAD Employees Seniority List</h2>
-
     <input type="text" id="searchBox" placeholder="Search by Name, Token No, or Location" />
     <button onclick="filterSearch()">Search</button>
+  </div>
 
-    <table class="button-table">
+  <div class="summary-section">
+    <table class="summary-table" id="summaryTable">
       <thead>
-        <tr><th>Category</th><th>Filter</th><th>Total</th></tr>
+        <tr><th>Group</th><th>Sub Ranks</th><th>Total Count</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Tradesman Mate</td>
-          <td><button onclick="filterByRank('Tradesman Mate')">Tradesman Mate</button></td>
-          <td><span id="count-tradesman"></span></td>
-        </tr>
-        <tr>
-          <td>Fitter Electrical</td>
-          <td>
-            <button onclick="filterByRank('Fitter Electrical SK')">SK</button>
-            <button onclick="filterByRank('Fitter Electrical HSK2')">HSK2</button>
-            <button onclick="filterByRank('Fitter Electrical HSK1')">HSK1</button>
-            <button onclick="filterByRank('Fitter Electrical MCM')">MCM</button>
-          </td>
-          <td><span id="count-ele"></span></td>
-        </tr>
-        <tr>
-          <td>Fitter Electronics</td>
-          <td>
-            <button onclick="filterByRank('Fitter Electronics SK')">SK</button>
-            <button onclick="filterByRank('Fitter Electronics HSK2')">HSK2</button>
-            <button onclick="filterByRank('Fitter Electronics HSK1')">HSK1</button>
-            <button onclick="filterByRank('Fitter Electronics MCM')">MCM</button>
-          </td>
-          <td><span id="count-elec"></span></td>
-        </tr>
-        <tr>
-          <td>Fitter General Mechanic</td>
-          <td>
-            <button onclick="filterByRank('Fitter General Mechanic SK')">SK</button>
-            <button onclick="filterByRank('Fitter General Mechanic HSK2')">HSK2</button>
-            <button onclick="filterByRank('Fitter General Mechanic HSK1')">HSK1</button>
-            <button onclick="filterByRank('Fitter General Mechanic MCM')">MCM</button>
-          </td>
-          <td><span id="count-gen"></span></td>
-        </tr>
-        <tr>
-          <td>Fitter Armament</td>
-          <td>
-            <button onclick="filterByRank('Fitter Armament SK')">SK</button>
-            <button onclick="filterByRank('Fitter Armament HSK2')">HSK2</button>
-            <button onclick="filterByRank('Fitter Armament HSK1')">HSK1</button>
-            <button onclick="filterByRank('Fitter Armament MCM')">MCM</button>
-          </td>
-          <td><span id="count-arm"></span></td>
-        </tr>
-        <tr>
-          <td>Other Engineering Groups</td>
-          <td>
-            <button onclick="filterByRank('Other Fitters SK')">SK</button>
-            <button onclick="filterByRank('Other Fitters HSK2')">HSK2</button>
-            <button onclick="filterByRank('Other Fitters HSK1')">HSK1</button>
-            <button onclick="filterByRank('Other Fitters MCM')">MCM</button>
-          </td>
-          <td><span id="count-other"></span></td>
-        </tr>
-        <tr>
-          <td>Combined Electrical + Electronics</td>
-          <td>
-            <button onclick="filterByCombined('Electrical+Electronics', 'SK')">SK</button>
-            <button onclick="filterByCombined('Electrical+Electronics', 'HSK2')">HSK2</button>
-            <button onclick="filterByCombined('Electrical+Electronics', 'HSK1')">HSK1</button>
-            <button onclick="filterByCombined('Electrical+Electronics', 'MCM')">MCM</button>
-          </td>
-          <td><span id="count-combo1"></span></td>
-        </tr>
-        <tr>
-          <td>Combined Fitter GM + Armament</td>
-          <td>
-            <button onclick="filterByCombined('Armament+General', 'SK')">SK</button>
-            <button onclick="filterByCombined('Armament+General', 'HSK2')">HSK2</button>
-            <button onclick="filterByCombined('Armament+General', 'HSK1')">HSK1</button>
-            <button onclick="filterByCombined('Armament+General', 'MCM')">MCM</button>
-          </td>
-          <td><span id="count-combo2"></span></td>
-        </tr>
-        <tr>
-          <td>Show All</td>
-          <td><button onclick="filterByAll()">All Employees</button></td>
-          <td><span id="count-all"></span></td>
-        </tr>
+        <!-- Summary rows will be injected by JS -->
       </tbody>
     </table>
+  </div>
 
-    <div id="employeeTableContainer"></div>
+  <div class="menu-section" id="menuButtons">
+    <!-- Buttons will be inserted here dynamically -->
+  </div>
+
+  <div id="employeeTableContainer">
+    <!-- Employee data will appear here -->
   </div>
 
   <footer>
