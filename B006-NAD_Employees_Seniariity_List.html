@@ -1,852 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>B005 - NAD Employees Seniority List</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NAD Employees Seniority List</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    :root {
-      --primary: #004466;
-      --primary-dark: #002233;
-      --secondary: #0077aa;
-      --light: #f8f9fa;
-      --dark: #333;
-      --gray: #6c757d;
-      --success: #28a745;
-      --danger: #dc3545;
-      --warning: #ffc107;
-      --info: #17a2b8;
-    }
-    
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background-color: #f0f2f5;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    
-    /* Header Styles */
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-      padding: 15px 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    header h1 {
+      font-family: Arial, sans-serif;
+      background: #f6f9fc;
       margin: 0;
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    
-    nav {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-    
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
-      padding: 5px 10px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
-    
-    nav a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      text-decoration: underline;
-    }
-    
-    /* Main Content */
-    .container {
-      max-width: 1200px;
-      margin: 30px auto;
-      padding: 0 20px;
-      flex: 1;
-    }
-    
-    .page-header {
-      text-align: center;
-      margin-bottom: 30px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid var(--primary);
-    }
-    
-    .page-header h2 {
-      color: var(--primary);
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-    
-    .page-description {
-      color: #555;
-      max-width: 800px;
-      margin: 0 auto 20px;
-      font-size: 16px;
-    }
-    
-    /* Search Area */
-    .search-section {
-      background: white;
-      border-radius: 8px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      margin-bottom: 30px;
+      color: #333;
     }
-    
-    .search-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      align-items: center;
-      margin-bottom: 15px;
+    h1 {
+      color: #0d47a1;
+      text-align: center;
     }
-    
-    .search-container input {
-      flex: 1;
-      min-width: 250px;
-      padding: 12px 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 16px;
-      transition: border-color 0.3s;
-    }
-    
-    .search-container input:focus {
-      outline: none;
-      border-color: var(--secondary);
-      box-shadow: 0 0 0 3px rgba(0, 119, 170, 0.2);
-    }
-    
-    .search-container button {
-      padding: 12px 20px;
-      background: var(--secondary);
-      color: white;
-      border: none;
-      border-radius: 4px;
+    details summary {
       cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: background 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .search-container button:hover {
-      background: #005577;
-    }
-    
-    .filter-info {
-      font-size: 14px;
-      color: #666;
-      padding: 8px 0;
-      font-style: italic;
-    }
-    
-    /* Stats Cards */
-    .stats-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-    
-    .stat-card {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-      text-align: center;
-      transition: transform 0.3s;
-    }
-    
-    .stat-card:hover {
-      transform: translateY(-5px);
-    }
-    
-    .stat-card i {
-      font-size: 36px;
-      margin-bottom: 15px;
-      color: var(--primary);
-    }
-    
-    .stat-card h3 {
-      font-size: 24px;
-      margin-bottom: 5px;
-      color: var(--primary);
-    }
-    
-    .stat-card p {
-      color: var(--gray);
-      font-size: 14px;
-    }
-    
-    /* Filter Buttons */
-    .filter-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-    
-    .filter-card {
-      background: white;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    }
-    
-    .filter-card h3 {
-      margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #eee;
-      color: var(--primary);
-    }
-    
-    .button-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    
-    .filter-btn {
-      padding: 8px 14px;
-      background: var(--secondary);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.2s;
-      min-width: 70px;
-      text-align: center;
-      margin-bottom: 5px;
-    }
-    
-    .filter-btn:hover {
-      background: #005577;
-      transform: translateY(-2px);
-    }
-    
-    .count-label {
       font-weight: bold;
-      color: var(--primary);
-      font-size: 18px;
-      margin-left: 5px;
-    }
-    
-    /* Employee Table */
-    .table-container {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      overflow: hidden;
-      margin-top: 30px;
-    }
-    
-    .table-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: var(--primary);
+      background: #2196f3;
       color: white;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
     }
-    
-    .table-header h3 {
-      font-size: 18px;
+    details details summary {
+      background: #64b5f6;
+      margin-left: 20px;
     }
-    
-    .table-controls {
-      display: flex;
-      gap: 10px;
-    }
-    
-    .table-controls button {
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 5px 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    
-    .table-controls button:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-    
-    .employee-table {
+    table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 10px;
       font-size: 14px;
     }
-    
-    .employee-table th {
-      background: #e9ecef;
-      color: var(--dark);
-      padding: 14px 10px;
-      text-align: left;
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background: #1976d2;
+      color: white;
       position: sticky;
       top: 0;
-      font-weight: 600;
     }
-    
-    .employee-table td {
-      padding: 12px 10px;
-      border-bottom: 1px solid #eee;
+    tr:nth-child(even) {
+      background: #f1f1f1;
     }
-    
-    .employee-table tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    
-    .employee-table tr:hover {
-      background-color: #e6f7ff;
-    }
-    
-    .status-indicator {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      margin-right: 5px;
-    }
-    
-    .active {
-      background-color: var(--success);
-    }
-    
-    .inactive {
-      background-color: var(--danger);
-    }
-    
-    /* Footer */
-    footer {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-      padding: 25px 0;
-      text-align: center;
+    .footer {
       margin-top: 40px;
-    }
-    
-    footer p {
-      margin: 5px 0;
-      font-size: 15px;
-    }
-    
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .header-content {
-        text-align: center;
-      }
-      
-      .search-container {
-        flex-direction: column;
-      }
-      
-      .search-container input,
-      .search-container button {
-        width: 100%;
-      }
-      
-      .stats-container {
-        grid-template-columns: 1fr;
-      }
-      
-      .employee-table {
-        font-size: 13px;
-      }
-      
-      .table-header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 24px;
-      }
-      
-      nav a {
-        font-size: 14px;
-      }
-      
-      .page-header h2 {
-        font-size: 22px;
-      }
-      
-      .filter-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    
-    /* Loading State */
-    .loading {
       text-align: center;
-      padding: 40px 0;
-    }
-    
-    .loading i {
-      font-size: 48px;
-      color: var(--primary);
-      margin-bottom: 20px;
-      animation: spin 1s linear infinite;
-    }
-    
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-    
-    .error {
-      background: #ffe6e6;
-      color: var(--danger);
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      margin: 20px 0;
+      font-size: 12px;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-content">
-      <h1>MILINDWEB</h1>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="project.html">Projects</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </header>
 
-  <div class="container">
-    <div class="page-header">
-      <h2>B005 - NAD Employees Seniority List</h2>
-      <p class="page-description">This page provides the comprehensive seniority list of NAD employees with filtering and search capabilities. All data is fetched directly from the official Google Sheet.</p>
-    </div>
+  <h1>NAD Employees Seniority List</h1>
 
-    <div class="stats-container">
-      <div class="stat-card">
-        <i class="fas fa-users"></i>
-        <h3 id="total-count">0</h3>
-        <p>Total Employees</p>
-      </div>
-      <div class="stat-card">
-        <i class="fas fa-check-circle"></i>
-        <h3 id="active-count">0</h3>
-        <p>Active Employees</p>
-      </div>
-      <div class="stat-card">
-        <i class="fas fa-building"></i>
-        <h3 id="locations-count">0</h3>
-        <p>Unique Locations</p>
-      </div>
-      <div class="stat-card">
-        <i class="fas fa-toolbox"></i>
-        <h3 id="ranks-count">0</h3>
-        <p>Unique Ranks</p>
-      </div>
-    </div>
+  <div id="hierarchyContainer">Loading...</div>
 
-    <div class="search-section">
-      <div class="search-container">
-        <input type="text" id="searchBox" placeholder="Search by Name, Token No, Designation, or Location" />
-        <button onclick="filterSearch()">
-          <i class="fas fa-search"></i> Search
-        </button>
-      </div>
-      <div class="filter-info" id="filterInfo">Showing all employees. Data loaded from Google Sheets.</div>
-    </div>
-
-    <div class="filter-grid">
-      <div class="filter-card">
-        <h3>Tradesman Mate</h3>
-        <div class="button-group">
-          <button class="filter-btn" onclick="filterByRank('Tradesman Mate')">Tradesman Mate</button>
-        </div>
-        <p>Total: <span class="count-label" id="count-tradesman">0</span></p>
-      </div>
-      
-      <div class="filter-card">
-        <h3>Fitter Electrical</h3>
-        <div class="button-group">
-          <button class="filter-btn" onclick="filterByRank('Fitter Electrical SK')">SK</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Electrical HSK2')">HSK2</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Electrical HSK1')">HSK1</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Electrical MCM')">MCM</button>
-        </div>
-        <p>Total: <span class="count-label" id="count-ele">0</span></p>
-      </div>
-      
-      <div class="filter-card">
-        <h3>Fitter Electronics</h3>
-        <div class="button-group">
-          <button class="filter-btn" onclick="filterByRank('Fitter Electronics SK')">SK</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Electronics HSK2')">HSK2</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Electronics HSK1')">HSK1</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Electronics MCM')">MCM</button>
-        </div>
-        <p>Total: <span class="count-label" id="count-elec">0</span></p>
-      </div>
-      
-      <div class="filter-card">
-        <h3>Fitter General Mechanic</h3>
-        <div class="button-group">
-          <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic SK')">SK</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic HSK2')">HSK2</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic HSK1')">HSK1</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter General Mechanic MCM')">MCM</button>
-        </div>
-        <p>Total: <span class="count-label" id="count-gen">0</span></p>
-      </div>
-      
-      <div class="filter-card">
-        <h3>Fitter Armament</h3>
-        <div class="button-group">
-          <button class="filter-btn" onclick="filterByRank('Fitter Armament SK')">SK</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Armament HSK2')">HSK2</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Armament HSK1')">HSK1</button>
-          <button class="filter-btn" onclick="filterByRank('Fitter Armament MCM')">MCM</button>
-        </div>
-        <p>Total: <span class="count-label" id="count-arm">0</span></p>
-      </div>
-      
-      <div class="filter-card">
-        <h3>Combined Filters</h3>
-        <div class="button-group">
-          <button class="filter-btn" onclick="filterByCombined('Electrical+Electronics', 'SK')">Elec + Elec SK</button>
-          <button class="filter-btn" onclick="filterByCombined('Electrical+Electronics', 'HSK1')">Elec + Elec HSK1</button>
-          <button class="filter-btn" onclick="filterByCombined('Armament+General', 'MCM')">GM + Armament MCM</button>
-          <button class="filter-btn" onclick="filterByAll()">Show All</button>
-        </div>
-        <p>Other: <span class="count-label" id="count-other">0</span></p>
-      </div>
-    </div>
-
-    <div class="table-container">
-      <div class="table-header">
-        <h3>Employee Records</h3>
-        <div class="table-controls">
-          <button id="sortSeniority"><i class="fas fa-sort-amount-down"></i> Seniority</button>
-          <button id="sortName"><i class="fas fa-sort-alpha-down"></i> Name</button>
-        </div>
-      </div>
-      
-      <div id="table-wrapper">
-        <table class="employee-table">
-          <thead>
-            <tr>
-              <th>Token No</th>
-              <th>Name</th>
-              <th>Designation</th>
-              <th>Rank</th>
-              <th>Location</th>
-              <th>Seniority</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="employeeTable">
-            <!-- Loading state -->
-            <tr>
-              <td colspan="7">
-                <div class="loading">
-                  <i class="fas fa-spinner"></i>
-                  <p>Loading employee data from Google Sheets...</p>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <div class="footer">
+    &copy; 2025 NAD Employees | Powered by <a href="https://milindweb.github.io" target="_blank">milindweb.github.io</a>
   </div>
 
-  <footer>
-    <p>&copy; 2025 MilindWeb. All Rights Reserved.</p>
-    <p>Maintained by ITS MAK | Data Source: NAD Employee Records</p>
-  </footer>
-
   <script>
-    // Google Sheets URL (published to web as CSV)
-    const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/gviz/tq?tqx=out:csv';
-    
-    // Employee data storage
+    const sheetID = "1Fe2GeVPkxSY7RzPO6GQ9CTqZ_TqxbJKT6IfhT4ijzA4";
+    const sheetName = "Sheet1";
+    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
     let employeeData = [];
-    let filteredData = [];
-    
-    // DOM Elements
-    const employeeTable = document.getElementById('employeeTable');
-    const searchBox = document.getElementById('searchBox');
-    const filterInfo = document.getElementById('filterInfo');
-    
-    // Fetch data from Google Sheets
-    async function fetchData() {
-      try {
-        showLoading();
-        
-        const response = await fetch(SHEET_URL);
-        if (!response.ok) throw new Error('Network response was not ok');
-        
-        const csvData = await response.text();
-        parseCSV(csvData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        showError('Failed to load data. Please check your connection or try again later.');
-      }
-    }
-    
-    // Parse CSV data
-    function parseCSV(csv) {
-      const rows = csv.split('\n');
-      const headers = rows[0].split(',').map(h => h.trim().replace(/"/g, ''));
-      
-      employeeData = [];
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (!row) continue;
-        
-        const values = row.split(',');
-        const employee = {};
-        
-        headers.forEach((header, index) => {
-          employee[header] = values[index] ? values[index].trim().replace(/"/g, '') : '';
+
+    const rankGroups = {
+      "Electrical": ["SK", "HSK 2", "HSK 1", "MCM"],
+      "Electronics": ["SK", "HSK 2", "HSK 1", "MCM"],
+      "General Mechanic": ["Fitter General Mechanic"],
+      "Armament": ["Armament Fitter"],
+      "Tradesman": ["Tradesman Mate"],
+      "Other": []
+    };
+
+    fetch(url)
+      .then(res => res.text())
+      .then(rep => {
+        const jsonData = JSON.parse(rep.substring(47).slice(0, -2));
+        const cols = jsonData.table.cols.map(col => col.label);
+        employeeData = jsonData.table.rows.map(row => {
+          const obj = {};
+          row.c.forEach((cell, idx) => {
+            obj[cols[idx]] = cell ? cell.v : "";
+          });
+          return obj;
         });
-        
-        employeeData.push(employee);
-      }
-      
-      // Process the data
-      filteredData = [...employeeData];
-      renderTable();
-      updateCounts();
-      updateStats();
-      
-      // Set initial filter info
-      filterInfo.textContent = `Showing all ${employeeData.length} employees.`;
-    }
-    
-    // Render employee table
-    function renderTable() {
-      if (filteredData.length === 0) {
-        employeeTable.innerHTML = `
-          <tr>
-            <td colspan="7" style="text-align: center; padding: 40px;">
-              <i class="fas fa-exclamation-circle" style="font-size: 48px; color: #6c757d; margin-bottom: 20px;"></i>
-              <h3>No employees found</h3>
-              <p>Try adjusting your search or filter criteria</p>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-      
-      let tableHTML = '';
-      
-      filteredData.forEach(employee => {
-        tableHTML += `
-          <tr>
-            <td>${employee['Token No'] || 'N/A'}</td>
-            <td>${employee.Name || 'N/A'}</td>
-            <td>${employee.Designation || 'N/A'}</td>
-            <td>${employee.Rank || 'N/A'}</td>
-            <td>${employee.Location || 'N/A'}</td>
-            <td>${employee.Seniority || 'N/A'}</td>
-            <td>
-              <span class="status-indicator ${employee.Status === 'Active' ? 'active' : 'inactive'}"></span>
-              ${employee.Status || 'N/A'}
-            </td>
-          </tr>
-        `;
+        displayHierarchy();
+      })
+      .catch(err => {
+        document.getElementById("hierarchyContainer").innerHTML = "Error loading data.";
+        console.error("Error:", err);
       });
-      
-      employeeTable.innerHTML = tableHTML;
+
+    function getSubCategory(rank) {
+      if (rank.includes("Electrical")) return "Electrical";
+      if (rank.includes("Electronics")) return "Electronics";
+      if (rank.includes("General Mechanic")) return "General Mechanic";
+      if (rank.includes("Armament")) return "Armament";
+      if (rank.includes("Tradesman")) return "Tradesman";
+      return "Other";
     }
-    
-    // Update counts and stats
-    function updateCounts() {
-      // Calculate counts for each category
-      const counts = {
-        tradesman: employeeData.filter(e => e.Rank === 'Tradesman Mate').length,
-        ele: employeeData.filter(e => e.Rank && e.Rank.startsWith('Fitter Electrical')).length,
-        elec: employeeData.filter(e => e.Rank && e.Rank.startsWith('Fitter Electronics')).length,
-        gen: employeeData.filter(e => e.Rank && e.Rank.startsWith('Fitter General Mechanic')).length,
-        arm: employeeData.filter(e => e.Rank && e.Rank.startsWith('Fitter Armament')).length,
-        other: employeeData.filter(e => e.Rank && e.Rank.startsWith('Other Fitters')).length
-      };
-      
-      // Update DOM elements
-      document.getElementById('count-tradesman').textContent = counts.tradesman;
-      document.getElementById('count-ele').textContent = counts.ele;
-      document.getElementById('count-elec').textContent = counts.elec;
-      document.getElementById('count-gen').textContent = counts.gen;
-      document.getElementById('count-arm').textContent = counts.arm;
-      document.getElementById('count-other').textContent = counts.other;
-      document.getElementById('count-all').textContent = employeeData.length;
+
+    function displayHierarchy() {
+      const container = document.getElementById("hierarchyContainer");
+      container.innerHTML = "";
+
+      const grouped = {};
+
+      employeeData.forEach(emp => {
+        const mainCat = getSubCategory(emp["Rank"]);
+        const subCat = emp["Rank"];
+        if (!grouped[mainCat]) grouped[mainCat] = {};
+        if (!grouped[mainCat][subCat]) grouped[mainCat][subCat] = [];
+        grouped[mainCat][subCat].push(emp);
+      });
+
+      for (const [mainCat, subRanks] of Object.entries(grouped)) {
+        const detailsMain = document.createElement("details");
+        const summaryMain = document.createElement("summary");
+        summaryMain.textContent = mainCat;
+        detailsMain.appendChild(summaryMain);
+
+        for (const [subRank, members] of Object.entries(subRanks)) {
+          const detailsSub = document.createElement("details");
+          const summarySub = document.createElement("summary");
+          summarySub.textContent = `${subRank} (${members.length})`;
+          detailsSub.appendChild(summarySub);
+          detailsSub.appendChild(buildTable(members));
+          detailsMain.appendChild(detailsSub);
+        }
+
+        container.appendChild(detailsMain);
+      }
     }
-    
-    // Update statistics
-    function updateStats() {
-      if (employeeData.length === 0) return;
-      
-      // Total employees
-      document.getElementById('total-count').textContent = employeeData.length;
-      
-      // Active employees
-      const activeCount = employeeData.filter(e => e.Status === 'Active').length;
-      document.getElementById('active-count').textContent = activeCount;
-      
-      // Unique locations
-      const locations = new Set(employeeData.map(e => e.Location));
-      document.getElementById('locations-count').textContent = locations.size;
-      
-      // Unique ranks
-      const ranks = new Set(employeeData.map(e => e.Rank));
-      document.getElementById('ranks-count').textContent = ranks.size;
-    }
-    
-    // Filter functions
-    function filterSearch() {
-      const searchTerm = searchBox.value.toLowerCase();
-      
-      if (!searchTerm) {
-        filteredData = [...employeeData];
-        filterInfo.textContent = `Showing all ${employeeData.length} employees.`;
-      } else {
-        filteredData = employeeData.filter(employee => {
-          return (
-            (employee.Name && employee.Name.toLowerCase().includes(searchTerm)) ||
-            (employee['Token No'] && employee['Token No'].toLowerCase().includes(searchTerm)) ||
-            (employee.Designation && employee.Designation.toLowerCase().includes(searchTerm)) ||
-            (employee.Location && employee.Location.toLowerCase().includes(searchTerm))
-          );
+
+    function buildTable(dataArray) {
+      const table = document.createElement("table");
+      const thead = document.createElement("thead");
+      const tbody = document.createElement("tbody");
+
+      const headers = [
+        "SrNo.", "Name", "Rank", "Tokan No.", "Category", "Location", "Date of Birth",
+        "Date of Retirement", "Date of Appointment", "Date of Regular",
+        "Dept Qualify Examination", "Date of USL", "Date of SSK", "Date of SK",
+        "Date of HSK 2", "Date of HSK 1", "Date of MCM", "Pin", "Mobile No.", "Email", "Remark"
+      ];
+
+      const trHead = document.createElement("tr");
+      headers.forEach(h => {
+        const th = document.createElement("th");
+        th.textContent = h;
+        trHead.appendChild(th);
+      });
+      thead.appendChild(trHead);
+      table.appendChild(thead);
+
+      dataArray.forEach(emp => {
+        const tr = document.createElement("tr");
+        headers.forEach(col => {
+          const td = document.createElement("td");
+          td.textContent = emp[col] || "";
+          tr.appendChild(td);
         });
-        
-        filterInfo.textContent = `Found ${filteredData.length} employees matching "${searchTerm}".`;
-      }
-      
-      renderTable();
-    }
-    
-    function filterByRank(rank) {
-      filteredData = employeeData.filter(employee => employee.Rank === rank);
-      filterInfo.textContent = `Showing ${filteredData.length} employees with rank: ${rank}.`;
-      renderTable();
-    }
-    
-    function filterByCombined(group, rank) {
-      let filtered = [];
-      
-      if (group === 'Electrical+Electronics') {
-        filtered = employeeData.filter(employee => 
-          (employee.Rank && 
-           (employee.Rank.startsWith('Fitter Electrical') || 
-            employee.Rank.startsWith('Fitter Electronics')) &&
-           employee.Rank.endsWith(rank))
-        );
-      } else if (group === 'Armament+General') {
-        filtered = employeeData.filter(employee => 
-          (employee.Rank && 
-           (employee.Rank.startsWith('Fitter General Mechanic') || 
-            employee.Rank.startsWith('Fitter Armament')) &&
-           employee.Rank.endsWith(rank))
-        );
-      }
-      
-      filteredData = filtered;
-      filterInfo.textContent = `Showing ${filteredData.length} employees in ${group} with rank ${rank}.`;
-      renderTable();
-    }
-    
-    function filterByAll() {
-      filteredData = [...employeeData];
-      filterInfo.textContent = `Showing all ${employeeData.length} employees.`;
-      renderTable();
-    }
-    
-    // UI Helper functions
-    function showLoading() {
-      employeeTable.innerHTML = `
-        <tr>
-          <td colspan="7">
-            <div class="loading">
-              <i class="fas fa-spinner"></i>
-              <p>Loading employee data from Google Sheets...</p>
-            </div>
-          </td>
-        </tr>
-      `;
-    }
-    
-    function showError(message) {
-      employeeTable.innerHTML = `
-        <tr>
-          <td colspan="7">
-            <div class="error">
-              <i class="fas fa-exclamation-triangle"></i>
-              <h3>Error Loading Data</h3>
-              <p>${message}</p>
-              <button onclick="fetchData()" style="margin-top: 15px; padding: 8px 15px; background: var(--danger); color: white; border: none; border-radius: 4px; cursor: pointer;">
-                <i class="fas fa-redo"></i> Try Again
-              </button>
-            </div>
-          </td>
-        </tr>
-      `;
-    }
-    
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', () => {
-      fetchData();
-      
-      // Set up event listeners
-      searchBox.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') filterSearch();
+        tbody.appendChild(tr);
       });
-      
-      document.getElementById('sortSeniority').addEventListener('click', () => {
-        filteredData.sort((a, b) => a.Seniority.localeCompare(b.Seniority));
-        renderTable();
-        filterInfo.textContent = `Sorted by seniority (${filteredData.length} employees)`;
-      });
-      
-      document.getElementById('sortName').addEventListener('click', () => {
-        filteredData.sort((a, b) => a.Name.localeCompare(b.Name));
-        renderTable();
-        filterInfo.textContent = `Sorted by name (${filteredData.length} employees)`;
-      });
-    });
+
+      table.appendChild(tbody);
+      return table;
+    }
   </script>
 </body>
 </html>
