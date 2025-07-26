@@ -22,6 +22,7 @@
             --gray: #6c757d;
             --light-gray: #e9ecef;
             --border: #dee2e6;
+            --filter-active: #e3f2fd;
         }
         
         * {
@@ -213,6 +214,11 @@
             white-space: nowrap;
             font-size: 0.9rem;
             position: relative;
+            z-index: 10;
+        }
+        
+        th.filter-active {
+            background-color: #0d3b66;
         }
         
         th:last-child {
@@ -244,6 +250,21 @@
         
         th:hover .filter-icon {
             opacity: 1;
+        }
+        
+        th .filter-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         td {
@@ -300,6 +321,9 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 5px;
         }
         
         .filter-option {
@@ -314,6 +338,9 @@
         
         .filter-option label {
             cursor: pointer;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         .filter-actions {
@@ -349,6 +376,31 @@
         
         .reset-btn:hover {
             background-color: #5a6268;
+        }
+        
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background-color: var(--filter-active);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .filter-tag {
+            background-color: var(--accent);
+            color: white;
+            border-radius: 20px;
+            padding: 5px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .filter-tag .remove {
+            cursor: pointer;
+            font-size: 1rem;
         }
         
         /* No Data Message */
@@ -545,6 +597,10 @@
                     </div>
                 </div>
                 
+                <div class="active-filters" id="active-filters">
+                    <!-- Active filters will be displayed here -->
+                </div>
+                
                 <div class="table-container">
                     <div class="loading">
                         <div class="loading-spinner"></div>
@@ -601,6 +657,7 @@
         // DOM Elements
         const tableContainer = document.querySelector('.table-container');
         const employeeCount = document.getElementById('employee-count');
+        const activeFiltersContainer = document.getElementById('active-filters');
         
         // Initialize the application
         function init() {
@@ -680,6 +737,70 @@
             
             // Update employee count
             employeeCount.textContent = filteredEmployees.length;
+            
+            // Render active filters
+            renderActiveFilters();
+        }
+        
+        // Render active filters
+        function renderActiveFilters() {
+            let activeFiltersHTML = '';
+            let filterCount = 0;
+            
+            for (const column in columnFilters) {
+                const filter = columnFilters[column];
+                
+                if (filter.selected.length > 0) {
+                    filter.selected.forEach(value => {
+                        activeFiltersHTML += `
+                            <div class="filter-tag">
+                                <span>${column}: ${value}</span>
+                                <span class="remove" onclick="removeFilter('${column}', '${value}')">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </div>
+                        `;
+                        filterCount++;
+                    });
+                }
+            }
+            
+            if (filterCount > 0) {
+                activeFiltersHTML = `
+                    <div class="filter-tag" style="background-color: var(--success);">
+                        <i class="fas fa-filter"></i>
+                        Active Filters: ${filterCount}
+                    </div>
+                    ${activeFiltersHTML}
+                    <div class="filter-tag" style="background-color: var(--danger); cursor: pointer;" onclick="clearAllFilters()">
+                        <i class="fas fa-trash"></i>
+                        Clear All Filters
+                    </div>
+                `;
+            } else {
+                activeFiltersHTML = '<div class="filter-tag" style="background-color: var(--gray);">No active filters</div>';
+            }
+            
+            activeFiltersContainer.innerHTML = activeFiltersHTML;
+        }
+        
+        // Remove a specific filter
+        function removeFilter(column, value) {
+            const filterIndex = columnFilters[column].selected.indexOf(value);
+            if (filterIndex !== -1) {
+                columnFilters[column].selected.splice(filterIndex, 1);
+                applyFilters();
+                renderTable();
+            }
+        }
+        
+        // Clear all filters
+        function clearAllFilters() {
+            for (const column in columnFilters) {
+                columnFilters[column].selected = [];
+            }
+            applyFilters();
+            renderTable();
         }
         
         // Render employee table with all columns
@@ -708,14 +829,17 @@
                 const isSorted = currentSort.column === header;
                 const sortIndicator = isSorted ? 
                     (currentSort.direction === 'asc' ? ' ↑' : ' ↓') : '';
+                const filterActive = columnFilters[header] && columnFilters[header].selected.length > 0;
+                const filterCount = filterActive ? columnFilters[header].selected.length : 0;
                 
                 tableHTML += `
-                    <th data-column="${header}">
+                    <th data-column="${header}" class="${filterActive ? 'filter-active' : ''}">
                         <div class="header-inner">
                             ${header}${sortIndicator}
                             <span class="filter-icon" data-column="${header}">
                                 <i class="fas fa-filter"></i>
                             </span>
+                            ${filterActive ? `<span class="filter-badge">${filterCount}</span>` : ''}
                         </div>
                         <div class="filter-dropdown" id="filter-${header}">
                             <div class="filter-header">
@@ -758,19 +882,30 @@
             // Populate filter dropdowns
             headers.forEach(header => {
                 const optionsContainer = document.getElementById(`options-${header}`);
+                optionsContainer.innerHTML = '';
+                
                 const filter = columnFilters[header];
                 
-                if (filter) {
+                if (filter && filter.values.length > 0) {
                     filter.values.forEach(value => {
                         const isSelected = filter.selected.includes(value);
-                        optionsContainer.innerHTML += `
-                            <div class="filter-option">
-                                <input type="checkbox" id="opt-${header}-${value}" 
-                                    value="${value}" ${isSelected ? 'checked' : ''}>
-                                <label for="opt-${header}-${value}">${value}</label>
-                            </div>
-                        `;
+                        const option = document.createElement('div');
+                        option.className = 'filter-option';
+                        
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.value = value;
+                        checkbox.checked = isSelected;
+                        
+                        const label = document.createElement('label');
+                        label.textContent = value;
+                        
+                        option.appendChild(checkbox);
+                        option.appendChild(label);
+                        optionsContainer.appendChild(option);
                     });
+                } else {
+                    optionsContainer.innerHTML = '<div class="no-options">No filter options available</div>';
                 }
             });
             
@@ -994,6 +1129,8 @@
         // Expose functions for HTML onclick
         window.exportToExcel = exportToExcel;
         window.exportToPDF = exportToPDF;
+        window.removeFilter = removeFilter;
+        window.clearAllFilters = clearAllFilters;
     </script>
 </body>
 </html>
