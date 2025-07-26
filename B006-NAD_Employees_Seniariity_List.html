@@ -10,8 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
-        /* CSS will be in a separate style tag for this example */
-        /* In production, this would be in an external CSS file */
         :root {
             --primary: #1a3a5f;
             --secondary: #2a5a8c;
@@ -147,10 +145,10 @@
         }
         
         .filter-item {
-            margin-bottom: 10px;
+            margin-bottom: 4px; /* Reduced spacing */
             cursor: pointer;
-            padding: 10px 15px;
-            border-radius: 6px;
+            padding: 8px 12px; /* Reduced padding */
+            border-radius: 4px;
             transition: all 0.3s ease;
             display: flex;
             justify-content: space-between;
@@ -174,34 +172,47 @@
             background-color: #e3f2fd;
             color: var(--accent);
             border-radius: 12px;
-            padding: 3px 12px;
-            font-size: 0.9rem;
-            min-width: 40px;
+            padding: 2px 10px; /* Reduced padding */
+            font-size: 0.85rem; /* Smaller font */
+            min-width: 35px; /* Smaller width */
             text-align: center;
         }
         
         .filter-item.main-category {
             font-weight: 600;
             background-color: #f8fbff;
-            margin-top: 20px;
-            padding: 12px 15px;
+            margin-top: 12px; /* Reduced spacing */
+            padding: 10px 12px; /* Reduced padding */
             border-left: 3px solid var(--primary);
+            position: relative;
+        }
+        
+        .toggle-icon {
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            width: 20px;
+            text-align: center;
         }
         
         .sub-category {
-            padding-left: 30px;
+            padding-left: 25px; /* Reduced indentation */
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.9rem; /* Smaller font */
             position: relative;
+            margin-top: 2px; /* Reduced spacing */
+            margin-bottom: 2px; /* Reduced spacing */
         }
         
         .sub-category::before {
             content: "";
             position: absolute;
-            left: 15px;
+            left: 12px; /* Adjusted position */
             top: 50%;
             transform: translateY(-50%);
-            width: 15px;
+            width: 10px; /* Smaller width */
             height: 2px;
             background-color: var(--gray);
         }
@@ -299,7 +310,7 @@
         th {
             background-color: var(--primary);
             color: white;
-            padding: 14px 16px;
+            padding: 12px 14px; /* Slightly reduced padding */
             text-align: left;
             position: sticky;
             top: 0;
@@ -308,6 +319,7 @@
             transition: background-color 0.3s;
             border-right: 1px solid rgba(255,255,255,0.1);
             white-space: nowrap;
+            font-size: 0.9rem; /* Smaller font */
         }
         
         th:last-child {
@@ -329,10 +341,10 @@
         }
         
         td {
-            padding: 12px 16px;
+            padding: 10px 14px; /* Slightly reduced padding */
             border-bottom: 1px solid var(--border);
             vertical-align: top;
-            font-size: 0.9rem;
+            font-size: 0.85rem; /* Smaller font */
         }
         
         tr:nth-child(even) {
@@ -341,23 +353,6 @@
         
         tr:hover {
             background-color: #f1f7ff;
-        }
-        
-        /* Status Indicators */
-        .status-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-        
-        .status-active {
-            background-color: var(--success);
-        }
-        
-        .status-retired {
-            background-color: var(--danger);
         }
         
         /* No Data Message */
@@ -740,10 +735,12 @@
             Object.keys(postGroups).sort().forEach(post => {
                 filtersHTML += `
                     <div class="filter-item main-category ${activeFilter.type === 'post' && activeFilter.value === post ? 'active' : ''}" 
-                         onclick="applyFilter('post', '${post}')">
+                         onclick="toggleCategory(this, '${post}')">
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
                         <i class="fas fa-folder"></i> ${post}
                         <span class="count">${postGroups[post].count}</span>
                     </div>
+                    <div class="sub-category-container" data-category="${post}">
                 `;
                 
                 // Add ranks for this post
@@ -756,16 +753,20 @@
                         </div>
                     `;
                 });
+                
+                filtersHTML += `</div>`;
             });
             
             // Add combined groups
             Object.keys(combinedGroups).forEach(combinedPost => {
                 filtersHTML += `
                     <div class="filter-item main-category ${activeFilter.type === 'combined' && activeFilter.value === combinedPost ? 'active' : ''}" 
-                         onclick="applyFilter('combined', '${combinedPost}')">
+                         onclick="toggleCategory(this, '${combinedPost}')">
+                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
                         <i class="fas fa-folder-plus"></i> ${combinedPost}
                         <span class="count">${combinedGroups[combinedPost].count}</span>
                     </div>
+                    <div class="sub-category-container" data-category="${combinedPost}">
                 `;
                 
                 // Add ranks for combined group
@@ -778,9 +779,27 @@
                         </div>
                     `;
                 });
+                
+                filtersHTML += `</div>`;
             });
             
             filtersContainer.innerHTML = filtersHTML;
+        }
+        
+        // Toggle category visibility
+        function toggleCategory(element, category) {
+            const container = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon i');
+            
+            if (container.style.display === 'none') {
+                container.style.display = 'block';
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                container.style.display = 'none';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-right');
+            }
         }
         
         // Apply filter to employee data
@@ -1083,8 +1102,11 @@
         // Initialize the application when the page loads
         window.addEventListener('DOMContentLoaded', init);
         
-        // Expose applyFilter for HTML onclick
+        // Expose functions for HTML onclick
         window.applyFilter = applyFilter;
+        window.toggleCategory = toggleCategory;
+        window.exportToExcel = exportToExcel;
+        window.exportToPDF = exportToPDF;
     </script>
 </body>
 </html>
