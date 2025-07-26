@@ -108,119 +108,11 @@
         
         /* Main Content Layout */
         .main-content {
-            display: flex;
-            gap: 30px;
             margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        /* Filters Section */
-        .filters-section {
-            flex: 1;
-            min-width: 320px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 25px;
-            height: fit-content;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-        
-        .filters-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--light-gray);
-        }
-        
-        .filters-header h2 {
-            font-size: 1.5rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .filter-item {
-            margin-bottom: 4px; /* Reduced spacing */
-            cursor: pointer;
-            padding: 8px 12px; /* Reduced padding */
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            font-weight: 500;
-            border-left: 3px solid transparent;
-        }
-        
-        .filter-item:hover {
-            background-color: #e9f7fe;
-            border-left-color: var(--accent);
-        }
-        
-        .filter-item.active {
-            background-color: #d1ecff;
-            color: var(--accent);
-            border-left-color: var(--accent);
-            font-weight: 600;
-        }
-        
-        .filter-item .count {
-            background-color: #e3f2fd;
-            color: var(--accent);
-            border-radius: 12px;
-            padding: 2px 10px; /* Reduced padding */
-            font-size: 0.85rem; /* Smaller font */
-            min-width: 35px; /* Smaller width */
-            text-align: center;
-        }
-        
-        .filter-item.main-category {
-            font-weight: 600;
-            background-color: #f8fbff;
-            margin-top: 12px; /* Reduced spacing */
-            padding: 10px 12px; /* Reduced padding */
-            border-left: 3px solid var(--primary);
-            position: relative;
-        }
-        
-        .toggle-icon {
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 0.9rem;
-            width: 20px;
-            text-align: center;
-        }
-        
-        .sub-category {
-            padding-left: 25px; /* Reduced indentation */
-            font-weight: 500;
-            font-size: 0.9rem; /* Smaller font */
-            position: relative;
-            margin-top: 2px; /* Reduced spacing */
-            margin-bottom: 2px; /* Reduced spacing */
-        }
-        
-        .sub-category::before {
-            content: "";
-            position: absolute;
-            left: 12px; /* Adjusted position */
-            top: 50%;
-            transform: translateY(-50%);
-            width: 10px; /* Smaller width */
-            height: 2px;
-            background-color: var(--gray);
         }
         
         /* Table Section */
         .table-section {
-            flex: 3;
-            min-width: 300px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -310,7 +202,7 @@
         th {
             background-color: var(--primary);
             color: white;
-            padding: 12px 14px; /* Slightly reduced padding */
+            padding: 12px 14px;
             text-align: left;
             position: sticky;
             top: 0;
@@ -319,7 +211,7 @@
             transition: background-color 0.3s;
             border-right: 1px solid rgba(255,255,255,0.1);
             white-space: nowrap;
-            font-size: 0.9rem; /* Smaller font */
+            font-size: 0.9rem;
         }
         
         th:last-child {
@@ -341,10 +233,10 @@
         }
         
         td {
-            padding: 10px 14px; /* Slightly reduced padding */
+            padding: 10px 14px;
             border-bottom: 1px solid var(--border);
             vertical-align: top;
-            font-size: 0.85rem; /* Smaller font */
+            font-size: 0.85rem;
         }
         
         tr:nth-child(even) {
@@ -353,6 +245,72 @@
         
         tr:hover {
             background-color: #f1f7ff;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 15px;
+            padding: 15px 20px;
+            background-color: #f8fbff;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+        
+        .sort-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+        
+        .sort-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+        
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background-color: white;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .sort-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        
+        .sort-btn {
+            padding: 8px 15px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .sort-btn:hover {
+            background-color: #2a5a8c;
+        }
+        
+        .reset-btn {
+            background-color: var(--gray);
+        }
+        
+        .reset-btn:hover {
+            background-color: #5a6268;
         }
         
         /* No Data Message */
@@ -468,10 +426,6 @@
             .main-content {
                 flex-direction: column;
             }
-            
-            .filters-section {
-                max-height: none;
-            }
         }
         
         @media (max-width: 768px) {
@@ -493,6 +447,14 @@
             
             .footer-content {
                 flex-direction: column;
+            }
+            
+            .sort-options {
+                flex-direction: column;
+            }
+            
+            .sort-buttons {
+                align-self: flex-start;
             }
         }
         
@@ -536,21 +498,6 @@
 
     <div class="container">
         <div class="main-content">
-            <div class="filters-section">
-                <div class="filters-header">
-                    <h2><i class="fas fa-filter"></i> Post & Rank Filters</h2>
-                    <div class="info-box">
-                        <i class="fas fa-info-circle"></i> Click to filter employees
-                    </div>
-                </div>
-                <div id="filters-container">
-                    <div class="loading">
-                        <div class="loading-spinner"></div>
-                        Loading filters...
-                    </div>
-                </div>
-            </div>
-
             <div class="table-section">
                 <div class="table-header">
                     <h2><i class="fas fa-table"></i> Employee Seniority List</h2>
@@ -567,6 +514,48 @@
                         </button>
                     </div>
                 </div>
+                
+                <div class="sort-options">
+                    <div class="sort-group">
+                        <label for="year-sort"><i class="fas fa-calendar"></i> Sort by Year</label>
+                        <select id="year-sort" class="sort-select" multiple>
+                            <option value="Date of Appointment">Appointment Year</option>
+                            <option value="Date of Regular">Regularization Year</option>
+                            <option value="Date of Retirement">Retirement Year</option>
+                        </select>
+                    </div>
+                    
+                    <div class="sort-group">
+                        <label for="post-sort"><i class="fas fa-briefcase"></i> Sort by Post</label>
+                        <select id="post-sort" class="sort-select" multiple>
+                            <option value="Fitter Electrical">Fitter Electrical</option>
+                            <option value="Fitter Electronics">Fitter Electronics</option>
+                            <option value="Fitter General Mechanic">Fitter General Mechanic</option>
+                            <option value="Fitter Armament">Fitter Armament</option>
+                        </select>
+                    </div>
+                    
+                    <div class="sort-group">
+                        <label for="rank-sort"><i class="fas fa-star"></i> Sort by Rank</label>
+                        <select id="rank-sort" class="sort-select" multiple>
+                            <option value="HSK-I">HSK-I</option>
+                            <option value="HSK-II">HSK-II</option>
+                            <option value="SK">SK</option>
+                            <option value="SSK">SSK</option>
+                            <option value="USL">USL</option>
+                        </select>
+                    </div>
+                    
+                    <div class="sort-buttons">
+                        <button class="sort-btn" onclick="applyMultiSort()">
+                            <i class="fas fa-sort"></i> Apply Sort
+                        </button>
+                        <button class="sort-btn reset-btn" onclick="resetSort()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                
                 <div class="table-container">
                     <div class="loading">
                         <div class="loading-spinner"></div>
@@ -617,10 +606,8 @@
         // Data structure
         let allEmployees = [];
         let filteredEmployees = [];
-        let activeFilter = { type: null, value: null };
         
         // DOM Elements
-        const filtersContainer = document.getElementById('filters-container');
         const tableContainer = document.querySelector('.table-container');
         const employeeCount = document.getElementById('employee-count');
         
@@ -639,215 +626,113 @@
                     allEmployees = results.data;
                     filteredEmployees = [...allEmployees];
                     
-                    // Remove loading indicators
-                    filtersContainer.innerHTML = '';
-                    tableContainer.innerHTML = '';
-                    
                     // Update employee count
                     employeeCount.textContent = filteredEmployees.length;
                     
                     // Render UI components
-                    renderFilters();
                     renderTable();
+                    populateSortOptions();
                 },
                 error: function(error) {
                     console.error("Error loading data:", error);
-                    filtersContainer.innerHTML = '<div class="no-data"><i class="fas fa-exclamation-triangle"></i><p>Error loading data. Please try again later.</p></div>';
                     tableContainer.innerHTML = '<div class="no-data"><i class="fas fa-exclamation-triangle"></i><p>Error loading data. Please try again later.</p></div>';
                 }
             });
         }
         
-        // Render filter menu
-        function renderFilters() {
-            // Group employees by post and then by rank
-            const postGroups = {};
-            
-            allEmployees.forEach(employee => {
-                const post = employee.Post || 'Other';
-                const rank = employee.Rank || 'Unknown';
-                
-                if (!postGroups[post]) {
-                    postGroups[post] = { count: 0, ranks: {} };
-                }
-                
-                postGroups[post].count++;
-                
-                if (!postGroups[post].ranks[rank]) {
-                    postGroups[post].ranks[rank] = 0;
-                }
-                
-                postGroups[post].ranks[rank]++;
+        // Populate sort options with unique values
+        function populateSortOptions() {
+            // Populate year options
+            const yearOptions = new Set();
+            allEmployees.forEach(emp => {
+                if (emp['Date of Appointment']) yearOptions.add(emp['Date of Appointment'].split('/').pop());
+                if (emp['Date of Regular']) yearOptions.add(emp['Date of Regular'].split('/').pop());
+                if (emp['Date of Retirement']) yearOptions.add(emp['Date of Retirement'].split('/').pop());
             });
             
-            // Generate combined groups
-            const combinedGroups = {
-                "Fitter Electrical + Fitter Electronics": {
-                    count: 0,
-                    ranks: {}
-                },
-                "Fitter General Mechanic + Fitter Armament": {
-                    count: 0,
-                    ranks: {}
-                }
-            };
-            
-            // Calculate combined group counts
-            ["Fitter Electrical", "Fitter Electronics"].forEach(post => {
-                if (postGroups[post]) {
-                    combinedGroups["Fitter Electrical + Fitter Electronics"].count += postGroups[post].count;
-                    
-                    Object.keys(postGroups[post].ranks).forEach(rank => {
-                        if (!combinedGroups["Fitter Electrical + Fitter Electronics"].ranks[rank]) {
-                            combinedGroups["Fitter Electrical + Fitter Electronics"].ranks[rank] = 0;
-                        }
-                        combinedGroups["Fitter Electrical + Fitter Electronics"].ranks[rank] += postGroups[post].ranks[rank];
-                    });
-                }
+            const yearSort = document.getElementById('year-sort');
+            Array.from(yearOptions).sort().reverse().forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSort.appendChild(option);
             });
             
-            ["Fitter General Mechanic", "Fitter Armament"].forEach(post => {
-                if (postGroups[post]) {
-                    combinedGroups["Fitter General Mechanic + Fitter Armament"].count += postGroups[post].count;
-                    
-                    Object.keys(postGroups[post].ranks).forEach(rank => {
-                        if (!combinedGroups["Fitter General Mechanic + Fitter Armament"].ranks[rank]) {
-                            combinedGroups["Fitter General Mechanic + Fitter Armament"].ranks[rank] = 0;
-                        }
-                        combinedGroups["Fitter General Mechanic + Fitter Armament"].ranks[rank] += postGroups[post].ranks[rank];
-                    });
-                }
+            // Populate post options
+            const postOptions = new Set();
+            allEmployees.forEach(emp => {
+                if (emp.Post) postOptions.add(emp.Post);
             });
             
-            // Create HTML for filters
-            let filtersHTML = '';
-            
-            // Add "All" filter
-            filtersHTML += `
-                <div class="filter-item ${activeFilter.type === null ? 'active' : ''}" 
-                     onclick="applyFilter(null, null)">
-                    <i class="fas fa-folder-open"></i> All Employees
-                    <span class="count">${allEmployees.length}</span>
-                </div>
-            `;
-            
-            // Add individual posts
-            Object.keys(postGroups).sort().forEach(post => {
-                filtersHTML += `
-                    <div class="filter-item main-category ${activeFilter.type === 'post' && activeFilter.value === post ? 'active' : ''}" 
-                         onclick="toggleCategory(this, '${post}')">
-                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
-                        <i class="fas fa-folder"></i> ${post}
-                        <span class="count">${postGroups[post].count}</span>
-                    </div>
-                    <div class="sub-category-container" data-category="${post}">
-                `;
-                
-                // Add ranks for this post
-                Object.keys(postGroups[post].ranks).sort().forEach(rank => {
-                    filtersHTML += `
-                        <div class="filter-item sub-category ${activeFilter.type === 'rank' && activeFilter.value === rank && activeFilter.post === post ? 'active' : ''}" 
-                             onclick="applyFilter('rank', '${rank}', '${post}')">
-                            ${rank}
-                            <span class="count">${postGroups[post].ranks[rank]}</span>
-                        </div>
-                    `;
-                });
-                
-                filtersHTML += `</div>`;
+            const postSort = document.getElementById('post-sort');
+            Array.from(postOptions).sort().forEach(post => {
+                const option = document.createElement('option');
+                option.value = post;
+                option.textContent = post;
+                postSort.appendChild(option);
             });
             
-            // Add combined groups
-            Object.keys(combinedGroups).forEach(combinedPost => {
-                filtersHTML += `
-                    <div class="filter-item main-category ${activeFilter.type === 'combined' && activeFilter.value === combinedPost ? 'active' : ''}" 
-                         onclick="toggleCategory(this, '${combinedPost}')">
-                        <span class="toggle-icon"><i class="fas fa-chevron-right"></i></span>
-                        <i class="fas fa-folder-plus"></i> ${combinedPost}
-                        <span class="count">${combinedGroups[combinedPost].count}</span>
-                    </div>
-                    <div class="sub-category-container" data-category="${combinedPost}">
-                `;
-                
-                // Add ranks for combined group
-                Object.keys(combinedGroups[combinedPost].ranks).sort().forEach(rank => {
-                    filtersHTML += `
-                        <div class="filter-item sub-category ${activeFilter.type === 'combined_rank' && activeFilter.value === rank && activeFilter.post === combinedPost ? 'active' : ''}" 
-                             onclick="applyFilter('combined_rank', '${rank}', '${combinedPost}')">
-                            ${rank}
-                            <span class="count">${combinedGroups[combinedPost].ranks[rank]}</span>
-                        </div>
-                    `;
-                });
-                
-                filtersHTML += `</div>`;
+            // Populate rank options
+            const rankOptions = new Set();
+            allEmployees.forEach(emp => {
+                if (emp.Rank) rankOptions.add(emp.Rank);
             });
             
-            filtersContainer.innerHTML = filtersHTML;
+            const rankSort = document.getElementById('rank-sort');
+            Array.from(rankOptions).sort().forEach(rank => {
+                const option = document.createElement('option');
+                option.value = rank;
+                option.textContent = rank;
+                rankSort.appendChild(option);
+            });
         }
         
-        // Toggle category visibility
-        function toggleCategory(element, category) {
-            const container = element.nextElementSibling;
-            const icon = element.querySelector('.toggle-icon i');
+        // Apply multi-sort based on selected options
+        function applyMultiSort() {
+            const selectedYears = Array.from(document.getElementById('year-sort').selectedOptions).map(o => o.value);
+            const selectedPosts = Array.from(document.getElementById('post-sort').selectedOptions).map(o => o.value);
+            const selectedRanks = Array.from(document.getElementById('rank-sort').selectedOptions).map(o => o.value);
             
-            if (container.style.display === 'none') {
-                container.style.display = 'block';
-                icon.classList.remove('fa-chevron-right');
-                icon.classList.add('fa-chevron-down');
-            } else {
-                container.style.display = 'none';
-                icon.classList.remove('fa-chevron-down');
-                icon.classList.add('fa-chevron-right');
-            }
-        }
-        
-        // Apply filter to employee data
-        function applyFilter(type, value, post = null) {
-            activeFilter = { type, value, post };
-            
-            if (type === null) {
-                // Show all employees
-                filteredEmployees = [...allEmployees];
-            } else if (type === 'post') {
-                // Filter by post
-                filteredEmployees = allEmployees.filter(emp => emp.Post === value);
-            } else if (type === 'rank' && post) {
-                // Filter by rank within a specific post
-                filteredEmployees = allEmployees.filter(emp => 
-                    emp.Post === post && emp.Rank === value
-                );
-            } else if (type === 'combined') {
-                // Filter by combined group
-                if (value === "Fitter Electrical + Fitter Electronics") {
-                    filteredEmployees = allEmployees.filter(emp => 
-                        emp.Post === "Fitter Electrical" || emp.Post === "Fitter Electronics"
+            // Filter employees based on selections
+            filteredEmployees = allEmployees.filter(emp => {
+                // Check year filters
+                let yearMatch = false;
+                if (selectedYears.length > 0) {
+                    const appYear = emp['Date of Appointment'] ? emp['Date of Appointment'].split('/').pop() : '';
+                    const regYear = emp['Date of Regular'] ? emp['Date of Regular'].split('/').pop() : '';
+                    const retYear = emp['Date of Retirement'] ? emp['Date of Retirement'].split('/').pop() : '';
+                    
+                    yearMatch = selectedYears.some(year => 
+                        year === appYear || year === regYear || year === retYear
                     );
-                } else if (value === "Fitter General Mechanic + Fitter Armament") {
-                    filteredEmployees = allEmployees.filter(emp => 
-                        emp.Post === "Fitter General Mechanic" || emp.Post === "Fitter Armament"
-                    );
+                } else {
+                    yearMatch = true;
                 }
-            } else if (type === 'combined_rank' && post) {
-                // Filter by rank within a combined group
-                if (post === "Fitter Electrical + Fitter Electronics") {
-                    filteredEmployees = allEmployees.filter(emp => 
-                        (emp.Post === "Fitter Electrical" || emp.Post === "Fitter Electronics") && 
-                        emp.Rank === value
-                    );
-                } else if (post === "Fitter General Mechanic + Fitter Armament") {
-                    filteredEmployees = allEmployees.filter(emp => 
-                        (emp.Post === "Fitter General Mechanic" || emp.Post === "Fitter Armament") && 
-                        emp.Rank === value
-                    );
-                }
-            }
+                
+                // Check post filter
+                const postMatch = selectedPosts.length === 0 || selectedPosts.includes(emp.Post);
+                
+                // Check rank filter
+                const rankMatch = selectedRanks.length === 0 || selectedRanks.includes(emp.Rank);
+                
+                return yearMatch && postMatch && rankMatch;
+            });
             
             // Update employee count
             employeeCount.textContent = filteredEmployees.length;
             
-            // Update UI
-            renderFilters();
+            // Render the table
+            renderTable();
+        }
+        
+        // Reset sort filters
+        function resetSort() {
+            document.getElementById('year-sort').selectedIndex = -1;
+            document.getElementById('post-sort').selectedIndex = -1;
+            document.getElementById('rank-sort').selectedIndex = -1;
+            
+            filteredEmployees = [...allEmployees];
+            employeeCount.textContent = filteredEmployees.length;
             renderTable();
         }
         
@@ -1103,8 +988,8 @@
         window.addEventListener('DOMContentLoaded', init);
         
         // Expose functions for HTML onclick
-        window.applyFilter = applyFilter;
-        window.toggleCategory = toggleCategory;
+        window.applyMultiSort = applyMultiSort;
+        window.resetSort = resetSort;
         window.exportToExcel = exportToExcel;
         window.exportToPDF = exportToPDF;
     </script>
