@@ -187,6 +187,24 @@
             background-color: #b71c1c;
         }
         
+        .apply-filter-btn {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .apply-filter-btn:hover {
+            background-color: #2a5a8c;
+        }
+        
+        .clear-filter-btn {
+            background-color: var(--gray);
+            color: white;
+        }
+        
+        .clear-filter-btn:hover {
+            background-color: #5a6268;
+        }
+        
         .table-container {
             overflow: auto;
             max-height: 70vh;
@@ -297,6 +315,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             display: none;
+            color: #333; /* Ensure text is visible */
         }
         
         .filter-dropdown.active {
@@ -341,66 +360,7 @@
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-        
-        .filter-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-            gap: 10px;
-        }
-        
-        .filter-btn {
-            flex: 1;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .apply-btn {
-            background-color: var(--success);
-            color: white;
-        }
-        
-        .apply-btn:hover {
-            background-color: #218838;
-        }
-        
-        .reset-btn {
-            background-color: var(--gray);
-            color: white;
-        }
-        
-        .reset-btn:hover {
-            background-color: #5a6268;
-        }
-        
-        .active-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 15px;
-            background-color: var(--filter-active);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .filter-tag {
-            background-color: var(--accent);
-            color: white;
-            border-radius: 20px;
-            padding: 5px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-        
-        .filter-tag .remove {
-            cursor: pointer;
-            font-size: 1rem;
+            color: #333; /* Ensure text is visible */
         }
         
         /* No Data Message */
@@ -439,6 +399,31 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background-color: var(--filter-active);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .filter-tag {
+            background-color: var(--accent);
+            color: white;
+            border-radius: 20px;
+            padding: 5px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .filter-tag .remove {
+            cursor: pointer;
+            font-size: 1rem;
         }
         
         /* Footer Styles */
@@ -533,6 +518,7 @@
             .export-buttons {
                 margin-top: 15px;
                 margin-left: 0;
+                flex-wrap: wrap;
             }
             
             .footer-content {
@@ -588,6 +574,12 @@
                         <span id="employee-count">Loading...</span> employees found
                     </div>
                     <div class="export-buttons">
+                        <button class="export-btn apply-filter-btn" onclick="applyAllFilters()">
+                            <i class="fas fa-filter"></i> Apply Filters
+                        </button>
+                        <button class="export-btn clear-filter-btn" onclick="clearAllFilters()">
+                            <i class="fas fa-times"></i> Clear All Filters
+                        </button>
                         <button class="export-btn export-excel" onclick="exportToExcel()">
                             <i class="fas fa-file-excel"></i> Excel
                         </button>
@@ -653,6 +645,7 @@
         let filteredEmployees = [];
         let columnFilters = {};
         let currentSort = { column: null, direction: null };
+        let filterDropdowns = {};
         
         // DOM Elements
         const tableContainer = document.querySelector('.table-container');
@@ -772,10 +765,6 @@
                         Active Filters: ${filterCount}
                     </div>
                     ${activeFiltersHTML}
-                    <div class="filter-tag" style="background-color: var(--danger); cursor: pointer;" onclick="clearAllFilters()">
-                        <i class="fas fa-trash"></i>
-                        Clear All Filters
-                    </div>
                 `;
             } else {
                 activeFiltersHTML = '<div class="filter-tag" style="background-color: var(--gray);">No active filters</div>';
@@ -798,7 +787,29 @@
         function clearAllFilters() {
             for (const column in columnFilters) {
                 columnFilters[column].selected = [];
+                
+                // Also uncheck all checkboxes in dropdowns
+                if (filterDropdowns[column]) {
+                    const checkboxes = filterDropdowns[column].querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                }
             }
+            applyFilters();
+            renderTable();
+        }
+        
+        // Apply all filters from dropdowns
+        function applyAllFilters() {
+            // Collect selected values from all dropdowns
+            for (const column in columnFilters) {
+                if (filterDropdowns[column]) {
+                    const checkboxes = filterDropdowns[column].querySelectorAll('input[type="checkbox"]:checked');
+                    columnFilters[column].selected = Array.from(checkboxes).map(cb => cb.value);
+                }
+            }
+            
             applyFilters();
             renderTable();
         }
@@ -848,10 +859,6 @@
                             <div class="filter-options" id="options-${header}">
                                 <!-- Options will be populated by JavaScript -->
                             </div>
-                            <div class="filter-actions">
-                                <button class="filter-btn apply-btn" data-column="${header}">Apply</button>
-                                <button class="filter-btn reset-btn" data-column="${header}">Reset</button>
-                            </div>
                         </div>
                     </th>
                 `;
@@ -879,38 +886,51 @@
             
             tableContainer.innerHTML = tableHTML;
             
-            // Populate filter dropdowns
+            // Store dropdown references and populate them
             headers.forEach(header => {
-                const optionsContainer = document.getElementById(`options-${header}`);
-                optionsContainer.innerHTML = '';
-                
-                const filter = columnFilters[header];
-                
-                if (filter && filter.values.length > 0) {
-                    filter.values.forEach(value => {
-                        const isSelected = filter.selected.includes(value);
-                        const option = document.createElement('div');
-                        option.className = 'filter-option';
-                        
-                        const checkbox = document.createElement('input');
-                        checkbox.type = 'checkbox';
-                        checkbox.value = value;
-                        checkbox.checked = isSelected;
-                        
-                        const label = document.createElement('label');
-                        label.textContent = value;
-                        
-                        option.appendChild(checkbox);
-                        option.appendChild(label);
-                        optionsContainer.appendChild(option);
-                    });
-                } else {
-                    optionsContainer.innerHTML = '<div class="no-options">No filter options available</div>';
+                const dropdown = document.getElementById(`filter-${header}`);
+                if (dropdown) {
+                    filterDropdowns[header] = dropdown;
+                    populateDropdown(header);
                 }
             });
             
             // Add event listeners
             setupEventListeners();
+        }
+        
+        // Populate dropdown with options
+        function populateDropdown(header) {
+            const optionsContainer = document.getElementById(`options-${header}`);
+            optionsContainer.innerHTML = '';
+            
+            const filter = columnFilters[header];
+            
+            if (filter && filter.values.length > 0) {
+                filter.values.forEach(value => {
+                    const isSelected = filter.selected.includes(value);
+                    const option = document.createElement('div');
+                    option.className = 'filter-option';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = value;
+                    checkbox.checked = isSelected;
+                    checkbox.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
+                    
+                    const label = document.createElement('label');
+                    label.textContent = value;
+                    label.setAttribute('for', `opt-${header}-${value}`);
+                    
+                    option.appendChild(checkbox);
+                    option.appendChild(label);
+                    optionsContainer.appendChild(option);
+                });
+            } else {
+                optionsContainer.innerHTML = '<div class="no-options">No filter options available</div>';
+            }
         }
         
         // Setup event listeners for sorting and filtering
@@ -953,52 +973,6 @@
                     
                     // Toggle current dropdown
                     dropdown.classList.toggle('active');
-                });
-            });
-            
-            // Apply filter button
-            document.querySelectorAll('.apply-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const column = this.getAttribute('data-column');
-                    const dropdown = document.getElementById(`filter-${column}`);
-                    const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]:checked');
-                    
-                    // Update selected filters
-                    columnFilters[column].selected = Array.from(checkboxes).map(cb => cb.value);
-                    
-                    // Apply filters
-                    applyFilters();
-                    
-                    // Close dropdown
-                    dropdown.classList.remove('active');
-                    
-                    // Re-render table
-                    renderTable();
-                });
-            });
-            
-            // Reset filter button
-            document.querySelectorAll('.reset-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const column = this.getAttribute('data-column');
-                    const dropdown = document.getElementById(`filter-${column}`);
-                    
-                    // Reset checkboxes
-                    dropdown.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                        cb.checked = false;
-                    });
-                    
-                    // Clear selected filters
-                    columnFilters[column].selected = [];
-                    
-                    // Apply filters
-                    applyFilters();
-                    
-                    // Close dropdown
-                    dropdown.classList.remove('active');
-                    
-                    // Re-render table
-                    renderTable();
                 });
             });
             
@@ -1131,6 +1105,7 @@
         window.exportToPDF = exportToPDF;
         window.removeFilter = removeFilter;
         window.clearAllFilters = clearAllFilters;
+        window.applyAllFilters = applyAllFilters;
     </script>
 </body>
 </html>
