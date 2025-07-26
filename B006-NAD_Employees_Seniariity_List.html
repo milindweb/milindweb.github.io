@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAD Employees Seniority Management</title>
+    <title>NAD Seniority Management | Milindweb</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -36,29 +36,30 @@
             background-color: #f0f4f8;
             color: #333;
             line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Header Styles */
-        header {
+        .top-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 15px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         
         .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 0 20px;
+            flex-wrap: wrap;
         }
         
         .logo-container {
@@ -68,17 +69,14 @@
         }
         
         .logo {
-            width: 60px;
-            height: 60px;
-            background: white;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: var(--primary);
             font-size: 24px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         
         .header-text {
@@ -86,30 +84,101 @@
         }
         
         .header-text h1 {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             margin-bottom: 5px;
             font-weight: 600;
         }
         
         .header-text p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             opacity: 0.9;
         }
         
-        /* Sub-header Styles */
-        .sub-header {
-            background: linear-gradient(to right, var(--accent), #3a7ca5);
-            color: white;
-            padding: 12px 0;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        /* Navigation */
+        .navbar {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
         }
         
-        /* Main Content Layout */
-        .main-content {
-            margin-top: 30px;
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-menu li {
+            position: relative;
+        }
+        
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 15px 20px;
+            display: block;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .nav-menu li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .nav-menu li a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+        
+        .nav-menu li a i {
+            margin-right: 8px;
+        }
+        
+        /* Main Content */
+        .seniority-container {
+            max-width: 1800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+        
+        .seniority-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .seniority-header h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .seniority-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         /* Table Section */
@@ -120,6 +189,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            margin-bottom: 50px;
         }
         
         .table-header {
@@ -130,31 +200,35 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
         }
         
-        .table-header h2 {
-            font-size: 1.5rem;
-            color: var(--primary);
+        .table-header h3 {
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             gap: 10px;
+            margin: 0;
         }
         
         .info-box {
-            background-color: #e8f4ff;
+            background-color: rgba(255, 255, 255, 0.15);
             border-radius: 8px;
             padding: 10px 15px;
             font-size: 0.9rem;
-            color: var(--primary);
+            color: white;
             display: flex;
             align-items: center;
             gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .export-buttons {
             display: flex;
             gap: 10px;
             margin-left: auto;
+            flex-wrap: wrap;
         }
         
         .export-btn {
@@ -167,6 +241,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
         
         .export-excel {
@@ -207,7 +282,7 @@
         
         .table-container {
             overflow: auto;
-            max-height: 70vh;
+            max-height: 60vh;
             flex: 1;
         }
         
@@ -215,7 +290,7 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            min-width: 2000px;
+            min-width: 1200px;
         }
         
         th {
@@ -315,7 +390,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             display: none;
-            color: #333; /* Ensure text is visible */
+            color: #333;
         }
         
         .filter-dropdown.active {
@@ -331,9 +406,10 @@
             border-bottom: 1px solid var(--light-gray);
         }
         
-        .filter-header h3 {
+        .filter-header h4 {
             font-size: 1.1rem;
             color: var(--primary);
+            margin: 0;
         }
         
         .filter-options {
@@ -360,7 +436,32 @@
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: #333; /* Ensure text is visible */
+            color: #333;
+        }
+        
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background-color: var(--filter-active);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .filter-tag {
+            background-color: var(--accent);
+            color: white;
+            border-radius: 20px;
+            padding: 5px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .filter-tag .remove {
+            cursor: pointer;
+            font-size: 1rem;
         }
         
         /* No Data Message */
@@ -401,41 +502,16 @@
             100% { transform: rotate(360deg); }
         }
         
-        .active-filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 15px;
-            background-color: var(--filter-active);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .filter-tag {
-            background-color: var(--accent);
-            color: white;
-            border-radius: 20px;
-            padding: 5px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-        
-        .filter-tag .remove {
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
         /* Footer Styles */
-        footer {
+        .footer {
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
-            padding: 30px 0;
-            margin-top: 40px;
+            padding: 30px 0 20px;
+            margin-top: auto;
         }
         
         .footer-content {
-            max-width: 1800px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
             display: flex;
@@ -454,20 +530,12 @@
             margin-bottom: 20px;
             position: relative;
             padding-bottom: 10px;
-        }
-        
-        .footer-section h3::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--accent);
+            border-bottom: 2px solid var(--accent);
         }
         
         .footer-links {
             list-style: none;
+            padding: 0;
         }
         
         .footer-links li {
@@ -487,27 +555,77 @@
             color: white;
         }
         
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
         .copyright {
             text-align: center;
-            padding-top: 30px;
+            padding-top: 20px;
             margin-top: 30px;
             border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.9rem;
             color: #a0c8f0;
+            max-width: 1200px;
+            margin: 20px auto 0;
+            padding: 20px 0 0;
         }
         
         /* Responsive Design */
-        @media (max-width: 1200px) {
-            .main-content {
-                flex-direction: column;
-            }
-        }
-        
-        @media (max-width: 768px) {
+        @media (max-width: 992px) {
             .header-content {
                 flex-direction: column;
-                text-align: center;
-                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .navbar {
+                justify-content: space-between;
+                margin-top: 15px;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 8px;
+                margin-top: 10px;
+                overflow: hidden;
+            }
+            
+            .nav-menu.show {
+                display: flex;
+            }
+            
+            .nav-menu li a {
+                padding: 12px 20px;
+            }
+            
+            .seniority-header h2 {
+                font-size: 1.8rem;
             }
             
             .table-header {
@@ -516,13 +634,62 @@
             }
             
             .export-buttons {
-                margin-top: 15px;
                 margin-left: 0;
-                flex-wrap: wrap;
+                margin-top: 15px;
+                justify-content: center;
+                width: 100%;
             }
-            
+        }
+        
+        @media (max-width: 768px) {
             .footer-content {
                 flex-direction: column;
+                gap: 20px;
+            }
+            
+            .seniority-header {
+                padding: 15px;
+            }
+            
+            .seniority-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .seniority-header p {
+                font-size: 1rem;
+            }
+            
+            .table-header h3 {
+                font-size: 1.1rem;
+            }
+            
+            .export-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-text h1 {
+                font-size: 1.2rem;
+            }
+            
+            .header-text p {
+                font-size: 0.8rem;
+            }
+            
+            .export-buttons {
+                flex-direction: column;
+            }
+            
+            .export-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
         
@@ -548,75 +715,99 @@
     </style>
 </head>
 <body>
-    <header>
+    <!-- Header Section -->
+    <header class="top-header">
         <div class="header-content">
             <div class="logo-container">
-                <div class="logo">NAD</div>
+                <div class="logo">
+                    <i class="fas fa-users"></i>
+                </div>
                 <div class="header-text">
-                    <h1>NAD Employees Seniority Management</h1>
-                    <p>Seniority tracking and management system</p>
+                    <h1>Milindweb</h1>
+                    <p>Technical Blogger & Engineering Project Developer</p>
                 </div>
             </div>
+            
+            <nav class="navbar">
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="index.html" class="menu"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="project.html" class="menu"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="workshop.html" class="menu"><i class="fas fa-wrench"></i> Workshop</a></li>
+                    <li><a href="blog.html" class="menu"><i class="fas fa-blog"></i> Blog</a></li>
+                    <li><a href="contact.html" class="menu"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <div class="sub-header">
-        Employee Seniority Tracking System
-    </div>
+    <!-- Main Content -->
+    <div class="seniority-container">
+        <div class="seniority-header">
+            <h2><i class="fas fa-users"></i> NAD Seniority Management System</h2>
+            <p>Track and manage employee seniority data with real-time updates. Filter and sort by multiple criteria to find the information you need.</p>
+        </div>
 
-    <div class="container">
-        <div class="main-content">
-            <div class="table-section">
-                <div class="table-header">
-                    <h2><i class="fas fa-table"></i> Employee Seniority List</h2>
-                    <div class="info-box">
-                        <i class="fas fa-database"></i> 
-                        <span id="employee-count">Loading...</span> employees found
-                    </div>
-                    <div class="export-buttons">
-                        <button class="export-btn apply-filter-btn" onclick="applyAllFilters()">
-                            <i class="fas fa-filter"></i> Apply Filters
-                        </button>
-                        <button class="export-btn clear-filter-btn" onclick="clearAllFilters()">
-                            <i class="fas fa-times"></i> Clear All Filters
-                        </button>
-                        <button class="export-btn export-excel" onclick="exportToExcel()">
-                            <i class="fas fa-file-excel"></i> Excel
-                        </button>
-                        <button class="export-btn export-pdf" onclick="exportToPDF()">
-                            <i class="fas fa-file-pdf"></i> PDF
-                        </button>
-                    </div>
+        <div class="table-section">
+            <div class="table-header">
+                <h3><i class="fas fa-table"></i> Employee Seniority List</h3>
+                <div class="info-box">
+                    <i class="fas fa-database"></i> 
+                    <span id="employee-count">Loading...</span> employees found
                 </div>
-                
-                <div class="active-filters" id="active-filters">
-                    <!-- Active filters will be displayed here -->
+                <div class="export-buttons">
+                    <button class="export-btn apply-filter-btn" onclick="applyAllFilters()">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                    <button class="export-btn clear-filter-btn" onclick="clearAllFilters()">
+                        <i class="fas fa-times"></i> Clear All
+                    </button>
+                    <button class="export-btn export-excel" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </button>
+                    <button class="export-btn export-pdf" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </button>
                 </div>
-                
-                <div class="table-container">
-                    <div class="loading">
-                        <div class="loading-spinner"></div>
-                        Loading employee data...
-                    </div>
+            </div>
+            
+            <div class="active-filters" id="active-filters">
+                <div class="filter-tag" style="background-color: var(--gray);">No active filters</div>
+            </div>
+            
+            <div class="table-container">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading employee data...
                 </div>
             </div>
         </div>
     </div>
 
-    <footer>
+    <!-- Footer Section -->
+    <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>NAD Seniority System</h3>
-                <p>A comprehensive solution for managing and tracking employee seniority data with real-time updates from Google Sheets.</p>
+                <h3>Milindweb</h3>
+                <p>Empowering students and engineers with hands-on projects, workshops, and technical resources.</p>
+                <div class="social-links">
+                    <a href="https://t.me/itsmakk" target="_blank"><i class="fab fa-telegram"></i></a>
+                    <a href="https://www.instagram.com/makhandare" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/channel/UC7bpvmuyLENrg2ZVvchgm9Q" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://github.com/milindweb" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
             </div>
             
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#"><i class="fas fa-user-circle"></i> About</a></li>
-                    <li><a href="#"><i class="fas fa-file-contract"></i> Policies</a></li>
-                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="project.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                    <li><a href="workshop.html"><i class="fas fa-wrench"></i> Workshops</a></li>
+                    <li><a href="blog.html"><i class="fas fa-blog"></i> Tech Blog</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
                 </ul>
             </div>
             
@@ -626,13 +817,15 @@
                     <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
                     <li><a href="#"><i class="fas fa-download"></i> Downloads</a></li>
                     <li><a href="#"><i class="fas fa-calendar-alt"></i> Important Dates</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-user-graduate"></i> Student Resources</a></li>
                 </ul>
             </div>
         </div>
         
         <div class="copyright">
-            &copy; 2023 NAD Employees Seniority Management System. All rights reserved.
+            <p>2025 &copy; Milindweb. All rights reserved. | NAD Seniority Management System v2.0</p>
+            <p>Designed and developed with <i class="fas fa-heart" style="color: #dc3545;"></i> for NAD employees</p>
         </div>
     </footer>
 
@@ -654,6 +847,22 @@
         
         // Initialize the application
         function init() {
+            // Setup mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('show');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.navbar') && navMenu.classList.contains('show')) {
+                    navMenu.classList.remove('show');
+                }
+            });
+            
+            // Load data
             loadData();
         }
         
@@ -854,7 +1063,7 @@
                         </div>
                         <div class="filter-dropdown" id="filter-${header}">
                             <div class="filter-header">
-                                <h3>Filter by ${header}</h3>
+                                <h4>Filter by ${header}</h4>
                             </div>
                             <div class="filter-options" id="options-${header}">
                                 <!-- Options will be populated by JavaScript -->
@@ -995,25 +1204,63 @@
                 const bValue = b[currentSort.column] || '';
                 const direction = currentSort.direction === 'asc' ? 1 : -1;
                 
+                // Special handling for date columns
+                const dateColumns = ['Date of Appointment', 'Date of Regular', 'Date of Retirement'];
+                
+                if (dateColumns.includes(currentSort.column)) {
+                    // Convert to date objects for proper comparison
+                    const aDate = parseDate(aValue);
+                    const bDate = parseDate(bValue);
+                    
+                    if (aDate && bDate) {
+                        return (aDate - bDate) * direction;
+                    }
+                }
+                
                 // Try to compare as numbers
                 if (!isNaN(aValue) && !isNaN(bValue)) {
                     return (parseFloat(aValue) - parseFloat(bValue)) * direction;
                 }
                 
-                // Try to compare as dates
-                const dateRegex = /(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/;
-                const aDateMatch = aValue.match(dateRegex);
-                const bDateMatch = bValue.match(dateRegex);
-                
-                if (aDateMatch && bDateMatch) {
-                    const aDate = new Date(`${aDateMatch[3]}-${aDateMatch[2]}-${aDateMatch[1]}`);
-                    const bDate = new Date(`${bDateMatch[3]}-${bDateMatch[2]}-${bDateMatch[1]}`);
-                    return (aDate - bDate) * direction;
-                }
-                
                 // Default to string comparison
                 return aValue.localeCompare(bValue) * direction;
             });
+        }
+        
+        // Helper function to parse dates
+        function parseDate(dateString) {
+            if (!dateString) return null;
+            
+            // Try different date formats
+            const formats = [
+                /(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/, // DD/MM/YYYY or DD-MM-YYYY
+                /(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})/  // YYYY/MM/DD or YYYY-MM-DD
+            ];
+            
+            for (const regex of formats) {
+                const match = dateString.match(regex);
+                if (match) {
+                    let year, month, day;
+                    
+                    if (match[3] && match[3].length === 4) {
+                        // DD/MM/YYYY format
+                        day = parseInt(match[1], 10);
+                        month = parseInt(match[2], 10) - 1; // Months are 0-indexed
+                        year = parseInt(match[3], 10);
+                    } else if (match[1] && match[1].length === 4) {
+                        // YYYY/MM/DD format
+                        year = parseInt(match[1], 10);
+                        month = parseInt(match[2], 10) - 1; // Months are 0-indexed
+                        day = parseInt(match[3], 10);
+                    }
+                    
+                    if (year && month !== undefined && day) {
+                        return new Date(year, month, day);
+                    }
+                }
+            }
+            
+            return null;
         }
         
         // Export to Excel function
