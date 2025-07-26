@@ -212,6 +212,7 @@
             border-right: 1px solid rgba(255,255,255,0.1);
             white-space: nowrap;
             font-size: 0.9rem;
+            position: relative;
         }
         
         th:last-child {
@@ -232,6 +233,19 @@
             font-size: 0.9em;
         }
         
+        th .filter-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        th:hover .filter-icon {
+            opacity: 1;
+        }
+        
         td {
             padding: 10px 14px;
             border-bottom: 1px solid var(--border);
@@ -247,66 +261,90 @@
             background-color: #f1f7ff;
         }
         
-        .sort-options {
-            display: flex;
-            gap: 15px;
-            padding: 15px 20px;
-            background-color: #f8fbff;
-            border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
+        /* Filter dropdown */
+        .filter-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 15px;
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
         }
         
-        .sort-group {
+        .filter-dropdown.active {
+            display: block;
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .filter-header h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+        
+        .filter-options {
             display: flex;
             flex-direction: column;
-            min-width: 200px;
+            gap: 8px;
         }
         
-        .sort-group label {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--primary);
-            font-size: 0.9rem;
-        }
-        
-        .sort-select {
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            background-color: white;
-            font-size: 0.9rem;
-            width: 100%;
-        }
-        
-        .sort-select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-        }
-        
-        .sort-buttons {
+        .filter-option {
             display: flex;
-            gap: 10px;
-            align-items: flex-end;
+            align-items: center;
+            gap: 8px;
         }
         
-        .sort-btn {
-            padding: 8px 15px;
-            background-color: var(--accent);
-            color: white;
+        .filter-option input {
+            cursor: pointer;
+        }
+        
+        .filter-option label {
+            cursor: pointer;
+        }
+        
+        .filter-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            flex: 1;
+            padding: 8px 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
         
-        .sort-btn:hover {
-            background-color: #2a5a8c;
+        .apply-btn {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .apply-btn:hover {
+            background-color: #218838;
         }
         
         .reset-btn {
             background-color: var(--gray);
+            color: white;
         }
         
         .reset-btn:hover {
@@ -448,14 +486,6 @@
             .footer-content {
                 flex-direction: column;
             }
-            
-            .sort-options {
-                flex-direction: column;
-            }
-            
-            .sort-buttons {
-                align-self: flex-start;
-            }
         }
         
         /* Scrollbar styling */
@@ -515,47 +545,6 @@
                     </div>
                 </div>
                 
-                <div class="sort-options">
-                    <div class="sort-group">
-                        <label for="year-sort"><i class="fas fa-calendar"></i> Sort by Year</label>
-                        <select id="year-sort" class="sort-select" multiple>
-                            <option value="Date of Appointment">Appointment Year</option>
-                            <option value="Date of Regular">Regularization Year</option>
-                            <option value="Date of Retirement">Retirement Year</option>
-                        </select>
-                    </div>
-                    
-                    <div class="sort-group">
-                        <label for="post-sort"><i class="fas fa-briefcase"></i> Sort by Post</label>
-                        <select id="post-sort" class="sort-select" multiple>
-                            <option value="Fitter Electrical">Fitter Electrical</option>
-                            <option value="Fitter Electronics">Fitter Electronics</option>
-                            <option value="Fitter General Mechanic">Fitter General Mechanic</option>
-                            <option value="Fitter Armament">Fitter Armament</option>
-                        </select>
-                    </div>
-                    
-                    <div class="sort-group">
-                        <label for="rank-sort"><i class="fas fa-star"></i> Sort by Rank</label>
-                        <select id="rank-sort" class="sort-select" multiple>
-                            <option value="HSK-I">HSK-I</option>
-                            <option value="HSK-II">HSK-II</option>
-                            <option value="SK">SK</option>
-                            <option value="SSK">SSK</option>
-                            <option value="USL">USL</option>
-                        </select>
-                    </div>
-                    
-                    <div class="sort-buttons">
-                        <button class="sort-btn" onclick="applyMultiSort()">
-                            <i class="fas fa-sort"></i> Apply Sort
-                        </button>
-                        <button class="sort-btn reset-btn" onclick="resetSort()">
-                            <i class="fas fa-redo"></i> Reset
-                        </button>
-                    </div>
-                </div>
-                
                 <div class="table-container">
                     <div class="loading">
                         <div class="loading-spinner"></div>
@@ -606,6 +595,8 @@
         // Data structure
         let allEmployees = [];
         let filteredEmployees = [];
+        let columnFilters = {};
+        let currentSort = { column: null, direction: null };
         
         // DOM Elements
         const tableContainer = document.querySelector('.table-container');
@@ -626,12 +617,14 @@
                     allEmployees = results.data;
                     filteredEmployees = [...allEmployees];
                     
+                    // Initialize column filters
+                    initColumnFilters();
+                    
                     // Update employee count
                     employeeCount.textContent = filteredEmployees.length;
                     
                     // Render UI components
                     renderTable();
-                    populateSortOptions();
                 },
                 error: function(error) {
                     console.error("Error loading data:", error);
@@ -640,168 +633,119 @@
             });
         }
         
-        // Populate sort options with unique values
-        function populateSortOptions() {
-            // Populate year options
-            const yearOptions = new Set();
-            allEmployees.forEach(emp => {
-                if (emp['Date of Appointment']) yearOptions.add(emp['Date of Appointment'].split('/').pop());
-                if (emp['Date of Regular']) yearOptions.add(emp['Date of Regular'].split('/').pop());
-                if (emp['Date of Retirement']) yearOptions.add(emp['Date of Retirement'].split('/').pop());
-            });
+        // Initialize column filters
+        function initColumnFilters() {
+            // Reset column filters
+            columnFilters = {};
             
-            const yearSort = document.getElementById('year-sort');
-            Array.from(yearOptions).sort().reverse().forEach(year => {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSort.appendChild(option);
-            });
-            
-            // Populate post options
-            const postOptions = new Set();
-            allEmployees.forEach(emp => {
-                if (emp.Post) postOptions.add(emp.Post);
-            });
-            
-            const postSort = document.getElementById('post-sort');
-            Array.from(postOptions).sort().forEach(post => {
-                const option = document.createElement('option');
-                option.value = post;
-                option.textContent = post;
-                postSort.appendChild(option);
-            });
-            
-            // Populate rank options
-            const rankOptions = new Set();
-            allEmployees.forEach(emp => {
-                if (emp.Rank) rankOptions.add(emp.Rank);
-            });
-            
-            const rankSort = document.getElementById('rank-sort');
-            Array.from(rankOptions).sort().forEach(rank => {
-                const option = document.createElement('option');
-                option.value = rank;
-                option.textContent = rank;
-                rankSort.appendChild(option);
-            });
+            // Extract unique values for each column
+            if (allEmployees.length > 0) {
+                const columns = Object.keys(allEmployees[0]);
+                
+                columns.forEach(col => {
+                    const uniqueValues = new Set();
+                    
+                    allEmployees.forEach(emp => {
+                        if (emp[col]) {
+                            uniqueValues.add(emp[col]);
+                        }
+                    });
+                    
+                    columnFilters[col] = {
+                        values: Array.from(uniqueValues).sort(),
+                        selected: []
+                    };
+                });
+            }
         }
         
-        // Apply multi-sort based on selected options
-        function applyMultiSort() {
-            const selectedYears = Array.from(document.getElementById('year-sort').selectedOptions).map(o => o.value);
-            const selectedPosts = Array.from(document.getElementById('post-sort').selectedOptions).map(o => o.value);
-            const selectedRanks = Array.from(document.getElementById('rank-sort').selectedOptions).map(o => o.value);
-            
-            // Filter employees based on selections
-            filteredEmployees = allEmployees.filter(emp => {
-                // Check year filters
-                let yearMatch = false;
-                if (selectedYears.length > 0) {
-                    const appYear = emp['Date of Appointment'] ? emp['Date of Appointment'].split('/').pop() : '';
-                    const regYear = emp['Date of Regular'] ? emp['Date of Regular'].split('/').pop() : '';
-                    const retYear = emp['Date of Retirement'] ? emp['Date of Retirement'].split('/').pop() : '';
+        // Apply filters
+        function applyFilters() {
+            filteredEmployees = allEmployees.filter(employee => {
+                for (const column in columnFilters) {
+                    const filter = columnFilters[column];
                     
-                    yearMatch = selectedYears.some(year => 
-                        year === appYear || year === regYear || year === retYear
-                    );
-                } else {
-                    yearMatch = true;
+                    // If any selection exists for this column
+                    if (filter.selected.length > 0) {
+                        const value = employee[column] || '';
+                        
+                        // If this value is not in the selected filters, exclude the row
+                        if (!filter.selected.includes(value)) {
+                            return false;
+                        }
+                    }
                 }
-                
-                // Check post filter
-                const postMatch = selectedPosts.length === 0 || selectedPosts.includes(emp.Post);
-                
-                // Check rank filter
-                const rankMatch = selectedRanks.length === 0 || selectedRanks.includes(emp.Rank);
-                
-                return yearMatch && postMatch && rankMatch;
+                return true;
             });
             
             // Update employee count
             employeeCount.textContent = filteredEmployees.length;
-            
-            // Render the table
-            renderTable();
-        }
-        
-        // Reset sort filters
-        function resetSort() {
-            document.getElementById('year-sort').selectedIndex = -1;
-            document.getElementById('post-sort').selectedIndex = -1;
-            document.getElementById('rank-sort').selectedIndex = -1;
-            
-            filteredEmployees = [...allEmployees];
-            employeeCount.textContent = filteredEmployees.length;
-            renderTable();
         }
         
         // Render employee table with all columns
         function renderTable() {
-            if (filteredEmployees.length === 0) {
+            if (allEmployees.length === 0) {
                 tableContainer.innerHTML = `
                     <div class="no-data">
-                        <i class="fas fa-database"></i>
-                        <p>No employees found matching the selected criteria</p>
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>No employee data available</p>
                     </div>
                 `;
                 return;
             }
             
+            // Get headers from the first employee
+            const headers = Object.keys(allEmployees[0]);
+            
             let tableHTML = `
                 <table id="employee-table">
                     <thead>
                         <tr>
-                            <th data-sort="SrNo">SrNo</th>
-                            <th data-sort="Name">Name</th>
-                            <th data-sort="Post">Post</th>
-                            <th data-sort="Rank">Rank</th>
-                            <th data-sort="Tokan No">Token No</th>
-                            <th data-sort="Category">Category</th>
-                            <th data-sort="Location">Location</th>
-                            <th data-sort="Date of Birth">Date of Birth</th>
-                            <th data-sort="Date of Retirement">Retirement Date</th>
-                            <th data-sort="Date of Appointment">Appointment Date</th>
-                            <th data-sort="Date of Regular">Regularization Date</th>
-                            <th data-sort="Dept Qualify Examination">Dept Qualify Exam</th>
-                            <th data-sort="Date of Tradesman Mate">Tradesman Mate Date</th>
-                            <th data-sort="Date of USL">USL Date</th>
-                            <th data-sort="Date of SSK">SSK Date</th>
-                            <th data-sort="Date of SK">SK Date</th>
-                            <th data-sort="Date of HSK 2">HSK2 Date</th>
-                            <th data-sort="Date of HSK 1">HSK1 Date</th>
-                            <th data-sort="Date of MCM">MCM Date</th>
-                            <th data-sort="Remark">Remark</th>
+            `;
+            
+            // Create header cells
+            headers.forEach(header => {
+                const isSorted = currentSort.column === header;
+                const sortIndicator = isSorted ? 
+                    (currentSort.direction === 'asc' ? ' ↑' : ' ↓') : '';
+                
+                tableHTML += `
+                    <th data-column="${header}">
+                        <div class="header-inner">
+                            ${header}${sortIndicator}
+                            <span class="filter-icon" data-column="${header}">
+                                <i class="fas fa-filter"></i>
+                            </span>
+                        </div>
+                        <div class="filter-dropdown" id="filter-${header}">
+                            <div class="filter-header">
+                                <h3>Filter by ${header}</h3>
+                            </div>
+                            <div class="filter-options" id="options-${header}">
+                                <!-- Options will be populated by JavaScript -->
+                            </div>
+                            <div class="filter-actions">
+                                <button class="filter-btn apply-btn" data-column="${header}">Apply</button>
+                                <button class="filter-btn reset-btn" data-column="${header}">Reset</button>
+                            </div>
+                        </div>
+                    </th>
+                `;
+            });
+            
+            tableHTML += `
                         </tr>
                     </thead>
                     <tbody>
             `;
             
+            // Create table rows
             filteredEmployees.forEach(emp => {
-                tableHTML += `
-                    <tr>
-                        <td>${emp.SrNo || ''}</td>
-                        <td>${emp.Name || ''}</td>
-                        <td>${emp.Post || ''}</td>
-                        <td>${emp.Rank || ''}</td>
-                        <td>${emp['Tokan No'] || ''}</td>
-                        <td>${emp.Category || ''}</td>
-                        <td>${emp.Location || ''}</td>
-                        <td>${emp['Date of Birth'] || ''}</td>
-                        <td>${emp['Date of Retirement'] || ''}</td>
-                        <td>${emp['Date of Appointment'] || ''}</td>
-                        <td>${emp['Date of Regular'] || ''}</td>
-                        <td>${emp['Dept Qualify Examination'] || ''}</td>
-                        <td>${emp['Date of Tradesman Mate'] || ''}</td>
-                        <td>${emp['Date of USL'] || ''}</td>
-                        <td>${emp['Date of SSK'] || ''}</td>
-                        <td>${emp['Date of SK'] || ''}</td>
-                        <td>${emp['Date of HSK 2'] || ''}</td>
-                        <td>${emp['Date of HSK 1'] || ''}</td>
-                        <td>${emp['Date of MCM'] || ''}</td>
-                        <td>${emp.Remark || ''}</td>
-                    </tr>
-                `;
+                tableHTML += '<tr>';
+                headers.forEach(header => {
+                    tableHTML += `<td>${emp[header] || ''}</td>`;
+                });
+                tableHTML += '</tr>';
             });
             
             tableHTML += `
@@ -811,47 +755,143 @@
             
             tableContainer.innerHTML = tableHTML;
             
-            // Add sorting functionality
-            document.querySelectorAll('#employee-table th').forEach(th => {
-                th.addEventListener('click', () => {
-                    const column = th.getAttribute('data-sort');
-                    sortTable(column);
+            // Populate filter dropdowns
+            headers.forEach(header => {
+                const optionsContainer = document.getElementById(`options-${header}`);
+                const filter = columnFilters[header];
+                
+                if (filter) {
+                    filter.values.forEach(value => {
+                        const isSelected = filter.selected.includes(value);
+                        optionsContainer.innerHTML += `
+                            <div class="filter-option">
+                                <input type="checkbox" id="opt-${header}-${value}" 
+                                    value="${value}" ${isSelected ? 'checked' : ''}>
+                                <label for="opt-${header}-${value}">${value}</label>
+                            </div>
+                        `;
+                    });
+                }
+            });
+            
+            // Add event listeners
+            setupEventListeners();
+        }
+        
+        // Setup event listeners for sorting and filtering
+        function setupEventListeners() {
+            // Header click for sorting
+            document.querySelectorAll('th').forEach(th => {
+                th.addEventListener('click', function(e) {
+                    // Don't trigger sort when clicking on filter icon
+                    if (e.target.closest('.filter-icon')) return;
+                    
+                    const column = this.getAttribute('data-column');
+                    
+                    // Toggle sort direction
+                    if (currentSort.column === column) {
+                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort.column = column;
+                        currentSort.direction = 'asc';
+                    }
+                    
+                    // Sort data
+                    sortData();
+                    renderTable();
                 });
+            });
+            
+            // Filter icon click
+            document.querySelectorAll('.filter-icon').forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const column = this.getAttribute('data-column');
+                    const dropdown = document.getElementById(`filter-${column}`);
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.filter-dropdown').forEach(dd => {
+                        if (dd !== dropdown) {
+                            dd.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            // Apply filter button
+            document.querySelectorAll('.apply-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const column = this.getAttribute('data-column');
+                    const dropdown = document.getElementById(`filter-${column}`);
+                    const checkboxes = dropdown.querySelectorAll('input[type="checkbox"]:checked');
+                    
+                    // Update selected filters
+                    columnFilters[column].selected = Array.from(checkboxes).map(cb => cb.value);
+                    
+                    // Apply filters
+                    applyFilters();
+                    
+                    // Close dropdown
+                    dropdown.classList.remove('active');
+                    
+                    // Re-render table
+                    renderTable();
+                });
+            });
+            
+            // Reset filter button
+            document.querySelectorAll('.reset-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const column = this.getAttribute('data-column');
+                    const dropdown = document.getElementById(`filter-${column}`);
+                    
+                    // Reset checkboxes
+                    dropdown.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                        cb.checked = false;
+                    });
+                    
+                    // Clear selected filters
+                    columnFilters[column].selected = [];
+                    
+                    // Apply filters
+                    applyFilters();
+                    
+                    // Close dropdown
+                    dropdown.classList.remove('active');
+                    
+                    // Re-render table
+                    renderTable();
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.filter-dropdown') && !e.target.closest('.filter-icon')) {
+                    document.querySelectorAll('.filter-dropdown').forEach(dd => {
+                        dd.classList.remove('active');
+                    });
+                }
             });
         }
         
-        // Sort table by column
-        function sortTable(column) {
-            const table = document.getElementById('employee-table');
-            const headers = table.querySelectorAll('th');
-            const tbody = table.querySelector('tbody');
-            const rows = Array.from(tbody.querySelectorAll('tr'));
+        // Sort data based on current sort settings
+        function sortData() {
+            if (!currentSort.column) return;
             
-            // Remove existing sort indicators
-            headers.forEach(header => {
-                header.classList.remove('sort-asc', 'sort-desc');
-            });
-            
-            // Determine sort direction
-            const currentHeader = table.querySelector(`th[data-sort="${column}"]`);
-            const isAsc = currentHeader.classList.contains('sort-asc');
-            const direction = isAsc ? -1 : 1;
-            
-            // Update sort indicator
-            currentHeader.classList.toggle('sort-asc', !isAsc);
-            currentHeader.classList.toggle('sort-desc', isAsc);
-            
-            // Sort rows
-            rows.sort((a, b) => {
-                const aValue = a.querySelector(`td:nth-child(${Array.from(headers).findIndex(h => h.getAttribute('data-sort') === column) + 1}`).textContent;
-                const bValue = b.querySelector(`td:nth-child(${Array.from(headers).findIndex(h => h.getAttribute('data-sort') === column) + 1}`).textContent;
+            filteredEmployees.sort((a, b) => {
+                const aValue = a[currentSort.column] || '';
+                const bValue = b[currentSort.column] || '';
+                const direction = currentSort.direction === 'asc' ? 1 : -1;
                 
-                // Try to compare as numbers if possible
+                // Try to compare as numbers
                 if (!isNaN(aValue) && !isNaN(bValue)) {
                     return (parseFloat(aValue) - parseFloat(bValue)) * direction;
                 }
                 
-                // Compare as dates (simple format detection)
+                // Try to compare as dates
                 const dateRegex = /(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/;
                 const aDateMatch = aValue.match(dateRegex);
                 const bDateMatch = bValue.match(dateRegex);
@@ -865,9 +905,6 @@
                 // Default to string comparison
                 return aValue.localeCompare(bValue) * direction;
             });
-            
-            // Re-append rows in sorted order
-            rows.forEach(row => tbody.appendChild(row));
         }
         
         // Export to Excel function
@@ -877,29 +914,17 @@
                 return;
             }
             
+            // Get headers from the first employee
+            const headers = Object.keys(filteredEmployees[0]);
+            
             // Prepare the data for export
-            const dataForExport = filteredEmployees.map(emp => ({
-                "SrNo": emp.SrNo,
-                "Name": emp.Name,
-                "Post": emp.Post,
-                "Rank": emp.Rank,
-                "Token No": emp['Tokan No'],
-                "Category": emp.Category,
-                "Location": emp.Location,
-                "Date of Birth": emp['Date of Birth'],
-                "Retirement Date": emp['Date of Retirement'],
-                "Appointment Date": emp['Date of Appointment'],
-                "Regularization Date": emp['Date of Regular'],
-                "Dept Qualify Exam": emp['Dept Qualify Examination'],
-                "Tradesman Mate Date": emp['Date of Tradesman Mate'],
-                "USL Date": emp['Date of USL'],
-                "SSK Date": emp['Date of SSK'],
-                "SK Date": emp['Date of SK'],
-                "HSK2 Date": emp['Date of HSK 2'],
-                "HSK1 Date": emp['Date of HSK 1'],
-                "MCM Date": emp['Date of MCM'],
-                "Remark": emp.Remark
-            }));
+            const dataForExport = filteredEmployees.map(emp => {
+                const row = {};
+                headers.forEach(header => {
+                    row[header] = emp[header] || '';
+                });
+                return row;
+            });
             
             // Create worksheet
             const worksheet = XLSX.utils.json_to_sheet(dataForExport);
@@ -922,6 +947,9 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('landscape');
             
+            // Get headers from the first employee
+            const headers = Object.keys(filteredEmployees[0]);
+            
             // Add title
             doc.setFontSize(18);
             doc.text('NAD Employees Seniority List', 15, 15);
@@ -930,35 +958,11 @@
             doc.text(`Total Employees: ${filteredEmployees.length}`, 15, 29);
             
             // Prepare table data
-            const tableColumn = [
-                "SrNo", "Name", "Post", "Rank", "Token No", "Category", "Location", 
-                "Date of Birth", "Retirement Date", "Appointment Date", "Regularization Date",
-                "Dept Qualify Exam", "Tradesman Mate Date", "USL Date", "SSK Date", 
-                "SK Date", "HSK2 Date", "HSK1 Date", "MCM Date", "Remark"
-            ];
+            const tableColumn = headers;
             
-            const tableRows = filteredEmployees.map(emp => [
-                emp.SrNo || '',
-                emp.Name || '',
-                emp.Post || '',
-                emp.Rank || '',
-                emp['Tokan No'] || '',
-                emp.Category || '',
-                emp.Location || '',
-                emp['Date of Birth'] || '',
-                emp['Date of Retirement'] || '',
-                emp['Date of Appointment'] || '',
-                emp['Date of Regular'] || '',
-                emp['Dept Qualify Examination'] || '',
-                emp['Date of Tradesman Mate'] || '',
-                emp['Date of USL'] || '',
-                emp['Date of SSK'] || '',
-                emp['Date of SK'] || '',
-                emp['Date of HSK 2'] || '',
-                emp['Date of HSK 1'] || '',
-                emp['Date of MCM'] || '',
-                emp.Remark || ''
-            ]);
+            const tableRows = filteredEmployees.map(emp => {
+                return headers.map(header => emp[header] || '');
+            });
             
             // Add table to PDF
             doc.autoTable({
@@ -988,8 +992,6 @@
         window.addEventListener('DOMContentLoaded', init);
         
         // Expose functions for HTML onclick
-        window.applyMultiSort = applyMultiSort;
-        window.resetSort = resetSort;
         window.exportToExcel = exportToExcel;
         window.exportToPDF = exportToPDF;
     </script>
