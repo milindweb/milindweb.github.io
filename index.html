@@ -1,401 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MilindWeb - Engineering Portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MilindWeb</title>
+  <link rel="stylesheet" href="style.css">
   <script src="js/include.js" defer></script>
-  <style>
-    :root {
-      --primary-bg: #ffffff;
-      --secondary-bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --accent: #3b82f6;
-      --border: #e2e8f0;
-      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      --transition: all 0.3s ease;
-    }
-
-    .dark-mode {
-      --primary-bg: #0f172a;
-      --secondary-bg: #1e293b;
-      --card-bg: #1e293b;
-      --text-primary: #f1f5f9;
-      --text-secondary: #cbd5e1;
-      --accent: #60a5fa;
-      --border: #334155;
-      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--primary-bg);
-      color: var(--text-primary);
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      line-height: 1.6;
-      transition: var(--transition);
-    }
-
-    .main-container {
-      padding: 1.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      min-height: 100vh;
-    }
-
-    section {
-      margin-bottom: 3rem;
-    }
-
-    h2 {
-      font-size: 1.75rem;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-weight: 700;
-    }
-
-    .cards-grid {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    }
-
-    .card {
-      background-color: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.75rem;
-      box-shadow: var(--card-shadow);
-      transition: var(--transition);
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .card-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      height: 100%;
-      cursor: pointer;
-    }
-
-    .card h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .card p {
-      color: var(--text-secondary);
-      margin-bottom: 1rem;
-      flex-grow: 1;
-      font-size: 1rem;
-    }
-
-    .card-icon {
-      font-size: 1.5rem;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-    }
-
-    .team-list {
-      list-style: none;
-      margin: 1rem 0;
-    }
-
-    .team-list li {
-      padding: 0.5rem 0;
-      border-bottom: 1px dashed var(--border);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-
-    .team-list li:last-child {
-      border-bottom: none;
-    }
-
-    .team-list strong {
-      color: var(--accent);
-    }
-
-    .team-list li::before {
-      content: "•";
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .recent-badge {
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      color: white;
-      font-size: 0.75rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 999px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      z-index: 100;
-      border: none;
-      transition: var(--transition);
-    }
-
-    .theme-toggle:hover {
-      transform: translateY(-3px) rotate(15deg);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    }
-
-    @media (max-width: 768px) {
-      .main-container {
-        padding: 1rem;
-      }
-      
-      h2 {
-        font-size: 1.5rem;
-      }
-      
-      .cards-grid {
-        gap: 1rem;
-      }
-      
-      .card {
-        padding: 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .card {
-        padding: 1.25rem;
-      }
-      
-      h2 {
-        font-size: 1.35rem;
-      }
-    }
-  </style>
 </head>
 <body>
-  <!-- Header include -->
+
+  <!-- Load Header -->
   <div data-include="header.html"></div>
-  
-  <main class="main-container">
-    <!-- Quick Links Section -->
+
+  <!-- Main Content -->
+  <main>
     <section>
+      <h2><i class="fas fa-users"></i> Our Expert Team</h2>
       <div class="cards-grid">
-        <a href="projects.html" class="card-link">
-          <div class="card">
-            <h3><span class="card-icon"><i class="fas fa-project-diagram"></i></span> Projects</h3>
-            <p>Electrical, Electronics, Mechanical, and Instrumentation student projects.</p>
-          </div>
-        </a>
-        
-        <a href="matlab-labview.html" class="card-link">
-          <div class="card">
-            <h3><span class="card-icon"><i class="fas fa-chart-line"></i></span> MATLAB & LabVIEW</h3>
-            <p>Simulation and control system projects with MATLAB/LabVIEW.</p>
-          </div>
-        </a>
-        
-        <a href="tech.html" class="card-link">
-          <div class="card">
-            <h3><span class="card-icon"><i class="fas fa-robot"></i></span> AI / Web Dev / Python</h3>
-            <p>Smart tools, AI apps, websites, and scripts for students & startups.</p>
-          </div>
-        </a>
-        
-        <a href="workshops.html" class="card-link">
-          <div class="card">
-            <h3><span class="card-icon"><i class="fas fa-tools"></i></span> Workshops</h3>
-            <p>Arduino / ESP32 hands-on training sessions with kits provided.</p>
-          </div>
-        </a>
-        
-        <a href="services.html" class="card-link">
-          <div class="card">
-            <h3><span class="card-icon"><i class="fas fa-paint-brush"></i></span> Graphic & Video Editing</h3>
-            <p>We design logos, reels, YouTube intros, and do pro video editing.</p>
-          </div>
-        </a>
-        
-        <!-- Seniority Manager moved here -->
-        <a href="B006-NAD_Employees_Seniariity_List.html" class="card-link">
-          <div class="card">
-            <h3><span class="card-icon"><i class="fas fa-chart-bar"></i></span> Seniority Manager</h3>
-            <p>Track promotion timelines and employee ranks with our specialized tool.</p>
-          </div>
-        </a>
-        
-        <a href="blog.html" class="card-link">
-          <div class="card">
-            <h3><span class="card-icon"><i class="fas fa-blog"></i></span> Blog & Tutorials</h3>
-            <p>Tech tips, project hacks, and community tutorials.</p>
-          </div>
-        </a>
-      </div>
-    </section>
-    
-    <!-- Recent Blogs Section -->
-    <section>
-      <h2><span class="recent-badge"><i class="fas fa-bolt"></i> NEW</span> Recently Added Blogs</h2>
-      <div class="cards-grid" id="recentBlogs">
-        <!-- Content will be populated by JavaScript -->
-        <div class="card">Loading recent blogs...</div>
-      </div>
-    </section>
-    
-    <!-- About Section -->
-    <section>
-      <div class="cards-grid">
-        <div class="card">
-          <h3><span class="card-icon"><i class="fas fa-users"></i></span> About Our Team</h3>
-          <p>Meet our expert team with diverse industry experience:</p>
-          <ul class="team-list">
-            <li><strong>Er. M!l!nd</strong> – DEE, B.E (Instrumentation), 7+ yrs exp. • Founder of MilindWeb</li>
-            <li><strong>Mr. Swapnil</strong> – B.Sc, 8 yrs in Mechanical, finance & operations</li>
-            <li><strong>Er. Anand</strong> – B.E (Computer), 6 yrs (Wipro), Admin, Python, Linux</li>
-            <li><strong>Er. Vishnu</strong> – DEE, B.E (Instrumentation), 7+ yrs in PLC, SCADA, MATLAB</li>
-            <li><strong>Mr. Sandesh S.</strong> – 20+ yrs in Electronics, Arduino, PCB repair</li>
-            <li><strong>Mr. Sandeep Tayade</strong> – Expert in electronics & mechanical repair</li>
-          </ul>
+        <div class="card team-card">
+          <p><strong>Er. M!l!nd</strong><br>DEE, B.E (Instrumentation) – 7+ yrs Industrial Experience • Founder of MilindWeb</p>
+        </div>
+        <div class="card team-card">
+          <p><strong>Mr. Swapnil</strong><br>B.Sc – 8 yrs Mechanical + Finance Services Experience</p>
+        </div>
+        <div class="card team-card">
+          <p><strong>Er. Anand</strong><br>B.E (Computer) – 6 yrs in Wipro, Admin, C/C++, Python, Linux</p>
+        </div>
+        <div class="card team-card">
+          <p><strong>Er. Vishnu</strong><br>DEE, B.E (Instrumentation) – 7+ yrs in PLC, SCADA, MATLAB</p>
+        </div>
+        <div class="card team-card">
+          <p><strong>Mr. Sandesh S.</strong><br>20+ yrs in Electronics, Arduino, PCB Repair Expert</p>
+        </div>
+        <div class="card team-card">
+          <p><strong>Mr. Sandeep Tayade</strong><br>Expert in repairing electronics & mechanical devices</p>
         </div>
       </div>
     </section>
   </main>
-  
-  <!-- Footer include -->
+
+  <!-- Load Footer -->
   <div data-include="footer.html"></div>
 
-  <script>
-    // Theme toggle functionality
-    const themeToggle = document.createElement('button');
-    themeToggle.className = 'theme-toggle';
-    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-    document.body.appendChild(themeToggle);
-    
-    const themeIcon = themeToggle.querySelector('i');
-    
-    function setTheme(theme) {
-      document.documentElement.classList.toggle('dark-mode', theme === 'dark');
-      localStorage.setItem('theme', theme);
-      themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-    }
-    
-    // Check saved theme or prefer color scheme
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      setTheme(systemPrefersDark ? 'dark' : 'light');
-    }
-    
-    themeToggle.addEventListener('click', () => {
-      const isDark = document.documentElement.classList.contains('dark-mode');
-      setTheme(isDark ? 'light' : 'dark');
-    });
-    
-    // Recent Blogs Autoload Script
-    const recentBlogs = [
-      { 
-        title: "Fire Sensor with Arduino", 
-        link: "blog/fire-sensor.html",
-        icon: "fas fa-fire",
-        excerpt: "Learn how to build a reliable fire detection system using Arduino and flame sensors."
-      },
-      { 
-        title: "Excel Dashboards for Engineers", 
-        link: "blog/excel-dashboards.html",
-        icon: "fas fa-table",
-        excerpt: "Create powerful engineering dashboards in Excel to visualize and analyze your data."
-      },
-      { 
-        title: "ESP32 vs Arduino: Full Comparison", 
-        link: "blog/esp32-vs-arduino.html",
-        icon: "fas fa-microchip",
-        excerpt: "Detailed technical comparison to help you choose the right board for your IoT projects."
-      }
-    ];
-
-    const container = document.getElementById("recentBlogs");
-    container.innerHTML = "";
-    
-    recentBlogs.forEach(blog => {
-      const blogCard = document.createElement("a");
-      blogCard.className = "card-link";
-      blogCard.href = blog.link;
-      
-      blogCard.innerHTML = `
-        <div class="card">
-          <h3><span class="card-icon">${blog.icon}</span> ${blog.title}</h3>
-          <p>${blog.excerpt}</p>
-        </div>
-      `;
-      
-      container.appendChild(blogCard);
-    });
-  </script>
 </body>
 </html>
