@@ -1,395 +1,401 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YSG0RRDYZ6"></script>
-	<script>
- 	 window.dataLayer = window.dataLayer || [];
- 	 function gtag(){dataLayer.push(arguments);}
- 	 gtag('js', new Date());
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MilindWeb - Engineering Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="js/include.js" defer></script>
+  <style>
+    :root {
+      --primary-bg: #ffffff;
+      --secondary-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent: #3b82f6;
+      --border: #e2e8f0;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
 
- 	 gtag('config', 'G-YSG0RRDYZ6');
-	</script>
-	<!-- Google tag (gtag.js) -->
+    .dark-mode {
+      --primary-bg: #0f172a;
+      --secondary-bg: #1e293b;
+      --card-bg: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --accent: #60a5fa;
+      --border: #334155;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
 
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-	<title>Milindweb - Technical Blogger & Engineering project Developer</title>
+    body {
+      background-color: var(--primary-bg);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      transition: var(--transition);
+    }
 
-	<link rel="shortcut icon" href="img/favicon.png">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
-	<script src="js/modernizr.js"></script>
-	<!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->
+    .main-container {
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
 
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+    }
+
+    .cards-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.75rem;
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      flex-grow: 1;
+      font-size: 1rem;
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+    .team-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .team-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .team-list li:last-child {
+      border-bottom: none;
+    }
+
+    .team-list strong {
+      color: var(--accent);
+    }
+
+    .team-list li::before {
+      content: "•";
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .recent-badge {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+      border: none;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-3px) rotate(15deg);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 1rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .cards-grid {
+        gap: 1rem;
+      }
+      
+      .card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.25rem;
+      }
+      
+      h2 {
+        font-size: 1.35rem;
+      }
+    }
+  </style>
 </head>
 <body>
-	
-	<!-- ===================== header section -->
-	<header class="top-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-5 header-logo">
-                <a href="index.html"><img src="img/logo.png" alt="" class="img-responsive logo"></a>
-            </div>
-
-            <div class="col-md-7">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid nav-bar">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a class="menu active" href="index.html">Home</a></li>
-                                <li><a class="menu" href="project.html">project</a></li>
-                                <li><a class="menu" href="workshop.html">workshop</a></li>
-                                <li><a class="menu" href="blog.html">blog</a></li>
-                                <li><a class="menu" href="contact.html">contact</a></li>
-                            </ul>
-                        </div><!-- /navbar-collapse -->
-                    </div><!-- / .container-fluid -->
-                </nav>
-            </div>
+  <!-- Header include -->
+  <div data-include="header.html"></div>
+  
+  <main class="main-container">
+    <!-- Quick Links Section -->
+    <section>
+      <div class="cards-grid">
+        <a href="projects.html" class="card-link">
+          <div class="card">
+            <h3><span class="card-icon"><i class="fas fa-project-diagram"></i></span> Projects</h3>
+            <p>Electrical, Electronics, Mechanical, and Instrumentation student projects.</p>
+          </div>
+        </a>
+        
+        <a href="matlab-labview.html" class="card-link">
+          <div class="card">
+            <h3><span class="card-icon"><i class="fas fa-chart-line"></i></span> MATLAB & LabVIEW</h3>
+            <p>Simulation and control system projects with MATLAB/LabVIEW.</p>
+          </div>
+        </a>
+        
+        <a href="tech.html" class="card-link">
+          <div class="card">
+            <h3><span class="card-icon"><i class="fas fa-robot"></i></span> AI / Web Dev / Python</h3>
+            <p>Smart tools, AI apps, websites, and scripts for students & startups.</p>
+          </div>
+        </a>
+        
+        <a href="workshops.html" class="card-link">
+          <div class="card">
+            <h3><span class="card-icon"><i class="fas fa-tools"></i></span> Workshops</h3>
+            <p>Arduino / ESP32 hands-on training sessions with kits provided.</p>
+          </div>
+        </a>
+        
+        <a href="services.html" class="card-link">
+          <div class="card">
+            <h3><span class="card-icon"><i class="fas fa-paint-brush"></i></span> Graphic & Video Editing</h3>
+            <p>We design logos, reels, YouTube intros, and do pro video editing.</p>
+          </div>
+        </a>
+        
+        <!-- Seniority Manager moved here -->
+        <a href="B006-NAD_Employees_Seniariity_List.html" class="card-link">
+          <div class="card">
+            <h3><span class="card-icon"><i class="fas fa-chart-bar"></i></span> Seniority Manager</h3>
+            <p>Track promotion timelines and employee ranks with our specialized tool.</p>
+          </div>
+        </a>
+        
+        <a href="blog.html" class="card-link">
+          <div class="card">
+            <h3><span class="card-icon"><i class="fas fa-blog"></i></span> Blog & Tutorials</h3>
+            <p>Tech tips, project hacks, and community tutorials.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+    
+    <!-- Recent Blogs Section -->
+    <section>
+      <h2><span class="recent-badge"><i class="fas fa-bolt"></i> NEW</span> Recently Added Blogs</h2>
+      <div class="cards-grid" id="recentBlogs">
+        <!-- Content will be populated by JavaScript -->
+        <div class="card">Loading recent blogs...</div>
+      </div>
+    </section>
+    
+    <!-- About Section -->
+    <section>
+      <div class="cards-grid">
+        <div class="card">
+          <h3><span class="card-icon"><i class="fas fa-users"></i></span> About Our Team</h3>
+          <p>Meet our expert team with diverse industry experience:</p>
+          <ul class="team-list">
+            <li><strong>Er. M!l!nd</strong> – DEE, B.E (Instrumentation), 7+ yrs exp. • Founder of MilindWeb</li>
+            <li><strong>Mr. Swapnil</strong> – B.Sc, 8 yrs in Mechanical, finance & operations</li>
+            <li><strong>Er. Anand</strong> – B.E (Computer), 6 yrs (Wipro), Admin, Python, Linux</li>
+            <li><strong>Er. Vishnu</strong> – DEE, B.E (Instrumentation), 7+ yrs in PLC, SCADA, MATLAB</li>
+            <li><strong>Mr. Sandesh S.</strong> – 20+ yrs in Electronics, Arduino, PCB repair</li>
+            <li><strong>Mr. Sandeep Tayade</strong> – Expert in electronics & mechanical repair</li>
+          </ul>
         </div>
-    </div>
-</header>
-	<!-- end of header area -->
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer include -->
+  <div data-include="footer.html"></div>
 
-	<!-- slider section -->
-	<section class="slider" id="home">
-		<div class="container-fluid">
-			<div class="row">
-			    <div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel">
-					<div class="header-backup"></div>
-			        <!-- Wrapper for slides -->
-			        <div class="carousel-inner" role="listbox">
-			            <div class="item active">
-			            	<img src="img/slide-one.jpg" alt="">
-			                <div class="carousel-caption">
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.createElement('button');
+    themeToggle.className = 'theme-toggle';
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    document.body.appendChild(themeToggle);
+    
+    const themeIcon = themeToggle.querySelector('i');
+    
+    function setTheme(theme) {
+      document.documentElement.classList.toggle('dark-mode', theme === 'dark');
+      localStorage.setItem('theme', theme);
+      themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    
+    // Check saved theme or prefer color scheme
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      setTheme(systemPrefersDark ? 'dark' : 'light');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark-mode');
+      setTheme(isDark ? 'light' : 'dark');
+    });
+    
+    // Recent Blogs Autoload Script
+    const recentBlogs = [
+      { 
+        title: "Fire Sensor with Arduino", 
+        link: "blog/fire-sensor.html",
+        icon: "fas fa-fire",
+        excerpt: "Learn how to build a reliable fire detection system using Arduino and flame sensors."
+      },
+      { 
+        title: "Excel Dashboards for Engineers", 
+        link: "blog/excel-dashboards.html",
+        icon: "fas fa-table",
+        excerpt: "Create powerful engineering dashboards in Excel to visualize and analyze your data."
+      },
+      { 
+        title: "ESP32 vs Arduino: Full Comparison", 
+        link: "blog/esp32-vs-arduino.html",
+        icon: "fas fa-microchip",
+        excerpt: "Detailed technical comparison to help you choose the right board for your IoT projects."
+      }
+    ];
 
-			                </div>
-			            </div>
-			            <div class="item">
-			            	<img src="img/slide-two.jpg" alt="">
-			                <div class="carousel-caption">
-
-			                </div>
-			            </div>
-			            <div class="item">
-			            	<img src="img/slide-three.jpg" alt="">
-			                <div class="carousel-caption">
-		               			<button> <a href="blog.html"> View Details </a> </button>
-			                </div>
-			            </div>
-			            <div class="item">
-			            	<img src="img/slide-four.jpg" alt="">
-			                <div class="carousel-caption">
-		               			<button> <a href="contact.html"> View Details </a> </button>
-			                </div>
-			            </div>
-
-			        </div>
-			        <!-- Controls -->
-			        <a class="left carousel-control" href="#carouselHacked" role="button" data-slide="prev">
-			            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-			            <span class="sr-only">Previous</span>
-			        </a>
-			        <a class="right carousel-control" href="#carouselHacked" role="button" data-slide="next">
-			            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-			            <span class="sr-only">Next</span>
-			        </a>
-			    </div>
-			</div>
-		</div>
-	</section>
-	<!-- end of slider section -->
-
-
-
-	<!-- about section -->
-	<section class="about text-center" id="about">
-		<div class="container">
-			<div class="row">
-				<h2>about us</h2>
-				 <h4>
-					we are passionate about igniting the curiosity and creativity of young minds. We understand that
-					learning should not be confined to textbooks and classrooms; it should be an exciting and hands-on
-					experience. With this vision, we have been dedicated to creating a dynamic platform that empowers
-					students from 7th to 12th grade, as well as diploma and engineering students, to explore the
-					fascinating worlds of science, technology, and innovation.
-					Our mission is to inspire the next generation of innovators, problem solvers, and engineers. We
-					believe that every student has the potential to be a maker, a creator, and a scientist. We're here
-					to provide the tools, knowledge, and guidance they need to turn their ideas into reality.
-				 </h4>
-				<div class="col-md-4 col-sm-6">
-					<div class="single-about-detail clearfix">
-						<div class="about-img">
-							<a href="project.html">
-							<img class="img-responsive" src="img/item1.jpg" alt=""> </a>
-						</div>
-						<div class="about-details">
-							<div class="pentagon-text">
-								<h1>P</h1>
-							</div>
-							<h3>Projects</h3>
-							<p>we're dedicated to delivering hands-on DIY projects for students in the field of science & technology, providing a rich learning experience.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6">
-					<div class="single-about-detail">
-						<div class="about-img">
-							<a href="workshop.html">
-							<img class="img-responsive" src="img/item2.jpg" alt=""></a>
-						</div>
-						<div class="about-details">
-							<div class="pentagon-text">
-								<h1>W</h1>
-							</div>
-
-							<h3>Workshops</h3>
-							<p>We offer hands-on workshops on Arduino Join us to gain valuable skills & new career.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6">
-					<div class="single-about-detail">
-						<div class="about-img">
-							<a href="blog.html">
-							<img class="img-responsive" src="img/item3.jpg" alt=""></a>
-						</div>
-						<div class="about-details">
-							<div class="pentagon-text">
-								<h1>B</h1>
-							</div>
-							<h3>Tech Blog </h3>
-							<p>Explore our forum/blog for tech insights and enjoy free technical support for your journey.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section><!-- end of about section -->
-
-
-	<!-- service section starts here -->
-	<section class="service text-center" id="service">
-		<div class="container">
-			<div class="row">
-				<h2>our services</h2>
-				<h4> We're here to help students, whether you're in school or studying engineering and science in college.
-					We offer assistance with things like your final-year projects and reports, making sure you meet your school or college's requirements.
-					But we also have something really cool: DIY projects that let you have fun with science and tech!
-					Our goal is to make learning more exciting and bridge the gap between what you learn in school and what you might need in the real world for a job someday. </h4>
-				<div class="col-md-3 col-sm-6">
-					<div class="single-service">
-						<div class="single-service-img">
-							<div class="service-img">
-								<img class="heart img-responsive" src="img/service1.png" alt="">
-							</div>
-						</div>
-						<h3>Arduino, PLC, LabView, industrial automation, robotics and all other EE/ ETC/ Instru Diploma BE BTECH projects available</h3>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6">
-					<div class="single-service">
-						<div class="single-service-img">
-							<div class="service-img">
-								<img class="brain img-responsive" src="img/service2.png" alt="">
-							</div>
-						</div>
-						<h3> Join us to gain essential skills, cultivate a creative mind & develop a profound interest in technology, propelling you confidently into the promising future of AI. </h3>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6">
-					<div class="single-service">
-						<div class="single-service-img">
-							<div class="service-img">
-								<img class="knee img-responsive" src="img/service3.png" alt="">
-							</div>
-						</div>
-						<h3>Mini Projects available for school and collage students as per requirements </h3>
-					</div>
-				</div>
-				<div class="col-md-3 col-sm-6">
-					<div class="single-service">
-						<div class="single-service-img">
-							<div class="service-img">
-								<img class="bone img-responsive" src="img/service4.png" alt="">
-							</div>
-						</div>
-						<h3>Discover sensor, modules insights, unravel electronics device, stay tuned to the latest tech news & newest tech trends.</h3>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section><!-- end of service section -->
-
-
-	<!-- team section -->
-	<section class="team" id="team">
-		<div class="container">
-			<div class="row">
-				<div class="team-heading text-center">
-					<h2>our team</h2>
-					<h4>With the Help of this Expertise, we are making projects</h4>
-				</div>
-				<div class="col-md-2 single-member col-sm-4">
-					<div class="person">
-						<img class="img-responsive" src="img/member1.jpg" alt="member-1">
-					</div>
-					<div class="person-detail">
-						<div class="arrow-bottom"></div>
-						<h3>Er.M!l!nd</h3>
-						<p> DEE, B.E - Instrumentation Engineering, Seven+ Years of Industrial Experience & Founder of Milindweb </p>
-					</div>
-				</div>
-				<div class="col-md-2 single-member col-sm-4">
-					<div class="person-detail">
-						<div class="arrow-top"></div>
-						<h3>Mr. Swapnil </h3>
-						<p>B.Sc, Eight Years of Experience in Mechanical field with high impact knowledge in Mechanical & Financial services </p>
-					</div>
-					<div class="person">
-						<img class="img-responsive" src="img/member2.jpg" alt="member-2">
-					</div>
-				</div>
-				<div class="col-md-2 single-member col-sm-4">
-					<div class="person">
-						<img class="img-responsive" src="img/member3.jpg" alt="member-3">
-					</div>
-					<div class="person-detail">
-						<div class="arrow-bottom"></div>
-						<h3>Er. Anand </h3>
-						<p>B.E - Computer Engineering, Six Years of Industrial Experience (Wipro) as a system admin, Expertise - Networking, C, C++, Python and Linux</p>
-					</div>
-				</div>
-				<div class="col-md-2 single-member col-sm-4">
-					<div class="person-detail">
-						<div class="arrow-top"></div>
-						<h3>Er. Vishnu</h3>
-						<p> DEE, B.E - Instrumentation Engg, Seven+ Year Industrial With Expertise - PLC, SCADA, MATLAB & LabView </p>
-					</div>
-					<div class="person">
-						<img class="img-responsive" src="img/member4.jpg" alt="member-4">
-					</div>
-				</div>
-				<div class="col-md-2 single-member col-sm-4">
-					<div class="person">
-						<img class="img-responsive" src="img/member5.jpg" alt="member-5">
-					</div>
-					<div class="person-detail">
-						<div class="arrow-bottom"></div>
-						<h3>Mr. Sandesh S.</h3>
-						<p>Twenty+ Years of experience in Electronics field, Expertise - Arduino and All Electronics devices & PCB Repairing </p>
-					</div>
-				</div>
-				<div class="col-md-2 single-member col-sm-4">
-					<div class="person-detail">
-						<div class="arrow-top"></div>
-						<h3> Mr. Sandeep Tayade </h3>
-						<p> Highly proficient in the repair of electronics and mechanical devices and equipment. </p>
-					</div>
-					<div class="person">
-						<img class="img-responsive" src="img/member6.jpg" alt="member-5">
-					</div>
-				</div>
-			</div>
-		</div>
-	</section><!-- end of team section -->
-
-
-
-	<!-- =================  map section =================== -->
-	<div class="contrast" id="map">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-12 map" id="text"></div>
-			</div>
-		</div>
-	</div><!-- end of map section -->
-
-	<!-- contact section starts here -->
-	<section class="contact">
-		<div class="container">
-			<div class="row">
-				<div class="contact-caption clearfix">
-					<div class="contact-heading text-center">
-						<h2>contact us</h2>
-					</div>
-					<div class="col-md-5 contact-info text-left">
-						<h3>contact information</h3>
-						<div class="info-detail">
-							<ul><li> <i class="fa fa-phone"></i><span>Phone:</span> +9l 9869787575</li></ul>
-							<ul><li> <i class="fa fa-envelope"></i><span>Email:</span> kmi9@pm.me </li></ul>
-							<ul><li> <i class="fa fa-map-marker"></i><span>Addrs:</span> 1) Uran, Navi Mumbai 2) Nanded MH</li></ul>
-							<ul><li> <i class="fa fa-calendar"></i><span>Saturday & Sunday : </span> 9:30 AM to 6:30 PM</li></ul>
-
-
-						</div>
-					</div>
-					<div class="col-md-6 col-md-offset-1 contact-form">
-						<h3>Important Links</h3>
-						<!-- Important Links -->
- 						<h4>
-							<span> ● </span> <a href="project.html"> <i class="link-primary"></i>  Project  </a>
-							<br> <br>
-							<span> ● </span> <a href="workshop.html"> <i class="link-primary"></i>  Workshop  </a>
-							<br> <br>
-							<span> ● </span> <a href="contact.html"> <i class="Yellow"></i>  Registration </a>
-							<br> <br>
-							<span> ● </span> <a href="blog.html"> <i class="Yellow"></i>  Tech Blog </a>
-						</h4>
-						<!-- End of Important Links -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- contact section End here -->
-
-
-	<!-- footer starts here -->
-	<footer class="footer clearfix">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-6 footer-para">
-					<p>2025 &copy; Milindweb All rights reserved</p>
-					<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/723500/t/9"></script>
-				</div>
-				<div class="col-xs-6 text-right">
-					<a href="https://t.me/itsmakk" class="text-white" target="_blank">  <img src="img/telegram-icon.png"> Telegram </a>
-					<a href="https://www.instagram.com/makhandare" class="text-white" target="_blank"> <i class="fa fa-instagram"></i>Instagram</a>
-					<a href="https://www.youtube.com/channel/UC7bpvmuyLENrg2ZVvchgm9Q" class="text-white" target="_blank"><i class="fa fa-youtube"></i>YouTube</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	<!-- script tags
-	============================================================= -->
-	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/smoothscroll.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/custom.js"></script>
+    const container = document.getElementById("recentBlogs");
+    container.innerHTML = "";
+    
+    recentBlogs.forEach(blog => {
+      const blogCard = document.createElement("a");
+      blogCard.className = "card-link";
+      blogCard.href = blog.link;
+      
+      blogCard.innerHTML = `
+        <div class="card">
+          <h3><span class="card-icon">${blog.icon}</span> ${blog.title}</h3>
+          <p>${blog.excerpt}</p>
+        </div>
+      `;
+      
+      container.appendChild(blogCard);
+    });
+  </script>
 </body>
 </html>
