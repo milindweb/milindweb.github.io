@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MilindWeb - Professional Header</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #0f2540;
+            --accent: #2d7d9a;
+            --accent-light: #3da0c3;
+            --text-light: #f8f9fa;
+            --text-dark: #212529;
+            --bg-light: #f8fafc;
+            --bg-dark: #0f172a;
+            --card-light: #ffffff;
+            --card-dark: #1e293b;
+            --border-light: #e2e8f0;
+            --border-dark: #334155;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        body.dark-mode header {
+            background-color: var(--primary-dark);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Top Header Bar */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        /* Logo Styles */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            background-color: var(--accent);
+            color: white;
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .logo-sub {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-style: italic;
+            margin-top: 0.1rem;
+        }
+
+        /* Desktop Navigation */
+        .nav-desktop {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin-right: 1.5rem;
+        }
+
+        .nav-menu li {
+            position: relative;
+            margin: 0 0.3rem;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.8rem 1.1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .nav-menu li a i {
+            margin-right: 0.6rem;
+            font-size: 0.95rem;
+        }
+
+        .nav-menu li a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .has-submenu > a::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.7rem;
+            margin-left: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 10;
+            overflow: hidden;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .submenu {
+            background-color: var(--card-dark);
+        }
+
+        .has-submenu:hover .submenu {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .submenu li {
+            margin: 0;
+            width: 100%;
+        }
+
+        .submenu li a {
+            color: var(--text-dark);
+            padding: 0.8rem 1.2rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        body.dark-mode .submenu li a {
+            color: var(--text-light);
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .submenu li:last-child a {
+            border-bottom: none;
+        }
+
+        .submenu li a:hover {
+            background-color: rgba(45, 125, 154, 0.1);
+        }
+
+        body.dark-mode .submenu li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(15deg);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 0.9rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        body.dark-mode .breadcrumb {
+            background-color: rgba(30, 41, 59, 0.95);
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb a {
+            text-decoration: none;
+            color: var(--accent);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        body.dark-mode .breadcrumb a {
+            color: var(--accent-light);
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: var(--text-dark);
+            margin: 0 0.5rem;
+            opacity: 0.7;
+        }
+
+        body.dark-mode .breadcrumb span {
+            color: var(--text-light);
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: white;
+            z-index: 1000;
+            overflow-y: auto;
+            transition: right 0.4s ease;
+        }
+
+        body.dark-mode .mobile-nav {
+            background-color: var(--card-dark);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: var(--primary);
+        }
+
+        .mobile-close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-nav-menu {
+            list-style: none;
+            padding: 1.5rem;
+        }
+
+        .mobile-nav-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .mobile-nav-menu li a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 0.9rem 1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        body.dark-mode .mobile-nav-menu li a {
+            color: var(--text-light);
+        }
+
+        .mobile-nav-menu li a:hover {
+            background-color: rgba(45, 125, 154, 0.1);
+        }
+
+        body.dark-mode .mobile-nav-menu li a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-menu li a i {
+            margin-right: 1rem;
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .mobile-submenu {
+            padding-left: 2rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .mobile-submenu.active {
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .nav-desktop {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1.5rem;
+            }
+            
+            .logo-main {
+                font-size: 1.5rem;
+            }
+            
+            .breadcrumb-container {
+                padding: 0 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .logo-main {
+                font-size: 1.4rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.75rem;
+            }
+            
+            .breadcrumb-container {
+                padding: 0 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="top-header">
+                <div class="logo">
+                    <div class="logo-icon">M</div>
+                    <div class="logo-text">
+                        <div class="logo-main">MILINDWEB</div>
+                        <div class="logo-sub">Life should be great rather than long</div>
+                    </div>
+                </div>
+                
+                <nav class="nav-desktop">
+                    <ul class="nav-menu">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="project.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                        <li class="has-submenu">
+                            <a href="#"><i class="fas fa-cogs"></i> Services</a>
+                            <ul class="submenu">
+                                <li><a href="workshop.html"><i class="fas fa-microchip"></i> Workshops</a></li>
+                                <li><a href="graphics.html"><i class="fas fa-paint-brush"></i> Graphics</a></li>
+                                <li><a href="Seniarity_Management.html"><i class="fas fa-users"></i> NAD Seniority</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="blog.html"><i class="fas fa-blog"></i> Blog</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                    
+                    <div class="header-actions">
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </nav>
+                
+                <div class="header-actions">
+                    <button class="theme-toggle" id="mobileThemeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <div class="breadcrumb-container">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="blog.html">Blog</a>
+                <span>/</span>
+                <a href="#">Arduino</a>
+                <span>/</span>
+                <span>Fire Sensor Project</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <div class="logo">
+                <div class="logo-icon">M</div>
+                <div class="logo-text">
+                    <div class="logo-main">MILINDWEB</div>
+                    <div class="logo-sub">Life should be great rather than long</div>
+                </div>
+            </div>
+            <button class="mobile-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <ul class="mobile-nav-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="project.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
+            <li>
+                <a href="#" id="servicesToggle"><i class="fas fa-cogs"></i> Services <i class="fas fa-chevron-down" style="margin-left: auto;"></i></a>
+                <ul class="mobile-submenu" id="mobileSubmenu">
+                    <li><a href="workshop.html"><i class="fas fa-microchip"></i> Workshops</a></li>
+                    <li><a href="graphics.html"><i class="fas fa-paint-brush"></i> Graphics</a></li>
+                    <li><a href="Seniarity_Management.html"><i class="fas fa-users"></i> NAD Seniority</a></li>
+                </ul>
+            </li>
+            <li><a href="blog.html"><i class="fas fa-blog"></i> Blog</a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileNav = document.getElementById('mobileNav');
+        const servicesToggle = document.getElementById('servicesToggle');
+        const mobileSubmenu = document.getElementById('mobileSubmenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+            mobileMenuOverlay.style.display = 'block';
+        });
+        
+        mobileCloseBtn.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            mobileMenuOverlay.style.display = 'none';
+        });
+        
+        mobileMenuOverlay.addEventListener('click', () => {
+            mobileNav.classList.remove('active');
+            mobileMenuOverlay.style.display = 'none';
+        });
+        
+        servicesToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            mobileSubmenu.classList.toggle('active');
+            
+            // Toggle icon rotation
+            const icon = servicesToggle.querySelector('.fa-chevron-down');
+            icon.classList.toggle('fa-rotate-180');
+        });
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            
+            // Update theme toggle icons
+            const icons = document.querySelectorAll('.theme-toggle i');
+            icons.forEach(icon => {
+                if (isDarkMode) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+            
+            // Save theme preference
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            const icons = document.querySelectorAll('.theme-toggle i');
+            icons.forEach(icon => {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            });
+        }
+    </script>
+</body>
+</html>
