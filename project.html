@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MilindWeb Projects Hub | Final Year & Mini Projects</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Base Styles */
         :root {
@@ -27,6 +28,7 @@
             line-height: 1.6;
             color: #333;
             background-color: #f8f9fa;
+            overflow-x: hidden;
         }
         
         /* Header & Footer Placeholders */
@@ -45,7 +47,7 @@
         
         /* Sections */
         .section {
-            padding: 40px 0;
+            padding: 50px 0;
         }
         
         .section-title {
@@ -54,6 +56,7 @@
             color: var(--primary);
             position: relative;
             padding-bottom: 10px;
+            font-weight: 700;
         }
         
         .section-title::after {
@@ -71,13 +74,14 @@
             background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
             color: white;
             text-align: center;
-            padding: 60px 0;
+            padding: 70px 0;
         }
         
         .hero h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
             font-weight: 700;
+            line-height: 1.3;
         }
         
         .hero p {
@@ -102,6 +106,8 @@
             padding: 25px;
             transition: var(--transition);
             border-left: 4px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
         }
         
         .domain-card:hover {
@@ -113,6 +119,10 @@
             font-size: 1.3rem;
             margin-bottom: 15px;
             color: var(--primary);
+        }
+        
+        .domain-card p {
+            color: #555;
         }
         
         /* Why Choose Us */
@@ -180,14 +190,18 @@
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition);
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            background: rgba(52, 152, 219, 0.1);
         }
         
         .project-link:hover {
             color: var(--accent);
-            text-decoration: underline;
+            background: rgba(231, 76, 60, 0.1);
         }
         
-        /* Contact Form */
+        /* Contact & Form Section */
         .contact-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -204,6 +218,7 @@
         
         .contact-info p {
             margin-bottom: 20px;
+            color: #555;
         }
         
         .contact-methods {
@@ -231,6 +246,34 @@
             background-color: var(--primary);
         }
         
+        .contact-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .contact-detail:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .contact-detail i {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            min-width: 30px;
+        }
+        
+        .contact-detail h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        /* Google Form Styling */
         .form-container {
             background-color: white;
             border-radius: 8px;
@@ -239,12 +282,25 @@
             overflow: hidden;
         }
         
+        .form-container h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .form-container p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
         .google-form-wrapper {
             position: relative;
             width: 100%;
-            height: 500px;
+            height: 950px; /* Default height */
             overflow: hidden;
             border-radius: 5px;
+            margin-top: 15px;
+            border: 1px solid #eee;
         }
         
         .google-form-wrapper iframe {
@@ -254,6 +310,41 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+        
+        /* Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .stat-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 25px;
+            transition: var(--transition);
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 600;
         }
         
         /* Footer */
@@ -273,6 +364,10 @@
             .hero h1 {
                 font-size: 2rem;
             }
+            
+            .google-form-wrapper {
+                height: 800px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -282,17 +377,21 @@
             }
             
             .section {
-                padding: 30px 0;
+                padding: 40px 0;
             }
             
             .section-title {
                 font-size: 1.7rem;
             }
+            
+            .google-form-wrapper {
+                height: 700px;
+            }
         }
         
         @media (max-width: 576px) {
             .hero {
-                padding: 40px 0;
+                padding: 50px 0;
             }
             
             .hero h1 {
@@ -306,7 +405,49 @@
             .domain-card {
                 padding: 20px;
             }
+            
+            .google-form-wrapper {
+                height: 600px;
+            }
         }
+        
+        @media (max-width: 480px) {
+            .google-form-wrapper {
+                height: 550px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .domain-card, .benefit-item, .stat-box {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .domain-card:nth-child(1) { animation-delay: 0.1s; }
+        .domain-card:nth-child(2) { animation-delay: 0.2s; }
+        .domain-card:nth-child(3) { animation-delay: 0.3s; }
+        .domain-card:nth-child(4) { animation-delay: 0.4s; }
+        .domain-card:nth-child(5) { animation-delay: 0.5s; }
+        .domain-card:nth-child(6) { animation-delay: 0.6s; }
+        .domain-card:nth-child(7) { animation-delay: 0.7s; }
+        .domain-card:nth-child(8) { animation-delay: 0.8s; }
+        .domain-card:nth-child(9) { animation-delay: 0.9s; }
+        
+        .benefit-item:nth-child(1) { animation-delay: 0.1s; }
+        .benefit-item:nth-child(2) { animation-delay: 0.2s; }
+        .benefit-item:nth-child(3) { animation-delay: 0.3s; }
+        .benefit-item:nth-child(4) { animation-delay: 0.4s; }
+        .benefit-item:nth-child(5) { animation-delay: 0.5s; }
+        
+        .stat-box:nth-child(1) { animation-delay: 0.1s; }
+        .stat-box:nth-child(2) { animation-delay: 0.2s; }
+        .stat-box:nth-child(3) { animation-delay: 0.3s; }
+        .stat-box:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
@@ -424,6 +565,25 @@
                     </div>
                 </div>
                 
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Students Served</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label">Engineering Domains</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+                
                 <p style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; font-weight: 600;">
                     ✅ Projects available for all branches. Custom projects accepted.<br>
                     🎓 Trusted by 100+ students across Mumbai, Pune, Nanded, and Maharashtra.
@@ -479,7 +639,7 @@
                 </tbody>
             </table>
             
-            <p style="margin-top: 20px;">
+            <p style="margin-top: 20px; color: #555;">
                 This is not an exhaustive list of projects; we have a wide range of options available. 
                 You can also request a custom project tailored to your requirements. Our team will design 
                 and deliver projects according to your needs. Please feel free to contact us for more information.
@@ -493,46 +653,9 @@
             <h2 class="section-title">📞 Contact & Enquiry</h2>
             <p>You can reach us easily through the contact details and social media links or simply fill out our Enquiry Form — our team will respond promptly!</p>
             
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h3>Get In Touch</h3>
-                    <p>Have questions about our projects or need custom solutions? Reach out to us through any of these channels:</p>
-                    
-                    <div class="benefit-item" style="margin-bottom: 15px;">
-                        <div class="benefit-icon">📧</div>
-                        <div>
-                            <h3>Email</h3>
-                            <p>contact@milindweb.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item" style="margin-bottom: 15px;">
-                        <div class="benefit-icon">📱</div>
-                        <div>
-                            <h3>Phone</h3>
-                            <p>+91 98765 43210</p>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">🏢</div>
-                        <div>
-                            <h3>Office</h3>
-                            <p>123 Innovation Street, Tech Park, Mumbai</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-methods">
-                        <a href="#" class="social-icon">f</a>
-                        <a href="#" class="social-icon">in</a>
-                        <a href="#" class="social-icon">t</a>
-                        <a href="#" class="social-icon">ig</a>
-                    </div>
-                </div>
-                
+        
                 <div class="form-container">
-                    <h3>Enquiry Form</h3>
-                    <p>Fill out this form and we'll get back to you within 24 hours</p>
+                    
                     
                     <div class="google-form-wrapper">
                         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdR3-PyGfvuJtcWrkzLEueOv5gyKhBoZH0xz8NS3WnZV6H93A/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
