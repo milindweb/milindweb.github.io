@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - for enquiries, order, registration, copyright issue, complaints</title>
+    <title>Contact Us</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             color: #333;
             line-height: 1.6;
+            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -28,11 +30,15 @@
             padding: 0 20px;
         }
 
+        /* Header Styles */
         header {
             background: linear-gradient(90deg, #2c3e50 0%, #1a2530 100%);
             color: white;
-            padding: 1.5rem 0;
+            padding: 1.2rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-content {
@@ -45,113 +51,156 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            animation: fadeInDown 0.8s ease-out;
         }
 
         .logo i {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: #3498db;
         }
 
         .logo h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 25px;
         }
 
         nav a {
             color: #ecf0f1;
             text-decoration: none;
             font-weight: 500;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
             padding: 8px 12px;
             border-radius: 4px;
+            position: relative;
         }
 
         nav a:hover {
             color: #3498db;
-            background: rgba(255, 255, 255, 0.1);
         }
 
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 4rem 0;
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c3e50"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%2334495e" stroke-width="2"/></svg>');
+            padding: 4rem 0 3rem;
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c3e50"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%2334495e" stroke-width="2"/></svg>');
             background-size: cover;
+            background-position: center;
             color: white;
+            animation: fadeIn 0.8s ease-out;
         }
 
         .hero h2 {
-            font-size: 2.8rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 2.6rem;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 0.8s ease-out;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             max-width: 800px;
             margin: 0 auto 2rem;
             opacity: 0.9;
+            animation: slideInUp 0.8s ease-out;
         }
 
+        /* Main Content */
         .content {
-            padding: 4rem 0;
+            padding: 3rem 0;
             flex: 1;
         }
 
         .intro {
             background: white;
             border-radius: 12px;
-            padding: 2.5rem;
+            padding: 2.2rem;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             margin-bottom: 3rem;
             border-left: 5px solid #3498db;
+            animation: fadeInUp 0.8s ease-out;
+            transition: transform 0.3s ease;
+        }
+
+        .intro:hover {
+            transform: translateY(-5px);
         }
 
         .intro h3 {
             color: #2c3e50;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .intro h3 i {
+            color: #3498db;
         }
 
         .intro p {
             margin-bottom: 1.2rem;
-            font-size: 1.1rem;
+            font-size: 1.08rem;
             color: #34495e;
+            line-height: 1.7;
         }
 
         .disclaimer-box {
             background: #fff8e1;
             border-left: 5px solid #ffc107;
-            padding: 1.5rem;
+            padding: 1.8rem;
             border-radius: 8px;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
+            animation: fadeIn 0.8s ease-out 0.2s both;
         }
 
         .disclaimer-box h4 {
             color: #e65100;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 1.3rem;
         }
 
         .disclaimer-box p {
             color: #5d4037;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            line-height: 1.7;
         }
 
+        /* Google Form Section */
         .form-container {
             background: white;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
             margin: 3rem 0;
+            animation: fadeIn 0.8s ease-out 0.4s both;
         }
 
         .form-header {
@@ -162,20 +211,31 @@
         }
 
         .form-header h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.7rem;
+            margin-bottom: 0.6rem;
+            animation: fadeIn 0.6s ease-out;
         }
 
         .form-header p {
             opacity: 0.9;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        .google-form-container {
+            width: 100%;
+            height: 820px;
+            position: relative;
+            overflow: hidden;
         }
 
         .google-form {
             width: 100%;
-            height: 1200px;
+            height: 100%;
             border: none;
+            animation: fadeIn 0.8s ease-out 0.6s both;
         }
 
+        /* Footer */
         footer {
             background: #2c3e50;
             color: #ecf0f1;
@@ -185,30 +245,86 @@
 
         .footer-content {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
         }
 
         .copyright {
             color: #95a5a6;
             font-size: 0.95rem;
+            margin-bottom: 1rem;
         }
 
         .footer-links {
             display: flex;
-            gap: 20px;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .footer-links a {
             color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s ease;
+            font-size: 0.95rem;
         }
 
         .footer-links a:hover {
             color: #3498db;
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -218,6 +334,7 @@
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
+                gap: 15px;
             }
             
             .hero h2 {
@@ -232,14 +349,13 @@
                 padding: 1.5rem;
             }
             
-            .google-form {
-                height: 1500px;
+            .google-form-container {
+                height: 1000px;
             }
 
-            .footer-content {
+            .footer-links {
                 flex-direction: column;
-                gap: 15px;
-                text-align: center;
+                gap: 10px;
             }
         }
 
@@ -261,13 +377,23 @@
                 font-size: 1.5rem;
             }
 
-            .google-form {
-                height: 1800px;
+            .google-form-container {
+                height: 1200px;
+            }
+
+            .intro {
+                padding: 1.2rem;
+            }
+
+            .disclaimer-box {
+                padding: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header Section - Will be included via JS -->
+    <header id="header"></header>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -282,6 +408,7 @@
         <div class="container">
             <!-- Introduction Section -->
             <div class="intro">
+                <h3><i class="fas fa-handshake"></i> Welcome to Our Community</h3>
                 <p>We're excited to have you join us on a journey into the world of technology, coding, and innovation. This is your gateway to hands-on learning, where you'll explore limitless possibilities.</p>
                 <p>If you have any questions or need assistance, feel free to reach out to us. We're here to help! Your curiosity and enthusiasm for technology are what drive us, and we're dedicated to making your experience as informative and enjoyable as possible.</p>
                 <p>Simply fill out the form below to get in touch, and don't hesitate to ask any questions or share your thoughts with us. We're looking forward to connecting with you and sharing exciting technological opportunities.</p>
@@ -291,7 +418,7 @@
             <div class="disclaimer-box">
                 <h4><i class="fas fa-exclamation-circle"></i> Content Disclaimer</h4>
                 <p>We respect intellectual property rights and make every effort to ensure compliance with copyright regulations. Some content on this website may be sourced from publicly available materials, AI-generated content, or third-party references.</p>
-                <p>If you believe that any content infringes upon your copyright, please contact us immediately at copyright@techinnovate.com. Upon verification, we will promptly remove the material in question. We do not claim ownership or credit for copyrighted content not originally created by us.</p>
+                <p>If you believe that any content infringes upon your copyright, please contact us immediately. Upon verification, we will promptly remove the material in question. We do not claim ownership or credit for copyrighted content not originally created by us.</p>
                 <p>All third-party trademarks and copyrighted materials are the property of their respective owners. Any references to such materials are for informational purposes only.</p>
             </div>
 
@@ -301,12 +428,45 @@
                     <h3>Get in Touch</h3>
                     <p>Fill out the form below and we'll respond as soon as possible</p>
                 </div>
-                <iframe class="google-form" src="https://docs.google.com/forms/d/e/1FAIpQLSdDliY3cW6ghlA2Rlw7p7vq4L7e8Vd7Xz3X7X8X9X0Y1Z2A3B4C/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                <div class="google-form-container">
+                    <iframe class="google-form" src="https://docs.google.com/forms/d/e/1FAIpQLSdR3-PyGfvuJtcWrkzLEueOv5gyKhBoZH0xz8NS3WnZV6H93A/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- JavaScript -->
-    <script src="js/include.js"></script>
+    <!-- Footer Section - Will be included via JS -->
+    <footer id="footer"></footer>
+
+    <!-- JavaScript for including header and footer -->
+    <script>
+        // Function to load external HTML files
+        function includeHTML() {
+            // Load header
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading header:', error);
+                    document.getElementById('header').innerHTML = '<div class="container"><h1>Header</h1></div>';
+                });
+            
+            // Load footer
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading footer:', error);
+                    document.getElementById('footer').innerHTML = '<div class="container"><p>Footer</p></div>';
+                });
+        }
+        
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', includeHTML);
+    </script>
 </body>
 </html>
