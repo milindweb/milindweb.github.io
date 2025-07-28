@@ -1,339 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YSG0RRDYZ6"></script>
-	<script>
- 	 window.dataLayer = window.dataLayer || [];
- 	 function gtag(){dataLayer.push(arguments);}
- 	 gtag('js', new Date());
-
- 	 gtag('config', 'G-YSG0RRDYZ6');
-	</script>
-	<!-- Google tag (gtag.js) -->
-
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-	<title>Milindweb - Workshop </title>
-
-	<link rel="shortcut icon" href="img/favicon.png">
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css">
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,400,800,700,300' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=BenchNine:300,400,700' rel='stylesheet' type='text/css'>
-	<script src="js/modernizr.js"></script>
-	<!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <script src="js/respond.min.js"></script>
-    <![endif]-->
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MilindWeb - Expert Workshops</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .workshop-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .workshop-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+        
+        .workshop-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+            border-bottom: 1px solid #e1e1e1;
+        }
+        
+        .workshop-title {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .workshop-content {
+            padding: 20px;
+        }
+        
+        .highlight-list {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        .highlight-list li {
+            margin-bottom: 8px;
+            position: relative;
+            list-style-type: none;
+            padding-left: 25px;
+        }
+        
+        .highlight-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .topic-group {
+            margin-bottom: 20px;
+        }
+        
+        .topic-title {
+            font-weight: 600;
+            color: #2980b9;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .topic-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+            padding-left: 15px;
+        }
+        
+        .topic-item {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border-left: 3px solid #3498db;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 30px 20px;
+            background: #2c3e50;
+            color: white;
+            margin-top: 40px;
+            border-radius: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        .cta-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); }
+            100% { transform: scale(1); }
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #e8f4fc;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .schedule-box {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        /* Workshop specific colors */
+        .excel-section {
+            border-left-color: #2ecc71;
+        }
+        
+        .excel-section .workshop-title {
+            color: #27ae60;
+        }
+        
+        .excel-section .topic-title {
+            color: #16a085;
+        }
+        
+        .arduino-section {
+            border-left-color: #3498db;
+        }
+        
+        .arduino-section .workshop-header {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        
+        .arduino-section .workshop-title {
+            color: #2980b9;
+        }
+        
+        .arduino-section .topic-title {
+            color: #3498db;
+        }
+    </style>
 </head>
 <body>
-
-	<!-- ===================== header section -->
-	<header class="top-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-5 header-logo">
-                <a href="index.html"><img src="img/logo.png" alt="" class="img-responsive logo"></a>
-            </div>
-
-            <div class="col-md-7">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid nav-bar">
-                        <!-- Brand and toggle get grouped for better mobile display -->
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                                data-target="#bs-example-navbar-collapse-1">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a class="menu" href="index.html">Home</a></li>
-                                <li><a class="menu" href="project.html">project</a></li>
-                                <li><a class="menu active" href="workshop.html">workshop</a></li>
-                                <li><a class="menu" href="blog.html">blog</a></li>
-                                <li><a class="menu" href="contact.html">contact</a></li>
-                            </ul>
-                        </div><!-- /navbar-collapse -->
-                    </div><!-- / .container-fluid -->
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-    <!-- end of header area -->
-
-    <!-- slider section -->
-	<section class="slider" id="home">
-		<div class="container-fluid">
-			<div class="row">
-			    <div id="carouselHacked" class="carousel slide carousel-fade" data-ride="carousel">
-					<div class="header-backup"></div>
-			        <!-- Wrapper for slides -->
-			        <div class="carousel-inner" role="listbox">
-			            <div class="item active">
-			            	<img src="img/slide-two.jpg" alt="">
-			                <div class="carousel-caption">
-
-			                </div>
-			            </div>
-			            <div class="item">
-			            	<img src="img/slide-one.jpg" alt="">
-			                <div class="carousel-caption">
-
-			                </div>
-			            </div>
-			            <div class="item">
-			            	<img src="img/slide-three.jpg" alt="">
-			                <div class="carousel-caption">
-		               			<button> <a href="blog.html"> View Details </a> </button>
-			                </div>
-			            </div>
-			            <div class="item">
-			            	<img src="img/slide-four.jpg" alt="">
-			                <div class="carousel-caption">
-		               			<button> <a href="contact.html"> View Details </a> </button>
-			                </div>
-			            </div>
-
-			        </div>
-			        <!-- Controls -->
-			        <a class="left carousel-control" href="#carouselHacked" role="button" data-slide="prev">
-			            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-			            <span class="sr-only">Previous</span>
-			        </a>
-			        <a class="right carousel-control" href="#carouselHacked" role="button" data-slide="next">
-			            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-			            <span class="sr-only">Next</span>
-			        </a>
-			    </div>
-			</div>
-		</div>
-	</section><!-- end of slider section -->
-
-
-
-<br><br>
+    <div id="header"></div>
     
-    <!-- Post Content Section -->
-    <article>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th><h1>Section</h1></th>
-                            <th><h1>Details</h1></th>
-                        </tr>
-                        <tr>
-                            <td>Workshop Title:</td>
-                            <td><ul><li> Arduino/ESP32 Workshop - Unleash Your Inner Engineer! <li></ul> </td>
-                        </tr>
-                        <tr>
-                            <td>Organizer:</td>
-                            <td>
-								<ul>
-                                    <li>Milind Khandare </li>
-                                	<li>Dip Electrical, BE Instrumentation Engineer </li>
-                                	<li>7+ years of Industrial experience </li>
-								</ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Who Can Join:</td>
-                            <td>
-                                <ul>
-                                    <li>7th to 12th-grade students</li>
-                                    <li>Science & Tech students</li>
-                                    <li>Tech Enthusiasts of All Ages</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Requirements:</td>
-                            <td>
-                                <ul>
-                                    <li>Android Mobile/Laptop</li>
-                                    <li>Arduino/ESP32 Kit (we will provide it FREE)</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Topics Covered in Workshop (Level 1):</td>
-                            <td>
-                                <ol>
-                                    <li>Introduction to Arduino/ESP32</li>
-                                    <li>Basic Electrical/Electronics</li>
-                                    <li>Sensors & Components</li>
-                                    <li>Hardware </li>
-                                    <li>Software Setup </li>
-                                    <li>Programming Techniques</li>
-                                    <li>Writing Your First Program</li>
-                                    <li>Four DIY Projects</li>
-                                </ol>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4 Hands-On DIY Projects:</td>
-                            <td>
-                                <ol>
-                                    <li>Traffic Light Control</li>
-                                    <li>Automatic Device Control</li>
-                                    <li>Simple Robot Car</li>
-                                    <li>Automatic Gate Open/Close</li>
-                                </ol>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Workshop Kit Details:</td>
-                            <td>
-                                <ul>
-                                    <li>ESP32 Dev Kit</li>
-                                    <li>3.7V Batteries (2)</li>
-                                    <li>Battery Holder</li>
-                                    <li>LEDs</li>
-                                    <li>Resistors</li>
-                                    <li>Breadboard</li>
-                                    <li>Male/Female Connectors</li>
-                                    <li>5V Relay</li>
-                                    <li>BO Motor</li>
-                                    <li>Servo Motor</li>
-                                    <li>IR Sensors</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Key Features:</td>
-                            <td>
-                                <ul>
-                                    <li>Hands-on Learning</li>
-                                    <li>Expert Guidance</li>
-                                    <li>Practical Projects</li>
-                                    <li>Build Real Devices</li>
-                                    <li>Interact with Like-Minded Individuals</li>
-                                    <li>Certificate of Completion</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Date & Venue:</td>
-                            <td>
-								<ul>
-                                    <li> NAVAL STATION KARANJA, URAN, NAVI MUMBAI </li>
-                               		<li> (Every 4th Saturday and Sunday of the month)</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Registration Fees:</td>
-                            <td><ul> <li>1999/- (With FREE Starter Kit Included) </li> </ul> </td>
-                        </tr>
-                        <tr>
-                            <td> <a href="contact.html"> <i class="Yellow"></i>  Click Here to Register Now! </a></td>
-                            <td>
-                                <ul>
-                                    <li>1 Batch, 2 0 seats only </li>
-                               		<li>Hurry Up, call / drop me a text / Contact us for information </li>
-								</ul>
-
-								</td>
-                        </tr>
-						<tr>
-							<img src="img/slide-two.jpg" alt="" class="responsive-img"> </tr>
-						</table>
-                    <br><br>
+    <div class="container">
+        <h1 style="text-align: center; margin: 20px 0 30px; color: #2c3e50;">📚 Our Expert-Led Workshops</h1>
+        
+        <div class="intro-text">
+            Welcome to our hands-on learning hub, where knowledge meets practical application. At MilindWeb, we conduct skill-based workshops designed to empower students, professionals, and tech enthusiasts. Whether you want to master Microsoft Excel for Data Science or build IoT devices with Arduino & ESP32, we've got you covered.
+        </div>
+        
+        <!-- Excel Workshop -->
+        <div class="workshop-section excel-section">
+            <div class="workshop-header">
+                <h2 class="workshop-title"><span class="emoji">🟢</span> Microsoft Excel Workshop – From Basics to Data Science</h2>
+            </div>
+            <div class="workshop-content">
+                <p>Microsoft Excel is more than just a spreadsheet tool — it's the backbone of modern data analysis and business intelligence. Our comprehensive workshop takes you from beginner to advanced, with a strong focus on Data Science applications.</p>
+                
+                <h3 class="topic-title">🔑 Workshop Highlights</h3>
+                <ul class="highlight-list">
+                    <li>Learn Excel from scratch — no prior knowledge required</li>
+                    <li>Real-world use cases for business, academics, and projects</li>
+                    <li>Step-by-step guidance from experienced trainers</li>
+                    <li>Practice sessions with live datasets</li>
+                </ul>
+                
+                <h3 class="topic-title">📌 Topics Covered</h3>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">1. Excel Basics</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Introduction to Excel interface</div>
+                        <div class="topic-item">Data entry, formatting, and navigation</div>
+                        <div class="topic-item">Managing worksheets and workbooks</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">2. Data Management</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Sorting, filtering, and data validation</div>
+                        <div class="topic-item">Conditional formatting</div>
+                        <div class="topic-item">Creating drop-down menus</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">3. Excel Formulas & Functions for Data Science</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Mathematical & Statistical Functions</div>
+                        <div class="topic-item">Logical Functions (IF, AND, OR)</div>
+                        <div class="topic-item">Lookup Functions (VLOOKUP, XLOOKUP)</div>
+                        <div class="topic-item">Text Functions</div>
+                        <div class="topic-item">Date & Time Functions</div>
+                        <div class="topic-item">Array & Dynamic Functions</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">4. Data Analysis Tools</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">PivotTables & PivotCharts</div>
+                        <div class="topic-item">Data Tables & What-If Analysis</div>
+                        <div class="topic-item">Scenario Manager & Goal Seek</div>
+                        <div class="topic-item">Solver Add-in for optimization</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">5. Visualization & Reporting</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Creating professional charts</div>
+                        <div class="topic-item">Conditional charts for trends</div>
+                        <div class="topic-item">Dashboards with slicers</div>
+                        <div class="topic-item">Custom formatting for reports</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">6. Advanced Data Science with Excel</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Power Query for data cleaning</div>
+                        <div class="topic-item">Power Pivot & DAX formulas</div>
+                        <div class="topic-item">Handling large datasets</div>
+                        <div class="topic-item">Linking external data sources</div>
+                        <div class="topic-item">Basics of Machine Learning</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">7. Project Work</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Interactive Sales Dashboard</div>
+                        <div class="topic-item">HR Analytics Report</div>
+                        <div class="topic-item">Financial Modeling</div>
+                    </div>
+                </div>
+                
+                <h3 class="topic-title">🎯 Who Can Join</h3>
+                <div class="topic-items">
+                    <div class="topic-item">Students (10th to Degree)</div>
+                    <div class="topic-item">Working Professionals</div>
+                    <div class="topic-item">Entrepreneurs & Business Owners</div>
+                    <div class="topic-item">Anyone eager to upskill in Data Science</div>
                 </div>
             </div>
         </div>
-    </article>
-    <!--========== End of Post Content Section============= -->
-
-
-
-
-
-	<!-- =================  map section =================== -->
-	<div class="contrast" id="map">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-12 map" id="text"></div>
-			</div>
-		</div>
-	</div><!-- end of map section -->
-
-	<!-- contact section starts here -->
-	<section class="contact">
-		<div class="container">
-			<div class="row">
-				<div class="contact-caption clearfix">
-					<div class="contact-heading text-center">
-						<h2>contact us</h2>
-					</div>
-					<div class="col-md-5 contact-info text-left">
-						<h3>contact information</h3>
-						<div class="info-detail">
-							<ul><li> <i class="fa fa-phone"></i><span>Phone:</span> +9l 9869787575</li></ul>
-							<ul><li> <i class="fa fa-envelope"></i><span>Email:</span> kmi9@pm.me </li></ul>
-							<ul><li> <i class="fa fa-map-marker"></i><span>Addrs:</span> 1) Uran, Navi Mumbai 2) Nanded MH</li></ul>
-							<ul><li> <i class="fa fa-calendar"></i><span>Saturday & Sunday : </span> 9:30 AM to 6:30 PM</li></ul>
-
-
-						</div>
-					</div>
-					<div class="col-md-6 col-md-offset-1 contact-form">
-						<h3>Important Links</h3>
-						<!-- Important Links -->
- 						<h4>
-							<span> ● </span> <a href="project.html"> <i class="link-primary"></i>  Project  </a>
-							<br> <br>
-							<span> ● </span> <a href="workshop.html"> <i class="link-primary"></i>  Workshop  </a>
-							<br> <br>
-							<span> ● </span> <a href="contact.html"> <i class="Yellow"></i>  Registration </a>
-							<br> <br>
-							<span> ● </span> <a href="blog.html"> <i class="Yellow"></i>  Tech Blog </a>
-						</h4>
-						<!-- End of Important Links -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- contact section End here -->
-
-
-	<!-- footer starts here -->
-	<footer class="footer clearfix">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-6 footer-para">
-					<p>2025 &copy; Milindweb All rights reserved</p>
-					<script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/723500/t/9"></script>
-				</div>
-				<div class="col-xs-6 text-right">
-					<a href="https://t.me/itsmakk" class="text-white" target="_blank">  <img src="img/telegram-icon.png"> Telegram </a>
-					<a href="https://www.instagram.com/makhandare" class="text-white" target="_blank"> <i class="fa fa-instagram"></i>Instagram</a>
-					<a href="https://www.youtube.com/channel/UC7bpvmuyLENrg2ZVvchgm9Q" class="text-white" target="_blank"><i class="fa fa-youtube"></i>YouTube</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-
-	<!-- script tags
-	============================================================= -->
-	<script src="js/jquery-2.1.1.js"></script>
-	<script src="js/smoothscroll.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/custom.js"></script>
+        
+        <!-- Arduino Workshop -->
+        <div class="workshop-section arduino-section">
+            <div class="workshop-header">
+                <h2 class="workshop-title"><span class="emoji">🔵</span> Arduino & ESP32 Workshop – Unleash Your Inner Engineer</h2>
+            </div>
+            <div class="workshop-content">
+                <p>Step into the world of IoT, robotics, and automation with our practical Arduino & ESP32 workshop. Designed for beginners and hobbyists, this workshop helps you build real electronic projects with confidence.</p>
+                
+                <h3 class="topic-title">🔑 Workshop Highlights</h3>
+                <ul class="highlight-list">
+                    <li>Learn electronics & programming from scratch</li>
+                    <li>Hands-on experience with Arduino & ESP32 kits</li>
+                    <li>Build 4+ real-world projects during the session</li>
+                    <li>Free starter kit included (keep it after the workshop)</li>
+                    <li>Guidance from industry experts with 7+ years of experience</li>
+                </ul>
+                
+                <h3 class="topic-title">📌 Topics Covered</h3>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">1. Introduction to Microcontrollers</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Difference between Arduino & ESP32</div>
+                        <div class="topic-item">Basics of circuits and power supply</div>
+                        <div class="topic-item">Installing Arduino IDE & ESP32 libraries</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">2. Electronics Fundamentals</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">LEDs, resistors, sensors, and motors</div>
+                        <div class="topic-item">Understanding breadboards & wiring</div>
+                        <div class="topic-item">Safety & troubleshooting techniques</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">3. Programming Skills</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Writing your first Arduino program</div>
+                        <div class="topic-item">Input & Output handling</div>
+                        <div class="topic-item">Using libraries for sensors & devices</div>
+                        <div class="topic-item">Wireless communication (Wi-Fi & Bluetooth)</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">4. DIY Projects You'll Build</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Traffic Light Controller</div>
+                        <div class="topic-item">Automatic Fan/Light Control</div>
+                        <div class="topic-item">Smart Robot Car</div>
+                        <div class="topic-item">IoT-Based Gate Automation</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">5. ESP32 Advanced Features</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">Wi-Fi-enabled data logging</div>
+                        <div class="topic-item">Control devices from smartphone</div>
+                        <div class="topic-item">IoT dashboards (Blynk, ThingSpeak)</div>
+                        <div class="topic-item">Integrating with Google Sheets/Cloud</div>
+                    </div>
+                </div>
+                
+                <div class="topic-group">
+                    <h4 class="topic-title">6. Workshop Kit (FREE)</h4>
+                    <div class="topic-items">
+                        <div class="topic-item">ESP32 Dev Kit</div>
+                        <div class="topic-item">LEDs & Resistors</div>
+                        <div class="topic-item">Breadboard & Connectors</div>
+                        <div class="topic-item">Sensors (IR, Ultrasonic)</div>
+                        <div class="topic-item">BO Motor & Servo Motor</div>
+                        <div class="topic-item">5V Relay Module</div>
+                        <div class="topic-item">Rechargeable Battery Pack</div>
+                    </div>
+                </div>
+                
+                <h3 class="topic-title">🎯 Who Can Join</h3>
+                <div class="topic-items">
+                    <div class="topic-item">Students (7th to Engineering)</div>
+                    <div class="topic-item">Science & Tech Enthusiasts</div>
+                    <div class="topic-item">Beginners in Electronics & IoT</div>
+                    <div class="topic-item">Hobbyists wanting to build devices</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="schedule-box">
+            <h3 style="margin-top: 0;">📅 Workshop Schedule & Venue</h3>
+            <p>📍 NAVAL STATION KARANJA, URAN, NAVI MUMBAI</p>
+            <p>🗓️ Every 4th Saturday & Sunday of the Month</p>
+        </div>
+        
+        <div class="cta-section">
+            <h3 class="cta-title">Limited Seats Available!</h3>
+            <p>Don't miss this opportunity to upgrade your skills with hands-on training from industry experts.</p>
+            <a href="contact.html" class="cta-button">Book Your Seat Now →</a>
+        </div>
+    </div>
+    
+    <div id="footer"></div>
+    
+    <script src="js/include.js"></script>
+    <script>
+        // Fetch header and footer
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header').innerHTML = data);
+            
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+            
+        // Add intersection observer for scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.workshop-section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                section.style.opacity = 0;
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        });
+    </script>
 </body>
 </html>
