@@ -1,135 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MilindWeb Blog</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
-    .blog-header {
-      text-align: center;
-      padding: 25px 15px;
-      background: linear-gradient(135deg, #005bea, #00c6fb);
-      color: white;
-    }
-    .blog-container {
-      max-width: 900px;
-      margin: auto;
-      padding: 10px;
-    }
-    .post-card {
-      display: flex;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-      margin-bottom: 12px;
-      overflow: hidden;
-      transition: background 0.2s;
-    }
-    .post-card:hover {
-      background: #f3f7ff;
-    }
-    .post-card img {
-      width: 90px;
-      height: 90px;
-      object-fit: cover;
-    }
-    .post-content {
-      padding: 8px 12px;
-      flex: 1;
-    }
-    .post-content h3 {
-      margin: 0 0 4px;
-      font-size: 1.1rem;
-    }
-    .post-content h3 a {
-      color: #005bea;
-      text-decoration: none;
-    }
-    .post-content small {
-      color: gray;
-      font-size: 0.85rem;
-      display: block;
-      margin-bottom: 6px;
-    }
-    .read-more {
-      display: inline-block;
-      color: #fff;
-      background: #005bea;
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      text-decoration: none;
-    }
-    .read-more:hover {
-      background: #0041b8;
-    }
-  </style>
-</head>
-<body>
-  <!-- Header Include -->
-  <div id="header"></div>
-
-  <section class="blog-header">
-    <h1>Welcome to My Blog</h1>
-    <p>Explore Microprocessors, Microcontrollers, Arduino, ESP32, and Employee Management topics.</p>
-  </section>
-
-  <main class="blog-container">
-    <!-- Blog Post Template -->
-    <div class="post-card" data-url="B001-Microprocessor.html" data-img="img/blog/up.jpg" data-title="What is Microprocessor"></div>
-    <div class="post-card" data-url="B002-Microcontroller.html" data-img="img/blog/ucpin.jpg" data-title="What is MicroController"></div>
-    <div class="post-card" data-url="B003-Arduino.html" data-img="img/blog/arduino.png" data-title="What is Arduino"></div>
-    <div class="post-card" data-url="B004-esp32.html" data-img="img/blog/esp32.png" data-title="What is ESP32"></div>
-    <div class="post-card" data-url="B006-NAD_Employees_Seniariity_List" data-img="img/blog/up.jpg" data-title="NAD Employees Seniarity Management New"></div>
-    <div class="post-card" data-url="Seniarity_Management.html" data-img="img/blog/up.jpg" data-title="NAD Employees Seniarity Management New"></div>
-  </main>
-
-  <!-- Footer Include -->
-  <div id="footer"></div>
-
-  <script src="js/include.js"></script>
-  <script>
-    document.querySelectorAll('.post-card').forEach(card => {
-      const url = card.getAttribute('data-url');
-      const img = card.getAttribute('data-img');
-      const title = card.getAttribute('data-title');
-
-      fetch(url).then(response => {
-        const lastModified = response.headers.get("Last-Modified");
-        let dateText = "-- --";
-        if (lastModified) {
-          const date = new Date(lastModified);
-          const options = { day: '2-digit', month: 'short' };
-          dateText = date.toLocaleDateString('en-GB', options);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milindweb - Blog and Tutorials</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles from header/footer */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        card.innerHTML = `
-          <img src="${img}" alt="${title}">
-          <div class="post-content">
-            <h3><a href="${url}">${title}</a></h3>
-            <small>Posted on: ${dateText}</small>
-            <a href="${url}" class="read-more">Read More →</a>
-          </div>
-        `;
-      }).catch(() => {
-        card.innerHTML = `
-          <img src="${img}" alt="${title}">
-          <div class="post-content">
-            <h3><a href="${url}">${title}</a></h3>
-            <small>Posted on: -- --</small>
-            <a href="${url}" class="read-more">Read More →</a>
-          </div>
-        `;
-      });
-    });
-  </script>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #0f2540;
+            --accent: #2d7d9a;
+            --accent-light: #3da0c3;
+            --text-light: #f8f9fa;
+            --text-dark: #212529;
+            --bg-light: #f8fafc;
+            --bg-dark: #0f172a;
+            --card-light: #ffffff;
+            --card-dark: #1e293b;
+            --border-light: #e2e8f0;
+            --border-dark: #334155;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .scale-in {
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Header will be inserted here */
+        #header-container {
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Main content styles */
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .blog-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 0.8s ease-out 0.2s forwards;
+        }
+
+        .blog-header p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.4s forwards;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background-color: var(--card-light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .blog-card:nth-child(1) { animation-delay: 0.2s; }
+        .blog-card:nth-child(2) { animation-delay: 0.3s; }
+        .blog-card:nth-child(3) { animation-delay: 0.4s; }
+        .blog-card:nth-child(4) { animation-delay: 0.5s; }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-card-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-card-img img {
+            transform: scale(1.05);
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+        }
+
+        .blog-card-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .blog-card-content .meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .blog-card-content .meta i {
+            margin-right: 0.5rem;
+        }
+
+        .blog-card-content .meta span {
+            margin-right: 1rem;
+        }
+
+        .blog-card-content p {
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            background-color: var(--accent-light);
+            transform: translateX(5px);
+        }
+
+        /* Footer will be inserted here */
+        #footer-container {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.4s forwards;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .blog-container {
+                padding: 0 1.5rem;
+            }
+            
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .blog-container {
+                padding: 0 1rem;
+            }
+            
+            .blog-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be loaded here -->
+    <div id="header-container"></div>
+
+    <main class="fade-in">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Our Latest Articles</h1>
+                <p>Discover insightful technical articles, tutorials, and project guides to enhance your engineering skills.</p>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card slide-up">
+                    <div class="blog-card-img">
+                        <img src="https://source.unsplash.com/random/600x400/?arduino" alt="Arduino Project">
+                    </div>
+                    <div class="blog-card-content">
+                        <h3>Getting Started with Arduino</h3>
+                        <div class="meta">
+                            <span><i class="far fa-calendar"></i> June 15, 2023</span>
+                            <span><i class="far fa-clock"></i> 5 min read</span>
+                        </div>
+                        <p>Learn the basics of Arduino programming and build your first project with this comprehensive beginner's guide.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card slide-up">
+                    <div class="blog-card-img">
+                        <img src="https://source.unsplash.com/random/600x400/?iot" alt="IoT Project">
+                    </div>
+                    <div class="blog-card-content">
+                        <h3>IoT Home Automation System</h3>
+                        <div class="meta">
+                            <span><i class="far fa-calendar"></i> July 2, 2023</span>
+                            <span><i class="far fa-clock"></i> 8 min read</span>
+                        </div>
+                        <p>Build a smart home system using NodeMCU and control your appliances remotely with this step-by-step tutorial.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card slide-up">
+                    <div class="blog-card-img">
+                        <img src="https://source.unsplash.com/random/600x400/?robotics" alt="Robotics Project">
+                    </div>
+                    <div class="blog-card-content">
+                        <h3>DIY Robotics for Beginners</h3>
+                        <div class="meta">
+                            <span><i class="far fa-calendar"></i> July 18, 2023</span>
+                            <span><i class="far fa-clock"></i> 10 min read</span>
+                        </div>
+                        <p>Create your first robot using simple components and learn the fundamentals of robotics programming.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card slide-up">
+                    <div class="blog-card-img">
+                        <img src="https://source.unsplash.com/random/600x400/?programming" alt="Programming">
+                    </div>
+                    <div class="blog-card-content">
+                        <h3>Python for Embedded Systems</h3>
+                        <div class="meta">
+                            <span><i class="far fa-calendar"></i> August 5, 2023</span>
+                            <span><i class="far fa-clock"></i> 7 min read</span>
+                        </div>
+                        <p>Explore how Python can be used in embedded systems development with practical examples and code snippets.</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <script>
+        // Fetch and insert header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+                // Initialize any header scripts here if needed
+                initMobileMenu();
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Fetch and insert footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Mobile menu functionality (same as in header.html)
+        function initMobileMenu() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileCloseBtn = document.querySelector('.mobile-close-btn');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileNav = document.getElementById('mobileNav');
+            const servicesToggle = document.getElementById('servicesToggle');
+            const mobileSubmenu = document.getElementById('mobileSubmenu');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileNav.classList.add('active');
+                    mobileMenuOverlay.style.display = 'block';
+                });
+            }
+            
+            if (mobileCloseBtn) {
+                mobileCloseBtn.addEventListener('click', () => {
+                    mobileNav.classList.remove('active');
+                    mobileMenuOverlay.style.display = 'none';
+                });
+            }
+            
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', () => {
+                    mobileNav.classList.remove('active');
+                    mobileMenuOverlay.style.display = 'none';
+                });
+            }
+            
+            if (servicesToggle) {
+                servicesToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    mobileSubmenu.classList.toggle('active');
+                    
+                    const icon = servicesToggle.querySelector('.fa-chevron-down');
+                    if (icon) {
+                        icon.classList.toggle('fa-rotate-180');
+                    }
+                });
+            }
+        }
+
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate elements when they come into view
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.blog-card, .blog-header h1, .blog-header p');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight - 100) {
+                        element.style.animationPlayState = 'running';
+                    }
+                });
+            };
+
+            // Run once on load
+            animateOnScroll();
+            
+            // Run on scroll
+            window.addEventListener('scroll', animateOnScroll);
+            
+            // Add hover animation to blog cards
+            const blogCards = document.querySelectorAll('.blog-card');
+            blogCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                    card.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                    card.style.boxShadow = 'var(--shadow)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
