@@ -1,106 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAD Employees Seniority Management</title>
-    <link rel="stylesheet" href="css/nadstyle.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milindweb - Graphics & Video Designer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+    }
+    .hero {
+      background: linear-gradient(135deg, #005bea, #00c6fb);
+      color: white;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: auto;
+    }
+    .services {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+    }
+    .card i {
+      font-size: 2.5rem;
+      color: #005bea;
+      margin-bottom: 15px;
+    }
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.3rem;
+      color: #333;
+    }
+    .card p {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.4;
+    }
+    .gallery {
+      background: #fff;
+      padding: 40px 20px;
+    }
+    .gallery h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
+    }
+    .gallery-grid {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+    }
+    .cta {
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #00c6fb, #005bea);
+      color: white;
+    }
+    .cta a {
+      background: white;
+      color: #005bea;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .cta a:hover {
+      background: #ddd;
+    }
+  </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-content">
-            <div class="logo-container">
-                <div class="logo">NAD</div>
-                <div class="header-text">
-                    <h1>NAD Employees Seniority Management</h1>
-                    <p>Seniority tracking and management system</p>
-                </div>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#" class="active">Seniority List</a></li>
-                    <li><a href="#">Resources</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+  <!-- Header Include -->
+  <div id="header"></div>
 
-    <div class="sub-header">
-        NAD Employees Seniority Management System
+  <section class="hero">
+    <h1>Creative Graphics & Video Design</h1>
+    <p>From eye-catching birthday banners to stunning wedding cards, unique logos, and professional social media video editing — we bring your ideas to life with creativity and precision.</p>
+  </section>
+
+  <section class="services">
+    <div class="card">
+      <i class="bi bi-brush"></i>
+      <h3>Birthday & Event Banners</h3>
+      <p>Make celebrations unforgettable with custom-designed birthday and event banners. Available in both print-ready and digital formats, perfect for social media invites.</p>
     </div>
-
-    <div class="container">
-        <div class="main-content">
-            <div class="filters-section">
-                <div class="filters-header">
-                    <h2><i class="fas fa-filter"></i> Post & Rank Filters</h2>
-                    <div class="info-box">
-                        <i class="fas fa-info-circle"></i> Click to filter employees
-                    </div>
-                </div>
-                <div id="filters-container">
-                    <div class="loading">
-                        <div class="loading-spinner"></div>
-                        Loading filters...
-                    </div>
-                </div>
-            </div>
-
-            <div class="table-section">
-                <div class="table-header">
-                    <h2><i class="fas fa-table"></i> Employee Seniority List</h2>
-                    <div class="info-box">
-                        <i class="fas fa-database"></i> 
-                        <span id="employee-count">Loading...</span> employees found
-                    </div>
-                </div>
-                <div class="table-container">
-                    <div class="loading">
-                        <div class="loading-spinner"></div>
-                        Loading employee data...
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="card">
+      <i class="bi bi-heart-fill"></i>
+      <h3>Wedding & Invitation Cards</h3>
+      <p>Elegant, creative, and personalized wedding & invitation cards that capture the essence of your special day, tailored to your theme and style.</p>
     </div>
+    <div class="card">
+      <i class="bi bi-palette-fill"></i>
+      <h3>Logos & Branding</h3>
+      <p>We design professional logos and brand kits that reflect your identity and leave a lasting impression, whether for personal use or business growth.</p>
+    </div>
+    <div class="card">
+      <i class="bi bi-camera-video"></i>
+      <h3>Professional Video Editing</h3>
+      <p>From Instagram reels and YouTube intros to full vlog edits, we create videos with engaging transitions, music syncing, and stunning visuals for your social presence.</p>
+    </div>
+  </section>
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>NAD Seniority System</h3>
-                <p>A comprehensive solution for managing and tracking employee seniority data with real-time updates from Google Sheets.</p>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#"><i class="fas fa-user-circle"></i> About NAD</a></li>
-                    <li><a href="#"><i class="fas fa-file-contract"></i> Policies</a></li>
-                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
-                    <li><a href="#"><i class="fas fa-download"></i> Downloads</a></li>
-                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Important Dates</a></li>
-                    <li><a href="#"><i class="fas fa-envelope"></i> Contact Support</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            &copy; 2023 NAD Employees Seniority Management System. All rights reserved.
-        </div>
-    </footer>
+  <section class="gallery">
+    <h2>Our Creative Showcase</h2>
+    <div class="gallery-grid">
+      <img src="img/graphics/birthday.jpg" alt="Birthday Banner">
+      <img src="img/graphics/wedding.jpg" alt="Wedding Card">
+      <img src="img/graphics/logo.jpg" alt="Logo Design">
+      <img src="img/graphics/video.jpg" alt="Video Editing">
+      <img src="img/graphics/social.jpg" alt="Social Media Reel">
+      <img src="img/graphics/intro.jpg" alt="Intro Video">
+    </div>
+  </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script src="js/sheetHandler.js"></script>
+  <section class="cta">
+    <h2>Let’s Create Something Amazing Together!</h2>
+    <p>Whether it’s a personal event or a professional project, we’re here to design and deliver stunning graphics & videos.</p>
+    <a href="contact.html">Contact Us</a>
+  </section>
+
+  <!-- Footer Include -->
+  <div id="footer"></div>
+
+  <script src="js/include.js"></script>
 </body>
 </html>
