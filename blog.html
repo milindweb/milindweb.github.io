@@ -15,39 +15,39 @@
     }
     .blog-header {
       text-align: center;
-      padding: 40px 20px;
+      padding: 25px 15px;
       background: linear-gradient(135deg, #005bea, #00c6fb);
       color: white;
     }
     .blog-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 20px;
-      max-width: 1200px;
+      max-width: 900px;
       margin: auto;
+      padding: 10px;
     }
     .post-card {
+      display: flex;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      margin-bottom: 12px;
       overflow: hidden;
-      transition: transform 0.3s ease;
+      transition: background 0.2s;
     }
     .post-card:hover {
-      transform: translateY(-6px);
+      background: #f3f7ff;
     }
     .post-card img {
-      width: 100%;
-      height: 180px;
+      width: 90px;
+      height: 90px;
       object-fit: cover;
     }
     .post-content {
-      padding: 15px;
+      padding: 8px 12px;
+      flex: 1;
     }
     .post-content h3 {
-      margin: 0 0 10px;
-      font-size: 1.3rem;
+      margin: 0 0 4px;
+      font-size: 1.1rem;
     }
     .post-content h3 a {
       color: #005bea;
@@ -55,17 +55,18 @@
     }
     .post-content small {
       color: gray;
+      font-size: 0.85rem;
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
     .read-more {
       display: inline-block;
       color: #fff;
       background: #005bea;
-      padding: 8px 14px;
-      border-radius: 6px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
       text-decoration: none;
-      font-size: 0.9rem;
     }
     .read-more:hover {
       background: #0041b8;
@@ -78,7 +79,7 @@
 
   <section class="blog-header">
     <h1>Welcome to My Blog</h1>
-    <p>Explore articles on Microprocessors, Microcontrollers, Arduino, ESP32, and Employee Management Systems.</p>
+    <p>Explore Microprocessors, Microcontrollers, Arduino, ESP32, and Employee Management topics.</p>
   </section>
 
   <main class="blog-container">
@@ -102,9 +103,8 @@
       const title = card.getAttribute('data-title');
 
       fetch(url).then(response => {
-        // Use Last-Modified header if available
         const lastModified = response.headers.get("Last-Modified");
-        let dateText = "Unknown";
+        let dateText = "-- --";
         if (lastModified) {
           const date = new Date(lastModified);
           const options = { day: '2-digit', month: 'short' };
@@ -120,7 +120,6 @@
           </div>
         `;
       }).catch(() => {
-        // Fallback if fetch fails
         card.innerHTML = `
           <img src="${img}" alt="${title}">
           <div class="post-content">
