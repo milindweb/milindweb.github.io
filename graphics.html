@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Milindweb - Graphics & Video Designer</title>
+  <title>Graphics & Video Design | MilindWeb</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <style>
@@ -16,7 +16,8 @@
       background: linear-gradient(135deg, #005bea, #00c6fb);
       color: white;
       text-align: center;
-      padding: 50px 20px;
+      padding: 60px 20px;
+      animation: fadeDown 1s ease-in-out;
     }
     .hero h1 {
       font-size: 2.5rem;
@@ -28,12 +29,12 @@
       margin: auto;
     }
     .services {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: auto;
       padding: 40px 20px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      gap: 25px;
     }
     .card {
       background: white;
@@ -41,15 +42,24 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       padding: 20px;
       text-align: center;
-      transition: transform 0.3s;
+      transition: transform 0.4s, box-shadow 0.4s;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards;
     }
+    .card:nth-child(1) { animation-delay: 0.2s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+    .card:nth-child(4) { animation-delay: 0.8s; }
     .card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }
     .card i {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       color: #005bea;
       margin-bottom: 15px;
+      display: block;
+      animation: bounce 2s infinite;
     }
     .card h3 {
       margin-bottom: 10px;
@@ -64,6 +74,7 @@
     .gallery {
       background: #fff;
       padding: 40px 20px;
+      animation: fadeIn 1.5s ease-in-out;
     }
     .gallery h2 {
       text-align: center;
@@ -74,7 +85,7 @@
       max-width: 1100px;
       margin: auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 15px;
     }
     .gallery-grid img {
@@ -83,16 +94,18 @@
       object-fit: cover;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
     .gallery-grid img:hover {
-      transform: scale(1.05);
+      transform: scale(1.07);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     }
     .cta {
       text-align: center;
       padding: 40px 20px;
       background: linear-gradient(135deg, #00c6fb, #005bea);
       color: white;
+      animation: fadeUp 1s ease-in-out;
     }
     .cta a {
       background: white;
@@ -101,10 +114,29 @@
       font-size: 1rem;
       border-radius: 6px;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.3s;
     }
     .cta a:hover {
       background: #ddd;
+      transform: scale(1.05);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
   </style>
 </head>
@@ -114,29 +146,29 @@
 
   <section class="hero">
     <h1>Creative Graphics & Video Design</h1>
-    <p>From eye-catching birthday banners to stunning wedding cards, unique logos, and professional social media video editing — we bring your ideas to life with creativity and precision.</p>
+    <p>Birthday banners, wedding cards, logos, and pro video editing — designed to impress and engage your audience.</p>
   </section>
 
   <section class="services">
     <div class="card">
       <i class="bi bi-brush"></i>
       <h3>Birthday & Event Banners</h3>
-      <p>Make celebrations unforgettable with custom-designed birthday and event banners. Available in both print-ready and digital formats, perfect for social media invites.</p>
+      <p>Custom-designed banners for birthdays, anniversaries, and events. Print or digital formats available.</p>
     </div>
     <div class="card">
       <i class="bi bi-heart-fill"></i>
       <h3>Wedding & Invitation Cards</h3>
-      <p>Elegant, creative, and personalized wedding & invitation cards that capture the essence of your special day, tailored to your theme and style.</p>
+      <p>Elegant and unique designs tailored to your theme — perfect for weddings and special occasions.</p>
     </div>
     <div class="card">
       <i class="bi bi-palette-fill"></i>
       <h3>Logos & Branding</h3>
-      <p>We design professional logos and brand kits that reflect your identity and leave a lasting impression, whether for personal use or business growth.</p>
+      <p>Professional logos and branding kits to give your personal or business identity a creative edge.</p>
     </div>
     <div class="card">
       <i class="bi bi-camera-video"></i>
       <h3>Professional Video Editing</h3>
-      <p>From Instagram reels and YouTube intros to full vlog edits, we create videos with engaging transitions, music syncing, and stunning visuals for your social presence.</p>
+      <p>High-quality editing for reels, intros, vlogs, and social media videos with engaging transitions and effects.</p>
     </div>
   </section>
 
@@ -154,7 +186,7 @@
 
   <section class="cta">
     <h2>Let’s Create Something Amazing Together!</h2>
-    <p>Whether it’s a personal event or a professional project, we’re here to design and deliver stunning graphics & videos.</p>
+    <p>Whether it’s a personal event or a professional project, we’re here to deliver stunning graphics & videos.</p>
     <a href="contact.html">Contact Us</a>
   </section>
 
