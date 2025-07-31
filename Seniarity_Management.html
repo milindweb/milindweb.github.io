@@ -1,121 +1,741 @@
-<div id="app">
-    <h1>NAD Seniority & Promotion Management System</h1>
-    
-    <!-- Token Number Search -->
-    <div>
-        <h2>1. Token Number Search</h2>
-        <input type="text" id="token-input" placeholder="Enter Token Number">
-        <button onclick="searchByToken()">Search</button>
-        <div id="token-results"></div>
-    </div>
-    
-    <!-- Combine Posts -->
-    <div>
-        <h2>2. Combine Posts Seniority View</h2>
-        <select id="post1-select"></select>
-        <select id="post2-select"></select>
-        <select id="rank-select">
-            <option value="">All Ranks</option>
-            <option value="SK">SK</option>
-            <option value="HSK II">HSK II</option>
-            <option value="HSK I">HSK I</option>
-            <option value="MCM">MCM</option>
-        </select>
-        <button onclick="combinePosts()">Combine Posts</button>
-        <div id="combine-results"></div>
-    </div>
-    
-    <!-- Retirement Search -->
-    <div>
-        <h2>3. Dynamic Retirement Search</h2>
-        <input type="number" id="retirement-year" placeholder="Year (e.g., 2035)">
-        <select id="retirement-post1"></select>
-        <select id="retirement-post2">
-            <option value="">No second post</option>
-        </select>
-        <select id="retirement-rank1">
-            <option value="">All Ranks</option>
-            <option value="SK">SK</option>
-            <option value="HSK II">HSK II</option>
-            <option value="HSK I">HSK I</option>
-            <option value="MCM">MCM</option>
-        </select>
-        <select id="retirement-rank2">
-            <option value="">No second rank</option>
-        </select>
-        <button onclick="searchRetirements()">Search Retirements</button>
-        <div id="retirement-results"></div>
-    </div>
-</div>
-
-<script>
-// Extract Sheet ID from the provided URL
-const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/edit?usp=drivesdk';
-const SPREADSHEET_ID = SHEET_URL.split('/')[5];
-const API_KEY = 'AIzaSyDxJaP_1q8J0q4tHKnQeQbQjZQJwYVH2F8'; // Replace with your actual API key
-
-let employeeData = [];
-let columnMapping = {};
-let sanctionedPosts = {};
-
-// Initialize when page loads
-window.onload = function() {
-    loadData();
-};
-
-// Load data from Google Sheets
-async function loadData() {
-    try {
-        // Load employee data
-        const range = 'Sheet1!A1:Z'; // Adjust sheet name if needed
-        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${range}?key=${API_KEY}`;
-        const response = await fetch(url);
-        const json = await response.json();
-        
-        if (!json.values || json.values.length < 2) {
-            throw new Error('No data found in sheet');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAD Seniority & Promotion Management</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a2a6c, #2a4d69);
+            color: #333;
+            min-height: 100vh;
         }
         
-        // Dynamically map columns based on header row
-        const headers = json.values[0];
-        columnMapping = {
-            tokenNo: headers.indexOf('Token No'),
-            name: headers.indexOf('Name'),
-            post: headers.indexOf('Post'),
-            currentRank: headers.indexOf('Current Rank'),
-            dateOfRank: headers.indexOf('Date of Rank'),
-            retirementDate: headers.indexOf('Retirement Date')
-            // Add more mappings if needed
-        };
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+        }
         
-        // Process employee data
-        employeeData = json.values.slice(1).map(row => {
-            return {
-                tokenNo: row[columnMapping.tokenNo] || '',
-                name: row[columnMapping.name] || '',
-                post: row[columnMapping.post] || '',
-                currentRank: row[columnMapping.currentRank] || '',
-                dateOfRank: row[columnMapping.dateOfRank] || '',
-                retirementDate: row[columnMapping.retirementDate] || '',
-                // Include all original data for flexibility
-                rawData: row
-            };
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2a4d69;
+        }
+        
+        h1 {
+            color: #2a4d69;
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: #4b86b4;
+            font-size: 1.2rem;
+            margin-top: 5px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #4b86b4;
+        }
+        
+        h2 {
+            color: #2a4d69;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .input-group > * {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2a4d69;
+        }
+        
+        input, select, button {
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        button {
+            background: linear-gradient(to right, #2a4d69, #4b86b4);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            max-width: 200px;
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, #1a3a5f, #3a76a4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .results {
+            margin-top: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: #e9ecef;
+            color: #2a4d69;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f1f7fd;
+        }
+        
+        .highlight {
+            background-color: #fffacd !important;
+            font-weight: 600;
+        }
+        
+        .tie {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .summary {
+            background: #eaf7ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border-left: 4px solid #4b86b4;
+        }
+        
+        .promotion-path {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f8f5;
+            border-radius: 6px;
+            border-left: 4px solid #1abc9c;
+        }
+        
+        .promotion-step {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #d1e7dd;
+        }
+        
+        .error {
+            color: #e74c3c;
+            padding: 15px;
+            background: #fdeded;
+            border-radius: 6px;
+            margin-top: 15px;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .status {
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #6c757d;
+        }
+        
+        .system-info {
+            background: #eaf7ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .system-info h3 {
+            margin-top: 0;
+            color: #2a4d69;
+        }
+        
+        .rank-hierarchy {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .rank-item {
+            background: #4b86b4;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            min-width: 100px;
+            font-weight: 600;
+        }
+        
+        .rank-item.highlight {
+            background: #2a4d69;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .input-group {
+                flex-direction: column;
+            }
+            
+            button {
+                max-width: 100%;
+            }
+            
+            .rank-hierarchy {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NAD Seniority & Promotion Management</h1>
+            <div class="subtitle">Dynamic Tracking System for Employee Seniority and Promotions</div>
+        </header>
+        
+        <div class="system-info">
+            <h3>System Overview</h3>
+            <p>This system integrates with Google Sheets to provide real-time seniority tracking, promotion analysis, and retirement planning for NAD employees up to MCM rank.</p>
+            
+            <div class="rank-hierarchy">
+                <div class="rank-item">USL</div>
+                <div class="rank-item">SSK</div>
+                <div class="rank-item">Tradesman Mate</div>
+                <div class="rank-item highlight">SK</div>
+                <div class="rank-item highlight">HSK II</div>
+                <div class="rank-item highlight">HSK I</div>
+                <div class="rank-item highlight">MCM</div>
+            </div>
+            
+            <p>System tracks: Token Number Search, Promotion Timeline, Retirement Analysis</p>
+        </div>
+        
+        <!-- Section 1: Token Number Search -->
+        <div class="section">
+            <h2>1. Token Number Search</h2>
+            <p>Enter an employee's token number to view their details, seniority position, and promotion timeline.</p>
+            
+            <div class="input-group">
+                <div>
+                    <label for="token-input">Token Number:</label>
+                    <input type="text" id="token-input" placeholder="Enter token number (e.g., 1077)">
+                </div>
+                <div>
+                    <label>&nbsp;</label>
+                    <button onclick="searchByToken()">Search Employee</button>
+                </div>
+            </div>
+            
+            <div class="status" id="token-status">Enter token number and click search</div>
+            <div class="results" id="token-results"></div>
+        </div>
+        
+        <!-- Section 2: Retirement Search -->
+        <div class="section">
+            <h2>2. Retirement Search</h2>
+            <p>Find employees retiring up to a specific year. Filter by post and rank as needed.</p>
+            
+            <div class="input-group">
+                <div>
+                    <label for="retirement-year">Retirement Year:</label>
+                    <input type="number" id="retirement-year" placeholder="Enter year (e.g., 2035)" min="2023" max="2100">
+                </div>
+                <div>
+                    <label for="retirement-post">Post (Optional):</label>
+                    <select id="retirement-post">
+                        <option value="">All Posts</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div>
+                    <label for="retirement-rank">Rank (Optional):</label>
+                    <select id="retirement-rank">
+                        <option value="">All Ranks</option>
+                        <option value="SK">SK</option>
+                        <option value="HSK II">HSK II</option>
+                        <option value="HSK I">HSK I</option>
+                        <option value="MCM">MCM</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <div>
+                    <label>&nbsp;</label>
+                    <button onclick="searchRetirements()">Search Retirements</button>
+                </div>
+            </div>
+            
+            <div class="status" id="retirement-status">Enter retirement year and click search</div>
+            <div class="results" id="retirement-results"></div>
+        </div>
+        
+        <div class="footer">
+            <p>NAD Seniority & Promotion Management System | Data fetched live from Google Sheets</p>
+            <p>Sheet1: Employee Data | Sheet2: Sanctioned Posts</p>
+        </div>
+    </div>
+
+    <script>
+        // Google Sheets configuration
+        const SPREADSHEET_ID = '1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo';
+        const API_KEY = 'AIzaSyDxJaP_1q8J0q4tHKnQeQbQjZQJwYVH2F8';
+        
+        // Global data stores
+        let employeeData = [];
+        let sanctionedPosts = {};
+        let columnMapping = {};
+        let posts = [];
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
         });
         
-        // Extract unique posts for dropdowns
-        const posts = [...new Set(employeeData.map(emp => emp.post))].sort();
-        populateDropdown('post1-select', posts, 'All Posts');
-        populateDropdown('post2-select', posts, 'No second post');
-        populateDropdown('retirement-post1', posts, 'All Posts');
+        // Load data from both Google Sheets
+        async function loadData() {
+            try {
+                // Show loading status
+                document.getElementById('token-status').textContent = 'Loading employee data...';
+                document.getElementById('retirement-status').textContent = 'Loading employee data...';
+                
+                // Load employee data (Sheet1)
+                const employeeUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1!A1:Z1000?key=${API_KEY}`;
+                const employeeResponse = await fetch(employeeUrl);
+                const employeeJson = await employeeResponse.json();
+                
+                if (!employeeJson.values || employeeJson.values.length < 2) {
+                    throw new Error('No data found in Employee sheet');
+                }
+                
+                // Map columns dynamically
+                const empHeaders = employeeJson.values[0];
+                columnMapping = {
+                    tokenNo: empHeaders.indexOf('Token No'),
+                    name: empHeaders.indexOf('Name'),
+                    post: empHeaders.indexOf('Post'),
+                    currentRank: empHeaders.indexOf('Current Rank'),
+                    dateOfRank: empHeaders.indexOf('Date of Rank'),
+                    retirementDate: empHeaders.indexOf('Retirement Date')
+                };
+                
+                // Process employee data
+                employeeData = employeeJson.values.slice(1).map(row => {
+                    return {
+                        tokenNo: row[columnMapping.tokenNo] || '',
+                        name: row[columnMapping.name] || '',
+                        post: row[columnMapping.post] || '',
+                        currentRank: row[columnMapping.currentRank] || '',
+                        dateOfRank: row[columnMapping.dateOfRank] || '',
+                        retirementDate: row[columnMapping.retirementDate] || '',
+                        rawData: row
+                    };
+                });
+                
+                // Extract unique posts
+                posts = [...new Set(employeeData.map(emp => emp.post))].sort();
+                
+                // Populate post dropdowns
+                const postSelect = document.getElementById('retirement-post');
+                postSelect.innerHTML = '<option value="">All Posts</option>';
+                posts.forEach(post => {
+                    postSelect.innerHTML += `<option value="${post}">${post}</option>`;
+                });
+                
+                // Load sanctioned posts data (Sheet2)
+                document.getElementById('token-status').textContent = 'Loading sanctioned posts data...';
+                const postsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet2!A1:Z100?key=${API_KEY}`;
+                const postsResponse = await fetch(postsUrl);
+                const postsJson = await postsResponse.json();
+                
+                if (!postsJson.values || postsJson.values.length < 2) {
+                    throw new Error('No data found in Sanctioned Posts sheet');
+                }
+                
+                // Process sanctioned posts data
+                const postHeaders = postsJson.values[0];
+                const rankCols = postHeaders.slice(1); // First column is Post, rest are ranks
+                
+                postsJson.values.slice(1).forEach(row => {
+                    const postName = row[0];
+                    if (!postName) return;
+                    
+                    sanctionedPosts[postName] = {};
+                    rankCols.forEach((rank, idx) => {
+                        sanctionedPosts[postName][rank] = parseInt(row[idx+1]) || 0;
+                    });
+                });
+                
+                // Update status
+                document.getElementById('token-status').textContent = `Data loaded: ${employeeData.length} employees, ${Object.keys(sanctionedPosts).length} posts`;
+                document.getElementById('retirement-status').textContent = `Data loaded: ${employeeData.length} employees`;
+                
+                console.log('Data loaded successfully');
+                console.log('Sanctioned Posts:', sanctionedPosts);
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('token-status').innerHTML = `<div class="error">Error: ${error.message}</div>`;
+                document.getElementById('retirement-status').innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
         
-        console.log('Data loaded successfully:', employeeData.length, 'employees');
-    } catch (error) {
-        console.error('Error loading data:', error);
-        alert('Error loading data: ' + error.message);
-    }
-}
-
-// [Rest of the code remains exactly the same as in previous implementation]
-// Helper functions (populateDropdown, searchByToken, combinePosts, searchRetirements, etc.)
-// would follow here unchanged from the previous implementation
-</script>
+        // 1. Token Number Search Functionality
+        function searchByToken() {
+            const tokenInput = document.getElementById('token-input').value.trim();
+            const resultsDiv = document.getElementById('token-results');
+            resultsDiv.innerHTML = '';
+            
+            if (!tokenInput) {
+                document.getElementById('token-status').innerHTML = `<div class="error">Please enter a token number</div>`;
+                return;
+            }
+            
+            const employee = employeeData.find(emp => emp.tokenNo === tokenInput);
+            if (!employee) {
+                document.getElementById('token-status').innerHTML = `<div class="error">No employee found with token number: ${tokenInput}</div>`;
+                return;
+            }
+            
+            // Display employee details
+            let html = `
+                <h3>Employee Details</h3>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Token No.</th>
+                        <th>Post</th>
+                        <th>Current Rank</th>
+                        <th>Date of Current Rank</th>
+                        <th>Retirement Date</th>
+                    </tr>
+                    <tr>
+                        <td>${employee.name || 'N/A'}</td>
+                        <td>${employee.tokenNo || 'N/A'}</td>
+                        <td>${employee.post || 'N/A'}</td>
+                        <td>${employee.currentRank || 'N/A'}</td>
+                        <td>${employee.dateOfRank || 'N/A'}</td>
+                        <td>${employee.retirementDate || 'N/A'}</td>
+                    </tr>
+                </table>
+            `;
+            
+            // Calculate seniority position
+            const rankEmployees = employeeData.filter(emp => 
+                emp.post === employee.post && 
+                emp.currentRank === employee.currentRank
+            ).sort((a, b) => new Date(a.dateOfRank) - new Date(b.dateOfRank));
+            
+            const position = rankEmployees.findIndex(emp => emp.tokenNo === tokenInput) + 1;
+            const totalInRank = rankEmployees.length;
+            
+            html += `
+                <div class="summary">
+                    <h4>Seniority Position</h4>
+                    <p><strong>Rank:</strong> ${employee.currentRank}</p>
+                    <p><strong>Position:</strong> ${position} of ${totalInRank}</p>
+                    <p><strong>Seniors:</strong> ${position - 1} | <strong>Juniors:</strong> ${totalInRank - position}</p>
+                </div>
+            `;
+            
+            // Generate promotion timeline
+            html += `<div class="promotion-path">
+                <h4>Promotion Timeline</h4>
+                ${generatePromotionPath(employee)}
+            </div>`;
+            
+            // Display rank-wise seniority
+            html += `<h3>Rank-wise Seniority (${employee.post} - ${employee.currentRank})</h3>`;
+            html += generateSeniorityTable(rankEmployees, employee.tokenNo);
+            
+            resultsDiv.innerHTML = html;
+            document.getElementById('token-status').textContent = `Showing results for Token: ${tokenInput}`;
+        }
+        
+        // Generate promotion path for an employee
+        function generatePromotionPath(employee) {
+            const ranks = ['SK', 'HSK II', 'HSK I', 'MCM'];
+            const currentRankIndex = ranks.indexOf(employee.currentRank);
+            
+            if (currentRankIndex === -1) {
+                return `<div class="error">Invalid current rank: ${employee.currentRank}</div>`;
+            }
+            
+            if (currentRankIndex === ranks.length - 1) {
+                return `<p>No further promotions possible (already at MCM rank)</p>`;
+            }
+            
+            let html = '';
+            let currentRank = employee.currentRank;
+            let nextRank = ranks[currentRankIndex + 1];
+            
+            // Get sanctioned posts data for this post
+            const postData = sanctionedPosts[employee.post];
+            if (!postData) {
+                return `<div class="error">No sanctioned posts data available for ${employee.post}</div>`;
+            }
+            
+            // Calculate position for promotion
+            const currentRankEmployees = employeeData.filter(emp => 
+                emp.post === employee.post && 
+                emp.currentRank === currentRank
+            ).sort((a, b) => new Date(a.dateOfRank) - new Date(b.dateOfRank));
+            
+            const currentPosition = currentRankEmployees.findIndex(emp => emp.tokenNo === employee.tokenNo) + 1;
+            
+            // Get employees in next rank
+            const nextRankEmployees = employeeData.filter(emp => 
+                emp.post === employee.post && 
+                emp.currentRank === nextRank
+            ).sort((a, b) => new Date(a.dateOfRank) - new Date(b.dateOfRank));
+            
+            const sanctionedNextRank = postData[nextRank] || 0;
+            const filledNextRank = nextRankEmployees.length;
+            const availableVacancies = sanctionedNextRank - filledNextRank;
+            const promotionPosition = currentPosition - availableVacancies;
+            
+            html += `<div class="promotion-step">
+                <p><strong>Current Rank:</strong> ${currentRank} (Position: ${currentPosition})</p>
+                <p><strong>Next Rank:</strong> ${nextRank}</p>
+                <p><strong>Sanctioned:</strong> ${sanctionedNextRank} | <strong>Filled:</strong> ${filledNextRank} | <strong>Vacancies:</strong> ${availableVacancies}</p>
+            </div>`;
+            
+            if (promotionPosition <= 0) {
+                html += `<p><strong>Promotion Status:</strong> Eligible for immediate promotion to ${nextRank}!</p>`;
+            } else {
+                // Estimate promotion year based on retirement of seniors
+                html += `<p><strong>Promotion Position:</strong> ${promotionPosition} (needs ${promotionPosition} retirements/promotions)</p>`;
+                
+                if (nextRankEmployees.length > 0) {
+                    const retirementDates = nextRankEmployees
+                        .slice(0, promotionPosition)
+                        .map(emp => new Date(emp.retirementDate))
+                        .filter(date => !isNaN(date.getTime()));
+                    
+                    if (retirementDates.length > 0) {
+                        const latestRetirement = new Date(Math.max(...retirementDates));
+                        const promotionYear = latestRetirement.getFullYear() + 1;
+                        html += `<p><strong>Estimated Promotion Year:</strong> ${promotionYear} (after retirement of seniors)</p>`;
+                    } else {
+                        html += `<p><strong>Estimated Promotion Year:</strong> Cannot determine (missing retirement data)</p>`;
+                    }
+                } else {
+                    html += `<p><strong>Estimated Promotion Year:</strong> No current ${nextRank} employees found</p>`;
+                }
+            }
+            
+            return html;
+        }
+        
+        // 2. Retirement Search Functionality
+        function searchRetirements() {
+            const yearInput = document.getElementById('retirement-year').value;
+            const postFilter = document.getElementById('retirement-post').value;
+            const rankFilter = document.getElementById('retirement-rank').value;
+            const resultsDiv = document.getElementById('retirement-results');
+            resultsDiv.innerHTML = '';
+            
+            if (!yearInput) {
+                document.getElementById('retirement-status').innerHTML = `<div class="error">Please enter a year</div>`;
+                return;
+            }
+            
+            const year = parseInt(yearInput);
+            if (isNaN(year) || year < 2023 || year > 2100) {
+                document.getElementById('retirement-status').innerHTML = `<div class="error">Please enter a valid year between 2023-2100</div>`;
+                return;
+            }
+            
+            // Filter employees
+            let retiringEmployees = employeeData.filter(emp => {
+                // Check retirement date
+                if (!emp.retirementDate) return false;
+                const retirementYear = new Date(emp.retirementDate).getFullYear();
+                if (isNaN(retirementYear) return false;
+                if (retirementYear > year) return false;
+                
+                // Check post filter
+                if (postFilter && emp.post !== postFilter) return false;
+                
+                // Check rank filter
+                if (rankFilter && emp.currentRank !== rankFilter) return false;
+                
+                return true;
+            });
+            
+            // Sort by retirement date
+            retiringEmployees.sort((a, b) => {
+                const dateA = new Date(a.retirementDate);
+                const dateB = new Date(b.retirementDate);
+                return dateA - dateB;
+            });
+            
+            // Generate results
+            let html = `<h3>Employees Retiring by ${year}: ${retiringEmployees.length}</h3>`;
+            
+            if (retiringEmployees.length === 0) {
+                html += `<p>No employees found matching the criteria.</p>`;
+            } else {
+                // Generate summary by post and rank
+                const postSummary = {};
+                const rankSummary = {};
+                
+                retiringEmployees.forEach(emp => {
+                    postSummary[emp.post] = (postSummary[emp.post] || 0) + 1;
+                    rankSummary[emp.currentRank] = (rankSummary[emp.currentRank] || 0) + 1;
+                });
+                
+                html += `<div class="summary">
+                    <h4>Summary</h4>
+                    <p><strong>By Post:</strong></p>
+                    <ul>`;
+                
+                for (const [post, count] of Object.entries(postSummary)) {
+                    html += `<li>${post}: ${count}</li>`;
+                }
+                
+                html += `</ul><p><strong>By Rank:</strong></p><ul>`;
+                
+                for (const [rank, count] of Object.entries(rankSummary)) {
+                    html += `<li>${rank}: ${count}</li>`;
+                }
+                
+                html += `</ul></div>`;
+                
+                // Generate table
+                html += `<table>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Token No.</th>
+                        <th>Post</th>
+                        <th>Rank</th>
+                        <th>Retirement Date</th>
+                    </tr>`;
+                
+                retiringEmployees.forEach((emp, index) => {
+                    // Check for tie (same retirement date as previous)
+                    const isTie = index > 0 && emp.retirementDate === retiringEmployees[index-1].retirementDate;
+                    
+                    html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${emp.name}</td>
+                        <td>${emp.tokenNo}</td>
+                        <td>${emp.post}</td>
+                        <td>${emp.currentRank}</td>
+                        <td class="${isTie ? 'tie' : ''}">${emp.retirementDate}${isTie ? ' ★' : ''}</td>
+                    </tr>`;
+                });
+                
+                html += `</table>`;
+            }
+            
+            resultsDiv.innerHTML = html;
+            document.getElementById('retirement-status').textContent = `Showing ${retiringEmployees.length} employees retiring by ${year}`;
+        }
+        
+        // Helper function to generate seniority table
+        function generateSeniorityTable(employees, highlightToken = null) {
+            // Group by date to find ties
+            const dateGroups = {};
+            employees.forEach(emp => {
+                const dateStr = emp.dateOfRank;
+                if (!dateGroups[dateStr]) dateGroups[dateStr] = [];
+                dateGroups[dateStr].push(emp);
+            });
+            
+            // Get sorted dates
+            const sortedDates = Object.keys(dateGroups).sort((a, b) => new Date(a) - new Date(b));
+            
+            let html = `<table>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Token No.</th>
+                    <th>Date of Rank</th>
+                    <th>Retirement Date</th>
+                </tr>`;
+            
+            let counter = 1;
+            sortedDates.forEach(date => {
+                const emps = dateGroups[date];
+                const isTie = emps.length > 1;
+                
+                emps.forEach(emp => {
+                    const isHighlighted = highlightToken === emp.tokenNo;
+                    
+                    html += `
+                    <tr ${isHighlighted ? 'class="highlight"' : ''}>
+                        <td>${counter++}</td>
+                        <td>${emp.name}</td>
+                        <td>${emp.tokenNo}</td>
+                        <td class="${isTie ? 'tie' : ''}">${date}${isTie ? ' ★' : ''}</td>
+                        <td>${emp.retirementDate}</td>
+                    </tr>`;
+                });
+            });
+            
+            html += `</table>`;
+            return html;
+        }
+    </script>
+</body>
+</html>
