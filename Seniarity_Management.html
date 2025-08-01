@@ -14,7 +14,7 @@
 
   <div id="employeeDetails"></div>
 
-<script>
+  <script>
 // Links to published CSV exports
 const sheet1URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=0";
 const sheet2URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=378290522";
@@ -111,47 +111,118 @@ function showSuggestions() {
   suggestionsDiv.style.display = matches.length > 0 ? "block" : "none";
 }
 
-// Search Employee
-function searchEmployee() {
-  const token = document.getElementById("tokenInput").value.trim();
-  const div = document.getElementById("employeeDetails");
-  div.innerHTML = "";
-  const emp = employees.find(e => e["Tokan No."] === token);
-  if (!emp) {
-    div.innerHTML = `<p>No employee found with token: ${token}</p>`;
-    return;
+// Utility: Parse date (DD/MM/YYYY or YYYY-MM-DD supported)
+function parseDate(str) {
+  if (!str) return null;
+  const parts = str.includes("/") ? str.split("/") : str.split("-");
+  if (parts.length === 3) {
+    let d = parseInt(parts[0]), m = parseInt(parts[1]) - 1, y = parseInt(parts[2]);
+    if (y < 100) y += 2000; // handle YY format
+    return new Date(y, m, d);
   }
-  div.innerHTML = `
-    <h4>Employee Details</h4>
-    <table border="1" cellpadding="5">
-      ${headers1.map(h => `<tr><th>${h}</th><td>${emp[h]}</td></tr>`).join("")}
-    </table>
-    <h4>Promotion Timeline</h4>
-    ${promotionTimeline(emp)}
-  `;
+  return null;
 }
 
-// Promotion Timeline
+// Show Seniority List for same Post & Rank
+function showSeniority(emp) {
+  const listDiv = document.createElement("div");
+  listDiv.innerHTML = `<h4>Seniority in ${emp["Post"]} – ${emp["Rank"]}</h4>`;
+
+  // Get sanctioned posts info
+  const postInfo = sanctionedPosts.find(p => p["Post"] === emp["Post"] && p["Rank"] === emp["Rank"]);
+  const totalSanctioned = postInfo ? parseInt(postInfo["Sactioned vacancy"]) || 0 : "N/A";
+
+  // Collect peers
+  let peers = employees.filter(e => e["Post"] === emp["Post"] && e["Rank"] === emp["Rank"]);
+  peers.forEach(p => p._dateRank = parseDate(p[`Date of ${emp["Rank"]}`]) || parseDate(p["Date of Appointment"]));
+
+  // Sort by date of current rank
+  peers.sort((a,b) => a._dateRank - b._dateRank);
+
+  // Build list
+  let html = `<p>Total Sanctioned: ${totalSanctioned}, Present: ${peers.length}</p>`;
+  html += "<ol>";
+  peers.forEach(p => {
+    const highlight = (p["Tokan No."] === emp["Tokan No."]) ? "style='background:yellow;'" : "";
+    const dateStr = p._dateRank ? p._dateRank.toLocaleDateString("en-GB") : "N/A";
+    html += `<li ${highlight}>${p["Name"]} (Token ${p["Tokan No."]}) – DoR: ${p["Date of Retirement"]} – Rank Date: ${dateStr}</li>`;
+  });
+  html += "</ol>";
+  listDiv.innerHTML += html;
+
+  return listDiv.outerHTML;
+}
+
+// Calculate Promotion Timeline with retirements
 function promotionTimeline(emp) {
-  const rankOrder = ["Tradesman Mate","USL","SSK","SK","HSK II","HSK I","MCM"];
-  const currentRank = emp["Rank"];
-  const idx = rankOrder.indexOf(currentRank);
+  const rankOrder = ["USL","SSK","Tradesman Mate","SK","HSK II","HSK I","MCM"];
+  const idx = rankOrder.indexOf(emp["Rank"]);
   if (idx === -1) return "<p>Rank not in promotion ladder</p>";
 
+  const retirementDate = parseDate(emp["Date of Retirement"]);
+  if (!retirementDate) return "<p>No retirement date available</p>";
+
   let html = "<ul>";
-  for (let i = idx + 1; i < rankOrder.length; i++) {
+
+  for (let i = idx+1; i < rankOrder.length; i++) {
     const nextRank = rankOrder[i];
-    const vacancyInfo = sanctionedPosts.find(p => p["Rank"] === nextRank && p["Post"] === emp["Post"]);
-    const sanctioned = vacancyInfo ? parseInt(vacancyInfo["Sactioned vacancy"]) || 0 : 0;
-    const seniors = employees.filter(e => e["Rank"] === nextRank).length;
-    const estimate = sanctioned > 0 ? Math.ceil(seniors / sanctioned) : "N/A";
-    html += `<li>${nextRank}: ~${estimate} years</li>`;
+    const sancInfo = sanctionedPosts.find(p => p["Post"]===emp["Post"] && p["Rank"]===nextRank);
+    const sanctioned = sancInfo ? parseInt(sancInfo["Sactioned vacancy"]) || 0 : 0;
+    if (sanctioned === 0) {
+      html += `<li>${emp["Post"]} ${nextRank} → No sanctioned posts</li>`;
+      continue;
+    }
+
+    // All candidates in nextRank
+    let candidates = employees.filter(e => e["Post"]===emp["Post"] && e["Rank"]===nextRank);
+    candidates.forEach(c => {
+      c._dateRank = parseDate(c[`Date of ${nextRank}`]) || parseDate(c["Date of Appointment"]);
+      c._retire = parseDate(c["Date of Retirement"]);
+    });
+    candidates.sort((a,b) => a._dateRank - b._dateRank || (a["Tokan No."]||"").localeCompare(b["Tokan No."]));
+
+    // How many seniors ahead in nextRank
+    let position = candidates.length + 1; // worst case: he comes after all
+    let year = new Date().getFullYear();
+    let foundYear = null;
+
+    while (year <= retirementDate.getFullYear() && !foundYear) {
+      const retiresThisYear = candidates.filter(c => c._retire && c._retire.getFullYear() === year).length;
+      position -= retiresThisYear;
+      if (position <= sanctioned) {
+        foundYear = year;
+      }
+      year++;
+    }
+
+    if (foundYear) {
+      html += `<li>${emp["Post"]} ${nextRank} → ${foundYear} 
+                 (Sanctioned: ${sanctioned}, Seniors: ${candidates.length})</li>`;
+    } else {
+      html += `<li>${emp["Post"]} ${nextRank} → Not Promoted (Retired ${retirementDate.getFullYear()})</li>`;
+      break; // stop further promotions
+    }
   }
+
+  html += `<li>Retirement → ${retirementDate.getFullYear()}</li>`;
   html += "</ul>";
   return html;
 }
 
+// Extend searchEmployee to include seniority list
+const oldSearchEmployee = searchEmployee;
+searchEmployee = function() {
+  oldSearchEmployee();
+  const token = document.getElementById("tokenInput").value.trim();
+  const div = document.getElementById("employeeDetails");
+  const emp = employees.find(e => e["Tokan No."] === token);
+  if (emp) {
+    div.innerHTML += showSeniority(emp);
+  }
+};
+
 window.onload = loadData;
 </script>
+
 </body>
 </html>
