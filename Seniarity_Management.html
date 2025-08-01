@@ -1,169 +1,166 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>NAD Seniority System - Live Data</title>
+  <meta charset="UTF-8">
+  <title>NAD Seniority & Promotion Management</title>
 </head>
 <body>
-    <h1>NAD Seniority System - Live Data</h1>
+  <h2>NAD Seniority & Promotion Management</h2>
 
-    <div>
-        <h2>Employee Search</h2>
-        <input type="text" id="tokenInput" placeholder="Enter Token Number" oninput="showSuggestions()">
-        <div id="suggestions" style="border:1px solid #ccc;display:none;"></div>
-        <button onclick="searchEmployee()">Search</button>
-    </div>
+  <h3>Search Employee</h3>
+  <input type="text" id="tokenInput" placeholder="Enter Token Number" oninput="showSuggestions()">
+  <div id="suggestions" style="border:1px solid #ccc;display:none;"></div>
+  <button onclick="searchEmployee()">Search</button>
 
-    <div id="searchResults"></div>
+  <div id="employeeDetails"></div>
 
-    <h2>Sheet1 - Employee Data</h2>
-    <div id="sheet1Data"></div>
+  <h3>Employee Data (Sheet1)</h3>
+  <div id="sheet1Data"></div>
 
-    <h2>Sheet2 - Sanctioned Posts</h2>
-    <div id="sheet2Data"></div>
+  <h3>Sanctioned Posts (Sheet2)</h3>
+  <div id="sheet2Data"></div>
 
-    <script>
-        // Your Google Sheet CSV export links
-        const sheet1URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=0";
-        const sheet2URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=378290522";
+<script>
+const sheet1URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=0";
+const sheet2URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=378290522";
 
-        let employeeData = [];
-        let sanctionedPosts = {};
-        let headers1 = [];
+let employees = [];
+let sanctionedPosts = [];
+let headers1 = [];
+let headers2 = [];
 
-        // Parse CSV safely
-        function parseCSV(text) {
-            return text.trim().split("\n").map(row =>
-                row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(cell => cell.replace(/^"|"$/g, "").trim())
-            );
-        }
+// CSV Parser
+function parseCSV(text) {
+  return text.trim().split("\n").map(row =>
+    row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(cell =>
+      cell.replace(/^"|"$/g, "").trim()
+    )
+  );
+}
 
-        // Load both sheets
-        async function initialize() {
-            try {
-                const [sheet1Res, sheet2Res] = await Promise.all([
-                    fetch(sheet1URL).then(r => r.text()),
-                    fetch(sheet2URL).then(r => r.text())
-                ]);
+// Load Sheets
+async function loadData() {
+  try {
+    const [res1, res2] = await Promise.all([
+      fetch(sheet1URL).then(r => r.text()),
+      fetch(sheet2URL).then(r => r.text())
+    ]);
 
-                // Process Sheet1
-                const rows1 = parseCSV(sheet1Res);
-                headers1 = rows1[0];
-                employeeData = rows1.slice(1).map(r => {
-                    let obj = {};
-                    headers1.forEach((h, i) => obj[h] = r[i] || "");
-                    return obj;
-                });
+    // Sheet1
+    const rows1 = parseCSV(res1);
+    headers1 = rows1[0];
+    employees = rows1.slice(1).map(r => {
+      let obj = {};
+      headers1.forEach((h, i) => obj[h] = r[i] || "");
+      return obj;
+    });
 
-                // Process Sheet2
-                const rows2 = parseCSV(sheet2Res);
-                const headers2 = rows2[0];
-                sanctionedPosts = {};
-                rows2.slice(1).forEach(r => {
-                    const post = r[0];
-                    if (post) {
-                        sanctionedPosts[post] = {};
-                        headers2.forEach((h, i) => {
-                            if (i > 0) sanctionedPosts[post][h] = parseInt(r[i] || 0);
-                        });
-                    }
-                });
+    // Sheet2
+    const rows2 = parseCSV(res2);
+    headers2 = rows2[0];
+    sanctionedPosts = rows2.slice(1).map(r => {
+      let obj = {};
+      headers2.forEach((h, i) => obj[h] = r[i] || "");
+      return obj;
+    });
 
-                displayAllData();
-            } catch (err) {
-                document.getElementById("sheet1Data").innerHTML = "<p>Error loading data. Check sheet sharing.</p>";
-                console.error(err);
-            }
-        }
+    displayAllData();
+  } catch (err) {
+    document.getElementById("sheet1Data").innerHTML = "<p>Error loading data. Did you publish the sheet?</p>";
+    console.error(err);
+  }
+}
 
-        // Show suggestions while typing
-        function showSuggestions() {
-            const input = document.getElementById("tokenInput").value.trim().toLowerCase();
-            const suggestionsDiv = document.getElementById("suggestions");
-            suggestionsDiv.innerHTML = "";
-            if (input.length < 2) {
-                suggestionsDiv.style.display = "none";
-                return;
-            }
-            const matches = employeeData.filter(emp => (emp["Tokan No."] || "").toLowerCase().includes(input)).slice(0, 5);
-            matches.forEach(emp => {
-                const div = document.createElement("div");
-                div.textContent = `${emp["Tokan No."]} - ${emp["Name"]}`;
-                div.style.cursor = "pointer";
-                div.onclick = () => {
-                    document.getElementById("tokenInput").value = emp["Tokan No."];
-                    suggestionsDiv.style.display = "none";
-                    searchEmployee();
-                };
-                suggestionsDiv.appendChild(div);
-            });
-            suggestionsDiv.style.display = matches.length > 0 ? "block" : "none";
-        }
+// Show Suggestions
+function showSuggestions() {
+  const input = document.getElementById("tokenInput").value.trim().toLowerCase();
+  const suggestionsDiv = document.getElementById("suggestions");
+  suggestionsDiv.innerHTML = "";
+  if (input.length < 2) {
+    suggestionsDiv.style.display = "none";
+    return;
+  }
+  const matches = employees.filter(e => (e["Tokan No."] || "").toLowerCase().includes(input)).slice(0, 5);
+  matches.forEach(emp => {
+    const div = document.createElement("div");
+    div.textContent = `${emp["Tokan No."]} - ${emp["Name"]}`;
+    div.style.cursor = "pointer";
+    div.onclick = () => {
+      document.getElementById("tokenInput").value = emp["Tokan No."];
+      suggestionsDiv.style.display = "none";
+      searchEmployee();
+    };
+    suggestionsDiv.appendChild(div);
+  });
+  suggestionsDiv.style.display = matches.length > 0 ? "block" : "none";
+}
 
-        // Search employee
-        function searchEmployee() {
-            const token = document.getElementById("tokenInput").value.trim();
-            const resultsDiv = document.getElementById("searchResults");
-            resultsDiv.innerHTML = "";
-            if (!token) {
-                resultsDiv.innerHTML = "<p>Please enter a token number</p>";
-                return;
-            }
-            const emp = employeeData.find(e => e["Tokan No."] === token);
-            if (!emp) {
-                resultsDiv.innerHTML = `<p>No employee found with token: ${token}</p>`;
-                return;
-            }
-            resultsDiv.innerHTML = `
-                <h3>Employee Details</h3>
-                <table border="1" cellpadding="5">
-                    <tr><th>Name</th><td>${emp["Name"]}</td></tr>
-                    <tr><th>Token</th><td>${emp["Tokan No."]}</td></tr>
-                    <tr><th>Rank</th><td>${emp["Rank"]}</td></tr>
-                    <tr><th>Category</th><td>${emp["Category"]}</td></tr>
-                    <tr><th>Date of Rank</th><td>${emp["Date of SK"] || emp["Date of HSK 2"] || emp["Date of HSK 1"] || emp["Date of MCM"] || "N/A"}</td></tr>
-                    <tr><th>Date of Retirement</th><td>${emp["Date of Retirement"]}</td></tr>
-                </table>
-                <h3>Promotion Timeline</h3>
-                ${generatePromotionTimeline(emp)}
-            `;
-        }
+// Search Employee
+function searchEmployee() {
+  const token = document.getElementById("tokenInput").value.trim();
+  const div = document.getElementById("employeeDetails");
+  div.innerHTML = "";
+  const emp = employees.find(e => e["Tokan No."] === token);
+  if (!emp) {
+    div.innerHTML = `<p>No employee found with token: ${token}</p>`;
+    return;
+  }
 
-        // Promotion Timeline
-        function generatePromotionTimeline(emp) {
-            const ranks = ["SK", "HSK 2", "HSK 1", "MCM"];
-            const currentRank = emp["Rank"];
-            const idx = ranks.indexOf(currentRank);
-            if (idx === -1) return "<p>Rank not in ladder</p>";
-            let html = "<ul>";
-            for (let i = idx + 1; i < ranks.length; i++) {
-                const r = ranks[i];
-                const postData = sanctionedPosts[emp["Category"]] || {};
-                const sanctioned = postData[r] || 0;
-                const seniors = employeeData.filter(e => e["Rank"] === r && e["Date of Retirement"] > emp["Date of Retirement"]).length;
-                const estimate = sanctioned ? Math.ceil(seniors / sanctioned) : "N/A";
-                html += `<li>${r}: ~${estimate} years</li>`;
-            }
-            html += "</ul>";
-            return html;
-        }
+  div.innerHTML = `
+    <h4>Employee Details</h4>
+    <table border="1" cellpadding="5">
+      ${headers1.map(h => `<tr><th>${h}</th><td>${emp[h]}</td></tr>`).join("")}
+    </table>
+    <h4>Promotion Timeline</h4>
+    ${promotionTimeline(emp)}
+  `;
+}
 
-        // Display all data for verification
-        function displayAllData() {
-            // Sheet1
-            const s1 = document.getElementById("sheet1Data");
-            s1.innerHTML = `<table border="1" cellpadding="5"><thead><tr>${headers1.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>
-            ${employeeData.map(e => `<tr>${headers1.map(h => `<td>${e[h]}</td>`).join("")}</tr>`).join("")}
-            </tbody></table><p>Total employees: ${employeeData.length}</p>`;
+// Promotion Timeline
+function promotionTimeline(emp) {
+  const rankOrder = ["Tradesman Mate","USL","SSK","SK","HSK II","HSK I","MCM"];
+  const currentRank = emp["Rank"];
+  const idx = rankOrder.indexOf(currentRank);
+  if (idx === -1) return "<p>Rank not in promotion ladder</p>";
 
-            // Sheet2
-            const s2 = document.getElementById("sheet2Data");
-            s2.innerHTML = `<table border="1" cellpadding="5"><thead><tr><th>Post</th><th>SK</th><th>HSK 2</th><th>HSK 1</th><th>MCM</th></tr></thead><tbody>
-            ${Object.entries(sanctionedPosts).map(([post, ranks]) => `<tr><td>${post}</td><td>${ranks["SK"]||0}</td><td>${ranks["HSK 2"]||0}</td><td>${ranks["HSK 1"]||0}</td><td>${ranks["MCM"]||0}</td></tr>`).join("")}
-            </tbody></table>`;
-        }
+  let html = "<ul>";
+  for (let i = idx + 1; i < rankOrder.length; i++) {
+    const nextRank = rankOrder[i];
+    const vacancyInfo = sanctionedPosts.find(p => p["Rank"] === nextRank && p["Post"] === emp["Post"]);
+    const sanctioned = vacancyInfo ? parseInt(vacancyInfo["Sactioned vacancy"]) || 0 : 0;
+    const seniors = employees.filter(e => e["Rank"] === nextRank).length;
+    const estimate = sanctioned > 0 ? Math.ceil(seniors / sanctioned) : "N/A";
+    html += `<li>${nextRank}: ~${estimate} years</li>`;
+  }
+  html += "</ul>";
+  return html;
+}
 
-        window.onload = initialize;
-    </script>
+// Show all data
+function displayAllData() {
+  // Sheet1
+  document.getElementById("sheet1Data").innerHTML = `
+    <table border="1" cellpadding="5">
+      <thead><tr>${headers1.map(h => `<th>${h}</th>`).join("")}</tr></thead>
+      <tbody>
+        ${employees.map(e => `<tr>${headers1.map(h => `<td>${e[h]}</td>`).join("")}</tr>`).join("")}
+      </tbody>
+    </table>
+    <p>Total employees: ${employees.length}</p>
+  `;
+
+  // Sheet2
+  document.getElementById("sheet2Data").innerHTML = `
+    <table border="1" cellpadding="5">
+      <thead><tr>${headers2.map(h => `<th>${h}</th>`).join("")}</tr></thead>
+      <tbody>
+        ${sanctionedPosts.map(p => `<tr>${headers2.map(h => `<td>${p[h]}</td>`).join("")}</tr>`).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+window.onload = loadData;
+</script>
 </body>
 </html>
