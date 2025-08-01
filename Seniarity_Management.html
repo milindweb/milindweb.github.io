@@ -1,24 +1,187 @@
 <body>
   <div>
-    <h1>NAD Promotion Timeline Calculator</h1>
+    <h1>NAD Promotion System</h1>
     
-    <!-- Token Search Section -->
+    <!-- Search with Autocomplete -->
     <div>
-      <h2>Employee Search</h2>
-      <input type="text" id="tokenInput" placeholder="Enter Token Number">
-      <button onclick="searchEmployee()">Search</button>
-      <div id="autocompleteResults"></div>
+      <input type="text" id="tokenSearch" placeholder="Type token (e.g. 18675)" 
+             oninput="showTokenSuggestions()" autocomplete="off">
+      <div id="tokenSuggestions"></div>
+      <button onclick="findEmployee()">Search</button>
+      <div id="searchStatus"></div>
     </div>
-    
-    <!-- Results Section -->
+
+    <!-- Results Display -->
     <div id="results">
-      <!-- Employee Details -->
-      <div id="employeeDetails"></div>
+      <!-- Dynamically populated -->
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const SHEET_ID = '1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo';
+    const API_KEY = 'AIzaSyDxJaP_1q8J0q4tHKnQeQbQjZQJwYVH2F8';
+    let employees = [];
+    let posts = {};
+    let columnIndex = {};
+
+    // Main initialization
+    async function initialize() {
+      await loadEmployeeData();
+      await loadSanctionedPosts();
+      document.getElementById('tokenSearch').focus();
+    }
+
+    // Load employee data from Sheet1
+    async function loadEmployeeData() {
+      try {
+        showStatus("Loading employee records...");
+        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1?key=${API_KEY}`);
+        const data = await response.json();
+        
+        // Map dynamic columns
+        const headers = data.values[0].map(h => h.trim());
+        columnIndex = {
+          token: headers.indexOf('Token No'),
+          name: headers.indexOf('Name'),
+          post: headers.indexOf('Post'),
+          rank: headers.indexOf('Current Rank'),
+          rankDate: headers.indexOf('Date of Rank'),
+          retireDate: headers.indexOf('Retirement Date')
+        };
+        
+        // Validate required columns
+        if (columnIndex.token === -1) throw new Error("Token No column missing");
+        
+        // Process data
+        employees = data.values.slice(1)
+          .map(row => ({
+            token: row[columnIndex.token]?.trim(),
+            name: row[columnIndex.name] || 'Unknown',
+            post: row[columnIndex.post] || 'Unassigned',
+            rank: row[columnIndex.rank] || 'Unknown',
+            rankDate: row[columnIndex.rankDate],
+            retireDate: row[columnIndex.retireDate]
+          }))
+          .filter(e => e.token); // Remove empty tokens
+        
+        showStatus(`Loaded ${employees.length} employees`);
+      } catch (error) {
+        showStatus(`Error: ${error.message}`, true);
+        console.error("Data load failed:", error);
+      }
+    }
+
+    // Load sanctioned posts from Sheet2
+    async function loadSanctionedPosts() {
+      try {
+        showStatus("Loading post data...");
+        const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet2?key=${API_KEY}`);
+        const data = await response.json();
+        
+        const headers = data.values[0].map(h => h.trim());
+        data.values.slice(1).forEach(row => {
+          const post = row[0]?.trim();
+          if (post) {
+            posts[post] = {
+              SK: parseInt(row[headers.indexOf('SK')]) || 0,
+              HSKII: parseInt(row[headers.indexOf('HSK II')]) || 0,
+              HSKI: parseInt(row[headers.indexOf('HSK I')]) || 0,
+              MCM: parseInt(row[headers.indexOf('MCM')]) || 0
+            };
+          }
+        });
+      } catch (error) {
+        console.error("Failed to load posts:", error);
+      }
+    }
+
+    // Autocomplete suggestions
+    function showTokenSuggestions() {
+      const input = document.getElementById('tokenSearch').value.trim();
+      const container = document.getElementById('tokenSuggestions');
+      container.innerHTML = '';
       
-      <!-- Promotion Timeline -->
-      <div>
+      if (input.length < 2) {
+        container.style.display = 'none';
+        return;
+      }
+      
+      const matches = employees.filter(e => 
+        e.token.includes(input)
+      ).slice(0, 5);
+      
+      if (matches.length === 0) {
+        container.style.display = 'none';
+        return;
+      }
+      
+      matches.forEach(emp => {
+        const div = document.createElement('div');
+        div.textContent = `${emp.token} - ${emp.name}`;
+        div.onclick = () => {
+          document.getElementById('tokenSearch').value = emp.token;
+          container.style.display = 'none';
+          findEmployee();
+        };
+        container.appendChild(div);
+      });
+      
+      container.style.display = 'block';
+    }
+
+    // Find employee and display results
+    function findEmployee() {
+      const token = document.getElementById('tokenSearch').value.trim();
+      const resultDiv = document.getElementById('results');
+      resultDiv.innerHTML = '';
+      
+      if (!token) {
+        showStatus("Please enter a token number", true);
+        return;
+      }
+      
+      const employee = employees.find(e => e.token === token);
+      if (!employee) {
+        showStatus(`Token ${token} not found`, true);
+        return;
+      }
+      
+      displayEmployeeProfile(employee);
+      showStatus(`Showing ${employee.name} (${employee.token})`);
+    }
+
+    // Display employee profile and timeline
+    function displayEmployeeProfile(emp) {
+      const resultDiv = document.getElementById('results');
+      
+      // Basic info
+      resultDiv.innerHTML = `
+        <div class="employee-card">
+          <h2>${emp.name}</h2>
+          <p>Token: ${emp.token}</p>
+          <p>Post: ${emp.post}</p>
+          <p>Current Rank: ${emp.rank}</p>
+          <p>Retirement Year: ${emp.retireDate ? new Date(emp.retireDate).getFullYear() : 'N/A'}</p>
+        </div>
+        <div id="promotionTimeline"></div>
+        <div id="vacancySummary"></div>
+      `;
+      
+      calculatePromotionPath(emp);
+      showVacancySummary(emp.post);
+    }
+
+    // Calculate promotion timeline
+    function calculatePromotionPath(emp) {
+      const ranks = ['SK', 'HSKII', 'HSKI', 'MCM'];
+      const currentRank = ranks.indexOf(emp.rank.replace(' ', ''));
+      if (currentRank === -1) return;
+      
+      const timelineDiv = document.getElementById('promotionTimeline');
+      timelineDiv.innerHTML = `
         <h3>Promotion Timeline</h3>
-        <table id="promotionTimeline" border="1">
+        <table border="1">
           <thead>
             <tr>
               <th>Current Rank</th>
@@ -27,197 +190,122 @@
               <th>Retirements Needed</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody id="timelineBody"></tbody>
         </table>
-      </div>
-      
-      <!-- Vacancy Summary -->
-      <div>
-        <h3>Vacancy Summary</h3>
-        <table id="vacancySummary" border="1">
-          <thead>
-            <tr>
-              <th>Post</th>
-              <th>Rank</th>
-              <th>Sanctioned</th>
-              <th>Filled</th>
-              <th>Vacancies</th>
-              <th>Retirements (Year)</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Configuration
-    const SHEET_ID = '1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo';
-    const API_KEY = 'AIzaSyDxJaP_1q8J0q4tHKnQeQbQjZQJwYVH2F8';
-    let employeeData = [];
-    let sanctionedPosts = {};
-
-    // Fetch data from Google Sheets
-    async function fetchData() {
-      try {
-        // Fetch employee data from Sheet1
-        const empResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A1:Z?key=${API_KEY}`);
-        const empJson = await empResponse.json();
-        
-        // Process employee data
-        const headers = empJson.values[0];
-        employeeData = empJson.values.slice(1).map(row => ({
-          tokenNo: row[headers.indexOf('Token No')],
-          name: row[headers.indexOf('Name')],
-          post: row[headers.indexOf('Post')],
-          currentRank: row[headers.indexOf('Current Rank')],
-          dateOfRank: row[headers.indexOf('Date of Rank')],
-          retirementDate: row[headers.indexOf('Retirement Date')]
-        }));
-
-        // Fetch sanctioned posts from Sheet2
-        const postsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet2!A1:Z?key=${API_KEY}`);
-        const postsJson = await postsResponse.json();
-        
-        // Process sanctioned posts
-        const postHeaders = postsJson.values[0];
-        postsJson.values.slice(1).forEach(row => {
-          const post = row[0];
-          sanctionedPosts[post] = {
-            'SK': parseInt(row[postHeaders.indexOf('SK')]) || 0,
-            'HSK II': parseInt(row[postHeaders.indexOf('HSK II')]) || 0,
-            'HSK I': parseInt(row[postHeaders.indexOf('HSK I')]) || 0,
-            'MCM': parseInt(row[postHeaders.indexOf('MCM')]) || 0
-          };
-        });
-
-        console.log('Data loaded successfully');
-      } catch (error) {
-        console.error('Error loading data:', error);
-        alert('Error loading data. Please check console for details.');
-      }
-    }
-
-    // Search employee by token number
-    function searchEmployee() {
-      const token = document.getElementById('tokenInput').value.trim();
-      if (!token) return;
-
-      const employee = employeeData.find(e => e.tokenNo === token);
-      if (!employee) {
-        alert('Employee not found');
-        return;
-      }
-
-      displayEmployeeDetails(employee);
-      calculatePromotionTimeline(employee);
-    }
-
-    // Display basic employee info
-    function displayEmployeeDetails(employee) {
-      const detailsDiv = document.getElementById('employeeDetails');
-      detailsDiv.innerHTML = `
-        <h2>${employee.name}</h2>
-        <p>Token: ${employee.tokenNo}</p>
-        <p>Post: ${employee.post}</p>
-        <p>Current Rank: ${employee.currentRank}</p>
-        <p>Retirement Year: ${employee.retirementDate ? new Date(employee.retirementDate).getFullYear() : 'N/A'}</p>
       `;
-    }
-
-    // Calculate and display promotion timeline
-    function calculatePromotionTimeline(employee) {
-      const ranks = ['SK', 'HSK II', 'HSK I', 'MCM'];
-      const currentRankIndex = ranks.indexOf(employee.currentRank);
-      const timelineBody = document.querySelector('#promotionTimeline tbody');
-      timelineBody.innerHTML = '';
-
-      // Get sanctioned posts data for employee's post
-      const postData = sanctionedPosts[employee.post] || {};
-
-      for (let i = currentRankIndex; i < ranks.length - 1; i++) {
-        const currentRank = ranks[i];
-        const nextRank = ranks[i + 1];
+      
+      const tbody = document.getElementById('timelineBody');
+      const postData = posts[emp.post] || {};
+      
+      for (let i = currentRank; i < ranks.length - 1; i++) {
+        const current = ranks[i];
+        const next = ranks[i+1];
         
         // Calculate vacancies
-        const sanctioned = postData[nextRank] || 0;
-        const currentEmployees = employeeData.filter(e => 
-          e.post === employee.post && e.currentRank === nextRank
+        const sanctioned = postData[next] || 0;
+        const currentHolders = employees.filter(e => 
+          e.post === emp.post && e.rank.replace(' ', '') === next
         );
-        const filled = currentEmployees.length;
-        const retiring = currentEmployees.filter(e => 
-          e.retirementDate && new Date(e.retirementDate).getFullYear() < new Date().getFullYear() + 5
-        ).length;
-        const vacancies = (sanctioned - filled) + retiring;
-
-        // Determine promotion year
-        let promotionYear = 'N/A';
-        let retirementsNeeded = '-';
-        
-        if (vacancies > 0) {
-          promotionYear = new Date().getFullYear() + 1;
-          if (retiring > 0) {
-            const retirementYears = [...new Set(retiring.map(e => 
-              new Date(e.retirementDate).getFullYear()
-            ))].sort();
-            retirementsNeeded = `${retiring.length} (${retirementYears.join(', ')})`;
-          }
-        } else {
-          promotionYear = 'Blocked';
-          retirementsNeeded = `${Math.abs(vacancies)} needed`;
-        }
-
-        // Add to timeline table
-        const row = timelineBody.insertRow();
-        row.insertCell().textContent = currentRank;
-        row.insertCell().textContent = nextRank;
-        row.insertCell().textContent = promotionYear;
-        row.insertCell().textContent = retirementsNeeded;
-      }
-
-      // Update vacancy summary
-      updateVacancySummary(employee.post);
-    }
-
-    // Update vacancy summary table
-    function updateVacancySummary(post) {
-      const summaryBody = document.querySelector('#vacancySummary tbody');
-      summaryBody.innerHTML = '';
-      const postData = sanctionedPosts[post] || {};
-
-      for (const rank in postData) {
-        const sanctioned = postData[rank];
-        const currentEmployees = employeeData.filter(e => 
-          e.post === post && e.currentRank === rank
-        );
-        const filled = currentEmployees.length;
-        const retiring = currentEmployees.filter(e => 
-          e.retirementDate && new Date(e.retirementDate).getFullYear() < new Date().getFullYear() + 5
+        const retiring = currentHolders.filter(e => 
+          e.retireDate && !isNaN(new Date(e.retireDate))
         );
         
         // Group retirements by year
         const retirementYears = {};
         retiring.forEach(e => {
-          const year = new Date(e.retirementDate).getFullYear();
+          const year = new Date(e.retireDate).getFullYear();
+          retirementYears[year] = (retirementYears[year] || 0) + 1;
+        });
+        
+        // Determine promotion year
+        let promoYear = 'N/A';
+        let retirements = '-';
+        const vacancies = (sanctioned - currentHolders.length) + retiring.length;
+        
+        if (vacancies > 0) {
+          if (retiring.length > 0) {
+            const earliestYear = Math.min(...Object.keys(retirementYears).map(Number));
+            promoYear = earliestYear + 1;
+            retirements = Object.entries(retirementYears)
+              .map(([y,c]) => `${c} in ${y}`)
+              .join(', ');
+          } else {
+            promoYear = new Date().getFullYear() + 1;
+          }
+        } else {
+          promoYear = 'Blocked';
+          retirements = `${Math.abs(vacancies)} more needed`;
+        }
+        
+        // Add to timeline
+        const row = tbody.insertRow();
+        row.insertCell().textContent = current;
+        row.insertCell().textContent = next;
+        row.insertCell().textContent = promoYear;
+        row.insertCell().textContent = retirements;
+      }
+    }
+
+    // Show vacancy summary for a post
+    function showVacancySummary(post) {
+      const summaryDiv = document.getElementById('vacancySummary');
+      const postData = posts[post] || {};
+      
+      summaryDiv.innerHTML = `
+        <h3>Vacancy Summary: ${post}</h3>
+        <table border="1">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Sanctioned</th>
+              <th>Filled</th>
+              <th>Vacancies</th>
+              <th>Retirements</th>
+            </tr>
+          </thead>
+          <tbody id="summaryBody"></tbody>
+        </table>
+      `;
+      
+      const tbody = document.getElementById('summaryBody');
+      
+      for (const rank in postData) {
+        const sanctioned = postData[rank];
+        const currentHolders = employees.filter(e => 
+          e.post === post && e.rank.replace(' ', '') === rank
+        );
+        const retiring = currentHolders.filter(e => 
+          e.retireDate && !isNaN(new Date(e.retireDate))
+        );
+        
+        // Group retirements by year
+        const retirementYears = {};
+        retiring.forEach(e => {
+          const year = new Date(e.retireDate).getFullYear();
           retirementYears[year] = (retirementYears[year] || 0) + 1;
         });
         
         const retirementsText = Object.entries(retirementYears)
-          .map(([year, count]) => `${count} (${year})`)
+          .map(([y,c]) => `${c} in ${y}`)
           .join(', ') || '-';
-
-        const row = summaryBody.insertRow();
-        row.insertCell().textContent = post;
+        
+        const row = tbody.insertRow();
         row.insertCell().textContent = rank;
         row.insertCell().textContent = sanctioned;
-        row.insertCell().textContent = filled;
-        row.insertCell().textContent = (sanctioned - filled) + retiring.length;
+        row.insertCell().textContent = currentHolders.length;
+        row.insertCell().textContent = (sanctioned - currentHolders.length) + retiring.length;
         row.insertCell().textContent = retirementsText;
       }
     }
 
+    // Helper function to show status messages
+    function showStatus(message, isError = false) {
+      const statusDiv = document.getElementById('searchStatus');
+      statusDiv.textContent = message;
+      statusDiv.style.color = isError ? 'red' : 'green';
+    }
+
     // Initialize on page load
-    window.onload = fetchData;
+    window.onload = initialize;
   </script>
 </body>
