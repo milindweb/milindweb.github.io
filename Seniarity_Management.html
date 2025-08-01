@@ -14,12 +14,6 @@
 
   <div id="employeeDetails"></div>
 
-  <h3>Employee Data (Sheet1)</h3>
-  <div id="sheet1Data"></div>
-
-  <h3>Sanctioned Posts (Sheet2)</h3>
-  <div id="sheet2Data"></div>
-
 <script>
 // Links to published CSV exports
 const sheet1URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=0";
@@ -30,7 +24,7 @@ let sanctionedPosts = [];
 let headers1 = [];
 let headers2 = [];
 
-// Robust CSV parser (handles quotes and commas inside cells)
+// Robust CSV parser
 function parseCSV(text) {
   const rows = [];
   let row = [];
@@ -88,11 +82,8 @@ async function loadData() {
       headers2.forEach((h, i) => obj[h] = r[i] || "");
       return obj;
     });
-
-    displayAllData();
   } catch (err) {
-    document.getElementById("sheet1Data").innerHTML = "<p>Error loading data. Did you publish the sheet?</p>";
-    console.error(err);
+    console.error("Error loading sheets", err);
   }
 }
 
@@ -158,29 +149,6 @@ function promotionTimeline(emp) {
   }
   html += "</ul>";
   return html;
-}
-
-// Show All Data
-function displayAllData() {
-  // Sheet1
-  document.getElementById("sheet1Data").innerHTML = `
-    <table border="1" cellpadding="5">
-      <thead><tr>${headers1.map(h => `<th>${h}</th>`).join("")}</tr></thead>
-      <tbody>
-        ${employees.map(e => `<tr>${headers1.map(h => `<td>${e[h]}</td>`).join("")}</tr>`).join("")}
-      </tbody>
-    </table>
-    <p>Total employees: ${employees.length}</p>
-  `;
-  // Sheet2
-  document.getElementById("sheet2Data").innerHTML = `
-    <table border="1" cellpadding="5">
-      <thead><tr>${headers2.map(h => `<th>${h}</th>`).join("")}</tr></thead>
-      <tbody>
-        ${sanctionedPosts.map(p => `<tr>${headers2.map(h => `<td>${p[h]}</td>`).join("")}</tr>`).join("")}
-      </tbody>
-    </table>
-  `;
 }
 
 window.onload = loadData;
