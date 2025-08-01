@@ -1,363 +1,223 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>NAD Seniority & Promotion System</title>
-    <script>
-        // Configuration
-        const SHEET_ID = '1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo';
-        const API_KEY = 'AIzaSyDxJaP_1q8J0q4tHKnQeQbQjZQJwYVH2F8'; // Replace with your actual API key
-        let employeeData = [];
-        let sanctionedPosts = {};
-
-        // Load data when page loads
-        window.onload = async function() {
-            await loadData();
-            setupTokenAutocomplete();
-        };
-
-        // Fetch data from Google Sheets
-        async function loadData() {
-            try {
-                // Load employee data from Sheet1
-                const empResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A1:Z?key=${API_KEY}`);
-                const empJson = await empResponse.json();
-                
-                // Process employee data
-                const empHeaders = empJson.values[0];
-                employeeData = empJson.values.slice(1).map(row => {
-                    return {
-                        tokenNo: row[empHeaders.indexOf('Token No')] || '',
-                        name: row[empHeaders.indexOf('Name')] || '',
-                        post: row[empHeaders.indexOf('Post')] || '',
-                        currentRank: row[empHeaders.indexOf('Current Rank')] || '',
-                        dateOfRank: row[empHeaders.indexOf('Date of Rank')] || '',
-                        retirementDate: row[empHeaders.indexOf('Retirement Date')] || ''
-                    };
-                });
-
-                // Load sanctioned posts from Sheet2
-                const postsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet2!A1:Z?key=${API_KEY}`);
-                const postsJson = await postsResponse.json();
-                
-                // Process sanctioned posts
-                const postHeaders = postsJson.values[0];
-                postsJson.values.slice(1).forEach(row => {
-                    const post = row[0];
-                    if (post) {
-                        sanctionedPosts[post] = {
-                            'SK': parseInt(row[postHeaders.indexOf('SK')]) || 0,
-                            'HSK II': parseInt(row[postHeaders.indexOf('HSK II')]) || 0,
-                            'HSK I': parseInt(row[postHeaders.indexOf('HSK I')]) || 0,
-                            'MCM': parseInt(row[postHeaders.indexOf('MCM')]) || 0
-                        };
-                    }
-                });
-
-                console.log('Data loaded successfully');
-            } catch (error) {
-                console.error('Error loading data:', error);
-                alert('Error loading data. Please check console for details.');
-            }
-        }
-
-        // Setup token number autocomplete
-        function setupTokenAutocomplete() {
-            const tokenInput = document.getElementById('token-input');
-            const autocompleteList = document.getElementById('autocomplete-list');
-            
-            tokenInput.addEventListener('input', function() {
-                const input = this.value.trim();
-                autocompleteList.innerHTML = '';
-                
-                if (input.length < 2) {
-                    autocompleteList.style.display = 'none';
-                    return;
-                }
-                
-                const matches = employeeData
-                    .filter(emp => emp.tokenNo.startsWith(input))
-                    .slice(0, 5);
-                
-                if (matches.length > 0) {
-                    matches.forEach(emp => {
-                        const item = document.createElement('div');
-                        item.textContent = emp.tokenNo + ' - ' + emp.name;
-                        item.addEventListener('click', function() {
-                            tokenInput.value = emp.tokenNo;
-                            autocompleteList.style.display = 'none';
-                            searchByToken();
-                        });
-                        autocompleteList.appendChild(item);
-                    });
-                    autocompleteList.style.display = 'block';
-                } else {
-                    autocompleteList.style.display = 'none';
-                }
-            });
-            
-            // Hide autocomplete when clicking outside
-            document.addEventListener('click', function(e) {
-                if (e.target.id !== 'token-input') {
-                    autocompleteList.style.display = 'none';
-                }
-            });
-        }
-
-        // 1. Token Number Search
-        function searchByToken() {
-            const token = document.getElementById('token-input').value.trim();
-            const resultsDiv = document.getElementById('token-results');
-            resultsDiv.innerHTML = '';
-            
-            if (!token) {
-                resultsDiv.innerHTML = '<p>Please enter a token number</p>';
-                return;
-            }
-            
-            const employee = employeeData.find(emp => emp.tokenNo === token);
-            if (!employee) {
-                resultsDiv.innerHTML = '<p>No employee found with this token number</p>';
-                return;
-            }
-            
-            // Display employee details
-            let html = `
-                <h3>Employee Details</h3>
-                <p><strong>Name:</strong> ${employee.name}</p>
-                <p><strong>Token No:</strong> ${employee.tokenNo}</p>
-                <p><strong>Post:</strong> ${employee.post}</p>
-                <p><strong>Current Rank:</strong> ${employee.currentRank}</p>
-                <p><strong>Date of Rank:</strong> ${employee.dateOfRank}</p>
-                <p><strong>Retirement Date:</strong> ${employee.retirementDate}</p>
-                
-                <h3>Seniority Position</h3>
-            `;
-            
-            // Calculate seniority position
-            const rankEmployees = employeeData.filter(emp => 
-                emp.post === employee.post && 
-                emp.currentRank === employee.currentRank
-            ).sort((a, b) => new Date(a.dateOfRank) - new Date(b.dateOfRank));
-            
-            const position = rankEmployees.findIndex(emp => emp.tokenNo === token) + 1;
-            html += `
-                <p><strong>Position:</strong> ${position} of ${rankEmployees.length}</p>
-                <p><strong>Seniors:</strong> ${position - 1} | <strong>Juniors:</strong> ${rankEmployees.length - position}</p>
-                
-                <h3>Promotion Timeline</h3>
-                ${generatePromotionPath(employee)}
-                
-                <h3>Rank Seniority (${employee.post} - ${employee.currentRank})</h3>
-                ${generateSeniorityTable(rankEmployees, token)}
-            `;
-            
-            resultsDiv.innerHTML = html;
-        }
-
-        // Generate promotion path
-        function generatePromotionPath(employee) {
-            const ranks = ['SK', 'HSK II', 'HSK I', 'MCM'];
-            const currentRankIndex = ranks.indexOf(employee.currentRank);
-            
-            if (currentRankIndex === -1) return '<p>Invalid current rank</p>';
-            if (currentRankIndex === ranks.length - 1) return '<p>No further promotions possible (already at MCM)</p>';
-            
-            let html = '';
-            const postData = sanctionedPosts[employee.post] || {};
-            
-            for (let i = currentRankIndex; i < ranks.length - 1; i++) {
-                const currentRank = ranks[i];
-                const nextRank = ranks[i + 1];
-                
-                const currentRankEmployees = employeeData.filter(emp => 
-                    emp.post === employee.post && 
-                    emp.currentRank === currentRank
-                ).sort((a, b) => new Date(a.dateOfRank) - new Date(b.dateOfRank));
-                
-                const currentPosition = currentRankEmployees.findIndex(emp => emp.tokenNo === employee.tokenNo) + 1;
-                const nextRankEmployees = employeeData.filter(emp => 
-                    emp.post === employee.post && 
-                    emp.currentRank === nextRank
-                ).sort((a, b) => new Date(a.dateOfRank) - new Date(b.dateOfRank));
-                
-                const sanctioned = postData[nextRank] || 0;
-                const filled = nextRankEmployees.length;
-                const vacancies = sanctioned - filled;
-                const needed = currentPosition - vacancies;
-                
-                html += `<p><strong>${nextRank}:</strong> `;
-                
-                if (needed <= 0) {
-                    html += `Eligible now (position ${currentPosition}, ${filled}/${sanctioned} filled)`;
-                } else {
-                    // Estimate based on retirements
-                    const seniors = nextRankEmployees.slice(0, needed);
-                    const retirementDates = seniors.map(emp => new Date(emp.retirementDate)).filter(d => !isNaN(d.getTime()));
-                    
-                    if (retirementDates.length > 0) {
-                        const latest = new Date(Math.max(...retirementDates));
-                        html += `Estimated ${latest.getFullYear() + 1} (needs ${needed} retirements)`;
-                    } else {
-                        html += `Cannot estimate (needs ${needed} retirements)`;
-                    }
-                }
-                
-                html += `</p>`;
-            }
-            
-            return html;
-        }
-
-        // 2. Retirement Year Search
-        function searchRetirements() {
-            const year = parseInt(document.getElementById('retirement-year').value);
-            const post = document.getElementById('retirement-post').value;
-            const rank = document.getElementById('retirement-rank').value;
-            const resultsDiv = document.getElementById('retirement-results');
-            resultsDiv.innerHTML = '';
-            
-            if (isNaN(year)) {
-                resultsDiv.innerHTML = '<p>Please enter a valid year</p>';
-                return;
-            }
-            
-            let retiring = employeeData.filter(emp => {
-                if (!emp.retirementDate) return false;
-                const retireYear = new Date(emp.retirementDate).getFullYear();
-                if (isNaN(retireYear)) return false;
-                if (retireYear > year) return false;
-                if (post && emp.post !== post) return false;
-                if (rank && emp.currentRank !== rank) return false;
-                return true;
-            }).sort((a, b) => new Date(a.retirementDate) - new Date(b.retirementDate));
-            
-            if (retiring.length === 0) {
-                resultsDiv.innerHTML = '<p>No employees found matching criteria</p>';
-                return;
-            }
-            
-            // Generate summary
-            const postSummary = {};
-            const rankSummary = {};
-            
-            retiring.forEach(emp => {
-                postSummary[emp.post] = (postSummary[emp.post] || 0) + 1;
-                rankSummary[emp.currentRank] = (rankSummary[emp.currentRank] || 0) + 1;
-            });
-            
-            let html = `
-                <h3>Employees Retiring by ${year}: ${retiring.length}</h3>
-                <h4>Summary</h4>
-                <p><strong>By Post:</strong> ${Object.entries(postSummary).map(([p,c]) => `${p}: ${c}`).join(', ')}</p>
-                <p><strong>By Rank:</strong> ${Object.entries(rankSummary).map(([r,c]) => `${r}: ${c}`).join(', ')}</p>
-                
-                <h4>Retirement List</h4>
-                <table border="1" cellpadding="5" cellspacing="0" width="100%">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Token</th>
-                        <th>Post</th>
-                        <th>Rank</th>
-                        <th>Retirement Date</th>
-                    </tr>
-            `;
-            
-            retiring.forEach((emp, i) => {
-                const isTie = i > 0 && emp.retirementDate === retiring[i-1].retirementDate;
-                html += `
-                    <tr>
-                        <td>${i+1}</td>
-                        <td>${emp.name}</td>
-                        <td>${emp.tokenNo}</td>
-                        <td>${emp.post}</td>
-                        <td>${emp.currentRank}</td>
-                        <td>${emp.retirementDate}${isTie ? ' ★' : ''}</td>
-                    </tr>
-                `;
-            });
-            
-            html += `</table>`;
-            resultsDiv.innerHTML = html;
-        }
-
-        // Helper to generate seniority table
-        function generateSeniorityTable(employees, highlightToken) {
-            let html = `
-                <table border="1" cellpadding="5" cellspacing="0" width="100%">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Token</th>
-                        <th>Date of Rank</th>
-                        <th>Retirement Date</th>
-                    </tr>
-            `;
-            
-            employees.forEach((emp, i) => {
-                const isTie = i > 0 && emp.dateOfRank === employees[i-1].dateOfRank;
-                const isHighlight = emp.tokenNo === highlightToken;
-                html += `
-                    <tr${isHighlight ? ' style="background-color:yellow;"' : ''}>
-                        <td>${i+1}</td>
-                        <td>${emp.name}</td>
-                        <td>${emp.tokenNo}</td>
-                        <td>${emp.dateOfRank}${isTie ? ' ★' : ''}</td>
-                        <td>${emp.retirementDate}</td>
-                    </tr>
-                `;
-            });
-            
-            html += `</table>`;
-            return html;
-        }
-    </script>
-</head>
 <body>
-    <h1>NAD Seniority & Promotion System</h1>
+  <div>
+    <h1>NAD Promotion Timeline Calculator</h1>
     
-    <div style="margin-bottom: 30px;">
-        <h2>1. Token Number Search</h2>
-        <div>
-            <input type="text" id="token-input" placeholder="Enter token number" style="padding: 8px; width: 300px;">
-            <button onclick="searchByToken()" style="padding: 8px 15px;">Search</button>
-            <div id="autocomplete-list" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;"></div>
-        </div>
-        <div id="token-results" style="margin-top: 20px;"></div>
-    </div>
-    
+    <!-- Token Search Section -->
     <div>
-        <h2>2. Retirement Year Search</h2>
-        <div>
-            <input type="number" id="retirement-year" placeholder="Year (e.g., 2035)" style="padding: 8px;">
-            <select id="retirement-post" style="padding: 8px;">
-                <option value="">All Posts</option>
-                ${/* Will be populated by JavaScript */ ''}
-            </select>
-            <select id="retirement-rank" style="padding: 8px;">
-                <option value="">All Ranks</option>
-                <option value="SK">SK</option>
-                <option value="HSK II">HSK II</option>
-                <option value="HSK I">HSK I</option>
-                <option value="MCM">MCM</option>
-            </select>
-            <button onclick="searchRetirements()" style="padding: 8px 15px;">Search</button>
-        </div>
-        <div id="retirement-results" style="margin-top: 20px;"></div>
+      <h2>Employee Search</h2>
+      <input type="text" id="tokenInput" placeholder="Enter Token Number">
+      <button onclick="searchEmployee()">Search</button>
+      <div id="autocompleteResults"></div>
     </div>
+    
+    <!-- Results Section -->
+    <div id="results">
+      <!-- Employee Details -->
+      <div id="employeeDetails"></div>
+      
+      <!-- Promotion Timeline -->
+      <div>
+        <h3>Promotion Timeline</h3>
+        <table id="promotionTimeline" border="1">
+          <thead>
+            <tr>
+              <th>Current Rank</th>
+              <th>Next Rank</th>
+              <th>Promotion Year</th>
+              <th>Retirements Needed</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      
+      <!-- Vacancy Summary -->
+      <div>
+        <h3>Vacancy Summary</h3>
+        <table id="vacancySummary" border="1">
+          <thead>
+            <tr>
+              <th>Post</th>
+              <th>Rank</th>
+              <th>Sanctioned</th>
+              <th>Filled</th>
+              <th>Vacancies</th>
+              <th>Retirements (Year)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        // Populate post dropdown after data loads
-        async function loadData() {
-            // ... (previous loadData implementation) ...
-            
-            // Populate post dropdown
-            const posts = [...new Set(employeeData.map(emp => emp.post))].sort();
-            const postSelect = document.getElementById('retirement-post');
-            posts.forEach(post => {
-                postSelect.innerHTML += `<option value="${post}">${post}</option>`;
-            });
+  <script>
+    // Configuration
+    const SHEET_ID = '1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo';
+    const API_KEY = 'AIzaSyDxJaP_1q8J0q4tHKnQeQbQjZQJwYVH2F8';
+    let employeeData = [];
+    let sanctionedPosts = {};
+
+    // Fetch data from Google Sheets
+    async function fetchData() {
+      try {
+        // Fetch employee data from Sheet1
+        const empResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1!A1:Z?key=${API_KEY}`);
+        const empJson = await empResponse.json();
+        
+        // Process employee data
+        const headers = empJson.values[0];
+        employeeData = empJson.values.slice(1).map(row => ({
+          tokenNo: row[headers.indexOf('Token No')],
+          name: row[headers.indexOf('Name')],
+          post: row[headers.indexOf('Post')],
+          currentRank: row[headers.indexOf('Current Rank')],
+          dateOfRank: row[headers.indexOf('Date of Rank')],
+          retirementDate: row[headers.indexOf('Retirement Date')]
+        }));
+
+        // Fetch sanctioned posts from Sheet2
+        const postsResponse = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet2!A1:Z?key=${API_KEY}`);
+        const postsJson = await postsResponse.json();
+        
+        // Process sanctioned posts
+        const postHeaders = postsJson.values[0];
+        postsJson.values.slice(1).forEach(row => {
+          const post = row[0];
+          sanctionedPosts[post] = {
+            'SK': parseInt(row[postHeaders.indexOf('SK')]) || 0,
+            'HSK II': parseInt(row[postHeaders.indexOf('HSK II')]) || 0,
+            'HSK I': parseInt(row[postHeaders.indexOf('HSK I')]) || 0,
+            'MCM': parseInt(row[postHeaders.indexOf('MCM')]) || 0
+          };
+        });
+
+        console.log('Data loaded successfully');
+      } catch (error) {
+        console.error('Error loading data:', error);
+        alert('Error loading data. Please check console for details.');
+      }
+    }
+
+    // Search employee by token number
+    function searchEmployee() {
+      const token = document.getElementById('tokenInput').value.trim();
+      if (!token) return;
+
+      const employee = employeeData.find(e => e.tokenNo === token);
+      if (!employee) {
+        alert('Employee not found');
+        return;
+      }
+
+      displayEmployeeDetails(employee);
+      calculatePromotionTimeline(employee);
+    }
+
+    // Display basic employee info
+    function displayEmployeeDetails(employee) {
+      const detailsDiv = document.getElementById('employeeDetails');
+      detailsDiv.innerHTML = `
+        <h2>${employee.name}</h2>
+        <p>Token: ${employee.tokenNo}</p>
+        <p>Post: ${employee.post}</p>
+        <p>Current Rank: ${employee.currentRank}</p>
+        <p>Retirement Year: ${employee.retirementDate ? new Date(employee.retirementDate).getFullYear() : 'N/A'}</p>
+      `;
+    }
+
+    // Calculate and display promotion timeline
+    function calculatePromotionTimeline(employee) {
+      const ranks = ['SK', 'HSK II', 'HSK I', 'MCM'];
+      const currentRankIndex = ranks.indexOf(employee.currentRank);
+      const timelineBody = document.querySelector('#promotionTimeline tbody');
+      timelineBody.innerHTML = '';
+
+      // Get sanctioned posts data for employee's post
+      const postData = sanctionedPosts[employee.post] || {};
+
+      for (let i = currentRankIndex; i < ranks.length - 1; i++) {
+        const currentRank = ranks[i];
+        const nextRank = ranks[i + 1];
+        
+        // Calculate vacancies
+        const sanctioned = postData[nextRank] || 0;
+        const currentEmployees = employeeData.filter(e => 
+          e.post === employee.post && e.currentRank === nextRank
+        );
+        const filled = currentEmployees.length;
+        const retiring = currentEmployees.filter(e => 
+          e.retirementDate && new Date(e.retirementDate).getFullYear() < new Date().getFullYear() + 5
+        ).length;
+        const vacancies = (sanctioned - filled) + retiring;
+
+        // Determine promotion year
+        let promotionYear = 'N/A';
+        let retirementsNeeded = '-';
+        
+        if (vacancies > 0) {
+          promotionYear = new Date().getFullYear() + 1;
+          if (retiring > 0) {
+            const retirementYears = [...new Set(retiring.map(e => 
+              new Date(e.retirementDate).getFullYear()
+            ))].sort();
+            retirementsNeeded = `${retiring.length} (${retirementYears.join(', ')})`;
+          }
+        } else {
+          promotionYear = 'Blocked';
+          retirementsNeeded = `${Math.abs(vacancies)} needed`;
         }
-    </script>
+
+        // Add to timeline table
+        const row = timelineBody.insertRow();
+        row.insertCell().textContent = currentRank;
+        row.insertCell().textContent = nextRank;
+        row.insertCell().textContent = promotionYear;
+        row.insertCell().textContent = retirementsNeeded;
+      }
+
+      // Update vacancy summary
+      updateVacancySummary(employee.post);
+    }
+
+    // Update vacancy summary table
+    function updateVacancySummary(post) {
+      const summaryBody = document.querySelector('#vacancySummary tbody');
+      summaryBody.innerHTML = '';
+      const postData = sanctionedPosts[post] || {};
+
+      for (const rank in postData) {
+        const sanctioned = postData[rank];
+        const currentEmployees = employeeData.filter(e => 
+          e.post === post && e.currentRank === rank
+        );
+        const filled = currentEmployees.length;
+        const retiring = currentEmployees.filter(e => 
+          e.retirementDate && new Date(e.retirementDate).getFullYear() < new Date().getFullYear() + 5
+        );
+        
+        // Group retirements by year
+        const retirementYears = {};
+        retiring.forEach(e => {
+          const year = new Date(e.retirementDate).getFullYear();
+          retirementYears[year] = (retirementYears[year] || 0) + 1;
+        });
+        
+        const retirementsText = Object.entries(retirementYears)
+          .map(([year, count]) => `${count} (${year})`)
+          .join(', ') || '-';
+
+        const row = summaryBody.insertRow();
+        row.insertCell().textContent = post;
+        row.insertCell().textContent = rank;
+        row.insertCell().textContent = sanctioned;
+        row.insertCell().textContent = filled;
+        row.insertCell().textContent = (sanctioned - filled) + retiring.length;
+        row.insertCell().textContent = retirementsText;
+      }
+    }
+
+    // Initialize on page load
+    window.onload = fetchData;
+  </script>
 </body>
-</html>
