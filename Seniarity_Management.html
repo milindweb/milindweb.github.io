@@ -21,6 +21,7 @@
   <div id="sheet2Data"></div>
 
 <script>
+// Links to published CSV exports
 const sheet1URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=0";
 const sheet2URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=378290522";
 
@@ -29,25 +30,47 @@ let sanctionedPosts = [];
 let headers1 = [];
 let headers2 = [];
 
-// CSV Parser
+// Robust CSV parser (handles quotes and commas inside cells)
 function parseCSV(text) {
-  return text.trim().split("\n").map(row =>
-    row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(cell =>
-      cell.replace(/^"|"$/g, "").trim()
-    )
-  );
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let insideQuote = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (char === '"') {
+      if (insideQuote && text[i + 1] === '"') {
+        cell += '"';
+        i++;
+      } else {
+        insideQuote = !insideQuote;
+      }
+    } else if (char === ',' && !insideQuote) {
+      row.push(cell);
+      cell = "";
+    } else if ((char === '\n' || char === '\r') && !insideQuote) {
+      if (cell || row.length) {
+        row.push(cell);
+        rows.push(row);
+        row = [];
+        cell = "";
+      }
+    } else {
+      cell += char;
+    }
+  }
+  if (cell || row.length) row.push(cell), rows.push(row);
+  return rows;
 }
 
-// Load Sheets
+// Load both sheets
 async function loadData() {
   try {
-    const [res1, res2] = await Promise.all([
-      fetch(sheet1URL).then(r => r.text()),
-      fetch(sheet2URL).then(r => r.text())
-    ]);
-
     // Sheet1
-    const rows1 = parseCSV(res1);
+    const res1 = await fetch(sheet1URL);
+    const text1 = await res1.text();
+    const rows1 = parseCSV(text1);
     headers1 = rows1[0];
     employees = rows1.slice(1).map(r => {
       let obj = {};
@@ -56,7 +79,9 @@ async function loadData() {
     });
 
     // Sheet2
-    const rows2 = parseCSV(res2);
+    const res2 = await fetch(sheet2URL);
+    const text2 = await res2.text();
+    const rows2 = parseCSV(text2);
     headers2 = rows2[0];
     sanctionedPosts = rows2.slice(1).map(r => {
       let obj = {};
@@ -71,7 +96,7 @@ async function loadData() {
   }
 }
 
-// Show Suggestions
+// Autocomplete Suggestions
 function showSuggestions() {
   const input = document.getElementById("tokenInput").value.trim().toLowerCase();
   const suggestionsDiv = document.getElementById("suggestions");
@@ -105,7 +130,6 @@ function searchEmployee() {
     div.innerHTML = `<p>No employee found with token: ${token}</p>`;
     return;
   }
-
   div.innerHTML = `
     <h4>Employee Details</h4>
     <table border="1" cellpadding="5">
@@ -136,7 +160,7 @@ function promotionTimeline(emp) {
   return html;
 }
 
-// Show all data
+// Show All Data
 function displayAllData() {
   // Sheet1
   document.getElementById("sheet1Data").innerHTML = `
@@ -148,7 +172,6 @@ function displayAllData() {
     </table>
     <p>Total employees: ${employees.length}</p>
   `;
-
   // Sheet2
   document.getElementById("sheet2Data").innerHTML = `
     <table border="1" cellpadding="5">
