@@ -3,439 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MilindWeb - Expert Workshops</title>
+    <title>Freelance Digital Marketing Services | Akash - SEO Specialist & Consultant</title>
+    <meta name="description" content="Akash - Freelance SEO Specialist & Digital Marketing Consultant. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online.">
     <style>
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
+        /* ===== Base Styles ===== */
+        :root {
+            --primary: #1565C0;  /* Dark blue */
+            --primary-dark: #0D47A1;
+            --secondary: #FFC107; /* Accent yellow */
+            --light: #f8f9fa;
+            --dark: #212121;
+            --gray: #757575;
+            --light-gray: #e0e0e0;
         }
         
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* ===== Layout Structure ===== */
         .container {
-            max-width: 900px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
-        .workshop-section {
+        main {
+            padding: 40px 0;
+            min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+        }
+        
+        /* ===== Typography ===== */
+        h1, h2, h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        /* ===== Card Styles ===== */
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* ===== Flex Layout System ===== */
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .flex-item {
+            flex: 1 0 300px; /* Grow, don't shrink, basis 300px */
+            min-width: 0; /* Prevent overflow */
+        }
+        
+        /* ===== Button Styles ===== */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ffb300;
+        }
+        
+        /* ===== Section Styles ===== */
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        /* ===== Service Cards ===== */
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* ===== FAQ Styles ===== */
+        details {
             background: white;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-        
-        .workshop-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-        }
-        
-        .workshop-header {
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
-            border-bottom: 1px solid #e1e1e1;
-        }
-        
-        .workshop-title {
-            font-size: 1.8rem;
-            margin: 0;
-            color: #2c3e50;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .workshop-content {
-            padding: 20px;
-        }
-        
-        .highlight-list {
-            padding-left: 20px;
-            margin: 15px 0;
-        }
-        
-        .highlight-list li {
-            margin-bottom: 8px;
-            position: relative;
-            list-style-type: none;
-            padding-left: 25px;
-        }
-        
-        .highlight-list li:before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #3498db;
-            font-weight: bold;
-        }
-        
-        .topic-group {
-            margin-bottom: 20px;
-        }
-        
-        .topic-title {
-            font-weight: 600;
-            color: #2980b9;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .topic-items {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 10px;
-            padding-left: 15px;
-        }
-        
-        .topic-item {
-            background: #f8f9fa;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            border-left: 3px solid #3498db;
-        }
-        
-        .cta-section {
-            text-align: center;
-            padding: 30px 20px;
-            background: #2c3e50;
-            color: white;
-            margin-top: 40px;
-            border-radius: 8px;
-            animation: pulse 2s infinite;
-        }
-        
-        .cta-title {
-            font-size: 1.5rem;
+            padding: 15px 20px;
             margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
-        .cta-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #e74c3c;
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            color: var(--primary-dark);
+        }
+        
+        details[open] summary {
+            margin-bottom: 10px;
+        }
+        
+        /* ===== Header/Footer Integration ===== */
+        header {
+            background-color: var(--primary);
             color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .cta-button:hover {
-            background: #c0392b;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.01); }
-            100% { transform: scale(1); }
-        }
-        
-        .emoji {
-            font-size: 1.2em;
-        }
-        
-        .intro-text {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            padding: 15px;
-            background: #e8f4fc;
-            border-radius: 6px;
-            border-left: 4px solid #3498db;
-        }
-        
-        .schedule-box {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 6px;
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px 0;
             text-align: center;
-            margin: 20px 0;
-            font-weight: bold;
         }
         
-        /* Workshop specific colors */
-        .excel-section {
-            border-left-color: #2ecc71;
-        }
-        
-        .excel-section .workshop-title {
-            color: #27ae60;
-        }
-        
-        .excel-section .topic-title {
-            color: #16a085;
-        }
-        
-        .arduino-section {
-            border-left-color: #3498db;
-        }
-        
-        .arduino-section .workshop-header {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-        }
-        
-        .arduino-section .workshop-title {
-            color: #2980b9;
-        }
-        
-        .arduino-section .topic-title {
-            color: #3498db;
+        /* ===== Responsive Adjustments ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+            
+            .flex-item {
+                flex-basis: 100%; /* Stack on mobile */
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="header"></div>
+    <!-- Header will be loaded via JS -->
+    <header id="header"></header>
     
-    <div class="container">
-        <h1 style="text-align: center; margin: 20px 0 30px; color: #2c3e50;">📚 Our Expert-Led Workshops</h1>
-        
-        <div class="intro-text">
-            Welcome to our hands-on learning hub, where knowledge meets practical application. At MilindWeb, we conduct skill-based workshops designed to empower students, professionals, and tech enthusiasts. Whether you want to master Microsoft Excel for Data Science or build IoT devices with Arduino & ESP32, we've got you covered.
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="section">
+                <div class="section-header">
+                    <h1>Freelance Digital Marketing Services | Akash – SEO Specialist & Consultant</h1>
+                    <p class="subtitle">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
+                    <p>Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
+                    <a href="https://wa.me/9198697887575" class="btn">👉 Get Free Consultation</a>
+                </div>
+            </section>
+            
+            <!-- About Me Section -->
+            <section class="section">
+                <div class="container">
+                    <h2>About Me</h2>
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <div class="card">
+                                <p>Hi, I'm <strong>Akash</strong>, a <strong>Freelance SEO Specialist & Digital Marketing Consultant</strong> with over 2 years of professional experience in helping businesses improve their online visibility and sales.</p>
+                                <p>After working at a reputed digital marketing agency, I now provide affordable, ROI-focused freelance digital marketing services for startups, small businesses, and growing brands.</p>
+                            </div>
+                        </div>
+                        <div class="flex-item">
+                            <div class="card">
+                                <h3>My Core Expertise:</h3>
+                                <ul>
+                                    <li>✅ Search Engine Optimization (SEO) – Get top rankings & organic traffic</li>
+                                    <li>✅ Social Media Marketing (SMM) – Build strong brand engagement</li>
+                                    <li>✅ Google Ads & PPC Campaigns – Generate instant leads & conversions</li>
+                                    <li>✅ Content Marketing – Publish content that ranks & converts</li>
+                                    <li>✅ SEO Audits & Consulting – Identify growth gaps & fix technical issues</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Process Section -->
+            <section class="section">
+                <div class="container">
+                    <h2>How I Drive Digital Marketing Success</h2>
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <div class="card">
+                                <h3>1. Research & Analysis</h3>
+                                <p>Study your industry, competitors, and target audience to build a solid foundation for your strategy.</p>
+                            </div>
+                        </div>
+                        <div class="flex-item">
+                            <div class="card">
+                                <h3>2. Custom Strategy Design</h3>
+                                <p>Create tailored SEO, PPC, or social campaigns specifically for your business goals.</p>
+                            </div>
+                        </div>
+                        <div class="flex-item">
+                            <div class="card">
+                                <h3>3. Execution with Precision</h3>
+                                <p>Launch data-driven campaigns that deliver measurable results from day one.</p>
+                            </div>
+                        </div>
+                        <div class="flex-item">
+                            <div class="card">
+                                <h3>4. Continuous Optimization</h3>
+                                <p>Track KPIs, refine strategies, and scale what works for long-term success.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Services Section -->
+            <section class="section">
+                <div class="container">
+                    <h2>My Digital Marketing Services</h2>
+                    
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <div class="card">
+                                <div class="service-icon">🔍</div>
+                                <h3>SEO – Rank Higher, Grow Organically</h3>
+                                <ul>
+                                    <li>On-Page SEO: Optimized meta tags, content structuring, and keyword targeting</li>
+                                    <li>Off-Page SEO: Quality backlinks, guest posts, and local citations</li>
+                                    <li>Technical SEO: Site speed, schema markup, and mobile optimization</li>
+                                    <li>Local SEO: Google Business Profile setup & maps ranking</li>
+                                    <li>Keyword Research & Competitor Analysis for maximum ROI</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-item">
+                            <div class="card">
+                                <div class="service-icon">📱</div>
+                                <h3>Social Media Marketing (SMM)</h3>
+                                <ul>
+                                    <li>Social profile setup & optimization (Facebook, Instagram, LinkedIn)</li>
+                                    <li>Creative content calendars & post designs</li>
+                                    <li>Paid ad campaigns for brand awareness & lead generation</li>
+                                    <li>Engagement strategies for audience growth</li>
+                                    <li>Detailed analytics & monthly reports</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <div class="card">
+                                <div class="service-icon">🎯</div>
+                                <h3>Google Ads & PPC</h3>
+                                <ul>
+                                    <li>Targeted Google Search & Display Ads</li>
+                                    <li>Remarketing campaigns to re-engage potential customers</li>
+                                    <li>Smart budget allocation for best ROI</li>
+                                    <li>Conversion tracking & transparent performance reports</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-item">
+                            <div class="card">
+                                <div class="service-icon">✍️</div>
+                                <h3>Content Marketing</h3>
+                                <ul>
+                                    <li>SEO-optimized blogs, articles & landing pages</li>
+                                    <li>Social media content (captions, infographics & creatives)</li>
+                                    <li>Brand storytelling to build trust & credibility</li>
+                                    <li>Strategic publishing calendars</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <div class="card">
+                                <div class="service-icon">🔧</div>
+                                <h3>SEO Audits & Consulting</h3>
+                                <ul>
+                                    <li>Full website SEO health audit</li>
+                                    <li>Competitor benchmarking & growth analysis</li>
+                                    <li>Clear, actionable strategies for better ranking</li>
+                                    <li>One-to-one consulting for business owners</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Why Choose Me Section -->
+            <section class="section">
+                <div class="container">
+                    <h2>Why Choose Me as Your Freelance Digital Marketer?</h2>
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <div class="card">
+                                <ul>
+                                    <li>✔ Proven SEO & digital marketing experience (2+ years)</li>
+                                    <li>✔ Affordable freelance services tailored to small businesses & startups</li>
+                                    <li>✔ Custom strategies aligned with your industry & goals</li>
+                                    <li>✔ Transparent monthly reporting with measurable results</li>
+                                    <li>✔ Certified expertise in SEO, Google Ads & social media campaigns</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- CTA Section -->
+            <section class="section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Let's Grow Your Business Together 🚀</h2>
+                        <p>Looking to rank higher on Google, attract quality leads, and scale your business online? I can help with affordable, data-driven freelance digital marketing solutions.</p>
+                        <a href="https://wa.me/9198697887575" class="btn">📩 Contact me today for a free consultation</a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- FAQ Section -->
+            <section class="section">
+                <div class="container">
+                    <h2>Frequently Asked Questions (FAQ)</h2>
+                    
+                    <details>
+                        <summary>How long before I see SEO results?</summary>
+                        <p>SEO is a steady process. Most clients notice improvements in 2–3 months, with major results in 6 months or more.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>Do you manage both SEO and paid ads?</summary>
+                        <p>Yes! I offer end-to-end digital marketing services, including SEO, Google Ads, and social media campaigns.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>Will I get regular performance updates?</summary>
+                        <p>Absolutely. I provide monthly reports with traffic, rankings, leads, and conversions.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>Who are your ideal clients?</summary>
+                        <p>I work best with startups, local businesses, and growing brands in industries such as retail, healthcare, education, and services.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>What's your pricing model?</summary>
+                        <p>I offer flexible pricing options including monthly retainers, project-based fees, or hourly consulting to suit different budgets.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>Can you help with e-commerce SEO?</summary>
+                        <p>Absolutely! I specialize in optimizing product pages, category structures, and technical SEO for Shopify, WooCommerce, and other e-commerce platforms.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>Do you work with international businesses?</summary>
+                        <p>Yes, I've managed SEO and ads for clients in multiple countries including the US, UK, UAE, and India.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>How do you build backlinks?</summary>
+                        <p>I use white-hat strategies like guest posts on authoritative sites, niche edits, digital PR, and creating shareable content - no spammy links!</p>
+                    </details>
+                    
+                    <details>
+                        <summary>What's your social media ad experience?</summary>
+                        <p>I've run successful campaigns on Facebook, Instagram, and LinkedIn for various objectives including lead generation, sales, and brand awareness.</p>
+                    </details>
+                    
+                    <details>
+                        <summary>Do you offer ongoing support?</summary>
+                        <p>Yes! I provide monthly SEO maintenance, ad management, and content updates to ensure long-term growth for your business.</p>
+                    </details>
+                </div>
+            </section>
         </div>
-        
-        <!-- Excel Workshop -->
-        <div class="workshop-section excel-section">
-            <div class="workshop-header">
-                <h2 class="workshop-title"><span class="emoji">🟢</span> Microsoft Excel Workshop – From Basics to Data Science</h2>
-            </div>
-            <div class="workshop-content">
-                <p>Microsoft Excel is more than just a spreadsheet tool — it's the backbone of modern data analysis and business intelligence. Our comprehensive workshop takes you from beginner to advanced, with a strong focus on Data Science applications.</p>
-                
-                <h3 class="topic-title">🔑 Workshop Highlights</h3>
-                <ul class="highlight-list">
-                    <li>Learn Excel from scratch — no prior knowledge required</li>
-                    <li>Real-world use cases for business, academics, and projects</li>
-                    <li>Step-by-step guidance from experienced trainers</li>
-                    <li>Practice sessions with live datasets</li>
-                </ul>
-                
-                <h3 class="topic-title">📌 Topics Covered</h3>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">1. Excel Basics</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Introduction to Excel interface</div>
-                        <div class="topic-item">Data entry, formatting, and navigation</div>
-                        <div class="topic-item">Managing worksheets and workbooks</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">2. Data Management</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Sorting, filtering, and data validation</div>
-                        <div class="topic-item">Conditional formatting</div>
-                        <div class="topic-item">Creating drop-down menus</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">3. Excel Formulas & Functions for Data Science</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Mathematical & Statistical Functions</div>
-                        <div class="topic-item">Logical Functions (IF, AND, OR)</div>
-                        <div class="topic-item">Lookup Functions (VLOOKUP, XLOOKUP)</div>
-                        <div class="topic-item">Text Functions</div>
-                        <div class="topic-item">Date & Time Functions</div>
-                        <div class="topic-item">Array & Dynamic Functions</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">4. Data Analysis Tools</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">PivotTables & PivotCharts</div>
-                        <div class="topic-item">Data Tables & What-If Analysis</div>
-                        <div class="topic-item">Scenario Manager & Goal Seek</div>
-                        <div class="topic-item">Solver Add-in for optimization</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">5. Visualization & Reporting</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Creating professional charts</div>
-                        <div class="topic-item">Conditional charts for trends</div>
-                        <div class="topic-item">Dashboards with slicers</div>
-                        <div class="topic-item">Custom formatting for reports</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">6. Advanced Data Science with Excel</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Power Query for data cleaning</div>
-                        <div class="topic-item">Power Pivot & DAX formulas</div>
-                        <div class="topic-item">Handling large datasets</div>
-                        <div class="topic-item">Linking external data sources</div>
-                        <div class="topic-item">Basics of Machine Learning</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">7. Project Work</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Interactive Sales Dashboard</div>
-                        <div class="topic-item">HR Analytics Report</div>
-                        <div class="topic-item">Financial Modeling</div>
-                    </div>
-                </div>
-                
-                <h3 class="topic-title">🎯 Who Can Join</h3>
-                <div class="topic-items">
-                    <div class="topic-item">Students (10th to Degree)</div>
-                    <div class="topic-item">Working Professionals</div>
-                    <div class="topic-item">Entrepreneurs & Business Owners</div>
-                    <div class="topic-item">Anyone eager to upskill in Data Science</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Arduino Workshop -->
-        <div class="workshop-section arduino-section">
-            <div class="workshop-header">
-                <h2 class="workshop-title"><span class="emoji">🔵</span> Arduino & ESP32 Workshop – Unleash Your Inner Engineer</h2>
-            </div>
-            <div class="workshop-content">
-                <p>Step into the world of IoT, robotics, and automation with our practical Arduino & ESP32 workshop. Designed for beginners and hobbyists, this workshop helps you build real electronic projects with confidence.</p>
-                
-                <h3 class="topic-title">🔑 Workshop Highlights</h3>
-                <ul class="highlight-list">
-                    <li>Learn electronics & programming from scratch</li>
-                    <li>Hands-on experience with Arduino & ESP32 kits</li>
-                    <li>Build 4+ real-world projects during the session</li>
-                    <li>Free starter kit included (keep it after the workshop)</li>
-                    <li>Guidance from industry experts with 7+ years of experience</li>
-                </ul>
-                
-                <h3 class="topic-title">📌 Topics Covered</h3>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">1. Introduction to Microcontrollers</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Difference between Arduino & ESP32</div>
-                        <div class="topic-item">Basics of circuits and power supply</div>
-                        <div class="topic-item">Installing Arduino IDE & ESP32 libraries</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">2. Electronics Fundamentals</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">LEDs, resistors, sensors, and motors</div>
-                        <div class="topic-item">Understanding breadboards & wiring</div>
-                        <div class="topic-item">Safety & troubleshooting techniques</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">3. Programming Skills</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Writing your first Arduino program</div>
-                        <div class="topic-item">Input & Output handling</div>
-                        <div class="topic-item">Using libraries for sensors & devices</div>
-                        <div class="topic-item">Wireless communication (Wi-Fi & Bluetooth)</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">4. DIY Projects You'll Build</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Traffic Light Controller</div>
-                        <div class="topic-item">Automatic Fan/Light Control</div>
-                        <div class="topic-item">Smart Robot Car</div>
-                        <div class="topic-item">IoT-Based Gate Automation</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">5. ESP32 Advanced Features</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">Wi-Fi-enabled data logging</div>
-                        <div class="topic-item">Control devices from smartphone</div>
-                        <div class="topic-item">IoT dashboards (Blynk, ThingSpeak)</div>
-                        <div class="topic-item">Integrating with Google Sheets/Cloud</div>
-                    </div>
-                </div>
-                
-                <div class="topic-group">
-                    <h4 class="topic-title">6. Workshop Kit (FREE)</h4>
-                    <div class="topic-items">
-                        <div class="topic-item">ESP32 Dev Kit</div>
-                        <div class="topic-item">LEDs & Resistors</div>
-                        <div class="topic-item">Breadboard & Connectors</div>
-                        <div class="topic-item">Sensors (IR, Ultrasonic)</div>
-                        <div class="topic-item">BO Motor & Servo Motor</div>
-                        <div class="topic-item">5V Relay Module</div>
-                        <div class="topic-item">Rechargeable Battery Pack</div>
-                    </div>
-                </div>
-                
-                <h3 class="topic-title">🎯 Who Can Join</h3>
-                <div class="topic-items">
-                    <div class="topic-item">Students (7th to Engineering)</div>
-                    <div class="topic-item">Science & Tech Enthusiasts</div>
-                    <div class="topic-item">Beginners in Electronics & IoT</div>
-                    <div class="topic-item">Hobbyists wanting to build devices</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="schedule-box">
-            <h3 style="margin-top: 0;">📅 Workshop Schedule & Venue</h3>
-            <p>📍 NAVAL STATION KARANJA, URAN, NAVI MUMBAI</p>
-            <p>🗓️ Every 4th Saturday & Sunday of the Month</p>
-        </div>
-        
-        <div class="cta-section">
-            <h3 class="cta-title">Limited Seats Available!</h3>
-            <p>Don't miss this opportunity to upgrade your skills with hands-on training from industry experts.</p>
-            <a href="contact.html" class="cta-button">Book Your Seat Now →</a>
-        </div>
-    </div>
+    </main>
     
-    <div id="footer"></div>
+    <!-- Footer will be loaded via JS -->
+    <footer id="footer"></footer>
     
+    <!-- Include Script -->
     <script src="js/include.js"></script>
     <script>
-        // Fetch header and footer
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('header').innerHTML = data);
-            
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer').innerHTML = data);
-            
-        // Add intersection observer for scroll animations
+        // Load header and footer
         document.addEventListener('DOMContentLoaded', function() {
-            const sections = document.querySelectorAll('.workshop-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
-                    }
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
                 });
-            }, { threshold: 0.1 });
             
-            sections.forEach(section => {
-                section.style.opacity = 0;
-                section.style.transform = 'translateY(20px)';
-                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(section);
-            });
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer').innerHTML = data;
+                });
         });
     </script>
 </body>
