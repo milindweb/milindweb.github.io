@@ -50,15 +50,15 @@
     }
 
     .main-container {
-      background: var(--secondary-bg);
-      border-radius: 16px;
-      padding: 2rem;
-      box-shadow: var(--card-shadow);
-      border: 1px solid var(--border);
-      margin: 2rem auto;
+      padding: 2rem 1.5rem;
       max-width: 1200px;
-      width: calc(100% - 3rem);
+      margin: 0 auto;
       flex: 1;
+      width: 100%;
+    }
+
+    section {
+      margin-bottom: 3rem;
       animation: fadeIn 0.8s ease-out;
     }
 
@@ -169,12 +169,11 @@
 
     /* Team Section */
     .team-section {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.75rem;
+      background: var(--secondary-bg);
+      border-radius: 16px;
+      padding: 2rem;
       box-shadow: var(--card-shadow);
       border: 1px solid var(--border);
-      margin-bottom: 0;
     }
 
     .team-grid {
@@ -195,7 +194,7 @@
       border-radius: 8px;
       transition: all 0.3s ease;
       border: 1px solid var(--border);
-      background: var(--secondary-bg);
+      background: var(--card-bg);
     }
 
     .team-member:hover {
@@ -261,9 +260,7 @@
     /* Responsive styles */
     @media (max-width: 768px) {
       .main-container {
-        padding: 1.5rem;
-        width: calc(100% - 2rem);
-        margin: 1rem auto;
+        padding: 1rem;
       }
       
       .cards-grid {
@@ -280,13 +277,6 @@
     }
 
     @media (max-width: 480px) {
-      .main-container {
-        padding: 1.25rem;
-        width: calc(100% - 1rem);
-        margin: 0.5rem auto;
-        border-radius: 12px;
-      }
-      
       .card {
         padding: 1.25rem;
       }
@@ -304,55 +294,55 @@
   
   <main class="main-container">
     <!-- Services Section -->
-    <section style="margin-bottom: 2rem;">
+    <section>
       <div class="cards-grid">
         <a href="freelance_seo_consultant.html" class="card-link">
           <div class="card" style="animation-delay: 0.1s">
             <h3><span class="card-icon"><i class="fas fa-bullhorn"></i></span> DIGITAL MARKETING</h3>
-            <p>Professional SEO and digital marketing services to boost your online visibility.</p>
-            <p>Custom strategies tailored for business growth and higher search rankings.</p>
+            <p>Freelance digital marketing and SEO consulting services to rank higher and grow faster.</p>
+            <p>Boost your online presence with expert SEO strategies tailored for your business growth.</p>
           </div>
         </a>
         
         <a href="project.html" class="card-link">
           <div class="card" style="animation-delay: 0.2s">
-            <h3><span class="card-icon"><i class="fas fa-project-diagram"></i></span> ENGINEERING PROJECTS</h3>
-            <p>Innovative projects for diploma and engineering students with industry applications.</p>
+            <h3><span class="card-icon"><i class="fas fa-project-diagram"></i></span> PROJECTS</h3>
+            <p>Innovative projects & mini projects for diploma and engineering students.</p>
           </div>
         </a>
         
         <a href="website-tech-solutions.html" class="card-link">
           <div class="card" style="animation-delay: 0.3s">
-            <h3><span class="card-icon"><i class="fas fa-robot"></i></span> TECH SOLUTIONS</h3>
-            <p>Web development, Python automation, and AI solutions for startups and students.</p>
+            <h3><span class="card-icon"><i class="fas fa-robot"></i></span> WEB DEV / PYTHON / AI</h3>
+            <p>Software, smart tools, android apps, websites & scripts for students & startups.</p>
           </div>
         </a>
         
         <a href="workshop.html" class="card-link">
           <div class="card" style="animation-delay: 0.4s">
             <h3><span class="card-icon"><i class="fas fa-tools"></i></span> WORKSHOPS</h3>
-            <p>Hands-on training in Arduino, ESP32, and MS Excel with provided kits.</p>
+            <p>Arduino/ESP32, MS Excel hands-on training with kits provided.</p>
           </div>
         </a>
         
         <a href="graphics.html" class="card-link">
           <div class="card" style="animation-delay: 0.5s">
             <h3><span class="card-icon"><i class="fas fa-paint-brush"></i></span> GRAPHICS DESIGN</h3>
-            <p>Professional designs for banners, cards, logos and social media content.</p>
+            <p>Design banners, wedding cards, logos & video editing for social media.</p>
           </div>
         </a>
         
         <a href="B006-NAD_Employees_Seniariity_List.html" class="card-link">
           <div class="card" style="animation-delay: 0.6s">
-            <h3><span class="card-icon"><i class="fas fa-chart-bar"></i></span> SENIORITY MANAGER</h3>
-            <p>Track employee promotions and seniority with our specialized management tool.</p>
+            <h3><span class="card-icon"><i class="fas fa-chart-bar"></i></span> SENIORITY MANAGEMENT</h3>
+            <p>Track promotion and employee ranks with our specialized tool.</p>
           </div>
         </a>
         
         <a href="blog.html" class="card-link">
           <div class="card" style="animation-delay: 0.7s">
             <h3><span class="card-icon"><i class="fas fa-blog"></i></span> BLOG & TUTORIALS</h3>
-            <p>Tech insights, project guides, and the latest industry trends and tutorials.</p>
+            <p>Tech news, tips, project hacks & community tutorials.</p>
           </div>
         </a>
       </div>
@@ -375,7 +365,7 @@
           <div class="member-avatar" aria-hidden="true"><i class="fas fa-user"></i></div>
           <div class="member-info">
             <h4>Mr. Swapnil</h4>
-            <p>B.Sc, 8 yrs experience in finance & operations management</p>
+            <p>B.Sc, 8 yrs experience in finance & operations</p>
           </div>
         </div>
         
@@ -383,7 +373,7 @@
           <div class="member-avatar" aria-hidden="true"><i class="fas fa-user"></i></div>
           <div class="member-info">
             <h4>Er. Aarti</h4>
-            <p>DEE, B.E (Electrical), Digital Marketing Executive with 2+ yrs experience</p>
+            <p>DEE, B.E (Electrical), Digital Marketing Executive, 2+ yrs experience</p>
           </div>
         </div>
         
