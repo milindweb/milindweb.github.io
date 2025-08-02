@@ -263,10 +263,6 @@
         padding: 1rem;
       }
       
-      h2 {
-        font-size: 1.5rem;
-      }
-      
       .cards-grid {
         gap: 1rem;
       }
@@ -285,10 +281,6 @@
         padding: 1.25rem;
       }
       
-      h2 {
-        font-size: 1.35rem;
-      }
-      
       .card-link {
         flex: 1 1 100%;
         min-width: auto;
@@ -303,8 +295,6 @@
   <main class="main-container">
     <!-- Services Section -->
     <section>
-      <h2><i class="fas fa-laptop-code"></i> OUR SERVICES</h2>
-      
       <div class="cards-grid">
         <a href="freelance_seo_consultant.html" class="card-link">
           <div class="card" style="animation-delay: 0.1s">
@@ -454,6 +444,26 @@
       if (!localStorage.getItem('theme')) {
         setTheme(e.matches ? 'dark' : 'light');
       }
+    });
+
+    // Include external HTML files
+    document.addEventListener('DOMContentLoaded', function() {
+      const includeElements = document.querySelectorAll('[data-include]');
+      
+      includeElements.forEach(element => {
+        const file = element.getAttribute('data-include');
+        
+        if (file) {
+          fetch(file)
+            .then(response => response.text())
+            .then(data => {
+              element.innerHTML = data;
+            })
+            .catch(error => {
+              console.error('Error loading include file:', error);
+            });
+        }
+      });
     });
   </script>
 </body>
