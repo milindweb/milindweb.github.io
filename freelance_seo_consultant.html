@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milindweb - Freelance Digital Marketing Services | Aarti - SEO Specialist & Consultant | Mumbai, Panvel, Pune Nagpur Sambhaji Nagar nanded parbhani hingoli</title>
-    <meta name="description" content="Aarti - Freelance SEO Specialist serving Mumbai, Panvel, Pune, Nagpur, Sambhaji Nagar, Nanded, Parbhani, Hingoli. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online.">
+    <title>Milindweb - Freelance Digital Marketing Services | Aarti - SEO Specialist & Consultant | Mumbai, Panvel, Pune, Nagpur, Sambhaji Nagar, Nanded, Parbhani, Hingoli</title>
+    <meta name="description" content="Aarti - Freelance SEO Specialist offering professional SEO services to help businesses rank higher on Google. Serving Mumbai, Panvel, Pune, Nagpur, Sambhaji Nagar, Nanded, Parbhani, Hingoli.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         /* ===== Base Styles ===== */
@@ -12,6 +12,7 @@
             --primary: #1565C0;
             --primary-dark: #0D47A1;
             --secondary: #FFC107;
+            --accent: #4CAF50;
             --light: #f8f9fa;
             --dark: #212121;
             --gray: #757575;
@@ -68,7 +69,6 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            white-space: nowrap;
         }
         
         p {
@@ -77,79 +77,64 @@
         
         /* ===== Animations ===== */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .animate-section {
-            opacity: 0;
+        @keyframes cardPulse {
+            0% { transform: scale(1); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            50% { transform: scale(1.02); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
+            100% { transform: scale(1); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         }
         
         .animate-fade-in-up {
-            animation: fadeInUp 1s ease-out forwards;
+            animation: fadeInUp 0.8s ease-out forwards;
         }
-        
-        .animate-slide-left {
-            animation: slideInLeft 1s ease-out forwards;
-        }
-        
-        .animate-slide-right {
-            animation: slideInRight 1s ease-out forwards;
-        }
-        
-        .animate-delay-1 { animation-delay: 0.2s; }
-        .animate-delay-2 { animation-delay: 0.4s; }
-        .animate-delay-3 { animation-delay: 0.6s; }
         
         /* ===== Card Styles ===== */
         .card {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 25px;
-            transition: all 0.3s ease;
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.4s ease;
             height: 100%;
-            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Regular Card */
+        .card-regular {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+        
+        /* Highlight Card */
+        .card-highlight {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--secondary);
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+        
+        /* Accent Card */
+        .card-accent {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-right: 5px solid var(--accent);
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+            animation: cardPulse 1.5s infinite;
+        }
+        
+        .card-highlight:hover {
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
         
         /* ===== Flex Layout System ===== */
         .flex-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 25px;
             margin: 30px 0;
         }
         
@@ -173,8 +158,8 @@
         
         .btn:hover {
             background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         
         /* ===== Section Styles ===== */
@@ -192,27 +177,43 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .service-icon {
-            font-size: 1.8rem;
-        }
-        
-        /* ===== Process Steps ===== */
-        .process-step {
-            position: relative;
-            padding-left: 30px;
             margin-bottom: 20px;
         }
         
-        .process-step:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
+        .service-icon {
             font-size: 2rem;
-            line-height: 1;
+            color: var(--primary);
+        }
+        
+        /* ===== SEO Content Section ===== */
+        .seo-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .seo-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .seo-content p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        /* ===== Service Areas ===== */
+        .service-areas {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 30px 0;
+            font-weight: 600;
         }
         
         /* ===== Benefits List ===== */
@@ -223,49 +224,18 @@
         
         .benefits-list li {
             position: relative;
-            padding-left: 25px;
-            margin-bottom: 10px;
-            line-height: 1.5;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            line-height: 1.6;
         }
         
         .benefits-list li:before {
             content: "•";
             position: absolute;
-            left: 0;
+            left: 15px;
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             line-height: 1;
-        }
-        
-        /* ===== Service Areas ===== */
-        .service-areas {
-            background-color: var(--primary);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 20px 0;
-            font-weight: 600;
-        }
-        
-        /* ===== FAQ Styles ===== */
-        details {
-            background: white;
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        
-        summary {
-            font-weight: 600;
-            cursor: pointer;
-            outline: none;
-            color: var(--primary-dark);
-        }
-        
-        details[open] summary {
-            margin-bottom: 10px;
         }
         
         /* ===== Responsive Adjustments ===== */
@@ -278,22 +248,16 @@
                 font-size: 1.75rem;
             }
             
-            h3 {
-                white-space: normal;
-                font-size: 1.3rem;
+            .container {
+                padding: 0 20px;
             }
             
-            .container {
-                padding: 0 15px;
+            .seo-content {
+                padding: 25px;
             }
             
             .flex-item {
                 flex-basis: 100%;
-            }
-            
-            .btn {
-                display: block;
-                width: 100%;
             }
         }
     </style>
@@ -306,14 +270,28 @@
         <div class="container">
             <!-- Hero Section -->
             <section class="section">
-                <div class="section-header">
-                    <h1 class="animate__animated animate__fadeIn">Freelance Digital Marketing Services</h1>
-                    <p class="subtitle animate-fade-in-up">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
-                    <div class="service-areas animate-fade-in-up animate-delay-1">
+                <div class="section-header animate__animated animate__fadeIn">
+                    <h1 class="animate-fade-in-up">Freelance Digital Marketing Services</h1>
+                    <p class="subtitle animate-fade-in-up animate-delay-1">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
+                    <div class="service-areas animate-fade-in-up animate-delay-2">
                         <p>Serving: Mumbai, Panvel, Pune, Nagpur, Sambhaji Nagar, Nanded, Parbhani, Hingoli</p>
                     </div>
-                    <p class="animate-fade-in-up animate-delay-2">Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
+                    <p class="animate-fade-in-up animate-delay-3">Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
                     <a href="https://wa.me/9198697887575" class="btn animate-fade-in-up animate-delay-3">👉 Get Free Consultation</a>
+                </div>
+            </section>
+            
+            <!-- SEO Content Section -->
+            <section class="section">
+                <div class="seo-content animate-fade-in-up">
+                    <h2>SEO – Rank Higher, Grow Organically</h2>
+                    <p>In today's digital landscape, <strong>Search Engine Optimization (SEO)</strong> is the cornerstone of online visibility. As your dedicated SEO specialist, I implement proven strategies to help your website climb search engine rankings and attract qualified organic traffic. Unlike paid ads that stop working when you turn them off, SEO delivers sustainable, long-term results that compound over time.</p>
+                    
+                    <p>My comprehensive SEO approach combines technical optimizations, content strategy, and authoritative link building to establish your website as an industry leader. I don't just chase rankings - I focus on driving conversions and revenue through targeted keyword strategies that align with your business goals.</p>
+                    
+                    <p>Whether you're a local business serving Mumbai, Panvel, or Pune, or an e-commerce store targeting customers across Maharashtra, I tailor SEO solutions to your specific needs. My services are designed to work for businesses of all sizes across Nagpur, Sambhaji Nagar, Nanded, Parbhani, and Hingoli.</p>
+                    
+                    <p>With 2+ years of experience in the digital marketing field, I've helped numerous clients achieve first-page rankings for competitive keywords. My data-driven methodology ensures every optimization delivers measurable impact to your bottom line.</p>
                 </div>
             </section>
             
@@ -323,13 +301,13 @@
                     <h2>About Me</h2>
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card card-regular">
                                 <p>Hi, I'm <strong>Aarti</strong>, a <strong>Freelance SEO Specialist & Digital Marketing Consultant</strong> with over 2 years of professional experience in helping businesses improve their online visibility and sales.</p>
                                 <p>After working at a reputed digital marketing agency, I now provide affordable, ROI-focused freelance digital marketing services for startups, small businesses, and growing brands.</p>
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card card-highlight">
                                 <h3>My Core Expertise:</h3>
                                 <ul class="benefits-list">
                                     <li>Search Engine Optimization (SEO) – Get top rankings & organic traffic</li>
@@ -344,47 +322,6 @@
                 </div>
             </section>
             
-            <!-- Animated Process Section -->
-            <section class="section animate-section" id="process">
-                <div class="container">
-                    <h2 class="animate-fade-in-up">How I Drive Digital Marketing Success</h2>
-                    <div class="flex-container">
-                        <div class="flex-item">
-                            <div class="card animate-slide-left">
-                                <div class="process-step">
-                                    <h3>Research & Analysis</h3>
-                                    <p>Study your industry, competitors, and target audience to build a solid foundation for your strategy.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-item">
-                            <div class="card animate-slide-right">
-                                <div class="process-step">
-                                    <h3>Strategy Design</h3>
-                                    <p>Create tailored SEO, PPC, or social campaigns specifically for your business goals.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-item">
-                            <div class="card animate-slide-left">
-                                <div class="process-step">
-                                    <h3>Precision Execution</h3>
-                                    <p>Launch data-driven campaigns that deliver measurable results from day one.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-item">
-                            <div class="card animate-slide-right">
-                                <div class="process-step">
-                                    <h3>Continuous Optimization</h3>
-                                    <p>Track KPIs, refine strategies, and scale what works for long-term success.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
             <!-- Services Section -->
             <section class="section">
                 <div class="container">
@@ -392,33 +329,33 @@
                     
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card card-highlight">
                                 <div class="service-header">
                                     <span class="service-icon">🔍</span>
-                                    <h3>SEO</h3>
+                                    <h3>SEO Services</h3>
                                 </div>
                                 <ul class="benefits-list">
-                                    <li>On-Page SEO: Optimized meta tags, content structuring, and keyword targeting</li>
-                                    <li>Off-Page SEO: Quality backlinks, guest posts, and local citations</li>
-                                    <li>Technical SEO: Site speed, schema markup, and mobile optimization</li>
-                                    <li>Local SEO: Google Business Profile setup & maps ranking</li>
-                                    <li>Keyword Research & Competitor Analysis for maximum ROI</li>
+                                    <li>Comprehensive On-Page Optimization (meta tags, content, structure)</li>
+                                    <li>Strategic Off-Page SEO (quality backlinks, digital PR)</li>
+                                    <li>Technical SEO audits & fixes (speed, mobile, indexing)</li>
+                                    <li>Local SEO for businesses in Mumbai, Pune, Nagpur and beyond</li>
+                                    <li>Ongoing keyword research & competitor analysis</li>
                                 </ul>
                             </div>
                         </div>
                         
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card card-accent">
                                 <div class="service-header">
                                     <span class="service-icon">📱</span>
                                     <h3>Social Media Marketing</h3>
                                 </div>
                                 <ul class="benefits-list">
-                                    <li>Social profile setup & optimization (Facebook, Instagram, LinkedIn)</li>
-                                    <li>Creative content calendars & post designs</li>
-                                    <li>Paid ad campaigns for brand awareness & lead generation</li>
-                                    <li>Engagement strategies for audience growth</li>
-                                    <li>Detailed analytics & monthly reports</li>
+                                    <li>Platform-specific profile optimization</li>
+                                    <li>Engaging content strategy & calendar</li>
+                                    <li>Targeted paid advertising campaigns</li>
+                                    <li>Community growth & management</li>
+                                    <li>Performance analytics & reporting</li>
                                 </ul>
                             </div>
                         </div>
@@ -426,68 +363,33 @@
                     
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card card-regular">
                                 <div class="service-header">
                                     <span class="service-icon">🎯</span>
                                     <h3>Google Ads & PPC</h3>
                                 </div>
                                 <ul class="benefits-list">
-                                    <li>Targeted Google Search & Display Ads</li>
-                                    <li>Remarketing campaigns to re-engage potential customers</li>
-                                    <li>Smart budget allocation for best ROI</li>
-                                    <li>Conversion tracking & transparent performance reports</li>
+                                    <li>Strategic campaign setup & management</li>
+                                    <li>Search & Display network advertising</li>
+                                    <li>Remarketing to convert lost visitors</li>
+                                    <li>Conversion tracking & optimization</li>
+                                    <li>Transparent performance reporting</li>
                                 </ul>
                             </div>
                         </div>
                         
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card card-highlight">
                                 <div class="service-header">
                                     <span class="service-icon">✍️</span>
                                     <h3>Content Marketing</h3>
                                 </div>
                                 <ul class="benefits-list">
-                                    <li>SEO-optimized blogs, articles & landing pages</li>
-                                    <li>Social media content (captions, infographics & creatives)</li>
-                                    <li>Brand storytelling to build trust & credibility</li>
-                                    <li>Strategic publishing calendars</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex-container">
-                        <div class="flex-item">
-                            <div class="card">
-                                <div class="service-header">
-                                    <span class="service-icon">🔧</span>
-                                    <h3>SEO Audits & Consulting</h3>
-                                </div>
-                                <ul class="benefits-list">
-                                    <li>Full website SEO health audit</li>
-                                    <li>Competitor benchmarking & growth analysis</li>
-                                    <li>Clear, actionable strategies for better ranking</li>
-                                    <li>One-to-one consulting for business owners</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Why Choose Me Section -->
-            <section class="section">
-                <div class="container">
-                    <h2>Why Choose Me as Your Freelance Digital Marketer?</h2>
-                    <div class="flex-container">
-                        <div class="flex-item">
-                            <div class="card">
-                                <ul class="benefits-list">
-                                    <li>Proven SEO & digital marketing experience (2+ years)</li>
-                                    <li>Affordable freelance services tailored to small businesses & startups</li>
-                                    <li>Custom strategies aligned with your industry & goals</li>
-                                    <li>Transparent monthly reporting with measurable results</li>
-                                    <li>Certified expertise in SEO, Google Ads & social media campaigns</li>
+                                    <li>SEO-optimized blog content creation</li>
+                                    <li>Website copywriting that converts</li>
+                                    <li>Social media content strategy</li>
+                                    <li>Brand storytelling & messaging</li>
+                                    <li>Editorial calendar management</li>
                                 </ul>
                             </div>
                         </div>
@@ -499,32 +401,10 @@
             <section class="section">
                 <div class="container">
                     <div class="section-header">
-                        <h2>Let's Grow Your Business Together 🚀</h2>
-                        <p>Looking to rank higher on Google, attract quality leads, and scale your business online? I can help with affordable, data-driven freelance digital marketing solutions.</p>
+                        <h2>Ready to Transform Your Online Presence?</h2>
+                        <p>Whether you're in Mumbai, Pune, Nagpur or anywhere in Maharashtra, I can help your business achieve digital success.</p>
                         <a href="https://wa.me/9198697887575" class="btn">📩 Contact me today for a free consultation</a>
                     </div>
-                </div>
-            </section>
-            
-            <!-- FAQ Section -->
-            <section class="section">
-                <div class="container">
-                    <h2>Frequently Asked Questions (FAQ)</h2>
-                    
-                    <details>
-                        <summary>How long before I see SEO results?</summary>
-                        <p>SEO is a steady process. Most clients notice improvements in 2–3 months, with major results in 6 months or more.</p>
-                    </details>
-                    
-                    <details>
-                        <summary>Do you manage both SEO and paid ads?</summary>
-                        <p>Yes! I offer end-to-end digital marketing services, including SEO, Google Ads, and social media campaigns.</p>
-                    </details>
-                    
-                    <details>
-                        <summary>Will I get regular performance updates?</summary>
-                        <p>Absolutely. I provide monthly reports with traffic, rankings, leads, and conversions.</p>
-                    </details>
                 </div>
             </section>
         </div>
@@ -533,7 +413,6 @@
     <!-- Footer will be loaded via JS -->
     <footer id="footer"></footer>
     
-    <!-- Animation Trigger Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Load header and footer
@@ -549,25 +428,10 @@
                     document.getElementById('footer').innerHTML = data;
                 });
             
-            // Intersection Observer for animations
-            const animateElements = document.querySelectorAll('.animate-section, .animate-fade-in-up, details');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        if (entry.target.classList.contains('animate-fade-in-up') || 
-                            entry.target.classList.contains('animate-slide-left') || 
-                            entry.target.classList.contains('animate-slide-right')) {
-                            entry.target.style.animationPlayState = 'running';
-                        }
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            animateElements.forEach(el => {
-                observer.observe(el);
+            // Simple animation trigger
+            const animateElements = document.querySelectorAll('.animate-fade-in-up');
+            animateElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.2}s`;
             });
         });
     </script>
