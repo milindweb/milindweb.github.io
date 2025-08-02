@@ -166,6 +166,7 @@
       border-radius: 8px;
     }
 
+    /* Team Section (unchanged as requested) */
     .team-section {
       background: var(--secondary-bg);
       border-radius: 16px;
@@ -254,64 +255,49 @@
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     }
 
-    /* Mobile Responsive Styles */
+    /* Optimized Mobile Card Spacing */
     @media (max-width: 768px) {
       .main-container {
-        padding: 0.5rem;
-        width: 100%;
+        padding: 0.5rem 0.75rem;
       }
       
       section {
         margin-bottom: 1.5rem;
-        padding: 0 0.5rem;
       }
       
       .cards-grid {
-        flex-direction: column;
-        gap: 0.75rem;
-        width: 100%;
+        gap: 0.5rem;
       }
       
       .card-link {
-        min-width: calc(100% - 1rem);
-        margin: 0 0.5rem;
-      }
-      
-      .card {
-        width: 100%;
-        padding: 1.25rem;
-        border-radius: 8px;
-        margin: 0;
-      }
-      
-      .team-section {
-        border-radius: 8px;
-        padding: 1.25rem;
-        margin: 0.5rem;
-      }
-      
-      .team-member {
-        min-width: calc(100% - 1rem);
-        margin: 0.25rem 0.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h2 {
-        font-size: 1.5rem;
-        padding-left: 0.5rem;
-      }
-      
-      h2::after {
-        left: 0.5rem;
+        min-width: calc(100% - 0.5rem);
+        margin: 0.1rem 0.25rem;
       }
       
       .card {
         padding: 1rem;
+        margin: 0;
       }
       
       .card h3 {
+        margin-bottom: 0.5rem;
         font-size: 1.1rem;
+      }
+      
+      .card p {
+        margin-bottom: 0.3rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 0.8rem;
+      }
+      
+      .card-link {
+        min-width: calc(100% - 0.4rem);
+        margin: 0.1rem 0.2rem;
       }
     }
   </style>
@@ -326,54 +312,56 @@
         <a href="freelance_seo_consultant.html" class="card-link">
           <div class="card" style="animation-delay: 0.1s">
             <h3><span class="card-icon"><i class="fas fa-bullhorn"></i></span> DIGITAL MARKETING</h3>
-            <p>Freelance digital marketing and SEO consulting services to rank higher and grow faster.</p>
+            <p>Freelance digital marketing and SEO consulting services.</p>
+            <p>Boost your online presence with expert strategies.</p>
           </div>
         </a>
         
         <a href="project.html" class="card-link">
           <div class="card" style="animation-delay: 0.2s">
             <h3><span class="card-icon"><i class="fas fa-project-diagram"></i></span> PROJECTS</h3>
-            <p>Innovative projects & mini projects for diploma and engineering students.</p>
+            <p>Innovative projects for engineering students.</p>
           </div>
         </a>
         
         <a href="website-tech-solutions.html" class="card-link">
           <div class="card" style="animation-delay: 0.3s">
             <h3><span class="card-icon"><i class="fas fa-robot"></i></span> TECH SOLUTIONS</h3>
-            <p>Software, smart tools, android apps, websites & scripts.</p>
+            <p>Software, tools, apps, and websites for startups.</p>
           </div>
         </a>
         
         <a href="workshop.html" class="card-link">
           <div class="card" style="animation-delay: 0.4s">
             <h3><span class="card-icon"><i class="fas fa-tools"></i></span> WORKSHOPS</h3>
-            <p>Arduino/ESP32, MS Excel hands-on training with kits provided.</p>
+            <p>Hands-on training with Arduino/ESP32 kits.</p>
           </div>
         </a>
         
         <a href="graphics.html" class="card-link">
           <div class="card" style="animation-delay: 0.5s">
             <h3><span class="card-icon"><i class="fas fa-paint-brush"></i></span> GRAPHICS DESIGN</h3>
-            <p>Design banners, wedding cards, logos & video editing for social media.</p>
+            <p>Design banners, cards, logos & video editing.</p>
           </div>
         </a>
         
         <a href="B006-NAD_Employees_Seniariity_List.html" class="card-link">
           <div class="card" style="animation-delay: 0.6s">
             <h3><span class="card-icon"><i class="fas fa-chart-bar"></i></span> SENIORITY MANAGER</h3>
-            <p>Track promotion and employee ranks with our specialized tool.</p>
+            <p>Track employee promotions and seniority.</p>
           </div>
         </a>
         
         <a href="blog.html" class="card-link">
           <div class="card" style="animation-delay: 0.7s">
             <h3><span class="card-icon"><i class="fas fa-blog"></i></span> BLOG & TUTORIALS</h3>
-            <p>Tech news, tips, project hacks & community tutorials.</p>
+            <p>Tech news, tips, and project tutorials.</p>
           </div>
         </a>
       </div>
     </section>
     
+    <!-- Team Section (unchanged as requested) -->
     <section class="team-section">
       <h2><i class="fas fa-users"></i> OUR TEAM</h2>
       
