@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milindweb - Freelance Digital Marketing Services | Aarti - SEO Specialist | Mumbai, Panvel, Pune, Nagpur, Sambhaji Nagar, Nanded, Parbhani, Hingoli</title>
-    <meta name="description" content="Aarti - Freelance SEO Specialist serving multiple cities. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online.">
+    <title>Milindweb - Freelance Digital Marketing Services | Aarti - SEO Specialist & Consultant | Mumbai, Panvel, Pune Nagpur Sambhaji Nagar nanded parbhani hingoli</title>
+    <meta name="description" content="Aarti - Freelance SEO Specialist serving Mumbai, Panvel, Pune, Nagpur, Sambhaji Nagar, Nanded, Parbhani, Hingoli. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         /* ===== Base Styles ===== */
         :root {
@@ -35,11 +36,12 @@
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 30px;
         }
         
         main {
             padding: 40px 0;
+            min-height: calc(100vh - 120px);
         }
         
         /* ===== Typography ===== */
@@ -66,11 +68,66 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            white-space: nowrap;
         }
         
         p {
             margin-bottom: 1rem;
         }
+        
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .animate-section {
+            opacity: 0;
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        .animate-slide-left {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+        
+        .animate-slide-right {
+            animation: slideInRight 1s ease-out forwards;
+        }
+        
+        .animate-delay-1 { animation-delay: 0.2s; }
+        .animate-delay-2 { animation-delay: 0.4s; }
+        .animate-delay-3 { animation-delay: 0.6s; }
         
         /* ===== Card Styles ===== */
         .card {
@@ -188,10 +245,6 @@
             border-radius: 8px;
             text-align: center;
             margin: 20px 0;
-        }
-        
-        .service-areas p {
-            margin: 0;
             font-weight: 600;
         }
         
@@ -225,6 +278,11 @@
                 font-size: 1.75rem;
             }
             
+            h3 {
+                white-space: normal;
+                font-size: 1.3rem;
+            }
+            
             .container {
                 padding: 0 15px;
             }
@@ -241,18 +299,21 @@
     </style>
 </head>
 <body>
+    <!-- Header will be loaded via JS -->
+    <header id="header"></header>
+    
     <main>
         <div class="container">
             <!-- Hero Section -->
             <section class="section">
                 <div class="section-header">
-                    <h1>Freelance Digital Marketing Services</h1>
-                    <p class="subtitle">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
-                    <div class="service-areas">
+                    <h1 class="animate__animated animate__fadeIn">Freelance Digital Marketing Services</h1>
+                    <p class="subtitle animate-fade-in-up">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
+                    <div class="service-areas animate-fade-in-up animate-delay-1">
                         <p>Serving: Mumbai, Panvel, Pune, Nagpur, Sambhaji Nagar, Nanded, Parbhani, Hingoli</p>
                     </div>
-                    <p>Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
-                    <a href="https://wa.me/9198697887575" class="btn">👉 Get Free Consultation</a>
+                    <p class="animate-fade-in-up animate-delay-2">Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
+                    <a href="https://wa.me/9198697887575" class="btn animate-fade-in-up animate-delay-3">👉 Get Free Consultation</a>
                 </div>
             </section>
             
@@ -263,8 +324,8 @@
                     <div class="flex-container">
                         <div class="flex-item">
                             <div class="card">
-                                <p>Hi, I'm <strong>Aarti</strong>, a <strong>Freelance SEO Specialist & Digital Marketing Consultant</strong> with professional experience in helping businesses improve their online visibility and sales.</p>
-                                <p>I provide affordable, ROI-focused freelance digital marketing services for startups, small businesses, and growing brands.</p>
+                                <p>Hi, I'm <strong>Aarti</strong>, a <strong>Freelance SEO Specialist & Digital Marketing Consultant</strong> with over 2 years of professional experience in helping businesses improve their online visibility and sales.</p>
+                                <p>After working at a reputed digital marketing agency, I now provide affordable, ROI-focused freelance digital marketing services for startups, small businesses, and growing brands.</p>
                             </div>
                         </div>
                         <div class="flex-item">
@@ -283,13 +344,13 @@
                 </div>
             </section>
             
-            <!-- Process Section -->
-            <section class="section">
+            <!-- Animated Process Section -->
+            <section class="section animate-section" id="process">
                 <div class="container">
-                    <h2>How I Drive Digital Marketing Success</h2>
+                    <h2 class="animate-fade-in-up">How I Drive Digital Marketing Success</h2>
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-slide-left">
                                 <div class="process-step">
                                     <h3>Research & Analysis</h3>
                                     <p>Study your industry, competitors, and target audience to build a solid foundation for your strategy.</p>
@@ -297,7 +358,7 @@
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-slide-right">
                                 <div class="process-step">
                                     <h3>Strategy Design</h3>
                                     <p>Create tailored SEO, PPC, or social campaigns specifically for your business goals.</p>
@@ -305,7 +366,7 @@
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-slide-left">
                                 <div class="process-step">
                                     <h3>Precision Execution</h3>
                                     <p>Launch data-driven campaigns that deliver measurable results from day one.</p>
@@ -313,7 +374,7 @@
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-slide-right">
                                 <div class="process-step">
                                     <h3>Continuous Optimization</h3>
                                     <p>Track KPIs, refine strategies, and scale what works for long-term success.</p>
@@ -422,11 +483,11 @@
                         <div class="flex-item">
                             <div class="card">
                                 <ul class="benefits-list">
-                                    <li>Proven SEO & digital marketing experience</li>
-                                    <li>Affordable services tailored to small businesses & startups</li>
+                                    <li>Proven SEO & digital marketing experience (2+ years)</li>
+                                    <li>Affordable freelance services tailored to small businesses & startups</li>
                                     <li>Custom strategies aligned with your industry & goals</li>
                                     <li>Transparent monthly reporting with measurable results</li>
-                                    <li>Certified expertise in SEO, Google Ads & social media</li>
+                                    <li>Certified expertise in SEO, Google Ads & social media campaigns</li>
                                 </ul>
                             </div>
                         </div>
@@ -439,7 +500,7 @@
                 <div class="container">
                     <div class="section-header">
                         <h2>Let's Grow Your Business Together 🚀</h2>
-                        <p>Looking to rank higher on Google, attract quality leads, and scale your business online?</p>
+                        <p>Looking to rank higher on Google, attract quality leads, and scale your business online? I can help with affordable, data-driven freelance digital marketing solutions.</p>
                         <a href="https://wa.me/9198697887575" class="btn">📩 Contact me today for a free consultation</a>
                     </div>
                 </div>
@@ -448,7 +509,7 @@
             <!-- FAQ Section -->
             <section class="section">
                 <div class="container">
-                    <h2>Frequently Asked Questions</h2>
+                    <h2>Frequently Asked Questions (FAQ)</h2>
                     
                     <details>
                         <summary>How long before I see SEO results?</summary>
@@ -468,5 +529,47 @@
             </section>
         </div>
     </main>
+    
+    <!-- Footer will be loaded via JS -->
+    <footer id="footer"></footer>
+    
+    <!-- Animation Trigger Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load header and footer
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                });
+            
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer').innerHTML = data;
+                });
+            
+            // Intersection Observer for animations
+            const animateElements = document.querySelectorAll('.animate-section, .animate-fade-in-up, details');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        if (entry.target.classList.contains('animate-fade-in-up') || 
+                            entry.target.classList.contains('animate-slide-left') || 
+                            entry.target.classList.contains('animate-slide-right')) {
+                            entry.target.style.animationPlayState = 'running';
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
 </html>
