@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milindweb - Freelance Digital Marketing Services | SEO Specialist & Consultant, Mumbai pune, Sambhajinagar, Nanded, Latur, Parbhani</title>
-    <meta name="description" content="Aarti- Freelance SEO Specialist & Digital Marketing Consultant. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online, Mumbai pune, Sambhajinagar, Nanded, Latur, Parbhani.">
+    <title>Freelance Digital Marketing Services | Aarti - SEO Specialist & Consultant</title>
+    <meta name="description" content="Aarti - Freelance SEO Specialist & Digital Marketing Consultant. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         /* ===== Base Styles ===== */
@@ -29,6 +29,7 @@
             background-color: #f5f5f5;
             color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
         
         /* ===== Layout Structure ===== */
@@ -65,6 +66,7 @@
         
         h3 {
             font-size: 1.5rem;
+            white-space: nowrap; /* Prevent heading breaks */
         }
         
         p {
@@ -213,6 +215,27 @@
             margin-bottom: 10px;
         }
         
+        /* ===== Why Choose Me Section ===== */
+        .benefits-list {
+            list-style-type: none;
+        }
+        
+        .benefits-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .benefits-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        
         /* ===== Responsive Adjustments ===== */
         @media (max-width: 768px) {
             h1 {
@@ -223,14 +246,30 @@
                 font-size: 1.75rem;
             }
             
+            h3 {
+                white-space: normal; /* Allow heading breaks on mobile */
+                font-size: 1.3rem;
+            }
+            
             .flex-item {
                 flex-basis: 100%;
+                min-width: 100%;
             }
             
             .btn {
                 display: block;
                 width: 100%;
                 margin-bottom: 10px;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            /* Ensure content fits horizontally */
+            body, html {
+                width: 100%;
+                overflow-x: hidden;
             }
         }
     </style>
@@ -244,10 +283,10 @@
             <!-- Hero Section -->
             <section class="section">
                 <div class="section-header animate__animated animate__fadeIn">
-                    <h1 class="animate-fade-in-up">Freelance Digital Marketing Services | Akash – SEO Specialist & Consultant</h1>
+                    <h1 class="animate-fade-in-up">Freelance Digital Marketing Services | Aarti – SEO Specialist & Consultant</h1>
                     <p class="subtitle animate-fade-in-up animate-delay-1">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
                     <p class="animate-fade-in-up animate-delay-2">Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
-                    <a href="https://wa.me/919869787575" class="btn pulse-hover animate-fade-in-up animate-delay-3">👉 Get Free Consultation</a>
+                    <a href="https://wa.me/9198697887575" class="btn pulse-hover animate-fade-in-up animate-delay-3">👉 Get Free Consultation</a>
                 </div>
             </section>
             
@@ -265,12 +304,12 @@
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-2">
                                 <h3>My Core Expertise:</h3>
-                                <ul>
-                                    <li> Search Engine Optimization (SEO) – Get top rankings & organic traffic</li>
-                                    <li> Social Media Marketing (SMM) – Build strong brand engagement</li>
-                                    <li> Google Ads & PPC Campaigns – Generate instant leads & conversions</li>
-                                    <li> Content Marketing – Publish content that ranks & converts</li>
-                                    <li> SEO Audits & Consulting – Identify growth gaps & fix technical issues</li>
+                                <ul class="benefits-list">
+                                    <li>Search Engine Optimization (SEO) – Get top rankings & organic traffic</li>
+                                    <li>Social Media Marketing (SMM) – Build strong brand engagement</li>
+                                    <li>Google Ads & PPC Campaigns – Generate instant leads & conversions</li>
+                                    <li>Content Marketing – Publish content that ranks & converts</li>
+                                    <li>SEO Audits & Consulting – Identify growth gaps & fix technical issues</li>
                                 </ul>
                             </div>
                         </div>
@@ -285,25 +324,25 @@
                     <div class="flex-container">
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-1">
-                                <h3> Research & Analysis</h3>
+                                <h3>1. Research & Analysis</h3>
                                 <p>Study your industry, competitors, and target audience to build a solid foundation for your strategy.</p>
                             </div>
                         </div>
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-2">
-                                <h3> Custom Strategy Design</h3>
+                                <h3>2. Custom Strategy Design</h3>
                                 <p>Create tailored SEO, PPC, or social campaigns specifically for your business goals.</p>
                             </div>
                         </div>
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-3">
-                                <h3> Execution with Precision</h3>
+                                <h3>3. Execution with Precision</h3>
                                 <p>Launch data-driven campaigns that deliver measurable results from day one.</p>
                             </div>
                         </div>
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-1">
-                                <h3> Continuous Optimization</h3>
+                                <h3>4. Continuous Optimization</h3>
                                 <p>Track KPIs, refine strategies, and scale what works for long-term success.</p>
                             </div>
                         </div>
@@ -320,8 +359,8 @@
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-1">
                                 <div class="service-icon">🔍</div>
-                                <h3>SEO – Rank Higher, Grow Organically</h3>
-                                <ul>
+                                <h3>SEO</h3>
+                                <ul class="benefits-list">
                                     <li>On-Page SEO: Optimized meta tags, content structuring, and keyword targeting</li>
                                     <li>Off-Page SEO: Quality backlinks, guest posts, and local citations</li>
                                     <li>Technical SEO: Site speed, schema markup, and mobile optimization</li>
@@ -334,8 +373,8 @@
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-2">
                                 <div class="service-icon">📱</div>
-                                <h3>Social Media Marketing (SMM)</h3>
-                                <ul>
+                                <h3>Social Media Marketing</h3>
+                                <ul class="benefits-list">
                                     <li>Social profile setup & optimization (Facebook, Instagram, LinkedIn)</li>
                                     <li>Creative content calendars & post designs</li>
                                     <li>Paid ad campaigns for brand awareness & lead generation</li>
@@ -351,7 +390,7 @@
                             <div class="card animate-fade-in-up animate-delay-1">
                                 <div class="service-icon">🎯</div>
                                 <h3>Google Ads & PPC</h3>
-                                <ul>
+                                <ul class="benefits-list">
                                     <li>Targeted Google Search & Display Ads</li>
                                     <li>Remarketing campaigns to re-engage potential customers</li>
                                     <li>Smart budget allocation for best ROI</li>
@@ -364,7 +403,7 @@
                             <div class="card animate-fade-in-up animate-delay-2">
                                 <div class="service-icon">✍️</div>
                                 <h3>Content Marketing</h3>
-                                <ul>
+                                <ul class="benefits-list">
                                     <li>SEO-optimized blogs, articles & landing pages</li>
                                     <li>Social media content (captions, infographics & creatives)</li>
                                     <li>Brand storytelling to build trust & credibility</li>
@@ -379,7 +418,7 @@
                             <div class="card animate-fade-in-up animate-delay-1">
                                 <div class="service-icon">🔧</div>
                                 <h3>SEO Audits & Consulting</h3>
-                                <ul>
+                                <ul class="benefits-list">
                                     <li>Full website SEO health audit</li>
                                     <li>Competitor benchmarking & growth analysis</li>
                                     <li>Clear, actionable strategies for better ranking</li>
@@ -398,12 +437,12 @@
                     <div class="flex-container">
                         <div class="flex-item">
                             <div class="card animate-fade-in-up animate-delay-1">
-                                <ul>
-                                    <li>✔ Proven SEO & digital marketing experience (2+ years)</li>
-                                    <li>✔ Affordable freelance services tailored to small businesses & startups</li>
-                                    <li>✔ Custom strategies aligned with your industry & goals</li>
-                                    <li>✔ Transparent monthly reporting with measurable results</li>
-                                    <li>✔ Certified expertise in SEO, Google Ads & social media campaigns</li>
+                                <ul class="benefits-list">
+                                    <li>Proven SEO & digital marketing experience (2+ years)</li>
+                                    <li>Affordable freelance services tailored to small businesses & startups</li>
+                                    <li>Custom strategies aligned with your industry & goals</li>
+                                    <li>Transparent monthly reporting with measurable results</li>
+                                    <li>Certified expertise in SEO, Google Ads & social media campaigns</li>
                                 </ul>
                             </div>
                         </div>
