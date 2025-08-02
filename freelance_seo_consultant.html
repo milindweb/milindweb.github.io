@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freelance Digital Marketing Services | Akash - SEO Specialist & Consultant</title>
-    <meta name="description" content="Akash - Freelance SEO Specialist & Digital Marketing Consultant. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online.">
+    <title>Milindweb - Freelance Digital Marketing Services | SEO Specialist & Consultant, Mumbai pune, Sambhajinagar, Nanded, Latur, Parbhani</title>
+    <meta name="description" content="Aarti- Freelance SEO Specialist & Digital Marketing Consultant. Offering SEO, Google Ads, Social Media Marketing & Content Strategies to grow your business online, Mumbai pune, Sambhajinagar, Nanded, Latur, Parbhani.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         /* ===== Base Styles ===== */
         :root {
@@ -40,7 +41,7 @@
         
         main {
             padding: 40px 0;
-            min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+            min-height: calc(100vh - 120px);
         }
         
         /* ===== Typography ===== */
@@ -70,19 +71,50 @@
             margin-bottom: 1rem;
         }
         
+        /* ===== Animations ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .animate-delay-1 { animation-delay: 0.2s; }
+        .animate-delay-2 { animation-delay: 0.4s; }
+        .animate-delay-3 { animation-delay: 0.6s; }
+        
+        .pulse-hover:hover {
+            animation: pulse 1s infinite;
+        }
+        
         /* ===== Card Styles ===== */
         .card {
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             height: 100%;
+            opacity: 0; /* Initially hidden for animation */
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
         
         /* ===== Flex Layout System ===== */
@@ -94,8 +126,8 @@
         }
         
         .flex-item {
-            flex: 1 0 300px; /* Grow, don't shrink, basis 300px */
-            min-width: 0; /* Prevent overflow */
+            flex: 1 0 300px;
+            min-width: 0;
         }
         
         /* ===== Button Styles ===== */
@@ -143,6 +175,11 @@
             font-size: 2.5rem;
             margin-bottom: 15px;
             color: var(--primary);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover .service-icon {
+            transform: rotate(10deg) scale(1.1);
         }
         
         /* ===== FAQ Styles ===== */
@@ -152,6 +189,12 @@
             padding: 15px 20px;
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        details[open] {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         summary {
@@ -159,25 +202,15 @@
             cursor: pointer;
             outline: none;
             color: var(--primary-dark);
+            transition: color 0.2s ease;
+        }
+        
+        summary:hover {
+            color: var(--primary);
         }
         
         details[open] summary {
             margin-bottom: 10px;
-        }
-        
-        /* ===== Header/Footer Integration ===== */
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        footer {
-            background-color: var(--primary);
-            color: white;
-            padding: 30px 0;
-            text-align: center;
         }
         
         /* ===== Responsive Adjustments ===== */
@@ -191,7 +224,7 @@
             }
             
             .flex-item {
-                flex-basis: 100%; /* Stack on mobile */
+                flex-basis: 100%;
             }
             
             .btn {
@@ -210,34 +243,34 @@
         <div class="container">
             <!-- Hero Section -->
             <section class="section">
-                <div class="section-header">
-                    <h1>Freelance Digital Marketing Services | Akash – SEO Specialist & Consultant</h1>
-                    <p class="subtitle">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
-                    <p>Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
-                    <a href="https://wa.me/9198697887575" class="btn">👉 Get Free Consultation</a>
+                <div class="section-header animate__animated animate__fadeIn">
+                    <h1 class="animate-fade-in-up">Freelance Digital Marketing Services | Akash – SEO Specialist & Consultant</h1>
+                    <p class="subtitle animate-fade-in-up animate-delay-1">🚀 Grow Your Business Online with Expert SEO & Digital Marketing</p>
+                    <p class="animate-fade-in-up animate-delay-2">Affordable, data-driven freelance solutions to help your business rank higher, attract quality leads, and boost sales.</p>
+                    <a href="https://wa.me/919869787575" class="btn pulse-hover animate-fade-in-up animate-delay-3">👉 Get Free Consultation</a>
                 </div>
             </section>
             
             <!-- About Me Section -->
             <section class="section">
                 <div class="container">
-                    <h2>About Me</h2>
+                    <h2 class="animate-fade-in-up">About Me</h2>
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-1">
                                 <p>Hi, I'm <strong>Akash</strong>, a <strong>Freelance SEO Specialist & Digital Marketing Consultant</strong> with over 2 years of professional experience in helping businesses improve their online visibility and sales.</p>
                                 <p>After working at a reputed digital marketing agency, I now provide affordable, ROI-focused freelance digital marketing services for startups, small businesses, and growing brands.</p>
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-2">
                                 <h3>My Core Expertise:</h3>
                                 <ul>
-                                    <li>✅ Search Engine Optimization (SEO) – Get top rankings & organic traffic</li>
-                                    <li>✅ Social Media Marketing (SMM) – Build strong brand engagement</li>
-                                    <li>✅ Google Ads & PPC Campaigns – Generate instant leads & conversions</li>
-                                    <li>✅ Content Marketing – Publish content that ranks & converts</li>
-                                    <li>✅ SEO Audits & Consulting – Identify growth gaps & fix technical issues</li>
+                                    <li> Search Engine Optimization (SEO) – Get top rankings & organic traffic</li>
+                                    <li> Social Media Marketing (SMM) – Build strong brand engagement</li>
+                                    <li> Google Ads & PPC Campaigns – Generate instant leads & conversions</li>
+                                    <li> Content Marketing – Publish content that ranks & converts</li>
+                                    <li> SEO Audits & Consulting – Identify growth gaps & fix technical issues</li>
                                 </ul>
                             </div>
                         </div>
@@ -248,29 +281,29 @@
             <!-- Process Section -->
             <section class="section">
                 <div class="container">
-                    <h2>How I Drive Digital Marketing Success</h2>
+                    <h2 class="animate-fade-in-up">How I Drive Digital Marketing Success</h2>
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
-                                <h3>1. Research & Analysis</h3>
+                            <div class="card animate-fade-in-up animate-delay-1">
+                                <h3> Research & Analysis</h3>
                                 <p>Study your industry, competitors, and target audience to build a solid foundation for your strategy.</p>
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
-                                <h3>2. Custom Strategy Design</h3>
+                            <div class="card animate-fade-in-up animate-delay-2">
+                                <h3> Custom Strategy Design</h3>
                                 <p>Create tailored SEO, PPC, or social campaigns specifically for your business goals.</p>
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
-                                <h3>3. Execution with Precision</h3>
+                            <div class="card animate-fade-in-up animate-delay-3">
+                                <h3> Execution with Precision</h3>
                                 <p>Launch data-driven campaigns that deliver measurable results from day one.</p>
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="card">
-                                <h3>4. Continuous Optimization</h3>
+                            <div class="card animate-fade-in-up animate-delay-1">
+                                <h3> Continuous Optimization</h3>
                                 <p>Track KPIs, refine strategies, and scale what works for long-term success.</p>
                             </div>
                         </div>
@@ -281,11 +314,11 @@
             <!-- Services Section -->
             <section class="section">
                 <div class="container">
-                    <h2>My Digital Marketing Services</h2>
+                    <h2 class="animate-fade-in-up">My Digital Marketing Services</h2>
                     
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-1">
                                 <div class="service-icon">🔍</div>
                                 <h3>SEO – Rank Higher, Grow Organically</h3>
                                 <ul>
@@ -299,7 +332,7 @@
                         </div>
                         
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-2">
                                 <div class="service-icon">📱</div>
                                 <h3>Social Media Marketing (SMM)</h3>
                                 <ul>
@@ -315,7 +348,7 @@
                     
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-1">
                                 <div class="service-icon">🎯</div>
                                 <h3>Google Ads & PPC</h3>
                                 <ul>
@@ -328,7 +361,7 @@
                         </div>
                         
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-2">
                                 <div class="service-icon">✍️</div>
                                 <h3>Content Marketing</h3>
                                 <ul>
@@ -343,7 +376,7 @@
                     
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-1">
                                 <div class="service-icon">🔧</div>
                                 <h3>SEO Audits & Consulting</h3>
                                 <ul>
@@ -361,10 +394,10 @@
             <!-- Why Choose Me Section -->
             <section class="section">
                 <div class="container">
-                    <h2>Why Choose Me as Your Freelance Digital Marketer?</h2>
+                    <h2 class="animate-fade-in-up">Why Choose Me as Your Freelance Digital Marketer?</h2>
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="card">
+                            <div class="card animate-fade-in-up animate-delay-1">
                                 <ul>
                                     <li>✔ Proven SEO & digital marketing experience (2+ years)</li>
                                     <li>✔ Affordable freelance services tailored to small businesses & startups</li>
@@ -382,9 +415,9 @@
             <section class="section">
                 <div class="container">
                     <div class="section-header">
-                        <h2>Let's Grow Your Business Together 🚀</h2>
-                        <p>Looking to rank higher on Google, attract quality leads, and scale your business online? I can help with affordable, data-driven freelance digital marketing solutions.</p>
-                        <a href="https://wa.me/9198697887575" class="btn">📩 Contact me today for a free consultation</a>
+                        <h2 class="animate-fade-in-up">Let's Grow Your Business Together 🚀</h2>
+                        <p class="animate-fade-in-up animate-delay-1">Looking to rank higher on Google, attract quality leads, and scale your business online? I can help with affordable, data-driven freelance digital marketing solutions.</p>
+                        <a href="https://wa.me/9198697887575" class="btn pulse-hover animate-fade-in-up animate-delay-2">📩 Contact me today for a free consultation</a>
                     </div>
                 </div>
             </section>
@@ -392,54 +425,54 @@
             <!-- FAQ Section -->
             <section class="section">
                 <div class="container">
-                    <h2>Frequently Asked Questions (FAQ)</h2>
+                    <h2 class="animate-fade-in-up">Frequently Asked Questions (FAQ)</h2>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-1">
                         <summary>How long before I see SEO results?</summary>
                         <p>SEO is a steady process. Most clients notice improvements in 2–3 months, with major results in 6 months or more.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-2">
                         <summary>Do you manage both SEO and paid ads?</summary>
                         <p>Yes! I offer end-to-end digital marketing services, including SEO, Google Ads, and social media campaigns.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-3">
                         <summary>Will I get regular performance updates?</summary>
                         <p>Absolutely. I provide monthly reports with traffic, rankings, leads, and conversions.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-1">
                         <summary>Who are your ideal clients?</summary>
                         <p>I work best with startups, local businesses, and growing brands in industries such as retail, healthcare, education, and services.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-2">
                         <summary>What's your pricing model?</summary>
                         <p>I offer flexible pricing options including monthly retainers, project-based fees, or hourly consulting to suit different budgets.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-3">
                         <summary>Can you help with e-commerce SEO?</summary>
                         <p>Absolutely! I specialize in optimizing product pages, category structures, and technical SEO for Shopify, WooCommerce, and other e-commerce platforms.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-1">
                         <summary>Do you work with international businesses?</summary>
                         <p>Yes, I've managed SEO and ads for clients in multiple countries including the US, UK, UAE, and India.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-2">
                         <summary>How do you build backlinks?</summary>
                         <p>I use white-hat strategies like guest posts on authoritative sites, niche edits, digital PR, and creating shareable content - no spammy links!</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-3">
                         <summary>What's your social media ad experience?</summary>
                         <p>I've run successful campaigns on Facebook, Instagram, and LinkedIn for various objectives including lead generation, sales, and brand awareness.</p>
                     </details>
                     
-                    <details>
+                    <details class="animate-fade-in-up animate-delay-1">
                         <summary>Do you offer ongoing support?</summary>
                         <p>Yes! I provide monthly SEO maintenance, ad management, and content updates to ensure long-term growth for your business.</p>
                     </details>
@@ -451,11 +484,10 @@
     <!-- Footer will be loaded via JS -->
     <footer id="footer"></footer>
     
-    <!-- Include Script -->
-    <script src="js/include.js"></script>
+    <!-- Animation Trigger Script -->
     <script>
-        // Load header and footer
         document.addEventListener('DOMContentLoaded', function() {
+            // Load header and footer
             fetch('header.html')
                 .then(response => response.text())
                 .then(data => {
@@ -467,6 +499,25 @@
                 .then(data => {
                     document.getElementById('footer').innerHTML = data;
                 });
+            
+            // Intersection Observer for animations
+            const animateElements = document.querySelectorAll('.animate-fade-in-up, details');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        if (entry.target.classList.contains('animate-fade-in-up')) {
+                            entry.target.style.animationPlayState = 'running';
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(el => {
+                observer.observe(el);
+            });
         });
     </script>
 </body>
