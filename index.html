@@ -89,7 +89,7 @@
       border-radius: 2px;
     }
 
-    /* Flexbox Cards Grid */
+    /* Flexbox Cards Grid - Desktop */
     .cards-grid {
       display: flex;
       flex-wrap: wrap;
@@ -257,33 +257,74 @@
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     }
 
-    /* Responsive styles */
+    /* Mobile Responsive Styles */
     @media (max-width: 768px) {
       .main-container {
-        padding: 1rem;
+        padding: 0;
+        width: 100%;
+      }
+      
+      section {
+        margin-bottom: 2rem;
+        padding: 0 1rem;
       }
       
       .cards-grid {
-        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+      }
+      
+      .card-link {
+        flex: 1 1 auto;
+        min-width: 100%;
+        max-width: 100%;
+        margin-bottom: 0;
       }
       
       .card {
+        width: 100%;
         padding: 1.5rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+      }
+      
+      .card:hover {
+        transform: none;
       }
       
       .team-section {
-        padding: 1.5rem;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        padding: 1.5rem 1rem;
+      }
+      
+      .team-member {
+        min-width: 100%;
+        border-radius: 0;
       }
     }
 
     @media (max-width: 480px) {
-      .card {
-        padding: 1.25rem;
+      h2 {
+        font-size: 1.5rem;
+        padding-left: 1rem;
       }
       
-      .card-link {
-        flex: 1 1 100%;
-        min-width: auto;
+      h2::after {
+        left: 1rem;
+      }
+      
+      .card h3 {
+        font-size: 1.1rem;
+      }
+      
+      .card p {
+        font-size: 0.9rem;
       }
     }
   </style>
