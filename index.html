@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MilindWeb - Smart Technical Services, Engineering Project Developer & Blogger</title>
+  <title>MilindWeb - Smart Technical Services</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -89,7 +89,6 @@
       border-radius: 2px;
     }
 
-    /* Flexbox Cards Grid - Desktop */
     .cards-grid {
       display: flex;
       flex-wrap: wrap;
@@ -167,7 +166,6 @@
       border-radius: 8px;
     }
 
-    /* Team Section */
     .team-section {
       background: var(--secondary-bg);
       border-radius: 16px;
@@ -232,7 +230,6 @@
       line-height: 1.4;
     }
 
-    /* Theme toggle button */
     .theme-toggle {
       position: fixed;
       bottom: 20px;
@@ -260,71 +257,61 @@
     /* Mobile Responsive Styles */
     @media (max-width: 768px) {
       .main-container {
-        padding: 0;
+        padding: 0.5rem;
         width: 100%;
       }
       
       section {
-        margin-bottom: 2rem;
-        padding: 0 1rem;
+        margin-bottom: 1.5rem;
+        padding: 0 0.5rem;
       }
       
       .cards-grid {
-        display: flex;
         flex-direction: column;
-        gap: 0;
+        gap: 0.75rem;
         width: 100%;
       }
       
       .card-link {
-        flex: 1 1 auto;
-        min-width: 100%;
-        max-width: 100%;
-        margin-bottom: 0;
+        min-width: calc(100% - 1rem);
+        margin: 0 0.5rem;
       }
       
       .card {
         width: 100%;
-        padding: 1.5rem;
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        box-shadow: none;
-      }
-      
-      .card:hover {
-        transform: none;
+        padding: 1.25rem;
+        border-radius: 8px;
+        margin: 0;
       }
       
       .team-section {
-        border-radius: 0;
-        border-left: none;
-        border-right: none;
-        padding: 1.5rem 1rem;
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin: 0.5rem;
       }
       
       .team-member {
-        min-width: 100%;
-        border-radius: 0;
+        min-width: calc(100% - 1rem);
+        margin: 0.25rem 0.5rem;
       }
     }
 
     @media (max-width: 480px) {
       h2 {
         font-size: 1.5rem;
-        padding-left: 1rem;
+        padding-left: 0.5rem;
       }
       
       h2::after {
-        left: 1rem;
+        left: 0.5rem;
+      }
+      
+      .card {
+        padding: 1rem;
       }
       
       .card h3 {
         font-size: 1.1rem;
-      }
-      
-      .card p {
-        font-size: 0.9rem;
       }
     }
   </style>
@@ -334,14 +321,12 @@
   <div data-include="header.html"></div>
   
   <main class="main-container">
-    <!-- Services Section -->
     <section>
       <div class="cards-grid">
         <a href="freelance_seo_consultant.html" class="card-link">
           <div class="card" style="animation-delay: 0.1s">
             <h3><span class="card-icon"><i class="fas fa-bullhorn"></i></span> DIGITAL MARKETING</h3>
             <p>Freelance digital marketing and SEO consulting services to rank higher and grow faster.</p>
-            <p>Boost your online presence with expert SEO strategies tailored for your business growth.</p>
           </div>
         </a>
         
@@ -354,8 +339,8 @@
         
         <a href="website-tech-solutions.html" class="card-link">
           <div class="card" style="animation-delay: 0.3s">
-            <h3><span class="card-icon"><i class="fas fa-robot"></i></span> WEB DEV / PYTHON / AI</h3>
-            <p>Software, smart tools, android apps, websites & scripts for students & startups.</p>
+            <h3><span class="card-icon"><i class="fas fa-robot"></i></span> TECH SOLUTIONS</h3>
+            <p>Software, smart tools, android apps, websites & scripts.</p>
           </div>
         </a>
         
@@ -375,7 +360,7 @@
         
         <a href="B006-NAD_Employees_Seniariity_List.html" class="card-link">
           <div class="card" style="animation-delay: 0.6s">
-            <h3><span class="card-icon"><i class="fas fa-chart-bar"></i></span> SENIORITY MANAGEMENT</h3>
+            <h3><span class="card-icon"><i class="fas fa-chart-bar"></i></span> SENIORITY MANAGER</h3>
             <p>Track promotion and employee ranks with our specialized tool.</p>
           </div>
         </a>
@@ -389,7 +374,6 @@
       </div>
     </section>
     
-    <!-- Team Section -->
     <section class="team-section">
       <h2><i class="fas fa-users"></i> OUR TEAM</h2>
       
@@ -448,7 +432,6 @@
   <!-- Footer include -->
   <div data-include="footer.html"></div>
   
-  <!-- Theme toggle button -->
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
     <i class="fas fa-moon"></i>
   </button>
