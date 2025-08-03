@@ -224,7 +224,7 @@
         
         /* Contact Form Styles */
         .contact-form-container {
-            background-color: #0a2342;
+            background: linear-gradient(135deg, #0a2342 0%, #1a2a6c 100%);
             color: white;
             border-radius: 12px;
             padding: 30px;
@@ -279,7 +279,7 @@
             border: none;
             border-radius: 6px;
             font-size: 16px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             color: #333;
             transition: all 0.3s;
         }
@@ -313,12 +313,30 @@
             margin-top: 10px;
             width: 100%;
             box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.6s;
         }
         
         .submit-btn:hover {
             background: linear-gradient(to right, #b71c1c, #9c1a1a);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        }
+        
+        .submit-btn:hover::after {
+            left: 120%;
         }
         
         #statusMsg {
@@ -328,6 +346,12 @@
             text-align: center;
             font-weight: 500;
             transition: all 0.3s;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .success {
@@ -346,6 +370,25 @@
             background: rgba(249, 168, 37, 0.2);
             color: #fff8e1;
             border: 1px solid #ffe082;
+        }
+        
+        /* Form validation indicators */
+        .form-group.invalid input,
+        .form-group.invalid select,
+        .form-group.invalid textarea {
+            border: 2px solid #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.invalid .error-message {
+            display: block;
         }
         
         /* Footer */
@@ -630,22 +673,27 @@
                       <option>Projects & Workshop</option>
                       <option>Any Other</option>
                     </select>
+                    <div class="error-message">Please select a service</div>
                   </div>
                   <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required placeholder="Your full name">
+                    <div class="error-message">Please enter your name</div>
                   </div>
                   <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                    <div class="error-message">Please enter a valid email</div>
                   </div>
                   <div class="form-group">
                     <label for="phone">Phone</label>
                     <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required placeholder="10-digit number">
+                    <div class="error-message">Please enter a 10-digit phone number</div>
                   </div>
                   <div class="form-group full-width">
                     <label for="message">Message</label>
                     <textarea id="message" name="message" required placeholder="Tell us about your project or inquiry..."></textarea>
+                    <div class="error-message">Please enter your message</div>
                   </div>
                   <button type="submit" class="submit-btn">Submit Request</button>
                 </form>
@@ -684,27 +732,61 @@
         const scriptURL = "https://script.google.com/macros/s/AKfycbxW1daVxkppEfyZ-XEa2QpAvE1Hny4b1T_mnu7tOvSFTvU3lS42vw6ntj1YJbxTWOD5dQ/exec";
         const form = document.getElementById("contactForm");
         const statusMsg = document.getElementById("statusMsg");
+        const formGroups = document.querySelectorAll('.form-group');
+
+        // Reset validation on input
+        form.addEventListener('input', function(e) {
+            const input = e.target;
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.remove('invalid');
+            statusMsg.textContent = '';
+            statusMsg.className = '';
+        });
 
         form.addEventListener("submit", e => {
           e.preventDefault();
+          let isValid = true;
 
-          const data = {
-            for: form.for.value,
-            name: form.name.value,
-            email: form.email.value,
-            phone: form.phone.value,
-            message: form.message.value
-          };
+          // Reset validation
+          formGroups.forEach(group => group.classList.remove('invalid'));
+          statusMsg.textContent = '';
+          statusMsg.className = '';
 
-          // Validate email & phone
-          const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-          if (!emailPattern.test(data.email)) {
-            statusMsg.textContent = "Please enter a valid email address.";
-            statusMsg.className = "warning";
-            return;
+          // Validate fields
+          const service = form.for.value;
+          const name = form.name.value.trim();
+          const email = form.email.value.trim();
+          const phone = form.phone.value.trim();
+          const message = form.message.value.trim();
+
+          if (!service) {
+            form.for.closest('.form-group').classList.add('invalid');
+            isValid = false;
           }
-          if (!/^\d{10}$/.test(data.phone)) {
-            statusMsg.textContent = "Phone must be 10 digits.";
+          
+          if (!name) {
+            form.name.closest('.form-group').classList.add('invalid');
+            isValid = false;
+          }
+          
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(email)) {
+            form.email.closest('.form-group').classList.add('invalid');
+            isValid = false;
+          }
+          
+          if (!/^\d{10}$/.test(phone)) {
+            form.phone.closest('.form-group').classList.add('invalid');
+            isValid = false;
+          }
+          
+          if (!message) {
+            form.message.closest('.form-group').classList.add('invalid');
+            isValid = false;
+          }
+
+          if (!isValid) {
+            statusMsg.textContent = "Please fill all required fields correctly.";
             statusMsg.className = "warning";
             return;
           }
@@ -713,27 +795,41 @@
           statusMsg.textContent = "Submitting your request...";
           statusMsg.className = "";
 
+          // Prepare form data
+          const data = {
+            for: service,
+            name: name,
+            email: email,
+            phone: phone,
+            message: message
+          };
+
+          // Submit form
           fetch(scriptURL, {
             method: "POST",
             body: JSON.stringify(data)
           })
-          .then(res => res.json())
+          .then(res => {
+            if (!res.ok) throw new Error('Network response was not ok');
+            return res.json();
+          })
           .then(response => {
             if (response.result === "success") {
               statusMsg.textContent = "✅ Submitted successfully! We will contact you shortly.";
               statusMsg.className = "success";
               form.reset();
+              
               // Auto-hide message after 5 seconds
               setTimeout(() => {
                 statusMsg.textContent = "";
                 statusMsg.className = "";
               }, 5000);
             } else {
-              statusMsg.textContent = "⚠️ Submission failed. Please try again.";
-              statusMsg.className = "error";
+              throw new Error('Server returned an error');
             }
           })
           .catch(error => {
+            console.error('Error submitting form:', error);
             statusMsg.textContent = "❌ Error submitting form. Please try again later.";
             statusMsg.className = "error";
           });
