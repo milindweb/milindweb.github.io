@@ -15,7 +15,7 @@
   <input type="text" name="name" placeholder="Your Name" required style="flex:1 1 300px; padding:12px;" />
   <input type="email" name="email" placeholder="Email (e.g., abc@xyz.com)" required style="flex:1 1 300px; padding:12px;" />
   
-  <!-- Numbers only, mobile friendly -->
+  <!-- Mobile number numeric only -->
   <input type="number" name="phone" placeholder="Mobile Number" required 
          style="flex:1 1 300px; padding:12px;" 
          oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
@@ -30,12 +30,25 @@
 </form>
 
 <p id="thankyou" style="text-align:center; font-weight:bold; color:#00695c; display:none;">
-  ✅ Submitted successfully! We will contact you shortly.
+  ✅ Thank you for contacting us. Your request has been received and our team will get back to you soon.
 </p>
 
 <script>
   let submitted = false;
-  document.querySelector('form').addEventListener('submit', function() {
+  document.querySelector('form').addEventListener('submit', async function() {
+    // Get user IP
+    const ip = await fetch("https://api.ipify.org?format=json")
+      .then(res => res.json())
+      .then(json => json.ip)
+      .catch(() => "Unknown");
+
+    // Append IP to form
+    const ipField = document.createElement("input");
+    ipField.type = "hidden";
+    ipField.name = "ip";
+    ipField.value = ip;
+    this.appendChild(ipField);
+
     setTimeout(() => {
       if (submitted) {
         const msgBox = document.getElementById('thankyou');
