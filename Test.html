@@ -1,5 +1,6 @@
-<form action="https://script.google.com/macros/s/AKfycbyCa9s8LQYQmaZ2WIx1duPVogBCREBp1r3nj9isYp61rgmEtwMdaiq9W5YTsrzjh67c/exec" 
-      method="POST" target="hidden_iframe" onsubmit="submitted=true;"
+<form id="contactForm"
+      action="https://script.google.com/macros/s/AKfycbyCa9s8LQYQmaZ2WIx1duPVogBCREBp1r3nj9isYp61rgmEtwMdaiq9W5YTsrzjh67c/exec"
+      method="POST"
       style="max-width:800px; margin:auto; padding:1.5rem; background:#f9f9f9; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); display:flex; flex-wrap:wrap; gap:1rem;">
 
   <select name="for" required style="flex:1 1 300px; padding:12px;">
@@ -14,19 +15,17 @@
 
   <input type="text" name="name" placeholder="Your Name" required style="flex:1 1 300px; padding:12px;" />
   <input type="email" name="email" placeholder="Email (e.g., abc@xyz.com)" required style="flex:1 1 300px; padding:12px;" />
-  
-  <!-- Mobile number numeric only -->
   <input type="number" name="phone" placeholder="Mobile Number" required 
-         style="flex:1 1 300px; padding:12px;" 
+         style="flex:1 1 300px; padding:12px;"
          oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
-  
   <textarea name="message" placeholder="Your Message" required style="flex:1 1 100%; padding:12px; min-height:120px;"></textarea>
+  
+  <!-- hidden IP -->
+  <input type="hidden" id="ipField" name="ip" value="">
 
   <button type="submit" style="flex:1 1 100%; padding:14px; background:#00897b; color:white; border:none; border-radius:8px; font-weight:bold; font-size:16px; cursor:pointer;">
     Submit
   </button>
-
-  <iframe name="hidden_iframe" style="display:none;"></iframe>
 </form>
 
 <p id="thankyou" style="text-align:center; font-weight:bold; color:#00695c; display:none;">
@@ -34,32 +33,20 @@
 </p>
 
 <script>
-  let submitted = false;
-  document.querySelector('form').addEventListener('submit', async function() {
-    // Get user IP
-    const ip = await fetch("https://api.ipify.org?format=json")
-      .then(res => res.json())
-      .then(json => json.ip)
-      .catch(() => "Unknown");
+  // Get user IP
+  fetch("https://api.ipify.org?format=json")
+    .then(res => res.json())
+    .then(json => document.getElementById('ipField').value = json.ip)
+    .catch(() => document.getElementById('ipField').value = "Unknown");
 
-    // Append IP to form
-    const ipField = document.createElement("input");
-    ipField.type = "hidden";
-    ipField.name = "ip";
-    ipField.value = ip;
-    this.appendChild(ipField);
-
+  // Handle thank you message
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', function() {
     setTimeout(() => {
-      if (submitted) {
-        const msgBox = document.getElementById('thankyou');
-        msgBox.style.display = 'block';
-        this.reset();
-        submitted = false;
-        // Hide after 15 seconds
-        setTimeout(() => {
-          msgBox.style.display = 'none';
-        }, 15000);
-      }
+      const msgBox = document.getElementById('thankyou');
+      msgBox.style.display = 'block';
+      form.reset();
+      setTimeout(() => msgBox.style.display = 'none', 15000);
     }, 1500);
   });
 </script>
