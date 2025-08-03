@@ -11,7 +11,7 @@
 
   <input type="text" name="name" placeholder="Your Name" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
   <input type="email" name="email" placeholder="Email (e.g., abc@xyz.com)" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
-  <input type="tel" name="phone" placeholder="10-digit Phone" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
+  <input type="tel" name="phone" placeholder="10-digit Phone" required pattern="[0-9]{10}" style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
   <textarea name="message" placeholder="Your Message" required style="flex: 1 1 100%; padding: 12px; min-height: 120px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
 
   <button type="submit"
@@ -32,22 +32,22 @@
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // Extra mobile number validation
     if (!/^\d{10}$/.test(data.phone)) {
       responseBox.textContent = "❌ Please enter a valid 10-digit mobile number.";
       return;
     }
 
     try {
-      // Add IP + UserAgent
       data.ip = await fetch("https://api.ipify.org?format=json")
         .then(res => res.json())
         .then(json => json.ip)
         .catch(() => "Unknown");
       data.userAgent = navigator.userAgent;
 
-      // Send to Apps Script
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyCa9s8LQYQmaZ2WIx1duPVogBCREBp1r3nj9isYp61rgmEtwMdaiq9W5YTsrzjh67c/exec", {
+      const scriptURL = "https://script.google.com/macros/s/AKfycbyCa9s8LQYQmaZ2WIx1duPVogBCREBp1r3nj9isYp61rgmEtwMdaiq9W5YTsrzjh67c/exec";
+      const proxyURL = `https://corsproxy.io/?${encodeURIComponent(scriptURL)}`;
+
+      const response = await fetch(proxyURL, {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" }
