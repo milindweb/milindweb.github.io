@@ -222,49 +222,130 @@
             background: var(--secondary);
         }
         
-        /* Contact & Form Section */
-        .contact-container {
-            margin-top: 25px; /* Reduced margin */
+        /* Contact Form Styles */
+        .contact-form-container {
+            background-color: #0a2342;
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            margin: 30px auto;
         }
         
-        /* Google Form Styling - Responsive with fixed height */
-        .form-container {
-            background-color: white;
-            border-radius: 6px; /* Smaller radius */
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05); /* Lighter shadow */
-            padding: 20px; /* Reduced padding */
-            overflow: hidden;
-        }
-        
-        .form-container h3 {
-            font-size: 1.4rem; /* Smaller */
-            margin-bottom: 12px; /* Reduced space */
-            color: var(--primary);
-        }
-        
-        .form-container p {
-            color: #555;
-            margin-bottom: 15px; /* Reduced space */
-            font-size: 1rem; /* Smaller */
-        }
-        
-        .google-form-wrapper {
+        .contact-form-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ffdd57;
+            font-size: 1.8rem;
             position: relative;
-            width: 100%;
-            min-height: 700px; /* Minimum height to prevent collapse */
-            height: 700px; /* Fixed initial height */
-            overflow: hidden;
-            border-radius: 5px;
-            border: 1px solid #eee;
+            padding-bottom: 15px;
         }
         
-        .google-form-wrapper iframe {
+        .contact-form-container h2::after {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #ffdd57, #d32f2f);
+            border-radius: 2px;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .form-group {
+            flex: 1 1 250px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #ffdd57;
+        }
+        
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            padding: 12px 15px;
             border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 221, 87, 0.4);
+        }
+        
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        
+        .form-group.full-width {
+            flex: 1 1 100%;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #d32f2f, #b71c1c);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(to right, #b71c1c, #9c1a1a);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
+        }
+        
+        #statusMsg {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .success {
+            background: rgba(46, 125, 50, 0.2);
+            color: #e8f5e9;
+            border: 1px solid #a5d6a7;
+        }
+        
+        .error {
+            background: rgba(198, 40, 40, 0.2);
+            color: #ffebee;
+            border: 1px solid #ef9a9a;
+        }
+        
+        .warning {
+            background: rgba(249, 168, 37, 0.2);
+            color: #fff8e1;
+            border: 1px solid #ffe082;
         }
         
         /* Footer */
@@ -279,10 +360,6 @@
         @media (max-width: 992px) {
             .hero h1 {
                 font-size: 2rem;
-            }
-            
-            .google-form-wrapper {
-                height: 650px; /* Adjusted height */
             }
         }
         
@@ -300,8 +377,8 @@
                 font-size: 1.6rem; /* Smaller */
             }
             
-            .google-form-wrapper {
-                height: 600px; /* Adjusted height */
+            .contact-form-container {
+                padding: 20px;
             }
         }
         
@@ -322,24 +399,8 @@
                 padding: 18px; /* Reduced padding */
             }
             
-            .google-form-wrapper {
-                height: 550px; /* Adjusted height */
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .google-form-wrapper {
-                height: 500px; /* Adjusted height */
-            }
-            
-            .projects-table th, 
-            .projects-table td {
-                padding: 10px 12px; /* Reduced padding */
-                font-size: 0.95rem; /* Smaller text */
-            }
-            
-            .project-link {
-                font-size: 0.9rem; /* Smaller text */
+            .contact-form {
+                gap: 15px;
             }
         }
         
@@ -549,186 +610,49 @@
         </div>
     </section>
 
-    <!-- Contact & Enquiry - Only Google Form -->
+    <!-- Contact & Enquiry - Custom Form -->
     <section class="section" style="background-color: #f0f7ff;">
         <div class="container">
             <h2 class="section-title">📞 Contact & Enquiry</h2>
             <p>Fill out our Enquiry Form and our team will respond promptly!</p>
             
-            <div class="contact-container">
-                <div class="form-container">
-                    <div class="google-form-wrapper">
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdR3-PyGfvuJtcWrkzLEueOv5gyKhBoZH0xz8NS3WnZV6H93A/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-                    </div>
-                </div>
+            <div class="contact-form-container">
+                <h2>Get in Touch</h2>
+                <form id="contactForm" class="contact-form">
+                  <div class="form-group">
+                    <label for="for">Service Needed</label>
+                    <select id="for" name="for" required>
+                      <option value="">Select Service</option>
+                      <option>SEO & Digital Marketing</option>
+                      <option>Web Designing</option>
+                      <option>Software Solutions</option>
+                      <option>Graphics Designing</option>
+                      <option>Projects & Workshop</option>
+                      <option>Any Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your full name">
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required placeholder="10-digit number">
+                  </div>
+                  <div class="form-group full-width">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your project or inquiry..."></textarea>
+                  </div>
+                  <button type="submit" class="submit-btn">Submit Request</button>
+                </form>
+                <p id="statusMsg"></p>
             </div>
         </div>
     </section>
-
-
-  <title>Contact Form</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6fa;
-      color: #222;
-    }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #0a2342;
-      color: #fff;
-      border-radius: 12px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #ffdd57;
-    }
-    form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    .form-group {
-      flex: 1 1 250px;
-      display: flex;
-      flex-direction: column;
-    }
-    label {
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-    input, select, textarea, button {
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-    input, select, textarea {
-      background: #f9f9f9;
-      color: #222;
-    }
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-    button {
-      background: #d32f2f;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.3s;
-      flex: 1 1 100%;
-    }
-    button:hover {
-      background: #b71c1c;
-    }
-    @media (min-width: 700px) {
-      button {
-        flex: 0 0 auto;
-        align-self: flex-end;
-        width: 200px;
-      }
-    }
-  </style>
-
-  <div class="container">
-    <h2>Get in Touch</h2>
-    <form id="contactForm">
-      <div class="form-group">
-        <label for="for">For</label>
-        <select id="for" name="for" required>
-          <option value="">Select Service</option>
-          <option>SEO & Digital Marketing</option>
-          <option>Web Designing</option>
-          <option>Software Solutions</option>
-          <option>Graphics Designing</option>
-          <option>Projects & Workshop</option>
-          <option>Any Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required>
-      </div>
-      <div class="form-group" style="flex:1 1 100%;">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" required></textarea>
-      </div>
-      <button type="submit">Submit</button>
-    </form>
-    <p id="statusMsg" style="margin-top:15px;text-align:center;"></p>
-  </div>
-
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxW1daVxkppEfyZ-XEa2QpAvE1Hny4b1T_mnu7tOvSFTvU3lS42vw6ntj1YJbxTWOD5dQ/exec";
-    const form = document.getElementById("contactForm");
-    const statusMsg = document.getElementById("statusMsg");
-
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-
-      const data = {
-        for: form.for.value,
-        name: form.name.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        message: form.message.value
-      };
-
-      // Validate email & phone
-      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-      if (!emailPattern.test(data.email)) {
-        statusMsg.textContent = "Please enter a valid email address.";
-        statusMsg.style.color = "yellow";
-        return;
-      }
-      if (!/^\d{10}$/.test(data.phone)) {
-        statusMsg.textContent = "Phone must be 10 digits.";
-        statusMsg.style.color = "yellow";
-        return;
-      }
-
-      fetch(scriptURL, {
-        method: "POST",
-        body: JSON.stringify(data)
-      })
-      .then(res => res.json())
-      .then(response => {
-        if (response.result === "success") {
-          statusMsg.textContent = "✅ Submitted successfully! We will contact you shortly.";
-          statusMsg.style.color = "lightgreen";
-          form.reset();
-          // Auto-hide message after 5 seconds
-          setTimeout(() => statusMsg.textContent = "", 5000);
-        } else {
-          statusMsg.textContent = "⚠️ Submission failed. Try again.";
-          statusMsg.style.color = "orange";
-        }
-      })
-      .catch(error => {
-        statusMsg.textContent = "❌ Error submitting form.";
-        statusMsg.style.color = "red";
-      });
-    });
-  </script>
-</body>
-</html>
-
-
-
-
 
     <!-- Footer Placeholder -->
     <div id="footer-placeholder"></div>
@@ -754,38 +678,65 @@
             const script = document.createElement('script');
             script.src = 'js/include.js';
             document.body.appendChild(script);
-            
-            // Fix for Google Form height after submission
-            const iframe = document.querySelector('.google-form-wrapper iframe');
-            iframe.onload = function() {
-                // Reset height to prevent collapse
-                setTimeout(() => {
-                    const wrapper = document.querySelector('.google-form-wrapper');
-                    wrapper.style.height = '700px';
-                    
-                    // Adjust for mobile
-                    if(window.innerWidth < 768) {
-                        wrapper.style.height = '600px';
-                    }
-                    if(window.innerWidth < 480) {
-                        wrapper.style.height = '500px';
-                    }
-                }, 1000);
-            };
         });
         
-        // Handle window resize for form height
-        window.addEventListener('resize', function() {
-            const wrapper = document.querySelector('.google-form-wrapper');
-            if(window.innerWidth >= 992) {
-                wrapper.style.height = '700px';
-            } else if(window.innerWidth >= 768) {
-                wrapper.style.height = '650px';
-            } else if(window.innerWidth >= 576) {
-                wrapper.style.height = '600px';
+        // Contact Form Script
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxW1daVxkppEfyZ-XEa2QpAvE1Hny4b1T_mnu7tOvSFTvU3lS42vw6ntj1YJbxTWOD5dQ/exec";
+        const form = document.getElementById("contactForm");
+        const statusMsg = document.getElementById("statusMsg");
+
+        form.addEventListener("submit", e => {
+          e.preventDefault();
+
+          const data = {
+            for: form.for.value,
+            name: form.name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            message: form.message.value
+          };
+
+          // Validate email & phone
+          const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+          if (!emailPattern.test(data.email)) {
+            statusMsg.textContent = "Please enter a valid email address.";
+            statusMsg.className = "warning";
+            return;
+          }
+          if (!/^\d{10}$/.test(data.phone)) {
+            statusMsg.textContent = "Phone must be 10 digits.";
+            statusMsg.className = "warning";
+            return;
+          }
+
+          // Show submitting message
+          statusMsg.textContent = "Submitting your request...";
+          statusMsg.className = "";
+
+          fetch(scriptURL, {
+            method: "POST",
+            body: JSON.stringify(data)
+          })
+          .then(res => res.json())
+          .then(response => {
+            if (response.result === "success") {
+              statusMsg.textContent = "✅ Submitted successfully! We will contact you shortly.";
+              statusMsg.className = "success";
+              form.reset();
+              // Auto-hide message after 5 seconds
+              setTimeout(() => {
+                statusMsg.textContent = "";
+                statusMsg.className = "";
+              }, 5000);
             } else {
-                wrapper.style.height = '500px';
+              statusMsg.textContent = "⚠️ Submission failed. Please try again.";
+              statusMsg.className = "error";
             }
+          })
+          .catch(error => {
+            statusMsg.textContent = "❌ Error submitting form. Please try again later.";
+            statusMsg.className = "error";
+          });
         });
     </script>
 </body>
