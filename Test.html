@@ -6,55 +6,98 @@
   <title>Contact Us</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
     .container {
-      max-width: 500px;
       background: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      margin: auto;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 600px;
+      animation: fadeIn 0.6s ease-in-out;
     }
     h2 {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      color: #333;
+      font-size: 28px;
     }
     label {
-      font-weight: bold;
-      margin: 10px 0 5px;
+      font-weight: 600;
+      margin-bottom: 8px;
       display: block;
+      color: #444;
     }
-    input, select, textarea, button {
+    input, select, textarea {
       width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
+      padding: 12px;
+      margin-bottom: 18px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #0056b3;
+      box-shadow: 0 0 8px rgba(0, 86, 179, 0.3);
+      outline: none;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
     }
     button {
-      background: #28a745;
+      width: 100%;
+      background: linear-gradient(90deg, #004085, #0056b3);
       color: white;
-      font-size: 16px;
+      font-size: 18px;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
     }
     button:hover {
-      background: #218838;
+      transform: translateY(-2px);
+      background: linear-gradient(90deg, #003366, #004080);
     }
-    .success, .error {
+    .alert {
       text-align: center;
-      font-weight: bold;
+      font-weight: 600;
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      display: inline-block;
+      width: 100%;
     }
-    .success { color: green; }
-    .error { color: red; }
+    .success {
+      background: #e6f9ed;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
     .error-msg {
       color: red;
       font-size: 14px;
-      margin-top: -10px;
-      margin-bottom: 10px;
+      margin-top: -12px;
+      margin-bottom: 12px;
       display: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -80,7 +123,7 @@
       <input type="email" id="email" name="email" required>
 
       <label for="phone">Mobile No.</label>
-      <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" maxlength="10" required>
+      <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" required>
       <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6-9.</div>
 
       <label for="message">Message</label>
@@ -93,8 +136,6 @@
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbwVzlM-VKAMYQnPKlRq4gVvQbJ-0SireCfppxiYXKqeKnVsI_SBU0DRMi9miw_3LV-Bjw/exec";
-    const sheetURL = "https://docs.google.com/spreadsheets/d/1oeHk8unyRpnfFYfkUjWUXJgbCuVA_db6DSF5EvbjNSk/edit?usp=sharing";
-
     const form = document.getElementById("contactForm");
     const responseDiv = document.getElementById("response");
     const phoneInput = document.getElementById("phone");
@@ -121,16 +162,17 @@
 
       fetch(scriptURL, {
         method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       })
-      .then(res => res.json())
       .then(() => {
-        window.open(sheetURL, '_blank');
-        responseDiv.innerHTML = "<p class='success'>Message sent successfully! Your response has been recorded.</p>";
+        responseDiv.innerHTML = "<div class='alert success'>✅ Thank you! Your message has been sent successfully and we will contact you shortly.</div>";
+        setTimeout(() => { responseDiv.innerHTML = ""; }, 15000);
         form.reset();
       })
       .catch(() => {
-        responseDiv.innerHTML = "<p class='error'>Error sending message. Try again!</p>";
+        responseDiv.innerHTML = "<div class='alert error'>❌ Oops! Something went wrong. Please try again.</div>";
       });
     });
   </script>
