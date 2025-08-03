@@ -31,11 +31,68 @@
             overflow-x: hidden;
         }
         
-        /* Header & Footer Placeholders - Fixed colors to prevent dark mode effects */
-        #header-placeholder, #footer-placeholder {
-            padding: 0;
-            background-color: #2c3e50 !important; /* Fixed color */
-            color: white !important; /* Fixed color */
+        /* Header Styles */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+            color: #ffdd57;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
         
         /* Main Content Container */
@@ -47,15 +104,16 @@
         
         /* Sections */
         .section {
-            padding: 40px 0; /* Reduced vertical padding */
+            padding: 60px 0;
         }
         
         .section-title {
-            font-size: 1.8rem; /* Slightly smaller */
-            margin-bottom: 20px; /* Reduced space */
+            font-size: 2rem;
+            margin-bottom: 30px;
             color: var(--primary);
             position: relative;
-            padding-bottom: 8px; /* Reduced padding */
+            padding-bottom: 15px;
+            text-align: center;
             font-weight: 700;
         }
         
@@ -63,10 +121,12 @@
             content: '';
             position: absolute;
             bottom: 0;
-            left: 0;
-            width: 50px; /* Smaller width */
-            height: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
             background-color: var(--secondary);
+            border-radius: 2px;
         }
         
         /* Hero Section */
@@ -74,116 +134,170 @@
             background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
             color: white;
             text-align: center;
-            padding: 50px 0; /* Reduced vertical padding */
+            padding: 80px 0;
         }
         
         .hero h1 {
-            font-size: 2.2rem; /* Smaller */
-            margin-bottom: 15px; /* Reduced space */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
             font-weight: 700;
             line-height: 1.3;
         }
         
         .hero p {
-            font-size: 1.1rem; /* Smaller */
+            font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto;
             opacity: 0.9;
         }
         
+        .cta-buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #ffdd57;
+            color: #2c3e50;
+        }
+        
+        .btn-primary:hover {
+            background: #ffd43b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+        
         /* What We Offer */
         .domains-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min size */
-            gap: 20px; /* Reduced gap */
-            margin-top: 25px; /* Reduced margin */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
         
         .domain-card {
             background: white;
-            border-radius: 6px; /* Smaller radius */
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05); /* Lighter shadow */
-            padding: 20px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 25px;
             transition: var(--transition);
-            border-left: 3px solid var(--secondary); /* Thinner border */
+            border-left: 4px solid var(--secondary);
+            text-align: center;
         }
         
         .domain-card:hover {
-            transform: translateY(-3px); /* Smaller lift */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Lighter shadow */
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .domain-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
         }
         
         .domain-card h3 {
-            font-size: 1.2rem; /* Smaller */
-            margin-bottom: 12px; /* Reduced space */
+            font-size: 1.3rem;
+            margin-bottom: 15px;
             color: var(--primary);
         }
         
         .domain-card p {
             color: #555;
-            font-size: 0.95rem; /* Smaller */
+            font-size: 1rem;
         }
         
         /* Why Choose Us */
         .benefits-container {
             background-color: white;
-            border-radius: 6px; /* Smaller radius */
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05); /* Lighter shadow */
-            padding: 25px; /* Reduced padding */
-            margin-top: 25px; /* Reduced margin */
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-top: 30px;
         }
         
         .benefits-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min size */
-            gap: 18px; /* Reduced gap */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
         
         .benefit-item {
             display: flex;
             align-items: flex-start;
-            gap: 12px; /* Reduced gap */
+            gap: 15px;
         }
         
         .benefit-icon {
-            font-size: 1.3rem; /* Smaller */
+            font-size: 1.8rem;
             color: var(--secondary);
-            min-width: 28px; /* Smaller */
+            min-width: 40px;
         }
         
         .benefit-item h3 {
-            font-size: 1.15rem; /* Smaller */
-            margin-bottom: 5px; /* Reduced space */
+            font-size: 1.25rem;
+            margin-bottom: 8px;
         }
         
         .benefit-item p {
-            font-size: 0.95rem; /* Smaller */
+            font-size: 1rem;
         }
         
-        /* Project Showcase - Flat design with minimal vertical padding */
+        .highlight-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f7ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            font-weight: 600;
+        }
+        
+        /* Project Showcase */
         .projects-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin: 25px 0; /* Reduced margin */
+            margin: 30px 0;
             background-color: white;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.05); /* Lighter shadow */
-            border-radius: 6px; /* Smaller radius */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 10px;
             overflow: hidden;
         }
         
         .projects-table th, 
         .projects-table td {
-            padding: 12px 15px; /* Reduced vertical padding */
+            padding: 15px 20px;
             text-align: left;
-            border-bottom: 1px solid #f0f0f0; /* Lighter border */
+            border-bottom: 1px solid #f0f0f0;
         }
         
         .projects-table th {
             background-color: var(--primary);
             color: white;
             font-weight: 600;
-            font-size: 1.05rem; /* Smaller */
+            font-size: 1.1rem;
         }
         
         .projects-table tr:last-child td {
@@ -200,9 +314,9 @@
         }
         
         .project-icon {
-            font-size: 1.4rem; /* Slightly smaller */
+            font-size: 1.6rem;
             text-align: center;
-            width: 40px; /* Fixed width */
+            width: 50px;
         }
         
         .project-link {
@@ -211,10 +325,10 @@
             font-weight: 600;
             transition: var(--transition);
             display: inline-block;
-            padding: 4px 8px; /* Reduced padding */
-            border-radius: 3px; /* Smaller radius */
-            border: 1px solid var(--secondary); /* Flat border */
-            background: transparent; /* Transparent background */
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--secondary);
+            background: transparent;
         }
         
         .project-link:hover {
@@ -222,22 +336,32 @@
             background: var(--secondary);
         }
         
+        .info-note {
+            margin-top: 20px;
+            color: #555;
+            font-size: 1rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
         /* Contact Form Styles */
         .contact-form-container {
             background: linear-gradient(135deg, #0a2342 0%, #1a2a6c 100%);
             color: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             max-width: 900px;
             margin: 30px auto;
         }
         
         .contact-form-container h2 {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             color: #ffdd57;
-            font-size: 1.8rem;
+            font-size: 2rem;
             position: relative;
             padding-bottom: 15px;
         }
@@ -248,7 +372,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
+            width: 100px;
             height: 4px;
             background: linear-gradient(to right, #ffdd57, #d32f2f);
             border-radius: 2px;
@@ -257,17 +381,17 @@
         .contact-form {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 25px;
         }
         
         .form-group {
-            flex: 1 1 250px;
+            flex: 1 1 280px;
             display: flex;
             flex-direction: column;
         }
         
         .form-group label {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
             color: #ffdd57;
         }
@@ -275,9 +399,9 @@
         .form-group input, 
         .form-group select, 
         .form-group textarea {
-            padding: 12px 15px;
+            padding: 14px 18px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
             background: rgba(255, 255, 255, 0.95);
             color: #333;
@@ -292,7 +416,7 @@
         }
         
         .form-group textarea {
-            min-height: 140px;
+            min-height: 150px;
             resize: vertical;
         }
         
@@ -304,47 +428,32 @@
             background: linear-gradient(to right, #d32f2f, #b71c1c);
             color: white;
             font-weight: bold;
-            font-size: 1.1rem;
-            padding: 14px 30px;
+            font-size: 1.2rem;
+            padding: 16px 40px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 10px;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 5px 20px rgba(211, 47, 47, 0.3);
             position: relative;
             overflow: hidden;
         }
         
-        .submit-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 20px;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(25deg);
-            transition: all 0.6s;
-        }
-        
         .submit-btn:hover {
             background: linear-gradient(to right, #b71c1c, #9c1a1a);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(211, 47, 47, 0.4);
-        }
-        
-        .submit-btn:hover::after {
-            left: 120%;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.4);
         }
         
         #statusMsg {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 6px;
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 8px;
             text-align: center;
             font-weight: 500;
+            font-size: 1.1rem;
             transition: all 0.3s;
             animation: fadeIn 0.5s ease;
         }
@@ -357,19 +466,19 @@
         .success {
             background: rgba(46, 125, 50, 0.2);
             color: #e8f5e9;
-            border: 1px solid #a5d6a7;
+            border: 1px solid #4caf50;
         }
         
         .error {
             background: rgba(198, 40, 40, 0.2);
             color: #ffebee;
-            border: 1px solid #ef9a9a;
+            border: 1px solid #f44336;
         }
         
         .warning {
             background: rgba(249, 168, 37, 0.2);
             color: #fff8e1;
-            border: 1px solid #ffe082;
+            border: 1px solid #ffc107;
         }
         
         /* Form validation indicators */
@@ -381,9 +490,9 @@
         }
         
         .error-message {
-            color: #e74c3c;
-            font-size: 0.85rem;
-            margin-top: 5px;
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 8px;
             display: none;
         }
         
@@ -391,59 +500,175 @@
             display: block;
         }
         
-        /* Footer */
+        /* Footer Styles */
         footer {
-            background-color: var(--primary) !important; /* Fixed color */
-            color: white !important; /* Fixed color */
-            padding: 25px 0; /* Reduced padding */
-            margin-top: 30px; /* Reduced margin */
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #ffdd57;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: #ffdd57;
+            transform: translateX(5px);
+        }
+        
+        .footer-links i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
         }
         
         /* Responsive Design */
         @media (max-width: 992px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 50px 0;
             }
         }
         
         @media (max-width: 768px) {
-            .projects-table {
-                display: block;
-                overflow-x: auto;
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #2c3e50;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
             }
             
-            .section {
-                padding: 30px 0; /* Reduced padding */
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
             .section-title {
-                font-size: 1.6rem; /* Smaller */
+                font-size: 1.8rem;
             }
             
             .contact-form-container {
-                padding: 20px;
+                padding: 30px;
             }
         }
         
         @media (max-width: 576px) {
             .hero {
-                padding: 40px 0; /* Reduced padding */
+                padding: 50px 0;
             }
             
             .hero h1 {
-                font-size: 1.7rem;
+                font-size: 1.8rem;
             }
             
             .hero p {
                 font-size: 1rem;
             }
             
-            .domain-card {
-                padding: 18px; /* Reduced padding */
+            .section-title {
+                font-size: 1.6rem;
             }
             
-            .contact-form {
-                gap: 15px;
+            .contact-form-container {
+                padding: 20px;
             }
         }
         
@@ -476,14 +701,40 @@
     </style>
 </head>
 <body>
-    <!-- Header Placeholder -->
-    <div id="header-placeholder"></div>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="logo-text">MilindWeb Projects Hub</div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> Resources</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> About</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <h1>🚀 Final Year & Mini Projects – Turning Ideas Into Innovation</h1>
             <p>Welcome to the MilindWeb Projects Hub — your trusted source for industry‑relevant final year and mini projects designed for Diploma and Engineering students. Our projects provide hands‑on experience, bridge the gap between academics and industry, and help you stand out in your academic journey.</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Browse Projects</a>
+                <a href="#" class="btn btn-secondary">Request Custom Project</a>
+            </div>
         </div>
     </section>
 
@@ -491,50 +742,77 @@
     <section class="section">
         <div class="container">
             <h2 class="section-title">🧠 What We Offer</h2>
-            <p>We deliver a wide variety of cutting‑edge projects across multiple domains:</p>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">We deliver a wide variety of cutting‑edge projects across multiple domains:</p>
             
             <div class="domains-grid">
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
                     <h3>Electronics & Communication</h3>
                     <p>IoT, Embedded Systems, Robotics, Wireless Tech</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
                     <h3>Electrical Engineering</h3>
                     <p>Power Systems, Solar Projects, Motor Control, EV Systems</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
                     <h3>Computer Science & IT</h3>
                     <p>Python, AI/ML, Web & App Development, Cybersecurity</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
                     <h3>Instrumentation & Automation</h3>
                     <p>PLC, SCADA, Industrial Automation, Control Panels</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
                     <h3>Simulation & Modeling</h3>
                     <p>MATLAB, Simulink, LabVIEW, Proteus, Multisim, ANSYS</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
                     <h3>Mechanical Engineering</h3>
                     <p>Mechatronics, CAD/CAM, 3D Printing, Automation</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
                     <h3>Civil Engineering</h3>
                     <p>Smart Infrastructure, Survey, Green Building, Structural Analysis</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
                     <h3>AI & IoT Applications</h3>
                     <p>Smart Cities, Defense, Smart Health, Home Automation</p>
                 </div>
                 
                 <div class="domain-card">
+                    <div class="domain-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
                     <h3>DIY Mini Projects</h3>
                     <p>Quick‑build, budget‑friendly practicals for workshops and exams</p>
                 </div>
@@ -553,7 +831,7 @@
                         <div class="benefit-icon">🔧</div>
                         <div>
                             <h3>Ready‑to‑Implement Projects</h3>
-                            <p>Fully tested and functional</p>
+                            <p>Fully tested and functional with complete documentation</p>
                         </div>
                     </div>
                     
@@ -561,7 +839,7 @@
                         <div class="benefit-icon">📄</div>
                         <div>
                             <h3>Complete Package</h3>
-                            <p>Code, PPT, Report, Circuit Diagrams</p>
+                            <p>Code, PPT, Report, Circuit Diagrams - everything included</p>
                         </div>
                     </div>
                     
@@ -569,7 +847,7 @@
                         <div class="benefit-icon">💸</div>
                         <div>
                             <h3>Affordable & Customizable</h3>
-                            <p>Designed to fit every student's need</p>
+                            <p>Designed to fit every student's budget and requirements</p>
                         </div>
                     </div>
                     
@@ -577,7 +855,7 @@
                         <div class="benefit-icon">🧑‍🏫</div>
                         <div>
                             <h3>Expert Mentorship</h3>
-                            <p>One‑on‑one support till final submission</p>
+                            <p>One‑on‑one support from concept to final submission</p>
                         </div>
                     </div>
                     
@@ -585,20 +863,20 @@
                         <div class="benefit-icon">🏆</div>
                         <div>
                             <h3>Industry‑Relevant</h3>
-                            <p>Projects that match current skills in demand</p>
+                            <p>Projects that match current skills in demand by employers</p>
                         </div>
                     </div>
                 </div>
                 
-                <p style="margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; font-weight: 600;">
+                <div class="highlight-box">
                     ✅ Projects available for all branches. Custom projects accepted.<br>
                     🎓 Trusted by 100+ students across Mumbai, Pune, Nanded, and Maharashtra.
-                </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Project Showcase - Flat design with minimal vertical padding -->
+    <!-- Project Showcase -->
     <section class="section">
         <div class="container">
             <h2 class="section-title">📁 Project Showcase</h2>
@@ -645,7 +923,7 @@
                 </tbody>
             </table>
             
-            <p style="margin-top: 20px; color: #555; font-size: 0.95rem;">
+            <p class="info-note">
                 This is not an exhaustive list of projects; we have a wide range of options available. 
                 You can also request a custom project tailored to your requirements. Our team will design 
                 and deliver projects according to your needs. Please feel free to contact us for more information.
@@ -653,11 +931,11 @@
         </div>
     </section>
 
-    <!-- Contact & Enquiry - Custom Form -->
+    <!-- Contact & Enquiry -->
     <section class="section" style="background-color: #f0f7ff;">
         <div class="container">
             <h2 class="section-title">📞 Contact & Enquiry</h2>
-            <p>Fill out our Enquiry Form and our team will respond promptly!</p>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 30px;">Fill out our Enquiry Form and our team will respond promptly!</p>
             
             <div class="contact-form-container">
                 <h2>Get in Touch</h2>
@@ -702,94 +980,212 @@
         </div>
     </section>
 
-    <!-- Footer Placeholder -->
-    <div id="footer-placeholder"></div>
-
-    <!-- JavaScript Includes -->
-    <script>
-        // Function to load external HTML files
-        function loadHTML(elementId, filePath) {
-            fetch(filePath)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById(elementId).innerHTML = data;
-                })
-                .catch(err => console.log(`Failed to load ${filePath}:`, err));
-        }
-
-        // Load header and footer
-        document.addEventListener('DOMContentLoaded', function() {
-            loadHTML('header-placeholder', 'header.html');
-            loadHTML('footer-placeholder', 'footer.html');
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>MilindWeb Projects</h3>
+                <p>Your trusted partner for academic and industry-relevant projects. We help students turn ideas into innovative solutions.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
             
-            // Load external JS
-            const script = document.createElement('script');
-            script.src = 'js/include.js';
-            document.body.appendChild(script);
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Resources</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Project Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Electronics</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Computer Science</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Electrical</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Mechanical</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Civil</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Info</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India</a></li>
+                    <li><a href="tel:+911234567890"><i class="fas fa-phone-alt"></i> +91 1234567890</a></li>
+                    <li><a href="mailto:contact@milindweb.com"><i class="fas fa-envelope"></i> contact@milindweb.com</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 MilindWeb Projects Hub. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
         });
         
         // Contact Form Script
-<form id="contactForm" style="max-width: 800px; margin: auto; padding: 1.5rem; background: #f9f9f9; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; gap: 1rem;">
-  <select name="for" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;">
-    <option value="">Select Service</option>
-    <option>SEO & Digital Marketing</option>
-    <option>Web Designing</option>
-    <option>Software Solutions</option>
-    <option>Graphics Designing</option>
-    <option>Projects & Workshop</option>
-    <option>Any Other</option>
-  </select>
-
-  <input type="text" name="name" placeholder="Your Name" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
-  <input type="email" name="email" placeholder="Email (e.g., abc@xyz.com)" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
-  <input type="tel" name="phone" pattern="^\d{10}$" placeholder="10-digit Phone" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
-  <textarea name="message" placeholder="Your Message" required style="flex: 1 1 100%; padding: 12px; min-height: 120px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
-
-  <button type="submit"
-    style="flex: 1 1 100%; padding: 14px; background-color: #00897b; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: background 0.3s;">
-    Submit
-  </button>
-
-  <div id="responseMessage" style="flex: 1 1 100%; margin-top: 10px; font-weight: bold; color: #00695c;"></div>
-</form>
-
-<script>
-  const form = document.getElementById('contactForm');
-  const responseBox = document.getElementById('responseMessage');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    if (!/^[^ ]+@([^ ]+\.(com|in|org|me|cc|io|ai)|(protonmail|pm)\.[a-z]+)$/i.test(data.email)) {
-      return responseBox.textContent = "Invalid email. Only .com/.in/.org/.me etc. allowed including ProtonMail.";
-    }
-
-    if (!/^\d{10}$/.test(data.phone)) {
-      return responseBox.textContent = "Phone number must be 10 digits.";
-    }
-
-    try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbxW1daVxkppEfyZ-XEa2QpAvE1Hny4b1T_mnu7tOvSFTvU3lS42vw6ntj1YJbxTWOD5dQ/exec", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
-      });
-
-      const result = await response.json();
-      if (result.result === "success") {
-        responseBox.textContent = "Submitted successfully! We will contact you shortly.";
-        form.reset();
-      } else {
-        responseBox.textContent = result.message || "Submission failed.";
-      }
-    } catch (err) {
-      responseBox.textContent = "Error: " + err.message;
-    }
-  });
-</script>
-
+        const form = document.getElementById("contactForm");
+        const statusMsg = document.getElementById("statusMsg");
+        const formGroups = document.querySelectorAll('.form-group');
+        
+        // Function to get client IP
+        async function getIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Error getting IP:', error);
+                return "Unknown";
+            }
+        }
+        
+        // Reset validation on input
+        form.addEventListener('input', function(e) {
+            const input = e.target;
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.remove('invalid');
+            statusMsg.textContent = '';
+            statusMsg.className = '';
+        });
+        
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Reset validation
+            formGroups.forEach(group => group.classList.remove('invalid'));
+            statusMsg.textContent = '';
+            statusMsg.className = '';
+            
+            // Validate fields
+            const service = form.for.value;
+            const name = form.name.value.trim();
+            const email = form.email.value.trim();
+            const phone = form.phone.value.trim();
+            const message = form.message.value.trim();
+            
+            if (!service) {
+                form.for.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            if (!name) {
+                form.name.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            // Updated email pattern to match server
+            const emailPattern = /^[^ ]+@([^ ]+\.(com|in|org|me|cc|io|ai)|(protonmail|pm)\.[a-z]+)$/i;
+            if (!emailPattern.test(email)) {
+                form.email.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            if (!/^\d{10}$/.test(phone)) {
+                form.phone.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            if (!message) {
+                form.message.closest('.form-group').classList.add('invalid');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                statusMsg.textContent = "Please fill all required fields correctly.";
+                statusMsg.className = "warning";
+                return;
+            }
+            
+            // Show submitting message
+            statusMsg.textContent = "Submitting your request...";
+            statusMsg.className = "";
+            
+            try {
+                // Get IP and user agent
+                const ip = await getIP();
+                const userAgent = navigator.userAgent;
+                
+                // Prepare form data
+                const data = {
+                    for: service,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    message: message
+                };
+                
+                // Create URL with query parameters
+                const url = new URL("https://script.google.com/macros/s/AKfycbwsvfnAXJEvoxLzag-8LDD_PfVBmGdxFeeTKdStyBiPiSoUtxTazlTE5CxlwQ2bEqDW/exec");
+                url.searchParams.append('ip', ip);
+                url.searchParams.append('userAgent', userAgent);
+                
+                // Submit form
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // Handle response
+                const result = await response.json();
+                
+                if (result.result === "success") {
+                    statusMsg.textContent = "✅ Submitted successfully! We will contact you shortly.";
+                    statusMsg.className = "success";
+                    form.reset();
+                    
+                    // Auto-hide message after 5 seconds
+                    setTimeout(() => {
+                        statusMsg.textContent = "";
+                        statusMsg.className = "";
+                    }, 5000);
+                } else if (result.message) {
+                    // Handle server-side validation errors
+                    let errorMessage = "❌ " + result.message;
+                    
+                    // Format specific errors
+                    if (result.message.includes("Only .com, .in, .org")) {
+                        errorMessage = "❌ Only .com, .in, .org, .me, .cc, .io, .ai domains allowed";
+                    } else if (result.message.includes("Phone must be 10 digits")) {
+                        errorMessage = "❌ Phone must be exactly 10 digits";
+                    } else if (result.message.includes("Limit reached")) {
+                        errorMessage = "❌ Limit: Only 3 submissions allowed within 6 hours";
+                    }
+                    
+                    statusMsg.textContent = errorMessage;
+                    statusMsg.className = "error";
+                } else {
+                    throw new Error('Server returned an error without message');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                statusMsg.textContent = "❌ Error submitting form. Please try again later.";
+                statusMsg.className = "error";
+            }
+        });
+    </script>
 </body>
 </html>
