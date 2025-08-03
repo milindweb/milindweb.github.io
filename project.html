@@ -565,6 +565,171 @@
         </div>
     </section>
 
+
+  <title>Contact Form</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6fa;
+      color: #222;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #0a2342;
+      color: #fff;
+      border-radius: 12px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffdd57;
+    }
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .form-group {
+      flex: 1 1 250px;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    input, select, textarea, button {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    input, select, textarea {
+      background: #f9f9f9;
+      color: #222;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    button {
+      background: #d32f2f;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      flex: 1 1 100%;
+    }
+    button:hover {
+      background: #b71c1c;
+    }
+    @media (min-width: 700px) {
+      button {
+        flex: 0 0 auto;
+        align-self: flex-end;
+        width: 200px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <h2>Get in Touch</h2>
+    <form id="contactForm">
+      <div class="form-group">
+        <label for="for">For</label>
+        <select id="for" name="for" required>
+          <option value="">Select Service</option>
+          <option>SEO & Digital Marketing</option>
+          <option>Web Designing</option>
+          <option>Software Solutions</option>
+          <option>Graphics Designing</option>
+          <option>Projects & Workshop</option>
+          <option>Any Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" maxlength="10" required>
+      </div>
+      <div class="form-group" style="flex:1 1 100%;">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="statusMsg" style="margin-top:15px;text-align:center;"></p>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxW1daVxkppEfyZ-XEa2QpAvE1Hny4b1T_mnu7tOvSFTvU3lS42vw6ntj1YJbxTWOD5dQ/exec";
+    const form = document.getElementById("contactForm");
+    const statusMsg = document.getElementById("statusMsg");
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const data = {
+        for: form.for.value,
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        message: form.message.value
+      };
+
+      // Validate email & phone
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(data.email)) {
+        statusMsg.textContent = "Please enter a valid email address.";
+        statusMsg.style.color = "yellow";
+        return;
+      }
+      if (!/^\d{10}$/.test(data.phone)) {
+        statusMsg.textContent = "Phone must be 10 digits.";
+        statusMsg.style.color = "yellow";
+        return;
+      }
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        if (response.result === "success") {
+          statusMsg.textContent = "✅ Submitted successfully! We will contact you shortly.";
+          statusMsg.style.color = "lightgreen";
+          form.reset();
+          // Auto-hide message after 5 seconds
+          setTimeout(() => statusMsg.textContent = "", 5000);
+        } else {
+          statusMsg.textContent = "⚠️ Submission failed. Try again.";
+          statusMsg.style.color = "orange";
+        }
+      })
+      .catch(error => {
+        statusMsg.textContent = "❌ Error submitting form.";
+        statusMsg.style.color = "red";
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
     <!-- Footer Placeholder -->
     <div id="footer-placeholder"></div>
 
