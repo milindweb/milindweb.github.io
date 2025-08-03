@@ -1,5 +1,5 @@
-<form id="contactForm" style="max-width: 800px; margin: auto; padding: 1.5rem; background: #f9f9f9; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; gap: 1rem;">
-  <select name="for" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;">
+<form id="contactForm" style="max-width:800px;margin:auto;padding:1.5rem;background:#f9f9f9;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:flex;flex-wrap:wrap;gap:1rem;">
+  <select name="for" required style="flex:1 1 300px;padding:12px;border:1px solid #ccc;border-radius:6px;">
     <option value="">Select Service</option>
     <option>SEO & Digital Marketing</option>
     <option>Web Designing</option>
@@ -8,54 +8,40 @@
     <option>Projects & Workshop</option>
     <option>Any Other</option>
   </select>
-
-  <input type="text" name="name" placeholder="Your Name" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
-  <input type="email" name="email" placeholder="Email (e.g., abc@xyz.com)" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
-  <input type="tel" name="phone" pattern="^\d{10}$" placeholder="10-digit Phone" required style="flex: 1 1 300px; padding: 12px; border: 1px solid #ccc; border-radius: 6px;" />
-  <textarea name="message" placeholder="Your Message" required style="flex: 1 1 100%; padding: 12px; min-height: 120px; border: 1px solid #ccc; border-radius: 6px;"></textarea>
-
-  <button type="submit"
-    style="flex: 1 1 100%; padding: 14px; background-color: #00897b; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: background 0.3s;">
-    Submit
-  </button>
-
-  <div id="responseMessage" style="flex: 1 1 100%; margin-top: 10px; font-weight: bold; color: #00695c;"></div>
+  <input type="text" name="name" placeholder="Your Name" required style="flex:1 1 300px;padding:12px;border:1px solid #ccc;border-radius:6px;">
+  <input type="email" name="email" placeholder="Email" required style="flex:1 1 300px;padding:12px;border:1px solid #ccc;border-radius:6px;">
+  <input type="tel" name="phone" pattern="^\\d{10}$" placeholder="10-digit Phone" required style="flex:1 1 300px;padding:12px;border:1px solid #ccc;border-radius:6px;">
+  <textarea name="message" placeholder="Your Message" required style="flex:1 1 100%;padding:12px;min-height:120px;border:1px solid #ccc;border-radius:6px;"></textarea>
+  <button type="submit" style="flex:1 1 100%;padding:14px;background:#00897b;color:#fff;border:none;border-radius:8px;font-weight:bold;font-size:16px;cursor:pointer;">Submit</button>
+  <div id="responseMessage" style="flex:1 1 100%;margin-top:10px;font-weight:bold;color:#00695c;"></div>
 </form>
 
 <script>
-  const form = document.getElementById('contactForm');
-  const responseBox = document.getElementById('responseMessage');
+const form = document.getElementById('contactForm');
+const responseBox = document.getElementById('responseMessage');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(form).entries());
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+  if (!/^[^ ]+@([^ ]+\\.(com|in|org|me|cc|io|ai)|(protonmail|pm)\\.[a-z]+)$/i.test(data.email)) {
+    return responseBox.textContent = "Invalid email format.";
+  }
+  if (!/^\\d{10}$/.test(data.phone)) {
+    return responseBox.textContent = "Phone must be 10 digits.";
+  }
 
-    try {
-      // Add IP + UserAgent
-      data.ip = await fetch("https://api.ipify.org?format=json")
-        .then(res => res.json())
-        .then(json => json.ip)
-        .catch(() => "Unknown");
-      data.userAgent = navigator.userAgent;
-
-      // Send to Apps Script
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyCa9s8LQYQmaZ2WIx1duPVogBCREBp1r3nj9isYp61rgmEtwMdaiq9W5YTsrzjh67c/exec", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" }
-      });
-
-      const result = await response.json();
-      if (result.result === "success") {
-        responseBox.textContent = "✅ Submitted successfully! Check Google Sheet.";
-        form.reset();
-      } else {
-        responseBox.textContent = "❌ " + (result.message || "Submission failed.");
-      }
-    } catch (err) {
-      responseBox.textContent = "⚠️ Error: " + err.message;
-    }
-  });
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbyCa9s8LQYQmaZ2WIx1duPVogBCREBp1r3nj9isYp61rgmEtwMdaiq9W5YTsrzjh67c/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" }
+    });
+    const result = await res.json();
+    responseBox.textContent = result.message || "Submitted successfully! We will contact you shortly.";
+    if (result.result === "success") form.reset();
+  } catch (err) {
+    responseBox.textContent = "⚠️ Error: " + err.message;
+  }
+});
 </script>
