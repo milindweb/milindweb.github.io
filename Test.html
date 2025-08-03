@@ -49,6 +49,13 @@
     }
     .success { color: green; }
     .error { color: red; }
+    .error-msg {
+      color: red;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -73,7 +80,8 @@
       <input type="email" id="email" name="email" required>
 
       <label for="phone">Mobile No.</label>
-      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+      <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" maxlength="10" required>
+      <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6-9.</div>
 
       <label for="message">Message</label>
       <textarea id="message" name="message" maxlength="500" required></textarea>
@@ -85,12 +93,24 @@
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbwVzlM-VKAMYQnPKlRq4gVvQbJ-0SireCfppxiYXKqeKnVsI_SBU0DRMi9miw_3LV-Bjw/exec";
+    const sheetURL = "https://docs.google.com/spreadsheets/d/1oeHk8unyRpnfFYfkUjWUXJgbCuVA_db6DSF5EvbjNSk/edit?usp=sharing";
+
     const form = document.getElementById("contactForm");
     const responseDiv = document.getElementById("response");
+    const phoneInput = document.getElementById("phone");
+    const phoneError = document.getElementById("phoneError");
 
     form.addEventListener("submit", e => {
       e.preventDefault();
-      
+
+      const phonePattern = /^[6-9][0-9]{9}$/;
+      if (!phonePattern.test(phoneInput.value)) {
+        phoneError.style.display = "block";
+        return;
+      } else {
+        phoneError.style.display = "none";
+      }
+
       const data = {
         service: form.service.value,
         name: form.name.value,
@@ -105,7 +125,8 @@
       })
       .then(res => res.json())
       .then(() => {
-        responseDiv.innerHTML = "<p class='success'>Message sent successfully!</p>";
+        window.open(sheetURL, '_blank');
+        responseDiv.innerHTML = "<p class='success'>Message sent successfully! Your response has been recorded.</p>";
         form.reset();
       })
       .catch(() => {
