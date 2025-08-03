@@ -15,9 +15,10 @@
   <input type="text" name="name" placeholder="Your Name" required style="flex:1 1 300px; padding:12px;" />
   <input type="email" name="email" placeholder="Email (e.g., abc@xyz.com)" required style="flex:1 1 300px; padding:12px;" />
   
-  <!-- Mobile number: numbers only -->
+  <!-- Numbers only, mobile friendly -->
   <input type="number" name="phone" placeholder="Mobile Number" required 
-         style="flex:1 1 300px; padding:12px;" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
+         style="flex:1 1 300px; padding:12px;" 
+         oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
   
   <textarea name="message" placeholder="Your Message" required style="flex:1 1 100%; padding:12px; min-height:120px;"></textarea>
 
@@ -37,9 +38,14 @@
   document.querySelector('form').addEventListener('submit', function() {
     setTimeout(() => {
       if (submitted) {
-        document.getElementById('thankyou').style.display = 'block';
+        const msgBox = document.getElementById('thankyou');
+        msgBox.style.display = 'block';
         this.reset();
         submitted = false;
+        // Hide after 15 seconds
+        setTimeout(() => {
+          msgBox.style.display = 'none';
+        }, 15000);
       }
     }, 1500);
   });
