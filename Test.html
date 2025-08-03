@@ -14,7 +14,11 @@
 
   <input type="text" name="name" placeholder="Your Name" required style="flex:1 1 300px; padding:12px;" />
   <input type="email" name="email" placeholder="Email (e.g., abc@xyz.com)" required style="flex:1 1 300px; padding:12px;" />
-  <input type="tel" name="phone" placeholder="10-digit Phone" pattern="\\d{10}" required style="flex:1 1 300px; padding:12px;" />
+  
+  <!-- Mobile number: numbers only -->
+  <input type="number" name="phone" placeholder="Mobile Number" required 
+         style="flex:1 1 300px; padding:12px;" oninput="this.value=this.value.replace(/[^0-9]/g,'');" />
+  
   <textarea name="message" placeholder="Your Message" required style="flex:1 1 100%; padding:12px; min-height:120px;"></textarea>
 
   <button type="submit" style="flex:1 1 100%; padding:14px; background:#00897b; color:white; border:none; border-radius:8px; font-weight:bold; font-size:16px; cursor:pointer;">
