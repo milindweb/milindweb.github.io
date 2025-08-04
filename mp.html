@@ -1,235 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secure Search Portal</title>
+  <title>Simple Drive Search</title>
   <style>
-    body { font-family: Arial, sans-serif; margin:10px; background:#f9f9f9; }
-    h2 { text-align:center; }
-    .step-box { max-width:400px; margin:20px auto; padding:15px; background:#fff;
-                border:1px solid #ddd; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
-    .hidden { display:none; }
-    input, select, button { width:100%; margin:6px 0; padding:8px; font-size:14px; border-radius:5px; border:1px solid #ccc; }
-    button { background:#0066cc; color:#fff; cursor:pointer; }
-    button:hover { background:#004c99; }
-    .results { display:flex; flex-direction:column; gap:12px; max-width:900px; margin:20px auto; }
-    .autocomplete-list { position:absolute; background:#fff; border:1px solid #ccc; max-height:150px; overflow-y:auto; width:90%; }
-    .autocomplete-item { padding:6px; cursor:pointer; font-size:13px; }
-    .autocomplete-item:hover { background:#e0e0e0; }
-    .card { display:flex; align-items:center; background:#fff; border:1px solid #ddd;
-            border-radius:6px; padding:8px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
-    .card img { width:60px; height:80px; object-fit:cover; border-radius:4px; margin-right:10px; }
-    .card-body { flex:1; }
-    .card-title { font-size:14px; font-weight:bold; margin-bottom:4px; }
-    .card a { background:#0066cc; color:#fff; padding:4px 8px; font-size:12px; border-radius:4px;
-              text-decoration:none; display:inline-block; margin-right:6px; }
-    .card a:hover { background:#004c99; }
-    table { border-collapse: collapse; width:100%; background:#fff; margin-top:10px; }
-    th, td { border:1px solid #ddd; padding:6px; font-size:13px; }
-    th { background:#0066cc; color:#fff; }
-    .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%;
-             background:rgba(0,0,0,0.7); }
-    .modal-content { background:#fff; margin:5% auto; padding:10px; border-radius:6px;
-                     width:90%; max-width:800px; height:80%; display:flex; flex-direction:column; }
-    .close { align-self:flex-end; font-size:22px; cursor:pointer; color:#333; }
-    iframe { flex:1; width:100%; border:none; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .search-box {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    input, select, button {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    button {
+      background: #4285f4;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .results {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .card {
+      width: 200px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .card-content {
+      padding: 10px;
+    }
+    
+    .card h3 {
+      margin: 0 0 5px;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .card p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .card a {
+      color: #4285f4;
+      text-decoration: none;
+      font-size: 14px;
+      display: block;
+      margin-top: 5px;
+    }
+    
+    .table-results {
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+    }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 </head>
 <body>
-
-<h2>🔒 Secure Search Portal</h2>
-
-<!-- Step 1: Unlock -->
-<div id="unlock-box" class="step-box">
-  <h3>Select Source & Enter Password</h3>
-  <select id="source">
-    <option value="drive">Documents (Drive)</option>
-    <option value="sheet">Google Sheet</option>
-  </select>
-  <input type="password" id="password" placeholder="Enter Password">
-  <label><input type="checkbox" onclick="togglePassword()"> Show Password</label>
-  <button onclick="unlockSearch()">Submit</button>
-  <p id="unlock-error" style="color:red"></p>
-</div>
-
-<!-- Step 2: Search -->
-<div id="search-box" class="step-box hidden">
-  <h3>Search</h3>
-  <div style="position:relative;">
-    <input type="text" id="query" placeholder="Enter search keyword" oninput="showSuggestions()">
-    <div id="autocomplete-list" class="autocomplete-list"></div>
+  <div class="container">
+    <div class="search-box">
+      <select id="source">
+        <option value="drive">Google Drive</option>
+        <option value="sheet">Google Sheet</option>
+      </select>
+      <input type="password" id="key" placeholder="Password">
+      <input type="text" id="query" placeholder="Search...">
+      <button id="search">Search</button>
+    </div>
+    
+    <div id="results" class="results"></div>
   </div>
-  <button onclick="performSearch()">Search</button>
-</div>
 
-<div id="results" class="results"></div>
-
-<!-- Modal for preview -->
-<div id="previewModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <iframe id="previewFrame" src=""></iframe>
-  </div>
-</div>
-
-<script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby1NITq7ct26UmJkTvmvAT7_MyfchgmoEAk21pMdtGTT9FQ4D4rMGbTv-WEhwzcjO0/exec";
-let cachedData = [];
-let currentSource = "";
-let currentPassword = "";
-
-// Toggle password visibility
-function togglePassword() {
-  const pass = document.getElementById("password");
-  pass.type = pass.type === "password" ? "text" : "password";
-}
-
-// Step 1: Unlock the search
-async function unlockSearch() {
-  currentSource = document.getElementById("source").value;
-  currentPassword = document.getElementById("password").value;
-
-  if (!currentPassword) {
-    document.getElementById("unlock-error").innerText = "Password is required.";
-    return;
-  }
-
-  const url = `${WEB_APP_URL}?source=${currentSource}&key=${encodeURIComponent(currentPassword)}`;
-  try {
-    const res = await fetch(url, { method: "GET", mode: "cors" });
-    const data = await res.json();
-    if (data.error) {
-      document.getElementById("unlock-error").innerText = "Unauthorized: Wrong password.";
-      return;
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwuZC0hkaAn-xgA2BEiW5-cuJdkf63a1KW-QHSqzm_5SPZsw4tRdJ9kXL6aTYI6aojG/exec";  // Replace with your deployment URL
+    
+    document.getElementById('search').addEventListener('click', search);
+    
+    async function search() {
+      const source = document.getElementById('source').value;
+      const key = document.getElementById('key').value;
+      const query = document.getElementById('query').value;
+      
+      const params = new URLSearchParams({ source, key });
+      if (query) params.append('q', query);
+      
+      try {
+        const response = await fetch(`${API_URL}?${params}`);
+        const data = await response.json();
+        
+        if (data.error) {
+          alert(data.error === "Unauthorized" ? "Invalid password" : "Error occurred");
+          return;
+        }
+        
+        displayResults(source, data);
+      } catch (error) {
+        alert("Connection failed");
+      }
     }
-
-    // Unlock success → store data & show search box
-    cachedData = data;
-    document.getElementById("unlock-box").classList.add("hidden");
-    document.getElementById("search-box").classList.remove("hidden");
-    document.getElementById("unlock-error").innerText = "";
-
-  } catch (err) {
-    document.getElementById("unlock-error").innerText = "Error: " + err.message;
-  }
-}
-
-// Perform search
-function performSearch(queryOverride) {
-  const query = (queryOverride || document.getElementById("query").value).toLowerCase();
-  if (!query) return;
-
-  searchAndRender(query);
-}
-
-// Search + render
-function searchAndRender(query) {
-  // Normal filter
-  let normalFiltered = cachedData.filter(row =>
-    Object.values(row).some(val => String(val).toLowerCase().includes(query))
-  );
-
-  // Fuse.js fuzzy filter
-  let fuseOptions = { threshold: 0.4 };
-  if (currentSource === "sheet") fuseOptions.keys = Object.keys(cachedData[0]);
-  else fuseOptions.keys = ["name"];
-
-  const fuse = new Fuse(cachedData, fuseOptions);
-  const fuzzyFiltered = fuse.search(query).map(r => r.item);
-
-  // Merge results
-  const combined = [...new Set([...normalFiltered, ...fuzzyFiltered])];
-
-  if (combined.length === 0) {
-    document.getElementById("results").innerHTML = "<p>No results found.</p>";
-    return;
-  }
-
-  if (currentSource === "sheet") renderSheet(combined);
-  else renderDrive(combined);
-}
-
-// Autocomplete
-function showSuggestions() {
-  const input = document.getElementById("query").value.toLowerCase();
-  const listDiv = document.getElementById("autocomplete-list");
-  listDiv.innerHTML = "";
-  if (!input || cachedData.length === 0) return;
-
-  let fuseOptions = { threshold: 0.4 };
-  if (currentSource === "sheet")
-    fuseOptions.keys = Object.keys(cachedData[0]);
-  else
-    fuseOptions.keys = ["name"];
-
-  const fuse = new Fuse(cachedData, fuseOptions);
-  const results = fuse.search(input).slice(0, 8).map(r => r.item);
-
-  results.forEach(item => {
-    const text = item.name || Object.values(item).join(" | ");
-    const div = document.createElement("div");
-    div.className = "autocomplete-item";
-    div.innerText = text.substring(0, 60);
-    div.onclick = () => {
-      document.getElementById("query").value = text;
-      listDiv.innerHTML = "";
-      searchAndRender(text.toLowerCase());
-    };
-    listDiv.appendChild(div);
-  });
-}
-
-// Render Google Sheet
-function renderSheet(data) {
-  let html = "<table><tr>";
-  Object.keys(data[0]).forEach(h => { html += `<th>${h}</th>`; });
-  html += "</tr>";
-  data.forEach(row => {
-    html += "<tr>";
-    Object.values(row).forEach(val => { html += `<td>${val}</td>`; });
-    html += "</tr>";
-  });
-  html += "</table>";
-  document.getElementById("results").innerHTML = html;
-}
-
-// Render Google Drive
-function renderDrive(data) {
-  const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "";
-  data.forEach(f => {
-    let div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `
-      <img src="${f.thumbnail}" alt="Preview">
-      <div class="card-body">
-        <div class="card-title">${f.name}</div>
-        <a href="${f.download}" target="_blank">Download (${f.size})</a>
-        <a href="#" onclick="openPreview('${f.preview}');return false;">Preview</a>
-      </div>
-    `;
-    resultsDiv.appendChild(div);
-  });
-}
-
-// Modal Preview
-function openPreview(url) {
-  document.getElementById("previewFrame").src = url;
-  document.getElementById("previewModal").style.display = "block";
-}
-document.querySelector(".close").onclick = () => {
-  document.getElementById("previewModal").style.display = "none";
-  document.getElementById("previewFrame").src = "";
-};
-window.onclick = (event) => {
-  if (event.target == document.getElementById("previewModal")) {
-    document.getElementById("previewModal").style.display = "none";
-    document.getElementById("previewFrame").src = "";
-  }
-};
-</script>
-
+    
+    function displayResults(source, items) {
+      const container = document.getElementById('results');
+      container.innerHTML = '';
+      
+      if (source === 'drive') {
+        if (!items.length) {
+          container.innerHTML = '<p>No files found</p>';
+          return;
+        }
+        
+        items.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${item.thumbnail}" alt="${item.name}">
+            <div class="card-content">
+              <h3>${item.name}</h3>
+              <p>${item.size}</p>
+              <a href="${item.preview}" target="_blank">Preview</a>
+              <a href="${item.download}" download>Download</a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+        
+      } else { // Sheet results
+        if (!items.length) {
+          container.innerHTML = '<p>No data found</p>';
+          return;
+        }
+        
+        const tableDiv = document.createElement('div');
+        tableDiv.className = 'table-results';
+        let tableHTML = '<table><thead><tr>';
+        
+        // Create headers
+        Object.keys(items[0]).forEach(key => {
+          tableHTML += `<th>${key}</th>`;
+        });
+        tableHTML += '</tr></thead><tbody>';
+        
+        // Create rows
+        items.forEach(row => {
+          tableHTML += '<tr>';
+          Object.values(row).forEach(value => {
+            tableHTML += `<td>${value}</td>`;
+          });
+          tableHTML += '</tr>';
+        });
+        
+        tableHTML += '</tbody></table>';
+        tableDiv.innerHTML = tableHTML;
+        container.appendChild(tableDiv);
+      }
+    }
+  </script>
 </body>
 </html>
