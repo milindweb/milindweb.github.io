@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Drive Search</title>
+  <title>Drive & Sheet Search</title>
   <style>
+    /* Simplified Flexbox Layout */
     body {
       font-family: Arial, sans-serif;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      background: #f5f5f5;
+      margin: 20px;
+      background: #f8f9fa;
     }
     
     .container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     
     .search-box {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
-      padding: 20px;
+      gap: 10px;
+      padding: 15px;
       background: white;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
     
     input, select, button {
@@ -34,10 +35,10 @@
     }
     
     button {
-      background: #4285f4;
+      background: #1a73e8;
       color: white;
-      cursor: pointer;
       border: none;
+      cursor: pointer;
     }
     
     .results {
@@ -51,14 +52,14 @@
       background: white;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
     .card img {
       width: 100%;
       height: 150px;
-      object-fit: cover;
-      border-bottom: 1px solid #eee;
+      object-fit: contain;
+      background: #f8f9fa;
     }
     
     .card-content {
@@ -67,37 +68,37 @@
     
     .card h3 {
       margin: 0 0 5px;
-      font-size: 16px;
+      font-size: 14px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     
     .card p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: #666;
+      margin: 3px 0;
+      font-size: 13px;
+      color: #5f6368;
     }
     
     .card a {
-      color: #4285f4;
-      text-decoration: none;
-      font-size: 14px;
       display: block;
+      font-size: 13px;
+      color: #1a73e8;
       margin-top: 5px;
+      text-decoration: none;
     }
     
-    .table-results {
+    .table-container {
       width: 100%;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      overflow-x: auto;
     }
     
     table {
       width: 100%;
       border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     
     th, td {
@@ -108,7 +109,13 @@
     
     th {
       background-color: #f8f9fa;
-      font-weight: bold;
+      font-weight: 600;
+    }
+    
+    .message {
+      padding: 20px;
+      text-align: center;
+      color: #5f6368;
     }
   </style>
 </head>
@@ -119,7 +126,7 @@
         <option value="drive">Google Drive</option>
         <option value="sheet">Google Sheet</option>
       </select>
-      <input type="password" id="key" placeholder="Password">
+      <input type="password" id="key" placeholder="Password" required>
       <input type="text" id="query" placeholder="Search...">
       <button id="search">Search</button>
     </div>
@@ -128,43 +135,57 @@
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwuZC0hkaAn-xgA2BEiW5-cuJdkf63a1KW-QHSqzm_5SPZsw4tRdJ9kXL6aTYI6aojG/exec";  // Replace with your deployment URL
+    const API_URL = "https://script.google.com/macros/s/AKfycbwuZC0hkaAn-xgA2BEiW5-cuJdkf63a1KW-QHSqzm_5SPZsw4tRdJ9kXL6aTYI6aojG/exec";
     
     document.getElementById('search').addEventListener('click', search);
+    document.getElementById('key').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') search();
+    });
     
     async function search() {
       const source = document.getElementById('source').value;
       const key = document.getElementById('key').value;
       const query = document.getElementById('query').value;
       
-      const params = new URLSearchParams({ source, key });
-      if (query) params.append('q', query);
+      // Show loading
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '<div class="message">Searching...</div>';
       
       try {
-        const response = await fetch(`${API_URL}?${params}`);
+        // Build URL with parameters
+        const url = new URL(API_URL);
+        url.searchParams.append('source', source);
+        url.searchParams.append('key', key);
+        if (query) url.searchParams.append('q', query);
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
         
         if (data.error) {
-          alert(data.error === "Unauthorized" ? "Invalid password" : "Error occurred");
-          return;
+          showError(data.error);
+        } else {
+          displayResults(source, data);
         }
-        
-        displayResults(source, data);
       } catch (error) {
-        alert("Connection failed");
+        showError(`Connection failed: ${error.message}`);
       }
     }
     
     function displayResults(source, items) {
-      const container = document.getElementById('results');
-      container.innerHTML = '';
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+      
+      if (!items || items.length === 0) {
+        resultsDiv.innerHTML = '<div class="message">No results found</div>';
+        return;
+      }
       
       if (source === 'drive') {
-        if (!items.length) {
-          container.innerHTML = '<p>No files found</p>';
-          return;
-        }
-        
         items.forEach(item => {
           const card = document.createElement('div');
           card.className = 'card';
@@ -177,17 +198,12 @@
               <a href="${item.download}" download>Download</a>
             </div>
           `;
-          container.appendChild(card);
+          resultsDiv.appendChild(card);
         });
+      } else {
+        const tableContainer = document.createElement('div');
+        tableContainer.className = 'table-container';
         
-      } else { // Sheet results
-        if (!items.length) {
-          container.innerHTML = '<p>No data found</p>';
-          return;
-        }
-        
-        const tableDiv = document.createElement('div');
-        tableDiv.className = 'table-results';
         let tableHTML = '<table><thead><tr>';
         
         // Create headers
@@ -206,9 +222,14 @@
         });
         
         tableHTML += '</tbody></table>';
-        tableDiv.innerHTML = tableHTML;
-        container.appendChild(tableDiv);
+        tableContainer.innerHTML = tableHTML;
+        resultsDiv.appendChild(tableContainer);
       }
+    }
+    
+    function showError(message) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = `<div class="message" style="color:#d93025;">${message}</div>`;
     }
   </script>
 </body>
