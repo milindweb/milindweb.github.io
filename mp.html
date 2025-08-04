@@ -7,23 +7,16 @@
   <style>
     body { font-family: Arial, sans-serif; margin:10px; background:#f9f9f9; }
     h2 { text-align:center; }
-    .search-bar { position:relative; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px; }
-    input, select, button { padding:8px; font-size:14px; border-radius:5px; border:1px solid #ccc; }
+    .step-box { max-width:400px; margin:20px auto; padding:15px; background:#fff;
+                border:1px solid #ddd; border-radius:6px; box-shadow:0 1px 4px rgba(0,0,0,0.1); }
+    .hidden { display:none; }
+    input, select, button { width:100%; margin:6px 0; padding:8px; font-size:14px; border-radius:5px; border:1px solid #ccc; }
     button { background:#0066cc; color:#fff; cursor:pointer; }
     button:hover { background:#004c99; }
-
-    .autocomplete-list {
-      position:absolute; top:38px; left:0; right:0; background:#fff; border:1px solid #ccc;
-      max-height:150px; overflow-y:auto; z-index:1000; border-radius:4px;
-    }
-    .autocomplete-item {
-      padding:6px; cursor:pointer; font-size:13px;
-    }
-    .autocomplete-item:hover {
-      background:#e0e0e0;
-    }
-
-    .results { display:flex; flex-direction:column; gap:12px; max-width:900px; margin:0 auto; }
+    .results { display:flex; flex-direction:column; gap:12px; max-width:900px; margin:20px auto; }
+    .autocomplete-list { position:absolute; background:#fff; border:1px solid #ccc; max-height:150px; overflow-y:auto; width:90%; }
+    .autocomplete-item { padding:6px; cursor:pointer; font-size:13px; }
+    .autocomplete-item:hover { background:#e0e0e0; }
     .card { display:flex; align-items:center; background:#fff; border:1px solid #ddd;
             border-radius:6px; padding:8px; box-shadow:0 1px 3px rgba(0,0,0,0.1); }
     .card img { width:60px; height:80px; object-fit:cover; border-radius:4px; margin-right:10px; }
@@ -32,11 +25,9 @@
     .card a { background:#0066cc; color:#fff; padding:4px 8px; font-size:12px; border-radius:4px;
               text-decoration:none; display:inline-block; margin-right:6px; }
     .card a:hover { background:#004c99; }
-
     table { border-collapse: collapse; width:100%; background:#fff; margin-top:10px; }
     th, td { border:1px solid #ddd; padding:6px; font-size:13px; }
     th { background:#0066cc; color:#fff; }
-
     .modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%;
              background:rgba(0,0,0,0.7); }
     .modal-content { background:#fff; margin:5% auto; padding:10px; border-radius:6px;
@@ -48,19 +39,28 @@
 </head>
 <body>
 
-<h2>🔍 Secure Search Portal</h2>
+<h2>🔒 Secure Search Portal</h2>
 
-<div class="search-bar">
-  <div style="position:relative; flex:1; min-width:200px;">
-    <input type="text" id="query" placeholder="Enter search keyword" oninput="showSuggestions()">
-    <div id="autocomplete-list" class="autocomplete-list"></div>
-  </div>
+<!-- Step 1: Unlock -->
+<div id="unlock-box" class="step-box">
+  <h3>Select Source & Enter Password</h3>
   <select id="source">
     <option value="drive">Documents (Drive)</option>
     <option value="sheet">Google Sheet</option>
   </select>
   <input type="password" id="password" placeholder="Enter Password">
   <label><input type="checkbox" onclick="togglePassword()"> Show Password</label>
+  <button onclick="unlockSearch()">Submit</button>
+  <p id="unlock-error" style="color:red"></p>
+</div>
+
+<!-- Step 2: Search -->
+<div id="search-box" class="step-box hidden">
+  <h3>Search</h3>
+  <div style="position:relative;">
+    <input type="text" id="query" placeholder="Enter search keyword" oninput="showSuggestions()">
+    <div id="autocomplete-list" class="autocomplete-list"></div>
+  </div>
   <button onclick="performSearch()">Search</button>
 </div>
 
@@ -77,6 +77,8 @@
 <script>
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby1NITq7ct26UmJkTvmvAT7_MyfchgmoEAk21pMdtGTT9FQ4D4rMGbTv-WEhwzcjO0/exec";
 let cachedData = [];
+let currentSource = "";
+let currentPassword = "";
 
 // Toggle password visibility
 function togglePassword() {
@@ -84,36 +86,46 @@ function togglePassword() {
   pass.type = pass.type === "password" ? "text" : "password";
 }
 
-// Perform search
-async function performSearch(queryOverride) {
-  const query = (queryOverride || document.getElementById("query").value).toLowerCase();
-  const source = document.getElementById("source").value;
-  const password = document.getElementById("password").value;
+// Step 1: Unlock the search
+async function unlockSearch() {
+  currentSource = document.getElementById("source").value;
+  currentPassword = document.getElementById("password").value;
 
-  if (!query || !password) {
-    alert("Please enter search text and password.");
+  if (!currentPassword) {
+    document.getElementById("unlock-error").innerText = "Password is required.";
     return;
   }
 
-  const url = `${WEB_APP_URL}?source=${source}&key=${encodeURIComponent(password)}`;
+  const url = `${WEB_APP_URL}?source=${currentSource}&key=${encodeURIComponent(currentPassword)}`;
   try {
     const res = await fetch(url, { method: "GET", mode: "cors" });
     const data = await res.json();
     if (data.error) {
-      document.getElementById("results").innerHTML = `<p style="color:red">${data.error}</p>`;
+      document.getElementById("unlock-error").innerText = "Unauthorized: Wrong password.";
       return;
     }
 
-    cachedData = data; // save for autocomplete
-    searchAndRender(query, source);
+    // Unlock success → store data & show search box
+    cachedData = data;
+    document.getElementById("unlock-box").classList.add("hidden");
+    document.getElementById("search-box").classList.remove("hidden");
+    document.getElementById("unlock-error").innerText = "";
 
   } catch (err) {
-    document.getElementById("results").innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
+    document.getElementById("unlock-error").innerText = "Error: " + err.message;
   }
 }
 
-// Search + render using includes + Fuse.js
-function searchAndRender(query, source) {
+// Perform search
+function performSearch(queryOverride) {
+  const query = (queryOverride || document.getElementById("query").value).toLowerCase();
+  if (!query) return;
+
+  searchAndRender(query);
+}
+
+// Search + render
+function searchAndRender(query) {
   // Normal filter
   let normalFiltered = cachedData.filter(row =>
     Object.values(row).some(val => String(val).toLowerCase().includes(query))
@@ -121,13 +133,13 @@ function searchAndRender(query, source) {
 
   // Fuse.js fuzzy filter
   let fuseOptions = { threshold: 0.4 };
-  if (source === "sheet") fuseOptions.keys = Object.keys(cachedData[0]);
+  if (currentSource === "sheet") fuseOptions.keys = Object.keys(cachedData[0]);
   else fuseOptions.keys = ["name"];
 
   const fuse = new Fuse(cachedData, fuseOptions);
   const fuzzyFiltered = fuse.search(query).map(r => r.item);
 
-  // Merge & deduplicate
+  // Merge results
   const combined = [...new Set([...normalFiltered, ...fuzzyFiltered])];
 
   if (combined.length === 0) {
@@ -135,11 +147,11 @@ function searchAndRender(query, source) {
     return;
   }
 
-  if (source === "sheet") renderSheet(combined);
+  if (currentSource === "sheet") renderSheet(combined);
   else renderDrive(combined);
 }
 
-// Show autocomplete suggestions
+// Autocomplete
 function showSuggestions() {
   const input = document.getElementById("query").value.toLowerCase();
   const listDiv = document.getElementById("autocomplete-list");
@@ -147,7 +159,7 @@ function showSuggestions() {
   if (!input || cachedData.length === 0) return;
 
   let fuseOptions = { threshold: 0.4 };
-  if (document.getElementById("source").value === "sheet")
+  if (currentSource === "sheet")
     fuseOptions.keys = Object.keys(cachedData[0]);
   else
     fuseOptions.keys = ["name"];
@@ -163,13 +175,13 @@ function showSuggestions() {
     div.onclick = () => {
       document.getElementById("query").value = text;
       listDiv.innerHTML = "";
-      searchAndRender(text.toLowerCase(), document.getElementById("source").value);
+      searchAndRender(text.toLowerCase());
     };
     listDiv.appendChild(div);
   });
 }
 
-// Render Google Sheet Data
+// Render Google Sheet
 function renderSheet(data) {
   let html = "<table><tr>";
   Object.keys(data[0]).forEach(h => { html += `<th>${h}</th>`; });
@@ -183,7 +195,7 @@ function renderSheet(data) {
   document.getElementById("results").innerHTML = html;
 }
 
-// Render Google Drive Files
+// Render Google Drive
 function renderDrive(data) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
