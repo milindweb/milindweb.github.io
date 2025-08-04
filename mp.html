@@ -8,46 +8,66 @@
     body {
       font-family: Arial, sans-serif;
       background: #f9fafc;
+      margin: 0;
+      padding: 10px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
+      justify-content: center;
     }
     .box {
       background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 600px;
-      width: 100%;
-    }
-    h2 { margin-bottom: 15px; }
-    input, select, button {
-      width: 100%;
       padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
       border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      max-width: 95%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    h2 { margin: 5px 0; font-size: 1.2em; }
+    input, select, button {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.9em;
     }
     button {
       background: #004aad;
       color: #fff;
       border: none;
       cursor: pointer;
-      font-weight: bold;
     }
     button:hover { background: #003580; }
-    #results {
-      margin-top: 20px;
+    #searchSection {
+      margin-top: 10px;
     }
-    .item {
-      padding: 10px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85em;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 4px 6px;
+      text-align: left;
+    }
+    th {
+      background: #f1f1f1;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .drive-item {
+      padding: 6px;
       border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .item img {
-      max-height: 50px;
-      margin-right: 10px;
-      vertical-align: middle;
+    .drive-item img {
+      height: 40px;
+      width: auto;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -68,8 +88,7 @@
     <button id="submitBtn">Submit</button>
 
     <div id="searchSection" style="display:none;">
-      <h3>Search</h3>
-      <input type="text" id="searchBox" placeholder="Type to search...">
+      <input type="text" id="searchBox" placeholder="Type to filter...">
       <div id="results"></div>
     </div>
   </div>
@@ -90,6 +109,7 @@
 
     let selectedSource = "";
     let password = "";
+    let fullData = []; // Store all data for filtering
 
     submitBtn.addEventListener("click", async () => {
       selectedSource = document.getElementById("source").value;
@@ -100,9 +120,8 @@
         return;
       }
 
-      // Test authentication by sending empty query
-      const testUrl = `${webAppUrl}?source=${selectedSource}&key=${encodeURIComponent(password)}`;
-      const res = await fetch(testUrl);
+      const url = `${webAppUrl}?source=${selectedSource}&key=${encodeURIComponent(password)}`;
+      const res = await fetch(url);
       const data = await res.json();
 
       if (data.error) {
@@ -111,51 +130,72 @@
       }
 
       searchSection.style.display = "block";
-      resultsDiv.innerHTML = "<em>Type to search...</em>";
+      fullData = data;
+      renderResults(fullData);
     });
 
-    // Live search
-    searchBox.addEventListener("input", async () => {
-      const q = searchBox.value.trim();
+    searchBox.addEventListener("input", () => {
+      const q = searchBox.value.trim().toLowerCase();
       if (!q) {
-        resultsDiv.innerHTML = "<em>Start typing to search...</em>";
+        renderResults(fullData);
         return;
       }
+      const filtered = fullData.filter(item =>
+        JSON.stringify(item).toLowerCase().includes(q)
+      );
+      renderResults(filtered);
+    });
 
-      const url = `${webAppUrl}?source=${selectedSource}&key=${encodeURIComponent(password)}&q=${encodeURIComponent(q)}`;
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (data.error) {
-        resultsDiv.innerHTML = `<span style="color:red">${data.error}</span>`;
-        return;
-      }
-
-      // Display results
+    function renderResults(data) {
       resultsDiv.innerHTML = "";
-      if (Array.isArray(data) && data.length > 0) {
+      if (!Array.isArray(data) || data.length === 0) {
+        resultsDiv.innerHTML = "<em>No results found</em>";
+        return;
+      }
+
+      if (selectedSource === "sheet") {
+        const headers = Object.keys(data[0]);
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+
+        headers.forEach(h => {
+          const th = document.createElement("th");
+          th.textContent = h;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          headers.forEach(h => {
+            const td = document.createElement("td");
+            td.textContent = row[h] || "";
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        resultsDiv.appendChild(table);
+
+      } else if (selectedSource === "drive") {
         data.forEach(item => {
           const div = document.createElement("div");
-          div.className = "item";
-
-          if (selectedSource === "drive") {
-            div.innerHTML = `
-              <img src="${item.thumbnail}" alt="thumb">
-              <strong>${item.name}</strong> (${item.size})
-              <br>
+          div.className = "drive-item";
+          div.innerHTML = `
+            <img src="${item.thumbnail}" alt="thumb">
+            <div>
+              <strong>${item.name}</strong> (${item.size})<br>
               <a href="${item.preview}" target="_blank">Preview</a> |
               <a href="${item.download}" target="_blank">Download</a>
-            `;
-          } else {
-            div.innerHTML = `<pre>${JSON.stringify(item, null, 2)}</pre>`;
-          }
-
+            </div>
+          `;
           resultsDiv.appendChild(div);
         });
-      } else {
-        resultsDiv.innerHTML = "<em>No results found</em>";
       }
-    });
+    }
   </script>
 </body>
 </html>
