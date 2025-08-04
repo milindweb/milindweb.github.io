@@ -1,236 +1,161 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Drive & Sheet Search</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Portal</title>
   <style>
-    /* Simplified Flexbox Layout */
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #f8f9fa;
-    }
-    
-    .container {
+      background: #f9fafc;
       display: flex;
       flex-direction: column;
-      max-width: 1200px;
-      margin: 0 auto;
+      align-items: center;
+      padding: 20px;
     }
-    
-    .search-box {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 15px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
+    .box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
     }
-    
+    h2 { margin-bottom: 15px; }
     input, select, button {
+      width: 100%;
       padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
     }
-    
     button {
-      background: #1a73e8;
-      color: white;
+      background: #004aad;
+      color: #fff;
       border: none;
       cursor: pointer;
+      font-weight: bold;
     }
-    
-    .results {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+    button:hover { background: #003580; }
+    #results {
+      margin-top: 20px;
     }
-    
-    .card {
-      width: 200px;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    
-    .card img {
-      width: 100%;
-      height: 150px;
-      object-fit: contain;
-      background: #f8f9fa;
-    }
-    
-    .card-content {
+    .item {
       padding: 10px;
+      border-bottom: 1px solid #ddd;
     }
-    
-    .card h3 {
-      margin: 0 0 5px;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    
-    .card p {
-      margin: 3px 0;
-      font-size: 13px;
-      color: #5f6368;
-    }
-    
-    .card a {
-      display: block;
-      font-size: 13px;
-      color: #1a73e8;
-      margin-top: 5px;
-      text-decoration: none;
-    }
-    
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    
-    th, td {
-      padding: 12px 15px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-    
-    th {
-      background-color: #f8f9fa;
-      font-weight: 600;
-    }
-    
-    .message {
-      padding: 20px;
-      text-align: center;
-      color: #5f6368;
+    .item img {
+      max-height: 50px;
+      margin-right: 10px;
+      vertical-align: middle;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="search-box">
-      <select id="source">
-        <option value="drive">Google Drive</option>
-        <option value="sheet">Google Sheet</option>
-      </select>
-      <input type="password" id="key" placeholder="Password" required>
-      <input type="text" id="query" placeholder="Search...">
-      <button id="search">Search</button>
+  <div class="box">
+    <h2>Secure Search Portal</h2>
+    <label for="source">Select Data Source:</label>
+    <select id="source">
+      <option value="">-- Select --</option>
+      <option value="drive">Google Drive</option>
+      <option value="sheet">Google Sheet</option>
+    </select>
+
+    <label for="password">Enter Password:</label>
+    <input type="password" id="password" placeholder="Enter password">
+    <label><input type="checkbox" id="showPwd"> Show Password</label>
+
+    <button id="submitBtn">Submit</button>
+
+    <div id="searchSection" style="display:none;">
+      <h3>Search</h3>
+      <input type="text" id="searchBox" placeholder="Type to search...">
+      <div id="results"></div>
     </div>
-    
-    <div id="results" class="results"></div>
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbwuZC0hkaAn-xgA2BEiW5-cuJdkf63a1KW-QHSqzm_5SPZsw4tRdJ9kXL6aTYI6aojG/exec";
-    
-    document.getElementById('search').addEventListener('click', search);
-    document.getElementById('key').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') search();
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec";
+
+    const submitBtn = document.getElementById("submitBtn");
+    const searchSection = document.getElementById("searchSection");
+    const searchBox = document.getElementById("searchBox");
+    const resultsDiv = document.getElementById("results");
+    const showPwd = document.getElementById("showPwd");
+    const pwdInput = document.getElementById("password");
+
+    showPwd.addEventListener("change", () => {
+      pwdInput.type = showPwd.checked ? "text" : "password";
     });
-    
-    async function search() {
-      const source = document.getElementById('source').value;
-      const key = document.getElementById('key').value;
-      const query = document.getElementById('query').value;
-      
-      // Show loading
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = '<div class="message">Searching...</div>';
-      
-      try {
-        // Build URL with parameters
-        const url = new URL(API_URL);
-        url.searchParams.append('source', source);
-        url.searchParams.append('key', key);
-        if (query) url.searchParams.append('q', query);
-        
-        const response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        if (data.error) {
-          showError(data.error);
-        } else {
-          displayResults(source, data);
-        }
-      } catch (error) {
-        showError(`Connection failed: ${error.message}`);
-      }
-    }
-    
-    function displayResults(source, items) {
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = '';
-      
-      if (!items || items.length === 0) {
-        resultsDiv.innerHTML = '<div class="message">No results found</div>';
+
+    let selectedSource = "";
+    let password = "";
+
+    submitBtn.addEventListener("click", async () => {
+      selectedSource = document.getElementById("source").value;
+      password = pwdInput.value.trim();
+
+      if (!selectedSource || !password) {
+        alert("Please select a source and enter password");
         return;
       }
-      
-      if (source === 'drive') {
-        items.forEach(item => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `
-            <img src="${item.thumbnail}" alt="${item.name}">
-            <div class="card-content">
-              <h3>${item.name}</h3>
-              <p>${item.size}</p>
-              <a href="${item.preview}" target="_blank">Preview</a>
-              <a href="${item.download}" download>Download</a>
-            </div>
-          `;
-          resultsDiv.appendChild(card);
+
+      // Test authentication by sending empty query
+      const testUrl = `${webAppUrl}?source=${selectedSource}&key=${encodeURIComponent(password)}`;
+      const res = await fetch(testUrl);
+      const data = await res.json();
+
+      if (data.error) {
+        alert("Unauthorized: Wrong password");
+        return;
+      }
+
+      searchSection.style.display = "block";
+      resultsDiv.innerHTML = "<em>Type to search...</em>";
+    });
+
+    // Live search
+    searchBox.addEventListener("input", async () => {
+      const q = searchBox.value.trim();
+      if (!q) {
+        resultsDiv.innerHTML = "<em>Start typing to search...</em>";
+        return;
+      }
+
+      const url = `${webAppUrl}?source=${selectedSource}&key=${encodeURIComponent(password)}&q=${encodeURIComponent(q)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.error) {
+        resultsDiv.innerHTML = `<span style="color:red">${data.error}</span>`;
+        return;
+      }
+
+      // Display results
+      resultsDiv.innerHTML = "";
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "item";
+
+          if (selectedSource === "drive") {
+            div.innerHTML = `
+              <img src="${item.thumbnail}" alt="thumb">
+              <strong>${item.name}</strong> (${item.size})
+              <br>
+              <a href="${item.preview}" target="_blank">Preview</a> |
+              <a href="${item.download}" target="_blank">Download</a>
+            `;
+          } else {
+            div.innerHTML = `<pre>${JSON.stringify(item, null, 2)}</pre>`;
+          }
+
+          resultsDiv.appendChild(div);
         });
       } else {
-        const tableContainer = document.createElement('div');
-        tableContainer.className = 'table-container';
-        
-        let tableHTML = '<table><thead><tr>';
-        
-        // Create headers
-        Object.keys(items[0]).forEach(key => {
-          tableHTML += `<th>${key}</th>`;
-        });
-        tableHTML += '</tr></thead><tbody>';
-        
-        // Create rows
-        items.forEach(row => {
-          tableHTML += '<tr>';
-          Object.values(row).forEach(value => {
-            tableHTML += `<td>${value}</td>`;
-          });
-          tableHTML += '</tr>';
-        });
-        
-        tableHTML += '</tbody></table>';
-        tableContainer.innerHTML = tableHTML;
-        resultsDiv.appendChild(tableContainer);
+        resultsDiv.innerHTML = "<em>No results found</em>";
       }
-    }
-    
-    function showError(message) {
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = `<div class="message" style="color:#d93025;">${message}</div>`;
-    }
+    });
   </script>
 </body>
 </html>
