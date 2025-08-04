@@ -7,10 +7,21 @@
   <style>
     body { font-family: Arial, sans-serif; margin:10px; background:#f9f9f9; }
     h2 { text-align:center; }
-    .search-bar { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px; }
+    .search-bar { position:relative; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px; }
     input, select, button { padding:8px; font-size:14px; border-radius:5px; border:1px solid #ccc; }
     button { background:#0066cc; color:#fff; cursor:pointer; }
     button:hover { background:#004c99; }
+
+    .autocomplete-list {
+      position:absolute; top:38px; left:0; right:0; background:#fff; border:1px solid #ccc;
+      max-height:150px; overflow-y:auto; z-index:1000; border-radius:4px;
+    }
+    .autocomplete-item {
+      padding:6px; cursor:pointer; font-size:13px;
+    }
+    .autocomplete-item:hover {
+      background:#e0e0e0;
+    }
 
     .results { display:flex; flex-direction:column; gap:12px; max-width:900px; margin:0 auto; }
     .card { display:flex; align-items:center; background:#fff; border:1px solid #ddd;
@@ -33,13 +44,17 @@
     .close { align-self:flex-end; font-size:22px; cursor:pointer; color:#333; }
     iframe { flex:1; width:100%; border:none; }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
 </head>
 <body>
 
 <h2>🔍 Secure Search Portal</h2>
 
 <div class="search-bar">
-  <input type="text" id="query" placeholder="Enter search keyword">
+  <div style="position:relative; flex:1; min-width:200px;">
+    <input type="text" id="query" placeholder="Enter search keyword" oninput="showSuggestions()">
+    <div id="autocomplete-list" class="autocomplete-list"></div>
+  </div>
   <select id="source">
     <option value="drive">Documents (Drive)</option>
     <option value="sheet">Google Sheet</option>
@@ -61,6 +76,7 @@
 
 <script>
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby1NITq7ct26UmJkTvmvAT7_MyfchgmoEAk21pMdtGTT9FQ4D4rMGbTv-WEhwzcjO0/exec";
+let cachedData = [];
 
 // Toggle password visibility
 function togglePassword() {
@@ -69,8 +85,8 @@ function togglePassword() {
 }
 
 // Perform search
-async function performSearch() {
-  const query = document.getElementById("query").value.toLowerCase();
+async function performSearch(queryOverride) {
+  const query = (queryOverride || document.getElementById("query").value).toLowerCase();
   const source = document.getElementById("source").value;
   const password = document.getElementById("password").value;
 
@@ -87,26 +103,78 @@ async function performSearch() {
       document.getElementById("results").innerHTML = `<p style="color:red">${data.error}</p>`;
       return;
     }
-    if (source === "sheet") renderSheet(data, query);
-    else renderDrive(data, query);
+
+    cachedData = data; // save for autocomplete
+    searchAndRender(query, source);
+
   } catch (err) {
     document.getElementById("results").innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
   }
 }
 
-// Render Google Sheet Data
-function renderSheet(data, q) {
-  const filtered = data.filter(row =>
-    Object.values(row).some(val => String(val).toLowerCase().includes(q))
+// Search + render using includes + Fuse.js
+function searchAndRender(query, source) {
+  // Normal filter
+  let normalFiltered = cachedData.filter(row =>
+    Object.values(row).some(val => String(val).toLowerCase().includes(query))
   );
-  if (filtered.length === 0) {
+
+  // Fuse.js fuzzy filter
+  let fuseOptions = { threshold: 0.4 };
+  if (source === "sheet") fuseOptions.keys = Object.keys(cachedData[0]);
+  else fuseOptions.keys = ["name"];
+
+  const fuse = new Fuse(cachedData, fuseOptions);
+  const fuzzyFiltered = fuse.search(query).map(r => r.item);
+
+  // Merge & deduplicate
+  const combined = [...new Set([...normalFiltered, ...fuzzyFiltered])];
+
+  if (combined.length === 0) {
     document.getElementById("results").innerHTML = "<p>No results found.</p>";
     return;
   }
+
+  if (source === "sheet") renderSheet(combined);
+  else renderDrive(combined);
+}
+
+// Show autocomplete suggestions
+function showSuggestions() {
+  const input = document.getElementById("query").value.toLowerCase();
+  const listDiv = document.getElementById("autocomplete-list");
+  listDiv.innerHTML = "";
+  if (!input || cachedData.length === 0) return;
+
+  let fuseOptions = { threshold: 0.4 };
+  if (document.getElementById("source").value === "sheet")
+    fuseOptions.keys = Object.keys(cachedData[0]);
+  else
+    fuseOptions.keys = ["name"];
+
+  const fuse = new Fuse(cachedData, fuseOptions);
+  const results = fuse.search(input).slice(0, 8).map(r => r.item);
+
+  results.forEach(item => {
+    const text = item.name || Object.values(item).join(" | ");
+    const div = document.createElement("div");
+    div.className = "autocomplete-item";
+    div.innerText = text.substring(0, 60);
+    div.onclick = () => {
+      document.getElementById("query").value = text;
+      listDiv.innerHTML = "";
+      searchAndRender(text.toLowerCase(), document.getElementById("source").value);
+    };
+    listDiv.appendChild(div);
+  });
+}
+
+// Render Google Sheet Data
+function renderSheet(data) {
   let html = "<table><tr>";
-  Object.keys(filtered[0]).forEach(h => { html += `<th>${h}</th>`; });
+  Object.keys(data[0]).forEach(h => { html += `<th>${h}</th>`; });
   html += "</tr>";
-  filtered.forEach(row => {
+  data.forEach(row => {
     html += "<tr>";
     Object.values(row).forEach(val => { html += `<td>${val}</td>`; });
     html += "</tr>";
@@ -116,15 +184,10 @@ function renderSheet(data, q) {
 }
 
 // Render Google Drive Files
-function renderDrive(data, q) {
-  const filtered = data.filter(f => f.name.toLowerCase().includes(q));
-  if (filtered.length === 0) {
-    document.getElementById("results").innerHTML = "<p>No results found.</p>";
-    return;
-  }
+function renderDrive(data) {
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
-  filtered.forEach(f => {
+  data.forEach(f => {
     let div = document.createElement("div");
     div.className = "card";
     div.innerHTML = `
