@@ -1,115 +1,239 @@
-// highlight text helper
-function highlight(text, query) {
-  if (!query) return text;
-  const re = new RegExp("(" + query + ")", "gi");
-  return text.replace(re, "<mark>$1</mark>");
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drive Explorer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9fafc;
+      margin: 0;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+    }
+    .box {
+      background: #fff;
+      padding: 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 900px;
+    }
+    h2 { margin: 5px 0; font-size: 1.2em; }
+    select, input, button {
+      margin: 4px 0;
+      padding: 6px;
+      font-size: 0.9em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+    }
+    button {
+      background: #004aad;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background: #003580; }
+    .folder {
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .folder-header {
+      padding: 6px;
+      background: #f1f1f1;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .folder-content {
+      display: none;
+      padding: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85em;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 4px 6px;
+      text-align: left;
+    }
+    th {
+      background: #f8f8f8;
+      position: sticky;
+      top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Secure Drive Explorer</h2>
+    <label>Select Source:</label>
+    <select id="source">
+      <option value="">-- Select --</option>
+      <option value="drive">Google Drive</option>
+      <option value="sheet">Google Sheet</option>
+    </select>
 
-// filter with autocomplete
-function filterTree(folder, query) {
-  if (!folder) return null;
-  const subfolders = (folder.subfolders || []).map(sub => filterTree(sub, query)).filter(Boolean);
-  const files = (folder.files || []).filter(file =>
-    file.name.toLowerCase().includes(query)
-  );
-  if (files.length > 0 || subfolders.length > 0 || folder.name.toLowerCase().includes(query)) {
-    return { ...folder, files, subfolders };
-  }
-  return null;
-}
+    <label>Password:</label>
+    <input type="password" id="password" placeholder="Enter password">
+    <label><input type="checkbox" id="showPwd"> Show Password</label>
+    <button id="submitBtn">Submit</button>
 
-function renderResults(data) {
-  resultsDiv.innerHTML = "";
-  if (!data) {
-    resultsDiv.innerHTML = "<em>No results</em>";
-    return;
-  }
+    <div id="searchSection" style="display:none;">
+      <input type="text" id="searchBox" placeholder="Type to filter...">
+      <div id="results"></div>
+    </div>
+  </div>
 
-  if (selectedSource === "drive") {
-    const root = createFolder(data, searchBox.value.trim().toLowerCase());
-    root.querySelector(".folder-content").style.display = "block";
-    resultsDiv.appendChild(root);
-  } else {
-    const headers = Object.keys(data[0]);
-    const table = document.createElement("table");
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    headers.forEach(h => {
-      const th = document.createElement("th");
-      th.textContent = h;
-      headerRow.appendChild(th);
+  <script>
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec";
+    const submitBtn = document.getElementById("submitBtn");
+    const searchSection = document.getElementById("searchSection");
+    const searchBox = document.getElementById("searchBox");
+    const resultsDiv = document.getElementById("results");
+    const showPwd = document.getElementById("showPwd");
+    const pwdInput = document.getElementById("password");
+
+    let selectedSource = "";
+    let password = "";
+    let fullData = [];
+
+    showPwd.addEventListener("change", () => {
+      pwdInput.type = showPwd.checked ? "text" : "password";
     });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-    const tbody = document.createElement("tbody");
-    data.forEach(row => {
-      const tr = document.createElement("tr");
-      headers.forEach(h => {
-        const td = document.createElement("td");
-        td.innerHTML = highlight(String(row[h] || ""), searchBox.value.trim().toLowerCase());
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
+
+    submitBtn.addEventListener("click", async () => {
+      selectedSource = document.getElementById("source").value;
+      password = pwdInput.value.trim();
+      if (!selectedSource || !password) {
+        alert("Please select source and enter password");
+        return;
+      }
+
+      const url = `${webAppUrl}?source=${selectedSource}&key=${encodeURIComponent(password)}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (data.error) {
+        alert("Unauthorized or error");
+        return;
+      }
+
+      searchSection.style.display = "block";
+      fullData = data;
+      renderResults(fullData);
     });
-    table.appendChild(tbody);
-    resultsDiv.appendChild(table);
-  }
-}
 
-function createFolder(folder, query) {
-  const folderDiv = document.createElement("div");
-  folderDiv.className = "folder";
-
-  const header = document.createElement("div");
-  header.className = "folder-header";
-  const fileCount = countFiles(folder);
-  header.innerHTML = `📁 ${highlight(folder.name, query)} (${fileCount} files)`;
-  folderDiv.appendChild(header);
-
-  const content = document.createElement("div");
-  content.className = "folder-content";
-
-  if (folder.files && folder.files.length > 0) {
-    const table = document.createElement("table");
-    const thead = document.createElement("thead");
-    const trHead = document.createElement("tr");
-    ["File Name","Type","Size","Preview","Download"].forEach(h => {
-      const th = document.createElement("th");
-      th.textContent = h;
-      trHead.appendChild(th);
+    searchBox.addEventListener("input", () => {
+      const q = searchBox.value.trim().toLowerCase();
+      if (!q) {
+        renderResults(fullData);
+        return;
+      }
+      const filtered = fullData.filter(item =>
+        JSON.stringify(item).toLowerCase().includes(q)
+      );
+      renderResults(filtered);
     });
-    thead.appendChild(trHead);
-    table.appendChild(thead);
 
-    const tbody = document.createElement("tbody");
-    folder.files.forEach(file => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${highlight(file.name, query)}</td>
-        <td>${file.type}</td>
-        <td>${file.size}</td>
-        <td><a href="${file.preview}" target="_blank">Preview</a></td>
-        <td><a href="${file.download}" target="_blank">Download</a></td>
-      `;
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    content.appendChild(table);
-  }
+    function renderResults(data) {
+      resultsDiv.innerHTML = "";
+      if (!Array.isArray(data) || data.length === 0) {
+        resultsDiv.innerHTML = "<em>No results</em>";
+        return;
+      }
 
-  if (folder.subfolders && folder.subfolders.length > 0) {
-    folder.subfolders.forEach(sub => {
-      content.appendChild(createFolder(sub, query));
-    });
-  }
+      if (selectedSource === "drive") {
+        // Group files by parent folder prefix (simulate folder names from filename)
+        const groups = {};
+        data.forEach(file => {
+          let folder = "Root"; // default
+          if (file.name.includes("/")) {
+            folder = file.name.split("/")[0];
+          }
+          if (!groups[folder]) groups[folder] = [];
+          groups[folder].push(file);
+        });
 
-  folderDiv.appendChild(content);
+        Object.keys(groups).forEach(folderName => {
+          const folderDiv = document.createElement("div");
+          folderDiv.className = "folder";
 
-  header.addEventListener("click", () => {
-    const siblings = folderDiv.parentNode.querySelectorAll(".folder-content");
-    siblings.forEach(s => s.style.display = "none");
-    content.style.display = (content.style.display === "block") ? "none" : "block";
-  });
+          const header = document.createElement("div");
+          header.className = "folder-header";
+          header.textContent = "📁 " + folderName;
+          folderDiv.appendChild(header);
 
-  return folderDiv;
-}
+          const content = document.createElement("div");
+          content.className = "folder-content";
+
+          const table = document.createElement("table");
+          const thead = document.createElement("thead");
+          const trHead = document.createElement("tr");
+          ["File Name","Type","Size","Preview","Download"].forEach(h => {
+            const th = document.createElement("th");
+            th.textContent = h;
+            trHead.appendChild(th);
+          });
+          thead.appendChild(trHead);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+          groups[folderName].forEach(file => {
+            const tr = document.createElement("tr");
+            const ext = file.name.split('.').pop().toUpperCase();
+
+            tr.innerHTML = `
+              <td>${file.name}</td>
+              <td>${ext}</td>
+              <td>${file.size}</td>
+              <td><a href="${file.preview}" target="_blank">Preview</a></td>
+              <td><a href="${file.download}" target="_blank">Download</a></td>
+            `;
+            tbody.appendChild(tr);
+          });
+          table.appendChild(tbody);
+          content.appendChild(table);
+          folderDiv.appendChild(content);
+
+          header.addEventListener("click", () => {
+            document.querySelectorAll(".folder-content").forEach(fc => fc.style.display = "none");
+            content.style.display = "block";
+          });
+
+          resultsDiv.appendChild(folderDiv);
+        });
+      } else {
+        // fallback for sheet (reuse table logic from before)
+        const headers = Object.keys(data[0]);
+        const table = document.createElement("table");
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+        headers.forEach(h => {
+          const th = document.createElement("th");
+          th.textContent = h;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        const tbody = document.createElement("tbody");
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          headers.forEach(h => {
+            const td = document.createElement("td");
+            td.textContent = row[h] || "";
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        resultsDiv.appendChild(table);
+      }
+    }
+  </script>
+</body>
+</html>
