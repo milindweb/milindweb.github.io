@@ -1,239 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drive Explorer</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9fafc;
-      margin: 0;
-      padding: 10px;
-      display: flex;
-      justify-content: center;
-    }
-    .box {
-      background: #fff;
-      padding: 10px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 900px;
-    }
-    h2 { margin: 5px 0; font-size: 1.2em; }
-    select, input, button {
-      margin: 4px 0;
-      padding: 6px;
-      font-size: 0.9em;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      width: 100%;
-    }
-    button {
-      background: #004aad;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover { background: #003580; }
-    .folder {
-      margin: 5px 0;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    .folder-header {
-      padding: 6px;
-      background: #f1f1f1;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .folder-content {
-      display: none;
-      padding: 4px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85em;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 4px 6px;
-      text-align: left;
-    }
-    th {
-      background: #f8f8f8;
-      position: sticky;
-      top: 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAD Search Portal</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fafafa; }
+  .container { max-width: 1100px; margin: auto; padding: 10px; }
+  h1 { font-size: 20px; }
+  select, input[type="password"], input[type="text"], button {
+    padding: 6px; margin: 5px; font-size: 14px;
+  }
+  #results { margin-top: 15px; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
+  th, td { border: 1px solid #ccc; padding: 6px; font-size: 13px; }
+  th { background: #eee; position: sticky; top: 0; }
+  .folder { border: 1px solid #ccc; margin: 4px 0; border-radius: 4px; }
+  .folder-header { background: #ddd; padding: 5px; cursor: pointer; font-weight: bold; }
+  .folder-content { display: none; padding: 5px; }
+  mark { background: yellow; }
+  #autocomplete-list { border: 1px solid #ccc; max-height: 150px; overflow-y: auto; background: white; position: absolute; z-index: 99; width: calc(100% - 20px); }
+  #autocomplete-list div { padding: 6px; cursor: pointer; }
+  #autocomplete-list div:hover { background: #f0f0f0; }
+</style>
 </head>
 <body>
-  <div class="box">
-    <h2>Secure Drive Explorer</h2>
-    <label>Select Source:</label>
-    <select id="source">
-      <option value="">-- Select --</option>
-      <option value="drive">Google Drive</option>
-      <option value="sheet">Google Sheet</option>
-    </select>
+<div class="container">
+  <h1>NAD Search Portal</h1>
 
-    <label>Password:</label>
-    <input type="password" id="password" placeholder="Enter password">
-    <label><input type="checkbox" id="showPwd"> Show Password</label>
-    <button id="submitBtn">Submit</button>
+  <label for="source">Select Source:</label>
+  <select id="source">
+    <option value="drive">Drive</option>
+    <option value="sheet">Sheet</option>
+  </select>
 
-    <div id="searchSection" style="display:none;">
-      <input type="text" id="searchBox" placeholder="Type to filter...">
-      <div id="results"></div>
-    </div>
+  <input type="password" id="password" placeholder="Enter password">
+  <label><input type="checkbox" onclick="togglePassword()"> Show</label>
+  <button onclick="authenticate()">Submit</button>
+
+  <div id="search-area" style="display:none;">
+    <input type="text" id="searchBox" placeholder="Search..." oninput="showAutocomplete()">
+    <div id="autocomplete-list"></div>
+    <button onclick="performSearch()">Search</button>
   </div>
 
-  <script>
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec";
-    const submitBtn = document.getElementById("submitBtn");
-    const searchSection = document.getElementById("searchSection");
-    const searchBox = document.getElementById("searchBox");
-    const resultsDiv = document.getElementById("results");
-    const showPwd = document.getElementById("showPwd");
-    const pwdInput = document.getElementById("password");
+  <div id="results"></div>
+</div>
 
-    let selectedSource = "";
-    let password = "";
-    let fullData = [];
+<script>
+const WEB_APP_URL = "YOUR_WEB_APP_URL_HERE"; // replace with your Apps Script web app URL
+let selectedSource = "";
+let authKey = "";
+let currentData = null;
 
-    showPwd.addEventListener("change", () => {
-      pwdInput.type = showPwd.checked ? "text" : "password";
+function togglePassword() {
+  const pwd = document.getElementById("password");
+  pwd.type = pwd.type === "password" ? "text" : "password";
+}
+
+function authenticate() {
+  selectedSource = document.getElementById("source").value;
+  authKey = document.getElementById("password").value.trim();
+  if (!authKey) { alert("Please enter password"); return; }
+
+  document.getElementById("search-area").style.display = "block";
+  performSearch();
+}
+
+function performSearch() {
+  const query = document.getElementById("searchBox").value.trim();
+  fetch(`${WEB_APP_URL}?source=${selectedSource}&key=${authKey}&q=${encodeURIComponent(query)}`)
+    .then(res => res.json())
+    .then(data => {
+      currentData = data;
+      renderResults(data, query.toLowerCase());
+    })
+    .catch(err => alert("Error: " + err));
+}
+
+function highlight(text, query) {
+  if (!query) return text;
+  const re = new RegExp("(" + query + ")", "gi");
+  return text.replace(re, "<mark>$1</mark>");
+}
+
+function renderResults(data, query) {
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
+
+  if (data.error) {
+    resultsDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
+    return;
+  }
+
+  if (selectedSource === "drive") {
+    const root = createFolder(data, query);
+    root.querySelector(".folder-content").style.display = "block"; // expand root
+    resultsDiv.appendChild(root);
+  } else if (selectedSource === "sheet" && data.length) {
+    const headers = Object.keys(data[0]);
+    const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    headers.forEach(h => {
+      const th = document.createElement("th");
+      th.textContent = h;
+      headerRow.appendChild(th);
     });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
 
-    submitBtn.addEventListener("click", async () => {
-      selectedSource = document.getElementById("source").value;
-      password = pwdInput.value.trim();
-      if (!selectedSource || !password) {
-        alert("Please select source and enter password");
-        return;
-      }
-
-      const url = `${webAppUrl}?source=${selectedSource}&key=${encodeURIComponent(password)}`;
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (data.error) {
-        alert("Unauthorized or error");
-        return;
-      }
-
-      searchSection.style.display = "block";
-      fullData = data;
-      renderResults(fullData);
+    const tbody = document.createElement("tbody");
+    data.forEach(row => {
+      const tr = document.createElement("tr");
+      headers.forEach(h => {
+        const td = document.createElement("td");
+        td.innerHTML = highlight(String(row[h] || ""), query);
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
     });
+    table.appendChild(tbody);
+    resultsDiv.appendChild(table);
+  } else {
+    resultsDiv.innerHTML = "<em>No results found</em>";
+  }
+}
 
-    searchBox.addEventListener("input", () => {
-      const q = searchBox.value.trim().toLowerCase();
-      if (!q) {
-        renderResults(fullData);
-        return;
-      }
-      const filtered = fullData.filter(item =>
-        JSON.stringify(item).toLowerCase().includes(q)
-      );
-      renderResults(filtered);
+function createFolder(folder, query) {
+  const folderDiv = document.createElement("div");
+  folderDiv.className = "folder";
+
+  const header = document.createElement("div");
+  header.className = "folder-header";
+  header.innerHTML = `📁 ${highlight(folder.name, query)} (${folder.files.length} files)`;
+  folderDiv.appendChild(header);
+
+  const content = document.createElement("div");
+  content.className = "folder-content";
+
+  if (folder.files.length) {
+    const table = document.createElement("table");
+    const thead = document.createElement("thead");
+    const trHead = document.createElement("tr");
+    ["File Name","Type","Size","Preview","Download"].forEach(h => {
+      const th = document.createElement("th");
+      th.textContent = h;
+      trHead.appendChild(th);
     });
+    thead.appendChild(trHead);
+    table.appendChild(thead);
 
-    function renderResults(data) {
-      resultsDiv.innerHTML = "";
-      if (!Array.isArray(data) || data.length === 0) {
-        resultsDiv.innerHTML = "<em>No results</em>";
-        return;
-      }
+    const tbody = document.createElement("tbody");
+    folder.files.forEach(file => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${highlight(file.name, query)}</td>
+        <td>${file.type}</td>
+        <td>${file.size}</td>
+        <td><a href="${file.preview}" target="_blank">Preview</a></td>
+        <td><a href="${file.download}" target="_blank">Download</a></td>
+      `;
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    content.appendChild(table);
+  }
 
-      if (selectedSource === "drive") {
-        // Group files by parent folder prefix (simulate folder names from filename)
-        const groups = {};
-        data.forEach(file => {
-          let folder = "Root"; // default
-          if (file.name.includes("/")) {
-            folder = file.name.split("/")[0];
-          }
-          if (!groups[folder]) groups[folder] = [];
-          groups[folder].push(file);
-        });
+  folder.subfolders.forEach(sub => content.appendChild(createFolder(sub, query)));
 
-        Object.keys(groups).forEach(folderName => {
-          const folderDiv = document.createElement("div");
-          folderDiv.className = "folder";
+  folderDiv.appendChild(content);
 
-          const header = document.createElement("div");
-          header.className = "folder-header";
-          header.textContent = "📁 " + folderName;
-          folderDiv.appendChild(header);
+  header.addEventListener("click", () => {
+    document.querySelectorAll(".folder-content").forEach(el => el.style.display = "none");
+    content.style.display = "block";
+  });
 
-          const content = document.createElement("div");
-          content.className = "folder-content";
+  return folderDiv;
+}
 
-          const table = document.createElement("table");
-          const thead = document.createElement("thead");
-          const trHead = document.createElement("tr");
-          ["File Name","Type","Size","Preview","Download"].forEach(h => {
-            const th = document.createElement("th");
-            th.textContent = h;
-            trHead.appendChild(th);
-          });
-          thead.appendChild(trHead);
-          table.appendChild(thead);
+function showAutocomplete() {
+  const input = document.getElementById("searchBox");
+  const query = input.value.toLowerCase();
+  const listDiv = document.getElementById("autocomplete-list");
+  listDiv.innerHTML = "";
 
-          const tbody = document.createElement("tbody");
-          groups[folderName].forEach(file => {
-            const tr = document.createElement("tr");
-            const ext = file.name.split('.').pop().toUpperCase();
+  if (!currentData || !query) return;
 
-            tr.innerHTML = `
-              <td>${file.name}</td>
-              <td>${ext}</td>
-              <td>${file.size}</td>
-              <td><a href="${file.preview}" target="_blank">Preview</a></td>
-              <td><a href="${file.download}" target="_blank">Download</a></td>
-            `;
-            tbody.appendChild(tr);
-          });
-          table.appendChild(tbody);
-          content.appendChild(table);
-          folderDiv.appendChild(content);
+  let suggestions = [];
 
-          header.addEventListener("click", () => {
-            document.querySelectorAll(".folder-content").forEach(fc => fc.style.display = "none");
-            content.style.display = "block";
-          });
-
-          resultsDiv.appendChild(folderDiv);
-        });
-      } else {
-        // fallback for sheet (reuse table logic from before)
-        const headers = Object.keys(data[0]);
-        const table = document.createElement("table");
-        const thead = document.createElement("thead");
-        const headerRow = document.createElement("tr");
-        headers.forEach(h => {
-          const th = document.createElement("th");
-          th.textContent = h;
-          headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-        const tbody = document.createElement("tbody");
-        data.forEach(row => {
-          const tr = document.createElement("tr");
-          headers.forEach(h => {
-            const td = document.createElement("td");
-            td.textContent = row[h] || "";
-            tr.appendChild(td);
-          });
-          tbody.appendChild(tr);
-        });
-        table.appendChild(tbody);
-        resultsDiv.appendChild(table);
-      }
+  if (selectedSource === "drive") {
+    function collect(folder) {
+      folder.files.forEach(f => {
+        if (f.name.toLowerCase().includes(query)) suggestions.push(f.name);
+      });
+      folder.subfolders.forEach(sf => collect(sf));
     }
-  </script>
+    collect(currentData);
+  } else if (Array.isArray(currentData)) {
+    currentData.forEach(row => {
+      Object.values(row).forEach(val => {
+        if (String(val).toLowerCase().includes(query)) suggestions.push(val);
+      });
+    });
+  }
+
+  [...new Set(suggestions)].slice(0, 10).forEach(s => {
+    const div = document.createElement("div");
+    div.innerHTML = highlight(s, query);
+    div.onclick = () => {
+      input.value = s;
+      listDiv.innerHTML = "";
+      performSearch();
+    };
+    listDiv.appendChild(div);
+  });
+}
+</script>
 </body>
 </html>
