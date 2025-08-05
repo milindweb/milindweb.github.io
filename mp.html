@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Search Portal</title>
+  <title>Drive Explorer</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,30 +16,40 @@
     .box {
       background: #fff;
       padding: 10px;
-      border-radius: 8px;
+      border-radius: 6px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      max-width: 95%;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      max-width: 900px;
     }
     h2 { margin: 5px 0; font-size: 1.2em; }
-    input, select, button {
+    select, input, button {
+      margin: 4px 0;
       padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
       font-size: 0.9em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
     }
     button {
       background: #004aad;
-      color: #fff;
-      border: none;
+      color: white;
       cursor: pointer;
     }
     button:hover { background: #003580; }
-    #searchSection {
-      margin-top: 10px;
+    .folder {
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .folder-header {
+      padding: 6px;
+      background: #f1f1f1;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .folder-content {
+      display: none;
+      padding: 4px;
     }
     table {
       width: 100%;
@@ -52,39 +62,25 @@
       text-align: left;
     }
     th {
-      background: #f1f1f1;
+      background: #f8f8f8;
       position: sticky;
       top: 0;
-      z-index: 2;
-    }
-    .drive-item {
-      padding: 6px;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .drive-item img {
-      height: 40px;
-      width: auto;
-      border-radius: 4px;
     }
   </style>
 </head>
 <body>
   <div class="box">
-    <h2>Secure Search Portal</h2>
-    <label for="source">Select Data Source:</label>
+    <h2>Secure Drive Explorer</h2>
+    <label>Select Source:</label>
     <select id="source">
       <option value="">-- Select --</option>
       <option value="drive">Google Drive</option>
       <option value="sheet">Google Sheet</option>
     </select>
 
-    <label for="password">Enter Password:</label>
+    <label>Password:</label>
     <input type="password" id="password" placeholder="Enter password">
     <label><input type="checkbox" id="showPwd"> Show Password</label>
-
     <button id="submitBtn">Submit</button>
 
     <div id="searchSection" style="display:none;">
@@ -95,7 +91,6 @@
 
   <script>
     const webAppUrl = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec";
-
     const submitBtn = document.getElementById("submitBtn");
     const searchSection = document.getElementById("searchSection");
     const searchBox = document.getElementById("searchBox");
@@ -103,20 +98,19 @@
     const showPwd = document.getElementById("showPwd");
     const pwdInput = document.getElementById("password");
 
+    let selectedSource = "";
+    let password = "";
+    let fullData = [];
+
     showPwd.addEventListener("change", () => {
       pwdInput.type = showPwd.checked ? "text" : "password";
     });
 
-    let selectedSource = "";
-    let password = "";
-    let fullData = []; // Store all data for filtering
-
     submitBtn.addEventListener("click", async () => {
       selectedSource = document.getElementById("source").value;
       password = pwdInput.value.trim();
-
       if (!selectedSource || !password) {
-        alert("Please select a source and enter password");
+        alert("Please select source and enter password");
         return;
       }
 
@@ -125,7 +119,7 @@
       const data = await res.json();
 
       if (data.error) {
-        alert("Unauthorized: Wrong password");
+        alert("Unauthorized or error");
         return;
       }
 
@@ -149,16 +143,76 @@
     function renderResults(data) {
       resultsDiv.innerHTML = "";
       if (!Array.isArray(data) || data.length === 0) {
-        resultsDiv.innerHTML = "<em>No results found</em>";
+        resultsDiv.innerHTML = "<em>No results</em>";
         return;
       }
 
-      if (selectedSource === "sheet") {
+      if (selectedSource === "drive") {
+        // Group files by parent folder prefix (simulate folder names from filename)
+        const groups = {};
+        data.forEach(file => {
+          let folder = "Root"; // default
+          if (file.name.includes("/")) {
+            folder = file.name.split("/")[0];
+          }
+          if (!groups[folder]) groups[folder] = [];
+          groups[folder].push(file);
+        });
+
+        Object.keys(groups).forEach(folderName => {
+          const folderDiv = document.createElement("div");
+          folderDiv.className = "folder";
+
+          const header = document.createElement("div");
+          header.className = "folder-header";
+          header.textContent = "📁 " + folderName;
+          folderDiv.appendChild(header);
+
+          const content = document.createElement("div");
+          content.className = "folder-content";
+
+          const table = document.createElement("table");
+          const thead = document.createElement("thead");
+          const trHead = document.createElement("tr");
+          ["File Name","Type","Size","Preview","Download"].forEach(h => {
+            const th = document.createElement("th");
+            th.textContent = h;
+            trHead.appendChild(th);
+          });
+          thead.appendChild(trHead);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+          groups[folderName].forEach(file => {
+            const tr = document.createElement("tr");
+            const ext = file.name.split('.').pop().toUpperCase();
+
+            tr.innerHTML = `
+              <td>${file.name}</td>
+              <td>${ext}</td>
+              <td>${file.size}</td>
+              <td><a href="${file.preview}" target="_blank">Preview</a></td>
+              <td><a href="${file.download}" target="_blank">Download</a></td>
+            `;
+            tbody.appendChild(tr);
+          });
+          table.appendChild(tbody);
+          content.appendChild(table);
+          folderDiv.appendChild(content);
+
+          header.addEventListener("click", () => {
+            document.querySelectorAll(".folder-content").forEach(fc => fc.style.display = "none");
+            content.style.display = "block";
+          });
+
+          resultsDiv.appendChild(folderDiv);
+        });
+      } else {
+        // fallback for sheet (reuse table logic from before)
         const headers = Object.keys(data[0]);
         const table = document.createElement("table");
         const thead = document.createElement("thead");
         const headerRow = document.createElement("tr");
-
         headers.forEach(h => {
           const th = document.createElement("th");
           th.textContent = h;
@@ -166,7 +220,6 @@
         });
         thead.appendChild(headerRow);
         table.appendChild(thead);
-
         const tbody = document.createElement("tbody");
         data.forEach(row => {
           const tr = document.createElement("tr");
@@ -179,21 +232,6 @@
         });
         table.appendChild(tbody);
         resultsDiv.appendChild(table);
-
-      } else if (selectedSource === "drive") {
-        data.forEach(item => {
-          const div = document.createElement("div");
-          div.className = "drive-item";
-          div.innerHTML = `
-            <img src="${item.thumbnail}" alt="thumb">
-            <div>
-              <strong>${item.name}</strong> (${item.size})<br>
-              <a href="${item.preview}" target="_blank">Preview</a> |
-              <a href="${item.download}" target="_blank">Download</a>
-            </div>
-          `;
-          resultsDiv.appendChild(div);
-        });
       }
     }
   </script>
