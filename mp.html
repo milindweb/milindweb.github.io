@@ -1,242 +1,169 @@
+<!-- FULL ROBUST IMPLEMENTATION -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milindweb Search Portal</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fafafa; }
-  .container { max-width: 1100px; margin: auto; padding: 10px; }
-  h1 { font-size: 20px; font-weight: normal; margin: 10px 0; }
-  select, input[type="password"], input[type="text"], button {
-    padding: 6px; margin: 5px; font-size: 14px; }
-  #results { margin-top: 15px; }
-  table { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
-  th, td { border: 1px solid #ccc; padding: 6px; font-size: 13px; }
-  th { background: #eee; position: sticky; top: 0; }
-  .folder { border: 1px solid #ccc; margin: 4px 0; border-radius: 4px; }
-  .folder-header { background: #ddd; padding: 5px; cursor: pointer; font-weight: bold; }
-  .folder-content { display: none; padding: 5px; }
-  mark { background: yellow; }
-  #autocomplete-list { border: 1px solid #ccc; max-height: 150px; overflow-y: auto; background: white; position: absolute; z-index: 99; width: calc(100% - 20px); }
-  #autocomplete-list div { padding: 6px; cursor: pointer; }
-  #autocomplete-list div:hover { background: #f0f0f0; }
-  #loading { display: none; margin-top: 10px; font-size: 14px; color: #333; }
-  #controls { margin: 10px 0; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milindweb Search Portal</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    header { background:#003366; color:#fff; padding:10px; text-align:center; }
+    main { padding:10px; }
+    .hidden { display:none; }
+    .folder, .file { margin:3px 0; padding:6px; border:1px solid #ccc; border-radius:4px; }
+    .folder { background:#eef; cursor:pointer; }
+    .file { background:#fafafa; }
+    .tree { margin-left:18px; }
+    .highlight { background:yellow; }
+    table { border-collapse:collapse; width:100%; }
+    th, td { border:1px solid #ccc; padding:6px; }
+    th { background:#f0f0f0; position:sticky; top:0; }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1>Milindweb Search Portal</h1>
-
-  <label for="source">Select Source:</label>
+<header><h1>Milindweb Search Portal</h1></header>
+<main>
+  <label>Source:</label>
   <select id="source">
-    <option value="drive">Drive</option>
-    <option value="sheet">Sheet</option>
+    <option value="drive">Google Drive</option>
+    <option value="sheet">Google Sheet</option>
   </select>
-
   <input type="password" id="password" placeholder="Enter password">
-  <label><input type="checkbox" onclick="togglePassword()"> Show</label>
-  <button onclick="authenticate()">Submit</button>
+  <input type="checkbox" onclick="togglePwd()"> Show Password
+  <button onclick="login()">Submit</button>
 
-  <div id="controls" style="display:none;">
-    <button onclick="expandAll()">Expand All</button>
-    <button onclick="collapseAll()">Collapse All</button>
-  </div>
-
-  <div id="search-area" style="display:none;">
-    <input type="text" id="searchBox" placeholder="Search..." oninput="showAutocomplete()">
-    <div id="autocomplete-list"></div>
+  <div id="searchBox" class="hidden">
+    <input type="text" id="search" placeholder="Search..." oninput="suggest()">
     <button onclick="performSearch()">Search</button>
+    <ul id="suggestions" style="list-style:none; padding:0; margin:5px 0;"></ul>
   </div>
 
-  <div id="loading">Loading, please wait...</div>
   <div id="results"></div>
-</div>
-
+</main>
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec";
-let selectedSource = "";
-let authKey = "";
-let currentData = null;
+const API_URL = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec";
+let currentSource = "";
+let currentKey = "";
+let fullData = null;
 
-function togglePassword() {
+function togglePwd() {
   const pwd = document.getElementById("password");
   pwd.type = pwd.type === "password" ? "text" : "password";
 }
 
-function authenticate() {
-  selectedSource = document.getElementById("source").value;
-  authKey = document.getElementById("password").value.trim();
-  if (!authKey) { alert("Please enter password"); return; }
+async function login() {
+  currentSource = document.getElementById("source").value;
+  currentKey = document.getElementById("password").value;
+  document.getElementById("searchBox").classList.remove("hidden");
+  await loadData();
+}
 
-  document.getElementById("search-area").style.display = "block";
-  document.getElementById("controls").style.display = selectedSource === "drive" ? "block" : "none";
-  performSearch();
+async function loadData(query="") {
+  try {
+    const res = await fetch(`${API_URL}?source=${currentSource}&key=${currentKey}&q=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    if (data.error) {
+      document.getElementById("results").innerHTML = `<p style='color:red'>${data.error}</p>`;
+      return;
+    }
+    fullData = data;
+    renderResults(data);
+  } catch (err) {
+    document.getElementById("results").innerHTML = `<p style='color:red'>Error: ${err.message}</p>`;
+  }
 }
 
 function performSearch() {
-  const query = document.getElementById("searchBox").value.trim();
-  document.getElementById("loading").style.display = "block";
-  fetch(`${WEB_APP_URL}?source=${selectedSource}&key=${authKey}&q=${encodeURIComponent(query)}`)
-    .then(res => res.json())
-    .then(data => {
-      currentData = data;
-      renderResults(data, query.toLowerCase());
-      document.getElementById("loading").style.display = "none";
-    })
-    .catch(err => {
-      alert("Error: " + err);
-      document.getElementById("loading").style.display = "none";
-    });
+  const q = document.getElementById("search").value.toLowerCase();
+  loadData(q);
 }
 
-function highlight(text, query) {
-  if (!text) return "";
-  text = String(text);
-  if (!query) return text;
-  const re = new RegExp("(" + query + ")", "gi");
-  return text.replace(re, "<mark>$1</mark>");
-}
+function renderResults(data) {
+  const container = document.getElementById("results");
+  container.innerHTML = "";
 
-function renderResults(data, query) {
-  const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "";
-
-  if (data.error) {
-    resultsDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
-    return;
-  }
-
-  if (selectedSource === "drive") {
-    const root = createFolder(data, query);
-    root.querySelector(".folder-content").style.display = "block"; // expand root by default
-    resultsDiv.appendChild(root);
-  } else if (selectedSource === "sheet" && data.length) {
-    const headers = Object.keys(data[0]);
-    const table = document.createElement("table");
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    headers.forEach(h => {
-      const th = document.createElement("th");
-      th.textContent = h;
-      headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
+  if (currentSource === "sheet") {
+    if (!Array.isArray(data) || data.length === 0) { container.innerHTML = "<p>No results</p>"; return; }
+    let table = "<table><thead><tr>";
+    Object.keys(data[0]).forEach(h => table += `<th>${h}</th>`);
+    table += "</tr></thead><tbody>";
     data.forEach(row => {
-      const tr = document.createElement("tr");
-      headers.forEach(h => {
-        const td = document.createElement("td");
-        td.innerHTML = highlight(String(row[h] || ""), query);
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
+      table += "<tr>";
+      Object.values(row).forEach(val => table += `<td>${highlight(val)}</td>`);
+      table += "</tr>";
     });
-    table.appendChild(tbody);
-    resultsDiv.appendChild(table);
-  } else {
-    resultsDiv.innerHTML = "<em>No results found</em>";
+    table += "</tbody></table>";
+    container.innerHTML = table;
+  } else if (currentSource === "drive") {
+    renderFolder(container, data);
   }
 }
 
-function createFolder(folder, query) {
-  const folderDiv = document.createElement("div");
-  folderDiv.className = "folder";
+function renderFolder(container, folder) {
+  const div = document.createElement("div");
+  div.className = "folder";
+  div.textContent = `📁 ${folder.name || "Unnamed"} (${(folder.files||[]).length} files)`;
+  const treeDiv = document.createElement("div");
+  treeDiv.className = "tree";
+  treeDiv.style.display = "none";
 
-  const header = document.createElement("div");
-  header.className = "folder-header";
-  header.innerHTML = `📁 ${highlight(folder.name, query)} (${folder.files.length} files)`;
-  folderDiv.appendChild(header);
+  div.onclick = () => {
+    const allTrees = document.querySelectorAll(".tree");
+    allTrees.forEach(t => t.style.display = "none");
+    treeDiv.style.display = "block";
+  };
 
-  const content = document.createElement("div");
-  content.className = "folder-content";
-
-  if (folder.files.length) {
-    const table = document.createElement("table");
-    const thead = document.createElement("thead");
-    const trHead = document.createElement("tr");
-    ["File Name","Type","Size","Preview","Download"].forEach(h => {
-      const th = document.createElement("th");
-      th.textContent = h;
-      trHead.appendChild(th);
-    });
-    thead.appendChild(trHead);
-    table.appendChild(thead);
-
-    const tbody = document.createElement("tbody");
-    folder.files.forEach(file => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${highlight(file.name, query)}</td>
-        <td>${file.type}</td>
-        <td>${file.size}</td>
-        <td><a href="${file.preview}" target="_blank">Preview</a></td>
-        <td><a href="${file.download}" target="_blank">Download</a></td>
-      `;
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
-    content.appendChild(table);
-  }
-
-  folder.subfolders.forEach(sub => content.appendChild(createFolder(sub, query)));
-
-  folderDiv.appendChild(content);
-
-  header.addEventListener("click", () => {
-    document.querySelectorAll(".folder-content").forEach(el => el.style.display = "none");
-    content.style.display = "block";
+  (folder.files||[]).forEach(file => {
+    const fileDiv = document.createElement("div");
+    fileDiv.className = "file";
+    fileDiv.innerHTML = `${highlight(file.name)} - ${file.size} <a href="${file.preview}" target="_blank">Preview</a> | <a href="${file.download}" target="_blank">Download</a>`;
+    treeDiv.appendChild(fileDiv);
   });
 
-  return folderDiv;
+  (folder.subfolders||[]).forEach(sub => {
+    renderFolder(treeDiv, sub);
+  });
+
+  container.appendChild(div);
+  container.appendChild(treeDiv);
 }
 
-function expandAll() {
-  document.querySelectorAll(".folder-content").forEach(el => el.style.display = "block");
-}
-
-function collapseAll() {
-  document.querySelectorAll(".folder-content").forEach(el => el.style.display = "none");
-}
-
-function showAutocomplete() {
-  const input = document.getElementById("searchBox");
-  const query = input.value.toLowerCase();
-  const listDiv = document.getElementById("autocomplete-list");
-  listDiv.innerHTML = "";
-
-  if (!currentData || !query) return;
-
-  let suggestions = [];
-
-  if (selectedSource === "drive") {
-    function collect(folder) {
-      folder.files.forEach(f => {
-        if (f.name.toLowerCase().includes(query)) suggestions.push(f.name);
-      });
-      folder.subfolders.forEach(sf => collect(sf));
-    }
-    collect(currentData);
-  } else if (Array.isArray(currentData)) {
-    currentData.forEach(row => {
-      Object.values(row).forEach(val => {
-        if (String(val).toLowerCase().includes(query)) suggestions.push(val);
-      });
-    });
+function highlight(text) {
+  const q = document.getElementById("search").value.toLowerCase();
+  if (!q) return text;
+  try {
+    const regex = new RegExp(`(${q})`, "gi");
+    return String(text).replace(regex, '<span class="highlight">$1</span>');
+  } catch {
+    return text;
   }
+}
 
-  [...new Set(suggestions)].slice(0, 10).forEach(s => {
-    const div = document.createElement("div");
-    div.innerHTML = highlight(s, query);
-    div.onclick = () => {
-      input.value = s;
-      listDiv.innerHTML = "";
-      performSearch();
+function suggest() {
+  const q = document.getElementById("search").value.toLowerCase();
+  const list = document.getElementById("suggestions");
+  list.innerHTML = "";
+  if (!q || !fullData) return;
+  let suggestions = [];
+  if (currentSource === "sheet" && Array.isArray(fullData)) {
+    suggestions = fullData.flatMap(row => Object.values(row))
+      .filter(v => String(v).toLowerCase().includes(q))
+      .slice(0,5);
+  } else if (currentSource === "drive") {
+    const gather = (f) => {
+      (f.files||[]).forEach(file => {
+        if (file.name.toLowerCase().includes(q)) suggestions.push(file.name);
+      });
+      (f.subfolders||[]).forEach(sub => gather(sub));
     };
-    listDiv.appendChild(div);
+    gather(fullData);
+    suggestions = suggestions.slice(0,5);
+  }
+  suggestions.forEach(s => {
+    const li = document.createElement("li");
+    li.textContent = s;
+    li.onclick = () => { document.getElementById("search").value = s; performSearch(); };
+    list.appendChild(li);
   });
 }
 </script>
