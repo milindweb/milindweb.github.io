@@ -8,10 +8,10 @@
   body { font-family: Arial, sans-serif; margin: 20px; }
   .hidden { display: none; }
   input, select, button { margin: 5px; padding: 8px; }
-  #results { margin-top: 20px; }
-  .file, .folder { margin-left: 20px; }
-  .file a { text-decoration: none; color: blue; }
-  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+  ul { list-style: none; padding-left: 20px; }
+  li { margin: 4px 0; }
+  .folder { font-weight: bold; cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 15px; }
   th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
 </style>
 </head>
@@ -35,12 +35,10 @@
 </div>
 
 <script>
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec"; // Replace with your deployed Apps Script Web App URL
-
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec"; // Replace with your Apps Script Web App URL
 let currentSource = "";
 let accessKey = "";
 
-// Authenticate user
 function authenticate() {
   currentSource = document.getElementById("source").value;
   accessKey = document.getElementById("password").value.trim();
@@ -51,10 +49,9 @@ function authenticate() {
   }
 
   document.getElementById("searchSection").classList.remove("hidden");
-  fetchData(); // load initial tree/table
+  fetchData();
 }
 
-// Fetch and display data
 async function fetchData() {
   const query = document.getElementById("searchBox").value.trim().toLowerCase();
   const url = `${BACKEND_URL}?source=${currentSource}&key=${accessKey}&q=${encodeURIComponent(query)}`;
@@ -68,7 +65,6 @@ async function fetchData() {
   }
 }
 
-// Render results
 function renderResults(data) {
   const container = document.getElementById("results");
   container.innerHTML = "";
@@ -79,22 +75,10 @@ function renderResults(data) {
   }
 
   if (currentSource === "drive") {
-    // Drive tree view
     const ul = document.createElement("ul");
-    data.forEach(file => {
-      const li = document.createElement("li");
-      li.classList.add("file");
-      li.innerHTML = `
-        📄 <strong>${file.name}</strong> (${file.size})
-        [<a href="${file.preview}" target="_blank">Preview</a>]
-        [<a href="${file.download}" target="_blank">Download</a>]
-      `;
-      ul.appendChild(li);
-    });
+    data.forEach(item => renderDriveItem(item, ul));
     container.appendChild(ul);
-
   } else if (currentSource === "sheet") {
-    // Sheet live table
     if (data.length === 0) {
       container.innerHTML = "<p>No matching records found.</p>";
       return;
@@ -127,6 +111,23 @@ function renderResults(data) {
 
     container.appendChild(table);
   }
+}
+
+function renderDriveItem(item, parentEl) {
+  const li = document.createElement("li");
+
+  if (item.type === "folder") {
+    li.innerHTML = `📁 <span class="folder">${item.name}</span>`;
+    if (item.children.length > 0) {
+      const ul = document.createElement("ul");
+      item.children.forEach(child => renderDriveItem(child, ul));
+      li.appendChild(ul);
+    }
+  } else if (item.type === "file") {
+    li.innerHTML = `📄 ${item.name} (${item.size}) [<a href="${item.preview}" target="_blank">Preview</a>] [<a href="${item.download}" target="_blank">Download</a>]`;
+  }
+
+  parentEl.appendChild(li);
 }
 </script>
 
