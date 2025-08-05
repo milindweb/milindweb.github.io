@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Drive Explorer</title>
+  <title>Milindweb Explorer</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -73,7 +73,7 @@
 </head>
 <body>
   <div class="box">
-    <h2>Secure Drive Explorer</h2>
+    <h2>Milindweb Explorer</h2>
     <label>Select Source:</label>
     <select id="source">
       <option value="">-- Select --</option>
@@ -103,7 +103,7 @@
 
     let selectedSource = "";
     let password = "";
-    let fullData = [];
+    let fullData = null;
 
     showPwd.addEventListener("change", () => {
       pwdInput.type = showPwd.checked ? "text" : "password";
@@ -141,32 +141,29 @@
       renderResults(filtered);
     });
 
-    function filterTree(tree, query) {
-      return tree.map(folder => {
-        const subfolders = filterTree(folder.subfolders || [], query);
-        const files = (folder.files || []).filter(file =>
-          JSON.stringify(file).toLowerCase().includes(query)
-        );
-        if (files.length > 0 || subfolders.length > 0 || folder.name.toLowerCase().includes(query)) {
-          return { ...folder, files, subfolders };
-        }
-        return null;
-      }).filter(Boolean);
+    function filterTree(folder, query) {
+      const subfolders = (folder.subfolders || []).map(sub => filterTree(sub, query)).filter(Boolean);
+      const files = (folder.files || []).filter(file =>
+        JSON.stringify(file).toLowerCase().includes(query)
+      );
+      if (files.length > 0 || subfolders.length > 0 || folder.name.toLowerCase().includes(query)) {
+        return { ...folder, files, subfolders };
+      }
+      return null;
     }
 
     function renderResults(data) {
       resultsDiv.innerHTML = "";
-      if (!Array.isArray(data) || data.length === 0) {
+      if (!data) {
         resultsDiv.innerHTML = "<em>No results</em>";
         return;
       }
 
       if (selectedSource === "drive") {
-        data.forEach(folder => {
-          resultsDiv.appendChild(createFolder(folder));
-        });
+        const root = createFolder(data);
+        root.querySelector(".folder-content").style.display = "block"; // auto-expand root
+        resultsDiv.appendChild(root);
       } else {
-        // fallback for sheet
         const headers = Object.keys(data[0]);
         const table = document.createElement("table");
         const thead = document.createElement("thead");
