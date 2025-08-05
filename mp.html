@@ -117,9 +117,10 @@ function renderDriveItem(item, parentEl) {
   const li = document.createElement("li");
 
   if (item.type === "folder") {
-    li.innerHTML = `📁 <span class="folder">${item.name}</span>`;
+    li.innerHTML = `📁 <span class="folder" onclick="toggleFolder(this)">${item.name}</span>`;
     if (item.children.length > 0) {
       const ul = document.createElement("ul");
+      ul.style.display = "none";
       item.children.forEach(child => renderDriveItem(child, ul));
       li.appendChild(ul);
     }
@@ -128,6 +129,13 @@ function renderDriveItem(item, parentEl) {
   }
 
   parentEl.appendChild(li);
+}
+
+function toggleFolder(el) {
+  const nextUl = el.parentElement.querySelector("ul");
+  if (nextUl) {
+    nextUl.style.display = nextUl.style.display === "none" ? "block" : "none";
+  }
 }
 </script>
 
