@@ -8,90 +8,66 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --primary-bg: #1a2a4a; /* Dark blue background */
+      --primary-bg: #1a2a4a;
       --secondary-bg: #243a5f;
       --text-primary: #f0f5ff;
       --text-secondary: #d0d8e8;
       --accent: #7BAEFF;
       --accent-light: #8AB4FF;
       --border: #2a3b5a;
-      --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --transition: all 0.4s ease;
       --gradient: linear-gradient(135deg, #7BAEFF, #8AB4FF);
-      --menu-slide-time: 0.4s;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * {margin: 0; padding: 0; box-sizing: border-box;}
 
     body {
-      background-color: #f8fafc;
+      background: #f8fafc;
       color: #1e293b;
       font-family: 'Segoe UI', system-ui, sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
-      padding-top: 80px; /* Prevent body content from going under header */
+      padding-top: 70px;
     }
 
-    /* Header Styles */
     header {
-      background-color: var(--primary-bg);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      background: var(--primary-bg);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       position: fixed;
       top: 0;
       width: 100%;
       z-index: 1000;
-      padding: 1rem 2rem;
-      transition: var(--transition);
     }
 
     .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem;
       max-width: 1200px;
-      margin: 0 auto;
-      height: 100%;
-    }
-
-    .logo-container {
-      display: flex;
-      flex-direction: column;
-      z-index: 1002;
+      margin: auto;
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
+      font-size: 1.5rem;
+      font-weight: bold;
       color: var(--accent);
       text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .logo:hover {
-      color: var(--accent-light);
-      transform: translateY(-2px);
     }
 
     .logo-tagline {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       color: var(--text-secondary);
-      margin-top: 0.2rem;
       font-style: italic;
-      opacity: 0.8;
-      transition: var(--transition);
     }
 
-    /* Navigation Styles */
+    /* Desktop nav hidden on small screens */
     .nav-desktop {
       display: none;
     }
 
     .nav-mobile {
       display: flex;
-      align-items: center;
     }
 
     .mobile-menu-btn {
@@ -100,44 +76,33 @@
       font-size: 1.8rem;
       color: var(--accent);
       cursor: pointer;
-      transition: var(--transition);
-      z-index: 1002;
-      padding: 0.5rem;
     }
 
-    .mobile-menu-btn:hover {
-      color: var(--accent-light);
-      transform: scale(1.1);
-    }
-
+    /* Mobile menu */
     .mobile-menu {
       position: fixed;
       top: 0;
       right: -100%;
       width: min(75vw, 400px);
       height: 100vh;
-      background-color: var(--secondary-bg);
-      box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
+      background: var(--secondary-bg);
+      padding: 5rem 2rem 2rem;
+      transition: right 0.4s ease;
       z-index: 1001;
-      transition: right var(--menu-slide-time) ease;
-      padding: 6rem 2rem 2rem;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
     }
 
-    .mobile-menu.active {
-      right: 0;
-    }
+    .mobile-menu.active { right: 0; }
 
     .mobile-menu-header {
       position: absolute;
       top: 1rem;
-      left: 2rem;
+      left: 1rem;
+      right: 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: calc(100% - 4rem);
     }
 
     .close-menu-btn {
@@ -146,256 +111,86 @@
       font-size: 1.8rem;
       color: var(--accent);
       cursor: pointer;
-      transition: var(--transition);
     }
 
-    .close-menu-btn:hover {
-      transform: rotate(90deg);
-      color: var(--accent-light);
-    }
-
-    .mobile-nav-list {
-      list-style: none;
-      width: 100%;
-    }
-
-    .mobile-nav-item {
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      transform: translateX(20px);
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu.active .mobile-nav-item {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .mobile-menu.active .mobile-nav-item:nth-child(1) { transition-delay: 0.1s; }
-    .mobile-menu.active .mobile-nav-item:nth-child(2) { transition-delay: 0.15s; }
-    .mobile-menu.active .mobile-nav-item:nth-child(3) { transition-delay: 0.2s; }
-    .mobile-menu.active .mobile-nav-item:nth-child(4) { transition-delay: 0.25s; }
-    .mobile-menu.active .mobile-nav-item:nth-child(5) { transition-delay: 0.3s; }
-    .mobile-menu.active .mobile-nav-item:nth-child(6) { transition-delay: 0.35s; }
-    .mobile-menu.active .mobile-nav-item:nth-child(7) { transition-delay: 0.4s; }
-
+    .mobile-nav-list { list-style: none; margin-top: 3rem; }
+    .mobile-nav-item { margin-bottom: 1.2rem; }
     .mobile-nav-link {
-      display: block;
-      padding: 0.75rem 0;
       color: var(--text-primary);
-      text-decoration: none;
       font-size: 1.2rem;
+      text-decoration: none;
       transition: var(--transition);
-      border-bottom: 1px solid transparent;
     }
+    .mobile-nav-link:hover { color: var(--accent-light); }
 
-    .mobile-nav-link:hover {
-      color: var(--accent);
-    }
-
-    .mobile-nav-link::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
-
-    .mobile-nav-link:hover::before {
-      width: 100%;
-    }
-
+    /* Overlay */
     .menu-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      opacity: 0; visibility: hidden;
+      transition: 0.4s ease;
       z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity var(--menu-slide-time) ease, visibility var(--menu-slide-time) ease;
     }
+    .menu-overlay.active { opacity: 1; visibility: visible; }
 
-    .menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Desktop Navigation */
-    @media (min-width: 768px) {
-      body {
-        padding-top: 90px; /* Adjust for desktop header height */
+    /* Desktop View */
+    @media(min-width: 768px){
+      body{padding-top:90px;}
+      .nav-desktop{display:flex;}
+      .desktop-nav-list{
+        display:flex;
+        gap:2rem;
+        list-style:none;
       }
-
-      .nav-desktop {
-        display: flex;
-        align-items: center;
-      }
-
-      .nav-mobile {
-        display: none;
-      }
-
-      .desktop-nav-list {
-        display: flex;
-        list-style: none;
-        gap: 2rem;
-      }
-
-      .desktop-nav-item {
-        position: relative;
-      }
-
       .desktop-nav-link {
         color: var(--text-primary);
-        text-decoration: none;
-        font-weight: 500;
-        transition: var(--transition);
-        padding: 0.5rem 0;
-        position: relative;
-        font-size: 0.95rem;
+        text-decoration:none;
+        font-weight:500;
+        position:relative;
       }
-
-      .desktop-nav-link:hover {
-        color: var(--accent);
+      .desktop-nav-link:hover { color: var(--accent); }
+      .desktop-nav-link::before{
+        content:"";
+        position:absolute;
+        bottom:-5px;
+        left:0;
+        width:0;
+        height:2px;
+        background:var(--accent);
+        transition: width 0.3s ease;
       }
-
-      .desktop-nav-link::before {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--accent);
-        transition: var(--transition);
-      }
-
-      .desktop-nav-link:hover::before {
-        width: 100%;
-      }
-
-      .desktop-submenu {
-        position: absolute;
-        top: calc(100% + 10px);
-        left: 50%;
-        transform: translateX(-50%) translateY(10px);
-        background-color: var(--secondary-bg);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        border-radius: 5px;
-        padding: 1rem 0;
-        min-width: 200px;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 100;
-        border: 1px solid var(--border);
-      }
-
-      .desktop-nav-item:hover .desktop-submenu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0);
-      }
-
-      .desktop-submenu-item {
-        padding: 0.5rem 1.5rem;
-        transition: var(--transition);
-      }
-
-      .desktop-submenu-item:hover {
-        background-color: rgba(123, 174, 255, 0.1);
-      }
-
-      .desktop-submenu-link {
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-size: 0.9rem;
-        transition: var(--transition);
-        display: block;
-        white-space: nowrap;
-      }
-
-      .desktop-submenu-link:hover {
-        color: var(--accent);
-        padding-left: 0.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding-top: 70px; /* Adjust for mobile header height */
-      }
-
-      header {
-        padding: 0.8rem 1rem;
-      }
-      
-      .mobile-menu {
-        padding: 5rem 1.5rem 1.5rem;
-      }
-      
-      .mobile-menu-header {
-        left: 1.5rem;
-        width: calc(100% - 3rem);
-      }
+      .desktop-nav-link:hover::before{width:100%;}
+      .nav-mobile{display:none;}
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header>
     <div class="header-container">
-      <div class="logo-container">
+      <div>
         <a href="index.html" class="logo">MILINDWEB</a>
-        <span class="logo-tagline">Life should be great rather than long</span>
+        <div class="logo-tagline">Life should be great rather than long</div>
       </div>
 
-      <!-- Desktop Navigation -->
+      <!-- Desktop Menu -->
       <nav class="nav-desktop">
         <ul class="desktop-nav-list">
-          <li class="desktop-nav-item">
-            <a href="index.html" class="desktop-nav-link">HOME</a>
-          </li>
-          <li class="desktop-nav-item">
-            <a href="#" class="desktop-nav-link">SERVICES</a>
-            <ul class="desktop-submenu">
-              <li class="desktop-submenu-item">
-                <a href="freelance_seo_consultant.html" class="desktop-submenu-link">DIGITAL MARKETING</a>
-              </li>
-              <li class="desktop-submenu-item">
-                <a href="graphics.html" class="desktop-submenu-link">GRAPHICS DESIGN</a>
-              </li>
-              <li class="desktop-submenu-item">
-                <a href="website-tech-solutions.html" class="desktop-submenu-link">TECH SOLUTIONS</a>
-              </li>
-              <li class="desktop-submenu-item">
-                <a href="project.html" class="desktop-submenu-link">PROJECTS</a>
-              </li>
-              <li class="desktop-submenu-item">
-                <a href="workshop.html" class="desktop-submenu-link">WORKSHOPS</a>
-              </li>
-            </ul>
-          </li>
-          <li class="desktop-nav-item">
-            <a href="blog.html" class="desktop-nav-link">TECH BLOGS</a>
-          </li>
-          <li class="desktop-nav-item">
-            <a href="contact.html" class="desktop-nav-link">CONTACT</a>
-          </li>
+          <li><a href="index.html" class="desktop-nav-link">HOME</a></li>
+          <li><a href="freelance_seo_consultant.html" class="desktop-nav-link">DIGITAL MARKETING</a></li>
+          <li><a href="graphics.html" class="desktop-nav-link">GRAPHICS DESIGN</a></li>
+          <li><a href="website-tech-solutions.html" class="desktop-nav-link">TECH SOLUTIONS</a></li>
+          <li><a href="project.html" class="desktop-nav-link">PROJECTS</a></li>
+          <li><a href="workshop.html" class="desktop-nav-link">WORKSHOPS</a></li>
+          <li><a href="blog.html" class="desktop-nav-link">TECH BLOGS</a></li>
+          <li><a href="contact.html" class="desktop-nav-link">CONTACT</a></li>
         </ul>
       </nav>
 
-      <!-- Mobile Navigation -->
+      <!-- Mobile Button -->
       <nav class="nav-mobile">
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
-          <i class="fas fa-bars"></i>
-        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
       </nav>
     </div>
   </header>
@@ -404,76 +199,49 @@
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <a href="index.html" class="logo">MILINDWEB</a>
-      <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
+      <button class="close-menu-btn" id="closeMenuBtn"><i class="fas fa-times"></i></button>
     </div>
     <ul class="mobile-nav-list">
-      <li class="mobile-nav-item">
-        <a href="index.html" class="mobile-nav-link">HOME</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="freelance_seo_consultant.html" class="mobile-nav-link">DIGITAL MARKETING</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="graphics.html" class="mobile-nav-link">GRAPHICS DESIGN</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="website-tech-solutions.html" class="mobile-nav-link">TECH SOLUTIONS</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="project.html" class="mobile-nav-link">PROJECTS</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="workshop.html" class="mobile-nav-link">WORKSHOPS</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="blog.html" class="mobile-nav-link">TECH BLOGS</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="contact.html" class="mobile-nav-link">CONTACT</a>
-      </li>
+      <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link">HOME</a></li>
+      <li class="mobile-nav-item"><a href="freelance_seo_consultant.html" class="mobile-nav-link">DIGITAL MARKETING</a></li>
+      <li class="mobile-nav-item"><a href="graphics.html" class="mobile-nav-link">GRAPHICS DESIGN</a></li>
+      <li class="mobile-nav-item"><a href="website-tech-solutions.html" class="mobile-nav-link">TECH SOLUTIONS</a></li>
+      <li class="mobile-nav-item"><a href="project.html" class="mobile-nav-link">PROJECTS</a></li>
+      <li class="mobile-nav-item"><a href="workshop.html" class="mobile-nav-link">WORKSHOPS</a></li>
+      <li class="mobile-nav-item"><a href="blog.html" class="mobile-nav-link">TECH BLOGS</a></li>
+      <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link">CONTACT</a></li>
     </ul>
   </div>
-
-  <!-- Mobile Menu Overlay -->
   <div class="menu-overlay" id="menuOverlay"></div>
 
   <script>
-    // Mobile Menu Toggle - Fixed Implementation
-    document.addEventListener('DOMContentLoaded', function() {
-      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-      const closeMenuBtn = document.getElementById('closeMenuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      const menuOverlay = document.getElementById('menuOverlay');
+    document.addEventListener('DOMContentLoaded',()=>{
+      const openBtn=document.getElementById('mobileMenuBtn');
+      const closeBtn=document.getElementById('closeMenuBtn');
+      const menu=document.getElementById('mobileMenu');
+      const overlay=document.getElementById('menuOverlay');
 
-      function openMenu() {
-        mobileMenu.classList.add('active');
-        menuOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
+      function openMenu(){
+        menu.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow='hidden';
+      }
+      function closeMenu(){
+        menu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow='';
       }
 
-      function closeMenu() {
-        mobileMenu.classList.remove('active');
-        menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      }
+      openBtn.addEventListener('click',openMenu);
+      closeBtn.addEventListener('click',closeMenu);
+      overlay.addEventListener('click',closeMenu);
 
-      // Event Listeners
-      mobileMenuBtn.addEventListener('click', openMenu);
-      closeMenuBtn.addEventListener('click', closeMenu);
-      menuOverlay.addEventListener('click', closeMenu);
-
-      // Close menu when clicking on a link
-      document.querySelectorAll('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', closeMenu);
+      document.querySelectorAll('.mobile-nav-link').forEach(link=>{
+        link.addEventListener('click',closeMenu);
       });
 
-      // Close menu when pressing Escape key
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-          closeMenu();
-        }
+      document.addEventListener('keydown',e=>{
+        if(e.key==='Escape'&&menu.classList.contains('active')) closeMenu();
       });
     });
   </script>
