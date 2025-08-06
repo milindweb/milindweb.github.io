@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MilindWeb - Smart Technical Services</title>
   <link rel="icon" href="img/favicon.png" type="image/png">
+  <link rel="shortcut icon" href="img/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -17,11 +18,8 @@
       --border: #2a3b5a;
       --transition: all 0.3s ease;
       --gradient: linear-gradient(135deg, #7BAEFF, #8AB4FF);
-      
-      /* Light mode variables */
-      --light-bg: #f8fafc;
-      --light-text: #1e293b;
-      --light-secondary: #64748b;
+      --body-bg: #f8fafc;
+      --body-text: #1e293b;
     }
 
     @media (prefers-color-scheme: light) {
@@ -36,27 +34,15 @@
       }
     }
 
-    * {
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--light-bg);
-      color: var(--light-text);
+      background: var(--body-bg);
+      color: var(--body-text);
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
       padding-top: 70px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #0f172a;
-        color: #f8fafc;
-      }
     }
 
     header {
@@ -67,7 +53,6 @@
       top: 0;
       width: 100%;
       z-index: 1000;
-      transition: var(--transition);
     }
 
     .header-container {
@@ -84,26 +69,16 @@
       font-weight: bold;
       color: var(--accent);
       text-decoration: none;
-      display: block;
-      transition: var(--transition);
-    }
-
-    .logo:hover {
-      color: var(--accent-light);
     }
 
     .logo-tagline {
       font-size: 0.8rem;
       color: var(--text-secondary);
       font-style: italic;
-      transition: var(--transition);
     }
 
-    /* Mobile Menu Button */
-    .nav-mobile {
-      display: flex;
-    }
-
+    /* Mobile menu button */
+    .nav-mobile { display: flex; }
     .mobile-menu-btn {
       background: none;
       border: none;
@@ -111,15 +86,9 @@
       color: var(--accent);
       cursor: pointer;
       padding: 0.5rem;
-      transition: var(--transition);
     }
 
-    .mobile-menu-btn:hover {
-      color: var(--accent-light);
-      transform: scale(1.1);
-    }
-
-    /* Mobile Menu */
+    /* Mobile menu */
     .mobile-menu {
       position: fixed;
       top: 0;
@@ -128,16 +97,13 @@
       height: 100vh;
       background: var(--secondary-bg);
       padding: 5rem 1.5rem 2rem;
-      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: right 0.4s ease;
       z-index: 1001;
       display: flex;
       flex-direction: column;
-      box-shadow: -4px 0 12px rgba(0,0,0,0.1);
     }
 
-    .mobile-menu.active { 
-      right: 0; 
-    }
+    .mobile-menu.active { right: 0; }
 
     .mobile-menu-header {
       position: absolute;
@@ -156,40 +122,28 @@
       color: var(--accent);
       cursor: pointer;
       padding: 0.5rem;
-      transition: var(--transition);
     }
 
-    .close-menu-btn:hover {
-      color: var(--accent-light);
-      transform: rotate(90deg);
-    }
-
-    .mobile-nav-list { 
-      list-style: none; 
-      margin-top: 2rem; 
-      overflow-y: auto;
-      flex-grow: 1;
-    }
-    
-    .mobile-nav-item { 
-      margin-bottom: 1rem; 
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
-    }
-    
+    .mobile-nav-list { list-style: none; margin-top: 2rem; overflow-y: auto; }
+    .mobile-nav-item { margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
     .mobile-nav-link {
       color: var(--text-primary);
       font-size: 1.1rem;
       font-weight: 500;
       text-decoration: none;
-      transition: var(--transition);
       display: block;
       padding: 0.5rem 0;
     }
-    
-    .mobile-nav-link:hover { 
-      color: var(--accent-light); 
-      padding-left: 0.5rem;
+
+    .dropdown-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .dropdown-toggle i {
+      transition: transform 0.3s ease;
     }
 
     .mobile-dropdown {
@@ -198,111 +152,47 @@
       display: none;
     }
 
-    .mobile-dropdown.active {
-      display: block;
-    }
+    .mobile-dropdown.active { display: block; }
+    .mobile-dropdown.active ~ .dropdown-toggle i { transform: rotate(180deg); }
 
-    .mobile-dropdown-item {
-      margin-bottom: 0.8rem;
-    }
-
+    .mobile-dropdown-item { margin-bottom: 0.8rem; }
     .mobile-dropdown-link {
       color: var(--text-secondary);
       text-decoration: none;
       font-size: 1rem;
       display: block;
       padding: 0.3rem 0;
-      transition: var(--transition);
-    }
-
-    .mobile-dropdown-link:hover {
-      color: var(--accent-light);
-      padding-left: 0.5rem;
-    }
-
-    .dropdown-toggle {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .dropdown-toggle i {
-      transition: transform 0.3s ease;
-    }
-
-    .dropdown-toggle.active i {
-      transform: rotate(180deg);
     }
 
     /* Overlay */
     .menu-overlay {
       position: fixed;
-      top: 0; 
-      left: 0;
-      width: 100%; 
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: rgba(0,0,0,0.5);
-      opacity: 0; 
-      visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s ease;
       z-index: 1000;
-      backdrop-filter: blur(2px);
     }
-    
-    .menu-overlay.active { 
-      opacity: 1; 
-      visibility: visible; 
-    }
+    .menu-overlay.active { opacity: 1; visibility: visible; }
 
-    /* Desktop View */
+    /* Desktop */
     @media (min-width: 768px) {
-      body {
-        padding-top: 80px;
-      }
-      
-      .nav-desktop {
-        display: flex;
-      }
-      
+      body { padding-top: 80px; }
+      .nav-desktop { display: flex; }
       .desktop-nav-list {
         display: flex;
         gap: 1.5rem;
         list-style: none;
       }
-      
-      .desktop-nav-item {
-        position: relative;
-      }
-      
+      .desktop-nav-item { position: relative; }
       .desktop-nav-link {
         color: var(--text-primary);
         text-decoration: none;
         font-weight: 500;
         padding: 0.5rem 0;
         display: block;
-        position: relative;
-        transition: var(--transition);
       }
-      
-      .desktop-nav-link:hover { 
-        color: var(--accent); 
-      }
-      
-      .desktop-nav-link::after {
-        content: "";
-        position: absolute;
-        bottom: -3px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--accent);
-        transition: width 0.3s ease;
-      }
-      
-      .desktop-nav-link:hover::after {
-        width: 100%;
-      }
-
       .desktop-dropdown {
         position: absolute;
         top: 100%;
@@ -312,57 +202,23 @@
         padding: 1rem;
         border-radius: 6px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
+        opacity: 0; visibility: hidden;
         transition: all 0.3s ease;
         z-index: 100;
       }
-
-      .desktop-nav-item:hover .desktop-dropdown {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
+      .desktop-nav-item:hover .desktop-dropdown,
+      .desktop-nav-item:focus-within .desktop-dropdown {
+        opacity: 1; visibility: visible;
       }
-
-      .desktop-dropdown-item {
-        margin-bottom: 0.8rem;
-      }
-
+      .desktop-dropdown-item { margin-bottom: 0.8rem; }
       .desktop-dropdown-link {
         color: var(--text-primary);
         text-decoration: none;
         font-size: 0.95rem;
-        transition: var(--transition);
         display: block;
         padding: 0.5rem;
-        border-radius: 4px;
       }
-
-      .desktop-dropdown-link:hover {
-        color: var(--accent-light);
-        background: rgba(123, 174, 255, 0.1);
-        padding-left: 0.8rem;
-      }
-      
-      .nav-mobile {
-        display: none;
-      }
-    }
-
-    /* Tablet specific adjustments */
-    @media (min-width: 768px) and (max-width: 1024px) {
-      .header-container {
-        padding: 1rem 1.5rem;
-      }
-      
-      .desktop-nav-list {
-        gap: 1rem;
-      }
-      
-      .desktop-dropdown {
-        min-width: 200px;
-      }
+      .nav-mobile { display: none; }
     }
   </style>
 </head>
@@ -373,151 +229,98 @@
         <a href="index.html" class="logo">MILINDWEB</a>
         <div class="logo-tagline">Life should be great rather than long</div>
       </div>
-
-      <!-- Desktop Menu -->
       <nav class="nav-desktop">
         <ul class="desktop-nav-list">
-          <li class="desktop-nav-item">
-            <a href="index.html" class="desktop-nav-link">HOME</a>
-          </li>
+          <li class="desktop-nav-item"><a href="index.html" class="desktop-nav-link">HOME</a></li>
           <li class="desktop-nav-item">
             <a href="#" class="desktop-nav-link">SERVICES</a>
             <ul class="desktop-dropdown">
-              <li class="desktop-dropdown-item">
-                <a href="freelance_seo_consultant.html" class="desktop-dropdown-link">DIGITAL MARKETING</a>
-              </li>
-              <li class="desktop-dropdown-item">
-                <a href="graphics.html" class="desktop-dropdown-link">GRAPHICS DESIGN</a>
-              </li>
-              <li class="desktop-dropdown-item">
-                <a href="website-tech-solutions.html" class="desktop-dropdown-link">TECH SOLUTIONS</a>
-              </li>
-              <li class="desktop-dropdown-item">
-                <a href="project.html" class="desktop-dropdown-link">PROJECTS</a>
-              </li>
-              <li class="desktop-dropdown-item">
-                <a href="workshop.html" class="desktop-dropdown-link">WORKSHOPS</a>
-              </li>
+              <li class="desktop-dropdown-item"><a href="freelance_seo_consultant.html" class="desktop-dropdown-link">DIGITAL MARKETING</a></li>
+              <li class="desktop-dropdown-item"><a href="graphics.html" class="desktop-dropdown-link">GRAPHICS DESIGN</a></li>
+              <li class="desktop-dropdown-item"><a href="website-tech-solutions.html" class="desktop-dropdown-link">TECH SOLUTIONS</a></li>
+              <li class="desktop-dropdown-item"><a href="project.html" class="desktop-dropdown-link">PROJECTS</a></li>
+              <li class="desktop-dropdown-item"><a href="workshop.html" class="desktop-dropdown-link">WORKSHOPS</a></li>
             </ul>
           </li>
-          <li class="desktop-nav-item">
-            <a href="blog.html" class="desktop-nav-link">TECH BLOGS</a>
-          </li>
-          <li class="desktop-nav-item">
-            <a href="contact.html" class="desktop-nav-link">CONTACT</a>
-          </li>
+          <li class="desktop-nav-item"><a href="blog.html" class="desktop-nav-link">TECH BLOGS</a></li>
+          <li class="desktop-nav-item"><a href="contact.html" class="desktop-nav-link">CONTACT</a></li>
         </ul>
       </nav>
-
-      <!-- Mobile Button -->
       <nav class="nav-mobile">
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
-          <i class="fas fa-bars"></i>
-        </button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
       </nav>
     </div>
   </header>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <a href="index.html" class="logo">MILINDWEB</a>
-      <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
+      <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu"><i class="fas fa-times"></i></button>
     </div>
     <ul class="mobile-nav-list">
-      <li class="mobile-nav-item">
-        <a href="index.html" class="mobile-nav-link">HOME</a>
-      </li>
+      <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link">HOME</a></li>
       <li class="mobile-nav-item">
         <div class="dropdown-toggle" id="mobileServicesToggle">
-          <a href="#" class="mobile-nav-link">SERVICES</a>
+          <span class="mobile-nav-link">SERVICES</span>
           <i class="fas fa-chevron-down"></i>
         </div>
         <ul class="mobile-dropdown" id="mobileServicesDropdown">
-          <li class="mobile-dropdown-item">
-            <a href="freelance_seo_consultant.html" class="mobile-dropdown-link">DIGITAL MARKETING</a>
-          </li>
-          <li class="mobile-dropdown-item">
-            <a href="graphics.html" class="mobile-dropdown-link">GRAPHICS DESIGN</a>
-          </li>
-          <li class="mobile-dropdown-item">
-            <a href="website-tech-solutions.html" class="mobile-dropdown-link">TECH SOLUTIONS</a>
-          </li>
-          <li class="mobile-dropdown-item">
-            <a href="project.html" class="mobile-dropdown-link">PROJECTS</a>
-          </li>
-          <li class="mobile-dropdown-item">
-            <a href="workshop.html" class="mobile-dropdown-link">WORKSHOPS</a>
-          </li>
+          <li class="mobile-dropdown-item"><a href="freelance_seo_consultant.html" class="mobile-dropdown-link">DIGITAL MARKETING</a></li>
+          <li class="mobile-dropdown-item"><a href="graphics.html" class="mobile-dropdown-link">GRAPHICS DESIGN</a></li>
+          <li class="mobile-dropdown-item"><a href="website-tech-solutions.html" class="mobile-dropdown-link">TECH SOLUTIONS</a></li>
+          <li class="mobile-dropdown-item"><a href="project.html" class="mobile-dropdown-link">PROJECTS</a></li>
+          <li class="mobile-dropdown-item"><a href="workshop.html" class="mobile-dropdown-link">WORKSHOPS</a></li>
         </ul>
       </li>
-      <li class="mobile-nav-item">
-        <a href="blog.html" class="mobile-nav-link">TECH BLOGS</a>
-      </li>
-      <li class="mobile-nav-item">
-        <a href="contact.html" class="mobile-nav-link">CONTACT</a>
-      </li>
+      <li class="mobile-nav-item"><a href="blog.html" class="mobile-nav-link">TECH BLOGS</a></li>
+      <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link">CONTACT</a></li>
     </ul>
   </div>
-  
+
   <div class="menu-overlay" id="menuOverlay"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Mobile menu toggle functionality
       const openBtn = document.getElementById('mobileMenuBtn');
       const closeBtn = document.getElementById('closeMenuBtn');
       const menu = document.getElementById('mobileMenu');
       const overlay = document.getElementById('menuOverlay');
       const servicesToggle = document.getElementById('mobileServicesToggle');
       const servicesDropdown = document.getElementById('mobileServicesDropdown');
+      const chevron = servicesToggle.querySelector('i');
 
       function openMenu() {
         menu.classList.add('active');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.body.style.height = '100vh';
       }
 
       function closeMenu() {
         menu.classList.remove('active');
         overlay.classList.remove('active');
-        document.body.style.overflow = '';
-        // Close any open dropdowns when closing menu
+        document.body.style.overflow = 'auto';
+        document.body.style.height = 'auto';
         servicesDropdown.classList.remove('active');
-        servicesToggle.classList.remove('active');
+        chevron.style.transform = 'rotate(0deg)';
       }
 
-      // Toggle mobile menu
       openBtn.addEventListener('click', openMenu);
       closeBtn.addEventListener('click', closeMenu);
       overlay.addEventListener('click', closeMenu);
 
-      // Toggle services dropdown in mobile menu
-      servicesToggle.addEventListener('click', (e) => {
-        e.preventDefault();
+      servicesToggle.addEventListener('click', () => {
         servicesDropdown.classList.toggle('active');
-        servicesToggle.classList.toggle('active');
+        chevron.style.transform = servicesDropdown.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
       });
 
-      // Close menu when clicking on a link (except dropdown toggle)
-      document.querySelectorAll('.mobile-nav-link:not(#mobileServicesToggle a), .mobile-dropdown-link').forEach(link => {
+      document.querySelectorAll('.mobile-nav-link, .mobile-dropdown-link').forEach(link => {
         link.addEventListener('click', closeMenu);
       });
 
-      // Close menu with ESC key
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && menu.classList.contains('active')) {
-          closeMenu();
-        }
-      });
-
-      // Detect system color scheme changes
-      const colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      colorSchemeQuery.addEventListener('change', (e) => {
-        // This will automatically update due to CSS variables
-        console.log('Color scheme changed to:', e.matches ? 'dark' : 'light');
+        if (e.key === 'Escape' && menu.classList.contains('active')) closeMenu();
       });
     });
   </script>
