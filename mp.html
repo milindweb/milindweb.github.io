@@ -1,150 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Drive & Sheet Viewer</title>
-<style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  .hidden { display: none; }
-  input, select, button { margin: 5px; padding: 8px; }
-  ul { list-style: none; padding-left: 20px; }
-  li { margin: 4px 0; }
-  .folder { font-weight: bold; cursor: pointer; }
-  table { border-collapse: collapse; width: 100%; margin-top: 15px; }
-  th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-</style>
+  <meta charset="UTF-8">
+  <title>Milindweb Search Portal</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 10px; }
+    .hidden { display: none; }
+    .folder { cursor: pointer; margin: 5px 0; font-weight: bold; }
+    .tree { margin-left: 20px; padding-left: 10px; border-left: 1px solid #ccc; }
+    .file { margin: 3px 0; }
+    .highlight { background: yellow; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 5px; text-align: left; }
+    th { background: #f2f2f2; position: sticky; top: 0; }
+    #suggestions { list-style: none; padding: 0; margin: 5px 0; }
+    #suggestions li { cursor: pointer; padding: 3px; border: 1px solid #ccc; margin-top: 2px; background: #fafafa; }
+    #loading { font-style: italic; color: #555; }
+  </style>
 </head>
 <body>
+  <h2>Milindweb Search Portal</h2>
 
-<h2>Secure Drive & Sheet Viewer</h2>
+  <div>
+    <label for="source">Select Source:</label>
+    <select id="source">
+      <option value="drive">Google Drive</option>
+      <option value="sheet">Google Sheet</option>
+    </select>
+    <br><br>
+    <input type="password" id="password" placeholder="Enter Password">
+    <input type="checkbox" onclick="togglePwd()"> Show Password
+    <button onclick="login()">Submit</button>
+  </div>
 
-<label for="source">Select Source:</label>
-<select id="source">
-  <option value="drive">Drive</option>
-  <option value="sheet">Sheet</option>
-</select>
+  <div id="searchBox" class="hidden">
+    <input type="text" id="search" placeholder="Search..." onkeyup="suggest()">
+    <button onclick="performSearch()">Search</button>
+    <ul id="suggestions"></ul>
+  </div>
 
-<input type="password" id="password" placeholder="Enter password">
-<button onclick="authenticate()">Submit</button>
-
-<div id="searchSection" class="hidden">
-  <input type="text" id="searchBox" placeholder="Search...">
-  <button onclick="fetchData()">Search</button>
-  <button onclick="showAllFolders()">Show All Folders</button>
+  <div id="loading" class="hidden">Loading data, please wait...</div>
   <div id="results"></div>
-</div>
 
-<script>
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec"; // Replace with your Apps Script Web App URL
-let currentSource = "";
-let accessKey = "";
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbxSqnkHPwOd12v93JSvqGSoHQOWhao2r7-DRvXjflnAEHpT2qcXg11EHDIY1flJmCkW/exec";
+    let currentSource = "";
+    let currentKey = "";
+    let fullData = null;
 
-function authenticate() {
-  currentSource = document.getElementById("source").value;
-  accessKey = document.getElementById("password").value.trim();
-
-  if (!accessKey) {
-    alert("Please enter a password.");
-    return;
-  }
-
-  document.getElementById("searchSection").classList.remove("hidden");
-  fetchData();
-}
-
-async function fetchData() {
-  const query = document.getElementById("searchBox").value.trim().toLowerCase();
-  const url = `${BACKEND_URL}?source=${currentSource}&key=${accessKey}&q=${encodeURIComponent(query)}`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    renderResults(data);
-  } catch (err) {
-    document.getElementById("results").innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
-  }
-}
-
-function renderResults(data) {
-  const container = document.getElementById("results");
-  container.innerHTML = "";
-
-  if (data.error) {
-    container.innerHTML = `<p style="color:red">${data.error}</p>`;
-    return;
-  }
-
-  if (currentSource === "drive") {
-    const ul = document.createElement("ul");
-    data.forEach(item => renderDriveItem(item, ul));
-    container.appendChild(ul);
-  } else if (currentSource === "sheet") {
-    if (data.length === 0) {
-      container.innerHTML = "<p>No matching records found.</p>";
-      return;
+    function togglePwd() {
+      const pwd = document.getElementById("password");
+      pwd.type = pwd.type === "password" ? "text" : "password";
     }
 
-    const table = document.createElement("table");
-    const headers = Object.keys(data[0]);
-    const thead = document.createElement("thead");
-    const headerRow = document.createElement("tr");
+    async function login() {
+      currentSource = document.getElementById("source").value;
+      currentKey = document.getElementById("password").value;
+      document.getElementById("searchBox").classList.remove("hidden");
+      await loadData(); // auto-load everything on login
+    }
 
-    headers.forEach(h => {
-      const th = document.createElement("th");
-      th.textContent = h;
-      headerRow.appendChild(th);
-    });
-    thead.appendChild(headerRow);
-    table.appendChild(thead);
+    async function loadData(query="") {
+      document.getElementById("loading").classList.remove("hidden");
+      document.getElementById("results").innerHTML = "";
+      try {
+        const res = await fetch(`${API_URL}?source=${currentSource}&key=${currentKey}&q=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        document.getElementById("loading").classList.add("hidden");
+        if (data.error) {
+          document.getElementById("results").innerHTML = `<p style='color:red'>${data.error}</p>`;
+          return;
+        }
+        fullData = data;
+        renderResults(data);
+      } catch (err) {
+        document.getElementById("loading").classList.add("hidden");
+        document.getElementById("results").innerHTML = `<p style='color:red'>Error: ${err.message}</p>`;
+      }
+    }
 
-    const tbody = document.createElement("tbody");
-    data.forEach(row => {
-      const tr = document.createElement("tr");
-      headers.forEach(h => {
-        const td = document.createElement("td");
-        td.textContent = row[h];
-        tr.appendChild(td);
+    function performSearch() {
+      const q = document.getElementById("search").value.toLowerCase();
+      loadData(q);
+    }
+
+    function renderResults(data) {
+      const container = document.getElementById("results");
+      container.innerHTML = "";
+
+      if (currentSource === "sheet") {
+        if (!Array.isArray(data) || data.length === 0) { container.innerHTML = "<p>No results</p>"; return; }
+        let table = "<table><thead><tr>";
+        Object.keys(data[0]).forEach(h => table += `<th>${h}</th>`);
+        table += "</tr></thead><tbody>";
+        data.forEach(row => {
+          table += "<tr>";
+          Object.values(row).forEach(val => table += `<td>${highlight(val)}</td>`);
+          table += "</tr>";
+        });
+        table += "</tbody></table>";
+        container.innerHTML = table;
+      } else if (currentSource === "drive") {
+        renderFolder(container, data, true); // auto-expand root
+      }
+    }
+
+    function renderFolder(container, folder, autoExpand=false) {
+      const div = document.createElement("div");
+      div.className = "folder";
+      div.textContent = `📁 ${folder.name || "Unnamed"} (${(folder.files||[]).length} files)`;
+      const treeDiv = document.createElement("div");
+      treeDiv.className = "tree";
+      treeDiv.style.display = autoExpand ? "block" : "none";
+
+      div.onclick = () => {
+        const allTrees = document.querySelectorAll(".tree");
+        allTrees.forEach(t => t.style.display = "none");
+        treeDiv.style.display = "block";
+      };
+
+      (folder.files||[]).forEach(file => {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "file";
+        fileDiv.innerHTML = `${highlight(file.name)} - ${file.size} 
+          <a href="${file.preview}" target="_blank">Preview</a> | 
+          <a href="${file.download}" target="_blank" download>Download</a>`;
+        treeDiv.appendChild(fileDiv);
       });
-      tbody.appendChild(tr);
-    });
-    table.appendChild(tbody);
 
-    container.appendChild(table);
-  }
-}
+      (folder.subfolders||[]).forEach(sub => {
+        renderFolder(treeDiv, sub);
+      });
 
-function renderDriveItem(item, parentEl) {
-  const li = document.createElement("li");
-
-  if (item.type === "folder") {
-    li.innerHTML = `📁 <span class="folder" onclick="toggleFolder(this)">${item.name}</span>`;
-    if (item.children.length > 0) {
-      const ul = document.createElement("ul");
-      ul.style.display = "none";
-      item.children.forEach(child => renderDriveItem(child, ul));
-      li.appendChild(ul);
+      container.appendChild(div);
+      container.appendChild(treeDiv);
     }
-  } else if (item.type === "file") {
-    li.innerHTML = `📄 ${item.name} (${item.size}) [<a href="${item.preview}" target="_blank">Preview</a>] [<a href="${item.download}" target="_blank">Download</a>]`;
-  }
 
-  parentEl.appendChild(li);
-}
+    function highlight(text) {
+      const q = document.getElementById("search").value.toLowerCase();
+      if (!q) return text;
+      try {
+        const regex = new RegExp(`(${q})`, "gi");
+        return String(text).replace(regex, '<span class="highlight">$1</span>');
+      } catch {
+        return text;
+      }
+    }
 
-function toggleFolder(el) {
-  const nextUl = el.parentElement.querySelector("ul");
-  if (nextUl) {
-    nextUl.style.display = nextUl.style.display === "none" ? "block" : "none";
-  }
-}
-
-function showAllFolders() {
-  document.querySelectorAll("#results ul").forEach(ul => {
-    ul.style.display = "block";
-  });
-}
-</script>
-
+    function suggest() {
+      const q = document.getElementById("search").value.toLowerCase();
+      const list = document.getElementById("suggestions");
+      list.innerHTML = "";
+      if (!q || !fullData) return;
+      let suggestions = [];
+      if (currentSource === "sheet" && Array.isArray(fullData)) {
+        suggestions = fullData.flatMap(row => Object.values(row))
+          .filter(v => String(v).toLowerCase().includes(q))
+          .slice(0,5);
+      } else if (currentSource === "drive") {
+        const gather = (f) => {
+          (f.files||[]).forEach(file => {
+            if (file.name.toLowerCase().includes(q)) suggestions.push(file.name);
+          });
+          (f.subfolders||[]).forEach(sub => gather(sub));
+        };
+        gather(fullData);
+        suggestions = suggestions.slice(0,5);
+      }
+      suggestions.forEach(s => {
+        const li = document.createElement("li");
+        li.textContent = s;
+        li.onclick = () => { document.getElementById("search").value = s; performSearch(); };
+        list.appendChild(li);
+      });
+    }
+  </script>
 </body>
 </html>
