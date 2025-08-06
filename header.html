@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MilindWeb - Smart Technical Services</title>
   <link rel="icon" href="img/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,7 +19,11 @@
       --gradient: linear-gradient(135deg, #7BAEFF, #8AB4FF);
     }
 
-    * {margin: 0; padding: 0; box-sizing: border-box;}
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
 
     body {
       background: #f8fafc;
@@ -45,7 +49,7 @@
       align-items: center;
       padding: 1rem;
       max-width: 1200px;
-      margin: auto;
+      margin: 0 auto;
     }
 
     .logo {
@@ -53,6 +57,7 @@
       font-weight: bold;
       color: var(--accent);
       text-decoration: none;
+      display: block;
     }
 
     .logo-tagline {
@@ -76,6 +81,7 @@
       font-size: 1.8rem;
       color: var(--accent);
       cursor: pointer;
+      padding: 0.5rem;
     }
 
     /* Mobile menu */
@@ -93,7 +99,9 @@
       flex-direction: column;
     }
 
-    .mobile-menu.active { right: 0; }
+    .mobile-menu.active { 
+      right: 0; 
+    }
 
     .mobile-menu-header {
       position: absolute;
@@ -111,58 +119,96 @@
       font-size: 1.8rem;
       color: var(--accent);
       cursor: pointer;
+      padding: 0.5rem;
     }
 
-    .mobile-nav-list { list-style: none; margin-top: 3rem; }
-    .mobile-nav-item { margin-bottom: 1.2rem; }
+    .mobile-nav-list { 
+      list-style: none; 
+      margin-top: 3rem; 
+    }
+    
+    .mobile-nav-item { 
+      margin-bottom: 1.2rem; 
+    }
+    
     .mobile-nav-link {
       color: var(--text-primary);
       font-size: 1.2rem;
       text-decoration: none;
       transition: var(--transition);
+      display: block;
+      padding: 0.5rem 0;
     }
-    .mobile-nav-link:hover { color: var(--accent-light); }
+    
+    .mobile-nav-link:hover { 
+      color: var(--accent-light); 
+    }
 
     /* Overlay */
     .menu-overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
       background: rgba(0,0,0,0.5);
-      opacity: 0; visibility: hidden;
+      opacity: 0; 
+      visibility: hidden;
       transition: 0.4s ease;
       z-index: 1000;
     }
-    .menu-overlay.active { opacity: 1; visibility: visible; }
+    
+    .menu-overlay.active { 
+      opacity: 1; 
+      visibility: visible; 
+    }
 
     /* Desktop View */
-    @media(min-width: 768px){
-      body{padding-top:90px;}
-      .nav-desktop{display:flex;}
-      .desktop-nav-list{
-        display:flex;
-        gap:2rem;
-        list-style:none;
+    @media (min-width: 768px) {
+      body {
+        padding-top: 90px;
       }
+      
+      .nav-desktop {
+        display: flex;
+      }
+      
+      .desktop-nav-list {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      
       .desktop-nav-link {
         color: var(--text-primary);
-        text-decoration:none;
-        font-weight:500;
-        position:relative;
+        text-decoration: none;
+        font-weight: 500;
+        position: relative;
+        padding: 0.5rem 0;
       }
-      .desktop-nav-link:hover { color: var(--accent); }
-      .desktop-nav-link::before{
-        content:"";
-        position:absolute;
-        bottom:-5px;
-        left:0;
-        width:0;
-        height:2px;
-        background:var(--accent);
+      
+      .desktop-nav-link:hover { 
+        color: var(--accent); 
+      }
+      
+      .desktop-nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
         transition: width 0.3s ease;
       }
-      .desktop-nav-link:hover::before{width:100%;}
-      .nav-mobile{display:none;}
+      
+      .desktop-nav-link:hover::before {
+        width: 100%;
+      }
+      
+      .nav-mobile {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -190,7 +236,9 @@
 
       <!-- Mobile Button -->
       <nav class="nav-mobile">
-        <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+          <i class="fas fa-bars"></i>
+        </button>
       </nav>
     </div>
   </header>
@@ -199,7 +247,9 @@
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <a href="index.html" class="logo">MILINDWEB</a>
-      <button class="close-menu-btn" id="closeMenuBtn"><i class="fas fa-times"></i></button>
+      <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
     <ul class="mobile-nav-list">
       <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link">HOME</a></li>
@@ -212,36 +262,43 @@
       <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link">CONTACT</a></li>
     </ul>
   </div>
+  
   <div class="menu-overlay" id="menuOverlay"></div>
 
   <script>
-    document.addEventListener('DOMContentLoaded',()=>{
-      const openBtn=document.getElementById('mobileMenuBtn');
-      const closeBtn=document.getElementById('closeMenuBtn');
-      const menu=document.getElementById('mobileMenu');
-      const overlay=document.getElementById('menuOverlay');
+    document.addEventListener('DOMContentLoaded', () => {
+      const openBtn = document.getElementById('mobileMenuBtn');
+      const closeBtn = document.getElementById('closeMenuBtn');
+      const menu = document.getElementById('mobileMenu');
+      const overlay = document.getElementById('menuOverlay');
 
-      function openMenu(){
+      function openMenu() {
         menu.classList.add('active');
         overlay.classList.add('active');
-        document.body.style.overflow='hidden';
+        document.body.style.overflow = 'hidden';
       }
-      function closeMenu(){
+
+      function closeMenu() {
         menu.classList.remove('active');
         overlay.classList.remove('active');
-        document.body.style.overflow='';
+        document.body.style.overflow = '';
       }
 
-      openBtn.addEventListener('click',openMenu);
-      closeBtn.addEventListener('click',closeMenu);
-      overlay.addEventListener('click',closeMenu);
+      // Toggle menu when clicking the button
+      openBtn.addEventListener('click', openMenu);
+      closeBtn.addEventListener('click', closeMenu);
+      overlay.addEventListener('click', closeMenu);
 
-      document.querySelectorAll('.mobile-nav-link').forEach(link=>{
-        link.addEventListener('click',closeMenu);
+      // Close menu when clicking on a link
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', closeMenu);
       });
 
-      document.addEventListener('keydown',e=>{
-        if(e.key==='Escape'&&menu.classList.contains('active')) closeMenu();
+      // Close menu with ESC key
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && menu.classList.contains('active')) {
+          closeMenu();
+        }
       });
     });
   </script>
