@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MilindWeb - Smart Technical Services</title>
-  <link rel="icon" href="img/favicon.png" type="image/png">
-  <link rel="shortcut icon" href="img/favicon.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
+      /* Dark mode colors */
       --primary-bg: #1a2a4a;
       --secondary-bg: #243a5f;
       --text-primary: #f0f5ff;
@@ -16,42 +15,58 @@
       --accent: #7BAEFF;
       --accent-light: #8AB4FF;
       --border: #2a3b5a;
+      
+      /* Light mode colors */
+      --light-primary-bg: #f8fafc;
+      --light-secondary-bg: #e2e8f0;
+      --light-text-primary: #1e293b;
+      --light-text-secondary: #475569;
+      --light-accent: #2563eb;
+      --light-accent-light: #3b82f6;
+      --light-border: #cbd5e1;
+      
+      /* Common */
       --transition: all 0.3s ease;
-      --gradient: linear-gradient(135deg, #7BAEFF, #8AB4FF);
       --body-bg: #f8fafc;
       --body-text: #1e293b;
     }
 
+    /* Apply light mode if preferred */
     @media (prefers-color-scheme: light) {
       :root {
-        --primary-bg: #f8fafc;
-        --secondary-bg: #e2e8f0;
-        --text-primary: #1e293b;
-        --text-secondary: #475569;
-        --accent: #2563eb;
-        --accent-light: #3b82f6;
-        --border: #cbd5e1;
+        --primary-bg: var(--light-primary-bg);
+        --secondary-bg: var(--light-secondary-bg);
+        --text-primary: var(--light-text-primary);
+        --text-secondary: var(--light-text-secondary);
+        --accent: var(--light-accent);
+        --accent-light: var(--light-accent-light);
+        --border: var(--light-border);
       }
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
       background: var(--body-bg);
       color: var(--body-text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
       padding-top: 70px;
     }
 
+    /* Header Styles */
     header {
-      background: var(--primary-bg);
-      color: var(--text-primary);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
+      background: var(--primary-bg);
+      color: var(--text-primary);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       z-index: 1000;
     }
 
@@ -77,33 +92,113 @@
       font-style: italic;
     }
 
-    /* Mobile menu button */
-    .nav-mobile { display: flex; }
+    /* Mobile Menu Button */
     .mobile-menu-btn {
       background: none;
       border: none;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: var(--accent);
       cursor: pointer;
-      padding: 0.5rem;
+      display: none;
     }
 
-    /* Mobile menu */
+    /* Desktop Navigation */
+    .desktop-nav {
+      display: flex;
+    }
+
+    .desktop-nav-list {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .desktop-nav-item {
+      position: relative;
+    }
+
+    .desktop-nav-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      display: block;
+      position: relative;
+    }
+
+    .desktop-nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: var(--transition);
+    }
+
+    .desktop-nav-link:hover::after {
+      width: 100%;
+    }
+
+    .desktop-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--secondary-bg);
+      min-width: 220px;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .desktop-nav-item:hover .desktop-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .desktop-dropdown-item {
+      margin-bottom: 0.8rem;
+    }
+
+    .desktop-dropdown-link {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: block;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      transition: var(--transition);
+    }
+
+    .desktop-dropdown-link:hover {
+      background: rgba(123, 174, 255, 0.1);
+      padding-left: 0.75rem;
+    }
+
+    /* Mobile Navigation */
     .mobile-menu {
       position: fixed;
       top: 0;
       right: -100%;
-      width: min(85vw, 350px);
+      width: 280px;
       height: 100vh;
       background: var(--secondary-bg);
       padding: 5rem 1.5rem 2rem;
-      transition: right 0.4s ease;
+      transition: right 0.3s ease-out;
       z-index: 1001;
-      display: flex;
-      flex-direction: column;
+      overflow-y: auto;
     }
 
-    .mobile-menu.active { right: 0; }
+    .mobile-menu.active {
+      right: 0;
+    }
 
     .mobile-menu-header {
       position: absolute;
@@ -118,19 +213,49 @@
     .close-menu-btn {
       background: none;
       border: none;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: var(--accent);
       cursor: pointer;
-      padding: 0.5rem;
     }
 
-    .mobile-nav-list { list-style: none; margin-top: 2rem; overflow-y: auto; }
-    .mobile-nav-item { margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .mobile-nav-list {
+      list-style: none;
+      margin-top: 2rem;
+    }
+
+    .mobile-nav-item {
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
     .mobile-nav-link {
       color: var(--text-primary);
       font-size: 1.1rem;
       font-weight: 500;
       text-decoration: none;
+      display: block;
+      padding: 0.75rem 0;
+    }
+
+    .mobile-dropdown {
+      padding-left: 1rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .mobile-dropdown.active {
+      max-height: 500px;
+    }
+
+    .mobile-dropdown-item {
+      margin-bottom: 0.8rem;
+    }
+
+    .mobile-dropdown-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 1rem;
       display: block;
       padding: 0.5rem 0;
     }
@@ -146,79 +271,56 @@
       transition: transform 0.3s ease;
     }
 
-    .mobile-dropdown {
-      padding-left: 1rem;
-      margin-top: 0.5rem;
-      display: none;
-    }
-
-    .mobile-dropdown.active { display: block; }
-    .mobile-dropdown.active ~ .dropdown-toggle i { transform: rotate(180deg); }
-
-    .mobile-dropdown-item { margin-bottom: 0.8rem; }
-    .mobile-dropdown-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 1rem;
-      display: block;
-      padding: 0.3rem 0;
+    .dropdown-toggle.active i {
+      transform: rotate(180deg);
     }
 
     /* Overlay */
     .menu-overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0,0,0,0.5);
-      opacity: 0; visibility: hidden;
-      transition: opacity 0.4s ease;
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
       z-index: 1000;
     }
-    .menu-overlay.active { opacity: 1; visibility: visible; }
 
-    /* Desktop */
-    @media (min-width: 768px) {
-      body { padding-top: 80px; }
-      .nav-desktop { display: flex; }
-      .desktop-nav-list {
-        display: flex;
-        gap: 1.5rem;
-        list-style: none;
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1023px) {
+      .desktop-nav {
+        display: none;
       }
-      .desktop-nav-item { position: relative; }
-      .desktop-nav-link {
-        color: var(--text-primary);
-        text-decoration: none;
-        font-weight: 500;
-        padding: 0.5rem 0;
+
+      .mobile-menu-btn {
         display: block;
       }
-      .desktop-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: var(--secondary-bg);
-        min-width: 220px;
-        padding: 1rem;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        opacity: 0; visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 100;
+
+      body {
+        padding-top: 70px;
       }
-      .desktop-nav-item:hover .desktop-dropdown,
-      .desktop-nav-item:focus-within .desktop-dropdown {
-        opacity: 1; visibility: visible;
+    }
+
+    @media (min-width: 1024px) {
+      body {
+        padding-top: 80px;
       }
-      .desktop-dropdown-item { margin-bottom: 0.8rem; }
-      .desktop-dropdown-link {
-        color: var(--text-primary);
-        text-decoration: none;
-        font-size: 0.95rem;
-        display: block;
-        padding: 0.5rem;
+    }
+
+    /* Tablet specific adjustments */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .header-container {
+        padding: 1rem 1.5rem;
       }
-      .nav-mobile { display: none; }
     }
   </style>
 </head>
@@ -229,98 +331,142 @@
         <a href="index.html" class="logo">MILINDWEB</a>
         <div class="logo-tagline">Life should be great rather than long</div>
       </div>
-      <nav class="nav-desktop">
+
+      <!-- Desktop Navigation -->
+      <nav class="desktop-nav">
         <ul class="desktop-nav-list">
-          <li class="desktop-nav-item"><a href="index.html" class="desktop-nav-link">HOME</a></li>
+          <li class="desktop-nav-item">
+            <a href="index.html" class="desktop-nav-link">HOME</a>
+          </li>
           <li class="desktop-nav-item">
             <a href="#" class="desktop-nav-link">SERVICES</a>
             <ul class="desktop-dropdown">
-              <li class="desktop-dropdown-item"><a href="freelance_seo_consultant.html" class="desktop-dropdown-link">DIGITAL MARKETING</a></li>
-              <li class="desktop-dropdown-item"><a href="graphics.html" class="desktop-dropdown-link">GRAPHICS DESIGN</a></li>
-              <li class="desktop-dropdown-item"><a href="website-tech-solutions.html" class="desktop-dropdown-link">TECH SOLUTIONS</a></li>
-              <li class="desktop-dropdown-item"><a href="project.html" class="desktop-dropdown-link">PROJECTS</a></li>
-              <li class="desktop-dropdown-item"><a href="workshop.html" class="desktop-dropdown-link">WORKSHOPS</a></li>
+              <li class="desktop-dropdown-item">
+                <a href="freelance_seo_consultant.html" class="desktop-dropdown-link">DIGITAL MARKETING</a>
+              </li>
+              <li class="desktop-dropdown-item">
+                <a href="graphics.html" class="desktop-dropdown-link">GRAPHICS DESIGN</a>
+              </li>
+              <li class="desktop-dropdown-item">
+                <a href="website-tech-solutions.html" class="desktop-dropdown-link">TECH SOLUTIONS</a>
+              </li>
+              <li class="desktop-dropdown-item">
+                <a href="project.html" class="desktop-dropdown-link">PROJECTS</a>
+              </li>
+              <li class="desktop-dropdown-item">
+                <a href="workshop.html" class="desktop-dropdown-link">WORKSHOPS</a>
+              </li>
             </ul>
           </li>
-          <li class="desktop-nav-item"><a href="blog.html" class="desktop-nav-link">TECH BLOGS</a></li>
-          <li class="desktop-nav-item"><a href="contact.html" class="desktop-nav-link">CONTACT</a></li>
+          <li class="desktop-nav-item">
+            <a href="blog.html" class="desktop-nav-link">TECH BLOGS</a>
+          </li>
+          <li class="desktop-nav-item">
+            <a href="contact.html" class="desktop-nav-link">CONTACT</a>
+          </li>
         </ul>
       </nav>
-      <nav class="nav-mobile">
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu"><i class="fas fa-bars"></i></button>
-      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </header>
 
-  <!-- Mobile menu -->
+  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <a href="index.html" class="logo">MILINDWEB</a>
-      <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu"><i class="fas fa-times"></i></button>
+      <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
     <ul class="mobile-nav-list">
-      <li class="mobile-nav-item"><a href="index.html" class="mobile-nav-link">HOME</a></li>
+      <li class="mobile-nav-item">
+        <a href="index.html" class="mobile-nav-link">HOME</a>
+      </li>
       <li class="mobile-nav-item">
         <div class="dropdown-toggle" id="mobileServicesToggle">
           <span class="mobile-nav-link">SERVICES</span>
           <i class="fas fa-chevron-down"></i>
         </div>
         <ul class="mobile-dropdown" id="mobileServicesDropdown">
-          <li class="mobile-dropdown-item"><a href="freelance_seo_consultant.html" class="mobile-dropdown-link">DIGITAL MARKETING</a></li>
-          <li class="mobile-dropdown-item"><a href="graphics.html" class="mobile-dropdown-link">GRAPHICS DESIGN</a></li>
-          <li class="mobile-dropdown-item"><a href="website-tech-solutions.html" class="mobile-dropdown-link">TECH SOLUTIONS</a></li>
-          <li class="mobile-dropdown-item"><a href="project.html" class="mobile-dropdown-link">PROJECTS</a></li>
-          <li class="mobile-dropdown-item"><a href="workshop.html" class="mobile-dropdown-link">WORKSHOPS</a></li>
+          <li class="mobile-dropdown-item">
+            <a href="freelance_seo_consultant.html" class="mobile-dropdown-link">DIGITAL MARKETING</a>
+          </li>
+          <li class="mobile-dropdown-item">
+            <a href="graphics.html" class="mobile-dropdown-link">GRAPHICS DESIGN</a>
+          </li>
+          <li class="mobile-dropdown-item">
+            <a href="website-tech-solutions.html" class="mobile-dropdown-link">TECH SOLUTIONS</a>
+          </li>
+          <li class="mobile-dropdown-item">
+            <a href="project.html" class="mobile-dropdown-link">PROJECTS</a>
+          </li>
+          <li class="mobile-dropdown-item">
+            <a href="workshop.html" class="mobile-dropdown-link">WORKSHOPS</a>
+          </li>
         </ul>
       </li>
-      <li class="mobile-nav-item"><a href="blog.html" class="mobile-nav-link">TECH BLOGS</a></li>
-      <li class="mobile-nav-item"><a href="contact.html" class="mobile-nav-link">CONTACT</a></li>
+      <li class="mobile-nav-item">
+        <a href="blog.html" class="mobile-nav-link">TECH BLOGS</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="contact.html" class="mobile-nav-link">CONTACT</a>
+      </li>
     </ul>
   </div>
 
+  <!-- Overlay -->
   <div class="menu-overlay" id="menuOverlay"></div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const openBtn = document.getElementById('mobileMenuBtn');
-      const closeBtn = document.getElementById('closeMenuBtn');
-      const menu = document.getElementById('mobileMenu');
+    document.addEventListener('DOMContentLoaded', function() {
+      // DOM Elements
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const closeMenuBtn = document.getElementById('closeMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
       const overlay = document.getElementById('menuOverlay');
       const servicesToggle = document.getElementById('mobileServicesToggle');
       const servicesDropdown = document.getElementById('mobileServicesDropdown');
-      const chevron = servicesToggle.querySelector('i');
 
-      function openMenu() {
-        menu.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        document.body.style.height = '100vh';
+      // Toggle mobile menu
+      function toggleMobileMenu() {
+        mobileMenu.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
       }
 
-      function closeMenu() {
-        menu.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        document.body.style.height = 'auto';
-        servicesDropdown.classList.remove('active');
-        chevron.style.transform = 'rotate(0deg)';
-      }
-
-      openBtn.addEventListener('click', openMenu);
-      closeBtn.addEventListener('click', closeMenu);
-      overlay.addEventListener('click', closeMenu);
-
-      servicesToggle.addEventListener('click', () => {
+      // Toggle services dropdown in mobile menu
+      function toggleServicesDropdown() {
         servicesDropdown.classList.toggle('active');
-        chevron.style.transform = servicesDropdown.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-      });
+        servicesToggle.classList.toggle('active');
+      }
 
+      // Close menu when clicking on a link
+      function closeMenuOnLinkClick() {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      // Event Listeners
+      mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+      closeMenuBtn.addEventListener('click', toggleMobileMenu);
+      overlay.addEventListener('click', toggleMobileMenu);
+      servicesToggle.addEventListener('click', toggleServicesDropdown);
+
+      // Close menu when clicking on navigation links
       document.querySelectorAll('.mobile-nav-link, .mobile-dropdown-link').forEach(link => {
-        link.addEventListener('click', closeMenu);
+        link.addEventListener('click', closeMenuOnLinkClick);
       });
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && menu.classList.contains('active')) closeMenu();
+      // Close menu with ESC key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+          toggleMobileMenu();
+        }
       });
     });
   </script>
