@@ -56,6 +56,7 @@
       background: var(--body-bg);
       color: var(--body-text);
       padding-top: 70px;
+      overflow-x: hidden;
     }
 
     /* Header Styles */
@@ -99,12 +100,12 @@
       font-size: 1.5rem;
       color: var(--accent);
       cursor: pointer;
-      display: none;
+      display: block;
     }
 
     /* Desktop Navigation */
     .desktop-nav {
-      display: flex;
+      display: none;
     }
 
     .desktop-nav-list {
@@ -296,21 +297,15 @@
     }
 
     /* Responsive Breakpoints */
-    @media (max-width: 1023px) {
-      .desktop-nav {
+    @media (min-width: 1024px) {
+      .mobile-menu-btn {
         display: none;
       }
 
-      .mobile-menu-btn {
-        display: block;
+      .desktop-nav {
+        display: flex;
       }
 
-      body {
-        padding-top: 70px;
-      }
-    }
-
-    @media (min-width: 1024px) {
       body {
         padding-top: 80px;
       }
@@ -332,7 +327,7 @@
         <div class="logo-tagline">Life should be great rather than long</div>
       </div>
 
-      <!-- Desktop Navigation -->
+      <!-- Desktop Navigation (hidden on mobile) -->
       <nav class="desktop-nav">
         <ul class="desktop-nav-list">
           <li class="desktop-nav-item">
@@ -367,14 +362,14 @@
         </ul>
       </nav>
 
-      <!-- Mobile Menu Button -->
+      <!-- Mobile Menu Button (visible on mobile) -->
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
         <i class="fas fa-bars"></i>
       </button>
     </div>
   </header>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile Menu (hidden by default) -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
       <a href="index.html" class="logo">MILINDWEB</a>
@@ -418,12 +413,12 @@
     </ul>
   </div>
 
-  <!-- Overlay -->
+  <!-- Overlay (hidden by default) -->
   <div class="menu-overlay" id="menuOverlay"></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // DOM Elements
+      // Get all necessary elements
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const closeMenuBtn = document.getElementById('closeMenuBtn');
       const mobileMenu = document.getElementById('mobileMenu');
@@ -431,27 +426,20 @@
       const servicesToggle = document.getElementById('mobileServicesToggle');
       const servicesDropdown = document.getElementById('mobileServicesDropdown');
 
-      // Toggle mobile menu
+      // Function to toggle mobile menu
       function toggleMobileMenu() {
         mobileMenu.classList.toggle('active');
         overlay.classList.toggle('active');
         document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
       }
 
-      // Toggle services dropdown in mobile menu
+      // Function to toggle services dropdown
       function toggleServicesDropdown() {
         servicesDropdown.classList.toggle('active');
         servicesToggle.classList.toggle('active');
       }
 
-      // Close menu when clicking on a link
-      function closeMenuOnLinkClick() {
-        mobileMenu.classList.remove('active');
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-
-      // Event Listeners
+      // Event listeners
       mobileMenuBtn.addEventListener('click', toggleMobileMenu);
       closeMenuBtn.addEventListener('click', toggleMobileMenu);
       overlay.addEventListener('click', toggleMobileMenu);
@@ -459,7 +447,11 @@
 
       // Close menu when clicking on navigation links
       document.querySelectorAll('.mobile-nav-link, .mobile-dropdown-link').forEach(link => {
-        link.addEventListener('click', closeMenuOnLinkClick);
+        link.addEventListener('click', function() {
+          if (!this.classList.contains('dropdown-toggle')) {
+            toggleMobileMenu();
+          }
+        });
       });
 
       // Close menu with ESC key
