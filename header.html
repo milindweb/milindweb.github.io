@@ -3,44 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MilindWeb - Smart Technical Services</title>
+  <title>MilindWeb - Responsive Header</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* CSS Variables for theming */
     :root {
-      /* Dark mode colors */
-      --primary-bg: #1a2a4a;
-      --secondary-bg: #243a5f;
-      --text-primary: #f0f5ff;
-      --text-secondary: #d0d8e8;
-      --accent: #7BAEFF;
-      --accent-light: #8AB4FF;
-      --border: #2a3b5a;
-      
-      /* Light mode colors */
-      --light-primary-bg: #f8fafc;
-      --light-secondary-bg: #e2e8f0;
-      --light-text-primary: #1e293b;
-      --light-text-secondary: #475569;
+      /* Light mode variables */
+      --light-header-bg: #ffffff;
+      --light-header-text: #334155;
       --light-accent: #2563eb;
-      --light-accent-light: #3b82f6;
-      --light-border: #cbd5e1;
+      --light-hover: #3b82f6;
+      --light-border: #e2e8f0;
+      --light-dropdown-bg: #ffffff;
+      --light-overlay: rgba(0,0,0,0.5);
       
-      /* Common */
+      /* Dark mode variables */
+      --dark-header-bg: #1e293b;
+      --dark-header-text: #e2e8f0;
+      --dark-accent: #7BAEFF;
+      --dark-hover: #8AB4FF;
+      --dark-border: #334155;
+      --dark-dropdown-bg: #1e293b;
+      --dark-overlay: rgba(0,0,0,0.7);
+      
+      /* Current theme variables (default to light) */
+      --header-bg: var(--light-header-bg);
+      --header-text: var(--light-header-text);
+      --accent: var(--light-accent);
+      --hover: var(--light-hover);
+      --border: var(--light-border);
+      --dropdown-bg: var(--light-dropdown-bg);
+      --overlay: var(--light-overlay);
+      
+      /* Common variables */
       --transition: all 0.3s ease;
-      --body-bg: #f8fafc;
-      --body-text: #1e293b;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+      --header-height: 70px;
     }
 
-    /* Apply light mode if preferred */
-    @media (prefers-color-scheme: light) {
+    /* Apply dark mode if preferred */
+    @media (prefers-color-scheme: dark) {
       :root {
-        --primary-bg: var(--light-primary-bg);
-        --secondary-bg: var(--light-secondary-bg);
-        --text-primary: var(--light-text-primary);
-        --text-secondary: var(--light-text-secondary);
-        --accent: var(--light-accent);
-        --accent-light: var(--light-accent-light);
-        --border: var(--light-border);
+        --header-bg: var(--dark-header-bg);
+        --header-text: var(--dark-header-text);
+        --accent: var(--dark-accent);
+        --hover: var(--dark-hover);
+        --border: var(--dark-border);
+        --dropdown-bg: var(--dark-dropdown-bg);
+        --overlay: var(--dark-overlay);
       }
     }
 
@@ -52,55 +62,75 @@
 
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
-      line-height: 1.6;
-      background: var(--body-bg);
-      color: var(--body-text);
-      padding-top: 70px;
-      overflow-x: hidden;
+      background: #f8fafc;
+      color: #1e293b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
     }
 
     /* Header Styles */
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
+      position: relative;
       width: 100%;
-      background: var(--primary-bg);
-      color: var(--text-primary);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      z-index: 1000;
+      max-width: 1200px;
+      height: var(--header-height);
+      background-color: var(--header-bg);
+      color: var(--header-text);
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 40px;
+      transition: var(--transition);
     }
 
     .header-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem;
+      padding: 0 1.5rem;
       max-width: 1200px;
+      width: 100%;
+      height: 100%;
       margin: 0 auto;
     }
 
+    .logo-container {
+      display: flex;
+      flex-direction: column;
+    }
+
     .logo {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       font-weight: bold;
       color: var(--accent);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo i {
+      font-size: 1.5rem;
     }
 
     .logo-tagline {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
+      font-size: 0.85rem;
+      color: var(--header-text);
       font-style: italic;
-    }
-
-    /* Mobile Menu Button */
-    .mobile-menu-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--accent);
-      cursor: pointer;
-      display: block;
+      opacity: 0.8;
+      margin-top: 0.2rem;
     }
 
     /* Desktop Navigation */
@@ -111,20 +141,33 @@
     .desktop-nav-list {
       display: flex;
       list-style: none;
-      gap: 1.5rem;
+      gap: 1.8rem;
+      height: 100%;
+      align-items: center;
     }
 
     .desktop-nav-item {
       position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
 
     .desktop-nav-link {
-      color: var(--text-primary);
+      color: var(--header-text);
       text-decoration: none;
       font-weight: 500;
       padding: 0.5rem 0;
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      height: 100%;
       position: relative;
+      transition: var(--transition);
+    }
+
+    .desktop-nav-link:hover {
+      color: var(--accent);
     }
 
     .desktop-nav-link::after {
@@ -133,7 +176,7 @@
       bottom: 0;
       left: 0;
       width: 0;
-      height: 2px;
+      height: 3px;
       background: var(--accent);
       transition: var(--transition);
     }
@@ -146,11 +189,11 @@
       position: absolute;
       top: 100%;
       left: 0;
-      background: var(--secondary-bg);
+      background: var(--dropdown-bg);
       min-width: 220px;
       padding: 1rem;
       border-radius: 0.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: var(--shadow);
       opacity: 0;
       visibility: hidden;
       transform: translateY(10px);
@@ -169,30 +212,57 @@
     }
 
     .desktop-dropdown-link {
-      color: var(--text-primary);
+      color: var(--header-text);
       text-decoration: none;
       font-size: 0.95rem;
-      display: block;
-      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.8rem;
       border-radius: 0.25rem;
       transition: var(--transition);
     }
 
     .desktop-dropdown-link:hover {
       background: rgba(123, 174, 255, 0.1);
-      padding-left: 0.75rem;
+      color: var(--accent);
+      padding-left: 1rem;
+    }
+
+    .desktop-dropdown-link i {
+      width: 1.2rem;
+      text-align: center;
     }
 
     /* Mobile Navigation */
+    .mobile-menu-btn {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--accent);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .mobile-menu-btn:hover {
+      background: rgba(123, 174, 255, 0.1);
+    }
+
     .mobile-menu {
       position: fixed;
       top: 0;
       right: -100%;
-      width: 280px;
+      width: 320px;
       height: 100vh;
-      background: var(--secondary-bg);
+      background: var(--header-bg);
       padding: 5rem 1.5rem 2rem;
-      transition: right 0.3s ease-out;
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 1001;
       overflow-y: auto;
     }
@@ -203,7 +273,7 @@
 
     .mobile-menu-header {
       position: absolute;
-      top: 1rem;
+      top: 1.5rem;
       left: 1.5rem;
       right: 1.5rem;
       display: flex;
@@ -214,9 +284,20 @@
     .close-menu-btn {
       background: none;
       border: none;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       color: var(--accent);
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .close-menu-btn:hover {
+      background: rgba(123, 174, 255, 0.1);
     }
 
     .mobile-nav-list {
@@ -230,19 +311,26 @@
     }
 
     .mobile-nav-link {
-      color: var(--text-primary);
+      color: var(--header-text);
       font-size: 1.1rem;
       font-weight: 500;
       text-decoration: none;
-      display: block;
-      padding: 0.75rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      transition: var(--transition);
+    }
+
+    .mobile-nav-link:hover {
+      color: var(--accent);
     }
 
     .mobile-dropdown {
       padding-left: 1rem;
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.4s ease;
     }
 
     .mobile-dropdown.active {
@@ -254,17 +342,33 @@
     }
 
     .mobile-dropdown-link {
-      color: var(--text-secondary);
+      color: var(--header-text);
       text-decoration: none;
       font-size: 1rem;
-      display: block;
-      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem 0;
+      opacity: 0.9;
+      transition: var(--transition);
+    }
+
+    .mobile-dropdown-link:hover {
+      color: var(--accent);
+      opacity: 1;
+      padding-left: 0.5rem;
+    }
+
+    .mobile-dropdown-link i {
+      width: 1.2rem;
+      text-align: center;
     }
 
     .dropdown-toggle {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
       cursor: pointer;
     }
 
@@ -283,8 +387,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(3px);
+      background: var(--overlay);
+      backdrop-filter: blur(4px);
       opacity: 0;
       visibility: hidden;
       transition: var(--transition);
@@ -305,155 +409,263 @@
       .desktop-nav {
         display: flex;
       }
-
-      body {
-        padding-top: 80px;
+      
+      .header-container {
+        padding: 0 2rem;
       }
     }
 
-    /* Tablet specific adjustments */
-    @media (min-width: 768px) and (max-width: 1023px) {
-      .header-container {
-        padding: 1rem 1.5rem;
-      }
+    /* Demo content */
+    .demo-container {
+      max-width: 800px;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, var(--accent), var(--hover));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+    
+    .device-info {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .device-card {
+      background: var(--header-bg);
+      padding: 20px;
+      border-radius: 12px;
+      min-width: 200px;
+      box-shadow: var(--shadow);
+    }
+    
+    .device-card i {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: var(--accent);
     }
   </style>
 </head>
 <body>
+  <!-- Header with Navigation -->
   <header>
     <div class="header-container">
-      <div>
-        <a href="index.html" class="logo">MILINDWEB</a>
+      <div class="logo-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-laptop-code"></i> MILINDWEB
+        </a>
         <div class="logo-tagline">Life should be great rather than long</div>
       </div>
 
-      <!-- Desktop Navigation (hidden on mobile) -->
+      <!-- Desktop Navigation -->
       <nav class="desktop-nav">
         <ul class="desktop-nav-list">
           <li class="desktop-nav-item">
-            <a href="index.html" class="desktop-nav-link">HOME</a>
+            <a href="index.html" class="desktop-nav-link">
+              <i class="fas fa-home"></i> HOME
+            </a>
           </li>
           <li class="desktop-nav-item">
-            <a href="#" class="desktop-nav-link">SERVICES</a>
+            <a href="#" class="desktop-nav-link">
+              <i class="fas fa-cogs"></i> SERVICES
+            </a>
             <ul class="desktop-dropdown">
               <li class="desktop-dropdown-item">
-                <a href="freelance_seo_consultant.html" class="desktop-dropdown-link">DIGITAL MARKETING</a>
+                <a href="freelance_seo_consultant.html" class="desktop-dropdown-link">
+                  <i class="fas fa-chart-line"></i> DIGITAL MARKETING
+                </a>
               </li>
               <li class="desktop-dropdown-item">
-                <a href="graphics.html" class="desktop-dropdown-link">GRAPHICS DESIGN</a>
+                <a href="graphics.html" class="desktop-dropdown-link">
+                  <i class="fas fa-palette"></i> GRAPHICS DESIGN
+                </a>
               </li>
               <li class="desktop-dropdown-item">
-                <a href="website-tech-solutions.html" class="desktop-dropdown-link">TECH SOLUTIONS</a>
+                <a href="website-tech-solutions.html" class="desktop-dropdown-link">
+                  <i class="fas fa-code"></i> TECH SOLUTIONS
+                </a>
               </li>
               <li class="desktop-dropdown-item">
-                <a href="project.html" class="desktop-dropdown-link">PROJECTS</a>
+                <a href="project.html" class="desktop-dropdown-link">
+                  <i class="fas fa-project-diagram"></i> PROJECTS
+                </a>
               </li>
               <li class="desktop-dropdown-item">
-                <a href="workshop.html" class="desktop-dropdown-link">WORKSHOPS</a>
+                <a href="workshop.html" class="desktop-dropdown-link">
+                  <i class="fas fa-graduation-cap"></i> WORKSHOPS
+                </a>
               </li>
             </ul>
           </li>
           <li class="desktop-nav-item">
-            <a href="blog.html" class="desktop-nav-link">TECH BLOGS</a>
+            <a href="blog.html" class="desktop-nav-link">
+              <i class="fas fa-blog"></i> TECH BLOGS
+            </a>
           </li>
           <li class="desktop-nav-item">
-            <a href="contact.html" class="desktop-nav-link">CONTACT</a>
+            <a href="contact.html" class="desktop-nav-link">
+              <i class="fas fa-envelope"></i> CONTACT
+            </a>
           </li>
         </ul>
       </nav>
 
-      <!-- Mobile Menu Button (visible on mobile) -->
+      <!-- Mobile Menu Button -->
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
         <i class="fas fa-bars"></i>
       </button>
     </div>
   </header>
 
-  <!-- Mobile Menu (hidden by default) -->
+  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-      <a href="index.html" class="logo">MILINDWEB</a>
+      <a href="index.html" class="logo">
+        <i class="fas fa-laptop-code"></i> MILINDWEB
+      </a>
       <button class="close-menu-btn" id="closeMenuBtn" aria-label="Close menu">
         <i class="fas fa-times"></i>
       </button>
     </div>
     <ul class="mobile-nav-list">
       <li class="mobile-nav-item">
-        <a href="index.html" class="mobile-nav-link">HOME</a>
+        <a href="index.html" class="mobile-nav-link">
+          <i class="fas fa-home"></i> HOME
+        </a>
       </li>
       <li class="mobile-nav-item">
         <div class="dropdown-toggle" id="mobileServicesToggle">
-          <span class="mobile-nav-link">SERVICES</span>
+          <span class="mobile-nav-link">
+            <i class="fas fa-cogs"></i> SERVICES
+          </span>
           <i class="fas fa-chevron-down"></i>
         </div>
         <ul class="mobile-dropdown" id="mobileServicesDropdown">
           <li class="mobile-dropdown-item">
-            <a href="freelance_seo_consultant.html" class="mobile-dropdown-link">DIGITAL MARKETING</a>
+            <a href="freelance_seo_consultant.html" class="mobile-dropdown-link">
+              <i class="fas fa-chart-line"></i> DIGITAL MARKETING
+            </a>
           </li>
           <li class="mobile-dropdown-item">
-            <a href="graphics.html" class="mobile-dropdown-link">GRAPHICS DESIGN</a>
+            <a href="graphics.html" class="mobile-dropdown-link">
+              <i class="fas fa-palette"></i> GRAPHICS DESIGN
+            </a>
           </li>
           <li class="mobile-dropdown-item">
-            <a href="website-tech-solutions.html" class="mobile-dropdown-link">TECH SOLUTIONS</a>
+            <a href="website-tech-solutions.html" class="mobile-dropdown-link">
+              <i class="fas fa-code"></i> TECH SOLUTIONS
+            </a>
           </li>
           <li class="mobile-dropdown-item">
-            <a href="project.html" class="mobile-dropdown-link">PROJECTS</a>
+            <a href="project.html" class="mobile-dropdown-link">
+              <i class="fas fa-project-diagram"></i> PROJECTS
+            </a>
           </li>
           <li class="mobile-dropdown-item">
-            <a href="workshop.html" class="mobile-dropdown-link">WORKSHOPS</a>
+            <a href="workshop.html" class="mobile-dropdown-link">
+              <i class="fas fa-graduation-cap"></i> WORKSHOPS
+            </a>
           </li>
         </ul>
       </li>
       <li class="mobile-nav-item">
-        <a href="blog.html" class="mobile-nav-link">TECH BLOGS</a>
+        <a href="blog.html" class="mobile-nav-link">
+          <i class="fas fa-blog"></i> TECH BLOGS
+        </a>
       </li>
       <li class="mobile-nav-item">
-        <a href="contact.html" class="mobile-nav-link">CONTACT</a>
+        <a href="contact.html" class="mobile-nav-link">
+          <i class="fas fa-envelope"></i> CONTACT
+        </a>
       </li>
     </ul>
   </div>
 
-  <!-- Overlay (hidden by default) -->
+  <!-- Overlay -->
   <div class="menu-overlay" id="menuOverlay"></div>
+
+  <!-- Demo content to show header in context -->
+  <div class="demo-container">
+    <h1>Responsive Header</h1>
+    <p>This responsive header features a mobile-friendly navigation with dropdown menu and automatically adapts to dark/light mode based on your system preferences.</p>
+    
+    <div class="device-info">
+      <div class="device-card">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>Mobile</h3>
+        <p>Hamburger menu with dropdown</p>
+      </div>
+      <div class="device-card">
+        <i class="fas fa-tablet-alt"></i>
+        <h3>Tablet</h3>
+        <p>Optimized navigation</p>
+      </div>
+      <div class="device-card">
+        <i class="fas fa-laptop"></i>
+        <h3>Desktop</h3>
+        <p>Horizontal menu with hover dropdowns</p>
+      </div>
+    </div>
+    
+    <p><small>Resize your browser to see the responsive behavior. Try switching your system dark/light mode.</small></p>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Get all necessary elements
+      // Get DOM elements
       const mobileMenuBtn = document.getElementById('mobileMenuBtn');
       const closeMenuBtn = document.getElementById('closeMenuBtn');
       const mobileMenu = document.getElementById('mobileMenu');
       const overlay = document.getElementById('menuOverlay');
       const servicesToggle = document.getElementById('mobileServicesToggle');
       const servicesDropdown = document.getElementById('mobileServicesDropdown');
-
-      // Function to toggle mobile menu
+      
+      // Toggle mobile menu
       function toggleMobileMenu() {
         mobileMenu.classList.toggle('active');
         overlay.classList.toggle('active');
         document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
       }
-
-      // Function to toggle services dropdown
-      function toggleServicesDropdown() {
+      
+      // Toggle services dropdown
+      function toggleServicesDropdown(e) {
+        e.preventDefault();
         servicesDropdown.classList.toggle('active');
         servicesToggle.classList.toggle('active');
       }
-
+      
+      // Close mobile menu when clicking on a link
+      function closeMenuOnLinkClick() {
+        if (mobileMenu.classList.contains('active')) {
+          toggleMobileMenu();
+        }
+      }
+      
       // Event listeners
       mobileMenuBtn.addEventListener('click', toggleMobileMenu);
       closeMenuBtn.addEventListener('click', toggleMobileMenu);
       overlay.addEventListener('click', toggleMobileMenu);
       servicesToggle.addEventListener('click', toggleServicesDropdown);
-
-      // Close menu when clicking on navigation links
+      
+      // Close menu when clicking on links
       document.querySelectorAll('.mobile-nav-link, .mobile-dropdown-link').forEach(link => {
-        link.addEventListener('click', function() {
-          if (!this.classList.contains('dropdown-toggle')) {
-            toggleMobileMenu();
-          }
-        });
+        link.addEventListener('click', closeMenuOnLinkClick);
       });
-
+      
       // Close menu with ESC key
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
