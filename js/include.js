@@ -1,44 +1,42 @@
+// js/include.js
+
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("✅ MilindWeb: include.js started");
-
-  // Utility: log messages
-  function log(msg, type = "info") {
-    const prefix = "MilindWeb:";
-    if (type === "error") console.error("❌ " + prefix, msg);
-    else console.log("ℹ️ " + prefix, msg);
+  // Load external HTML file into container
+  function loadComponent(id, file, callback) {
+    fetch(file)
+      .then(response => {
+        if (!response.ok) throw new Error(`Failed to load ${file}`);
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById(id).innerHTML = data;
+        if (typeof callback === "function") callback();
+      })
+      .catch(error => console.error(error));
   }
 
-  // Utility: fetch & inject file into element
-  async function loadFile(targetEl, file, placeholder) {
-    if (!targetEl) {
-      log(`No element found for ${placeholder}`, "error");
-      return;
-    }
+  // Attach mobile menu toggle
+  function initMenuToggle() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
 
-    // Add skeleton loader
-    targetEl.classList.add(`${placeholder}-loading`);
-    targetEl.innerHTML = `<div class="skeleton">Loading ${placeholder}...</div>`;
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("open");
+      });
 
-    try {
-      const res = await fetch(file);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const html = await res.text();
-      targetEl.innerHTML = html;
-      targetEl.classList.remove(`${placeholder}-loading`);
-      log(`Loaded ${placeholder} from ${file}`);
-    } catch (err) {
-      targetEl.innerHTML = `<div class="error">⚠️ Failed to load ${placeholder}</div>`;
-      log(`Error loading ${placeholder}: ${err.message}`, "error");
+      // Optional: close menu when a link is clicked
+      mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.remove("open");
+        });
+      });
     }
   }
 
-  // === Load header ===
-  const headerEl = document.getElementById("header-placeholder") 
-                || document.querySelector('[data-include="header.html"]');
-  loadFile(headerEl, "header.html", "header");
+  // Load header first, then init menu
+  loadComponent("header", "header.html", initMenuToggle);
 
-  // === Load footer ===
-  const footerEl = document.getElementById("footer-placeholder") 
-                || document.querySelector('[data-include="footer.html"]');
-  loadFile(footerEl, "footer.html", "footer");
+  // Load footer
+  loadComponent("footer", "footer.html");
 });
