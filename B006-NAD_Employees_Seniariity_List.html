@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAD Seniority Management | Milindweb</title>
+    <title>Milindweb - NAD Seniority Management </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+      <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- JS to load header/footer -->
+  <script src="js/headerfooter.js" defer></script>
     <style>
         :root {
             --primary: #1a3a5f;
@@ -39,111 +43,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-        
-        /* Header Styles */
-        .top-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-        
-        .header-text {
-            line-height: 1.3;
-        }
-        
-        .header-text h1 {
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        
-        .header-text p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        
-        /* Navigation */
-        .navbar {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 10px;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .nav-menu li {
-            position: relative;
-        }
-        
-        .nav-menu li a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 15px 20px;
-            display: block;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-        
-        .nav-menu li a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-        
-        .nav-menu li a.active {
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
-        }
-        
-        .nav-menu li a i {
-            margin-right: 8px;
         }
         
         /* Main Content */
@@ -502,128 +401,8 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Footer Styles */
-        .footer {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            padding: 30px 0 20px;
-            margin-top: auto;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 30px;
-        }
-        
-        .footer-section {
-            flex: 1;
-            min-width: 250px;
-        }
-        
-        .footer-section h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent);
-        }
-        
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #c2e0ff;
-            text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            color: white;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            margin-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-            color: #a0c8f0;
-            max-width: 1200px;
-            margin: 20px auto 0;
-            padding: 20px 0 0;
-        }
-        
         /* Responsive Design */
         @media (max-width: 992px) {
-            .header-content {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .navbar {
-                justify-content: space-between;
-                margin-top: 15px;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-menu {
-                display: none;
-                flex-direction: column;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.2);
-                border-radius: 8px;
-                margin-top: 10px;
-                overflow: hidden;
-            }
-            
-            .nav-menu.show {
-                display: flex;
-            }
-            
-            .nav-menu li a {
-                padding: 12px 20px;
-            }
-            
             .seniority-header h2 {
                 font-size: 1.8rem;
             }
@@ -642,11 +421,6 @@
         }
         
         @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
             .seniority-header {
                 padding: 15px;
             }
@@ -670,19 +444,6 @@
         }
         
         @media (max-width: 480px) {
-            .logo-container {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .header-text h1 {
-                font-size: 1.2rem;
-            }
-            
-            .header-text p {
-                font-size: 0.8rem;
-            }
-            
             .export-buttons {
                 flex-direction: column;
             }
@@ -715,35 +476,9 @@
     </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header class="top-header">
-        <div class="header-content">
-            <div class="logo-container">
-                <div class="logo">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="header-text">
-                    <h1>Milindweb</h1>
-                    <p>Technical Blogger & Engineering Project Developer</p>
-                </div>
-            </div>
-            
-            <nav class="navbar">
-                <button class="menu-toggle" id="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="nav-menu" id="nav-menu">
-                    <li><a href="index.html" class="menu"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="project.html" class="menu"><i class="fas fa-project-diagram"></i> Projects</a></li>
-                    <li><a href="workshop.html" class="menu"><i class="fas fa-wrench"></i> Workshop</a></li>
-                    <li><a href="blog.html" class="menu"><i class="fas fa-blog"></i> Blog</a></li>
-                    <li><a href="contact.html" class="menu"><i class="fas fa-envelope"></i> Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
     <!-- Main Content -->
+    <!-- load header from page header.html - Header Placeholder -->
+    <div id="header"></div>
     <div class="seniority-container">
         <div class="seniority-header">
             <h2><i class="fas fa-users"></i> NAD Seniority Management System</h2>
@@ -786,49 +521,6 @@
         </div>
     </div>
 
-    <!-- Footer Section -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Milindweb</h3>
-                <p>Empowering students and engineers with hands-on projects, workshops, and technical resources.</p>
-                <div class="social-links">
-                    <a href="https://t.me/itsmakk" target="_blank"><i class="fab fa-telegram"></i></a>
-                    <a href="https://www.instagram.com/makhandare" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/channel/UC7bpvmuyLENrg2ZVvchgm9Q" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://github.com/milindweb" target="_blank"><i class="fab fa-github"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="project.html"><i class="fas fa-project-diagram"></i> Projects</a></li>
-                    <li><a href="workshop.html"><i class="fas fa-wrench"></i> Workshops</a></li>
-                    <li><a href="blog.html"><i class="fas fa-blog"></i> Tech Blog</a></li>
-                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Resources</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-book"></i> Documentation</a></li>
-                    <li><a href="#"><i class="fas fa-download"></i> Downloads</a></li>
-                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Important Dates</a></li>
-                    <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                    <li><a href="#"><i class="fas fa-user-graduate"></i> Student Resources</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            <p>2025 &copy; Milindweb. All rights reserved. | NAD Seniority Management System v2.0</p>
-            <p>Designed and developed with <i class="fas fa-heart" style="color: #dc3545;"></i> for NAD employees</p>
-        </div>
-    </footer>
-
     <script>
         // Configuration
         const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv";
@@ -847,21 +539,6 @@
         
         // Initialize the application
         function init() {
-            // Setup mobile menu toggle
-            const menuToggle = document.getElementById('menu-toggle');
-            const navMenu = document.getElementById('nav-menu');
-            
-            menuToggle.addEventListener('click', function() {
-                navMenu.classList.toggle('show');
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.navbar') && navMenu.classList.contains('show')) {
-                    navMenu.classList.remove('show');
-                }
-            });
-            
             // Load data
             loadData();
         }
@@ -1354,5 +1031,7 @@
         window.clearAllFilters = clearAllFilters;
         window.applyAllFilters = applyAllFilters;
     </script>
+      <!-- load footer from page footer.html -Footer Placeholder -->
+      <div id="footer"></div>
 </body>
 </html>
