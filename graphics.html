@@ -3,8 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Milindweb - raphics & Video Design</title>
+  <title>Milindweb - Graphics Design video editing for ads reels greetings</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- Font Awesome (for icons in footer) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- JS to load header/footer -->
+  <script src="js/headerfooter.js" defer></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -111,7 +117,7 @@
   </style>
 </head>
 <body>
-  <!-- Header Include -->
+  <!-- load header from page header.html - Header Placeholder -->
   <div id="header"></div>
 
   <section class="hero">
@@ -158,18 +164,7 @@
     <a href="contact.html">Get in Touch</a>
   </section>
 
-  <!-- Footer Include -->
+    <!-- load footer from page footer.html -Footer Placeholder -->
   <div id="footer"></div>
-
-  <script>
-    // Fetch header and footer
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("header").innerHTML = data);
-
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
-  </script>
 </body>
 </html>
