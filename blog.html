@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Dynamic Blog</title>
     <link rel="stylesheet" href="css/blogstyle.css">
+      <!-- Header + Footer CSS -->
+    <link rel="stylesheet" href="css/headerfooter.css">
 </head>
 <body>
+      <!-- Header fetch from header.html, header placeholder -->
     <div id="header"></div>
     
     <main class="container">
@@ -25,10 +28,11 @@
             <div id="recent-posts"></div>
         </aside>
     </main>
-    
+      <!-- footer fetch from footer.html, footer placeholder -->
     <div id="footer"></div>
-
-    <script src="js/include.js"></script>
+    <!-- JS to load header/footer -->
+    <script src="js/headerfooter.js"></script>
+    <!-- JS to load blog functions google apps script and spreadsheets data -->
     <script src="js/bloghandler.js"></script>
     <script>
         // Initialize blog listing
