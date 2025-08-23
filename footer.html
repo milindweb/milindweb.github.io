@@ -1,304 +1,64 @@
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<footer class="footer">
+  <div class="footer-grid">
+    <!-- Explore Column -->
+    <div class="footer-col">
+      <h3>EXPLORE</h3>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="freelance_seo_consultant.html">Digital Marketing</a></li>
+        <li><a href="graphics.html">Graphics Design</a></li>
+        <li><a href="website-tech-solutions.html">Tech Solutions</a></li>
+      </ul>
+    </div>
 
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
+    <!-- Community Column -->
+    <div class="footer-col">
+      <h3>COMMUNITY</h3>
+      <ul class="footer-links">
+        <li><a href="project.html">Projects</a></li>
+        <li><a href="workshop.html">Workshops</a></li>
+        <li><a href="blog.html">Tech Blog</a></li>
+        <li><a href="B006-NAD_Employees_Seniariity_List.html">Seniarity Manager</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
 
-        /* Footer Styles */
-        .footer {
-            background: linear-gradient(160deg, #0f172a, #1e293b);
-            color: #f1f5f9;
-            width: 100%;
-            padding: 40px 20px 25px;
-            position: relative;
-            overflow: hidden;
-        }
+    <!-- Contact Column -->
+    <div class="footer-col">
+      <h3>CONTACT INFO</h3>
+      <ul class="contact-info">
+        <li><i class="fas fa-phone"></i><span>+91 9869787575</span></li>
+        <li><i class="fas fa-envelope"></i><span>kmi9@pm.me</span></li>
+        <li><i class="fas fa-map-marker-alt"></i><span>Uran, Navi Mumbai & Nanded MH</span></li>
+        <li><i class="fas fa-clock"></i><span>Mon to Fri 10:00 - 18:00 Hrs</span></li>
+      </ul>
+    </div>
+  </div>
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        }
+  <!-- Social Media -->
+  <div class="social-icons">
+    <a href="https://wa.me/919869787575" class="social-icon" target="_blank" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="https://t.me/itsmakk" class="social-icon" target="_blank" title="Telegram">
+      <i class="fab fa-telegram"></i>
+    </a>
+    <a href="https://instagram.com/makhandare" class="social-icon" target="_blank" title="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="#" class="social-icon" title="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
+    <a href="#" class="social-icon" title="Twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" class="social-icon" title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+  </div>
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto 25px;
-        }
-
-        .footer-col {
-            position: relative;
-            z-index: 1;
-        }
-
-        .footer-col h3 {
-            font-size: 1.2rem;
-            margin-bottom: 18px;
-            color: #93c5fd;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 8px;
-        }
-
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            border-radius: 2px;
-        }
-
-        /* Contact Info */
-        .contact-info {
-            list-style: none;
-        }
-
-        .contact-info li {
-            display: flex;
-            margin-bottom: 14px;
-            align-items: flex-start;
-            transition: transform 0.3s;
-        }
-
-        .contact-info li:hover {
-            transform: translateX(5px);
-        }
-
-        .contact-info i {
-            font-size: 1.1rem;
-            margin-right: 12px;
-            margin-top: 3px;
-            color: #60a5fa;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .contact-info span {
-            opacity: 0.9;
-            font-size: 0.95rem;
-        }
-
-        /* Footer Links */
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-            font-size: 0.95rem;
-            position: relative;
-        }
-
-        .footer-links a::before {
-            content: '›';
-            position: absolute;
-            left: -15px;
-            opacity: 0;
-            transition: all 0.3s;
-            color: #60a5fa;
-        }
-
-        .footer-links a:hover {
-            color: #93c5fd;
-            transform: translateX(10px);
-        }
-
-        .footer-links a:hover::before {
-            opacity: 1;
-            left: -12px;
-        }
-
-        /* Social Media */
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            margin: 20px auto 25px;
-            max-width: 500px;
-        }
-
-        .social-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: rgba(30, 41, 59, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .social-icon::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: -1;
-        }
-
-        .social-icon:hover {
-            transform: translateY(-5px) rotate(5deg);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            color: white;
-        }
-
-        .social-icon:hover::before {
-            transform: translateY(0);
-        }
-
-        /* Footer Bottom */
-        .footer-bottom {
-            text-align: center;
-            padding: 20px 0 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .copyright {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            color: #94a3b8;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .footer-col {
-                padding-bottom: 20px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            }
-            
-            .footer-col:last-child {
-                border-bottom: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .social-icons {
-                gap: 10px;
-            }
-        }
-    </style>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <!-- Explore Column -->
-            <div class="footer-col">
-                <h3>EXPLORE</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html">Home</a></li>
-                   <li><a href="freelance_seo_consultant.html">Digital Marketing</a></li>
-                   <li><a href="graphics.html">Graphics Design</a></li>
-                    <li><a href="website-tech-solutions.html">Tech Solutions</a></li>
-                </ul>
-            </div>
-            
-            <!-- Community Column -->
-            <div class="footer-col">
-                <h3>COMMUNITY</h3>
-                <ul class="footer-links">
-                      <li><a href="project.html">Projects</a></li>
-                    <li><a href="workshop.html">Workshops</a></li>
-                    <li><a href="blog.html">Tech Blog</a></li>
-                    <li><a href="B006-NAD_Employees_Seniariity_List.html">Seniarity Manager</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                </ul>
-            </div>
-            
-            <!-- Contact Column -->
-            <div class="footer-col">
-                <h3>CONTACT INFO</h3>
-                <ul class="contact-info">
-                    <li>
-                        <i class="fas fa-phone"></i>
-                        <span>+91 9869787575</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-envelope"></i>
-                        <span>kmi9@pm.me</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Uran, Navi Mumbai & Nanded MH</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-clock"></i>
-                        <span> Mon to Fri 10:00 - 18:00 Hrs</span>
-                </ul>
-            </div>
-        </div>
-        
-        <!-- Social Media Icons -->
-        <div class="social-icons">
-            <a href="https://wa.me/919869787575" class="social-icon" target="_blank" title="WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="https://t.me/itsmakk" class="social-icon" target="_blank" title="Telegram">
-                <i class="fab fa-telegram"></i>
-            </a>
-            <a href="https://instagram.com/makhandare" class="social-icon" target="_blank" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="social-icon" title="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="#" class="social-icon" title="Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="social-icon" title="LinkedIn">
-                <i class="fab fa-linkedin"></i>
-            </a>
-        </div>
-        
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <p class="copyright">&copy; 2026 MilindWeb. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p class="copyright">&copy; 2026 MilindWeb. All rights reserved.</p>
+  </div>
+</footer>
