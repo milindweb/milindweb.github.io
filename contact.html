@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Milindweb - Contact Us for business, any query, registration </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+      <!-- Header + Footer CSS -->
+      <link rel="stylesheet" href="css/headerfooter.css">
+      <!-- JS to load header/footer -->
+      <script src="js/headerfooter.js" defer></script>
     <style>
         * {
             margin: 0;
@@ -284,11 +288,8 @@
     </style>
 </head>
 <body>
-    <!-- Header Section - Will be included via JS -->
-<script src="js/include.js"></script>
-
-    <header id="header"></header>
-
+  <!-- load header from page header.html - Header Placeholder -->
+  <div id="header"></div>
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -364,5 +365,7 @@
         // Call the function when the page loads
         document.addEventListener('DOMContentLoaded', includeHTML);
     </script>
+      <!-- load footer from page footer.html -Footer Placeholder -->
+  <div id="footer"></div>
 </body>
 </html>
