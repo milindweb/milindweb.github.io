@@ -39,5 +39,26 @@
         const blog = new Blog();
         blog.loadPostList();
     </script>
+
+
+
+<div id="form-container"></div>
+
+<script>
+  fetch("contactform.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("form-container").innerHTML = html;
+
+      // Load JS
+      const script = document.createElement("script");
+      script.src = "js/form-handler.js";
+      document.body.appendChild(script);
+    });
+</script>
+
+
+
+
 </body>
 </html>
