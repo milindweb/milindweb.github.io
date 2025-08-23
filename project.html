@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MilindWeb Projects Hub | Final Year & Mini Projects</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>MilindWeb - Projects Hub for diploma & Engineering Final Year students</title>
+      <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- Font Awesome (for icons in footer) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- JS to load header/footer -->
+  <script src="js/headerfooter.js" defer></script>
     <style>
         /* Base Styles */
         :root {
@@ -29,70 +34,6 @@
             color: #333;
             background-color: #f8f9fa;
             overflow-x: hidden;
-        }
-        
-        /* Header Styles */
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo-icon {
-            font-size: 2rem;
-            color: #ffdd57;
-        }
-        
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-        
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-        
-        .nav-menu a:hover {
-            background: rgba(255,255,255,0.1);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
         }
         
         /* Main Content Container */
@@ -500,102 +441,7 @@
             display: block;
         }
         
-        /* Footer Styles */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 40px 0 20px;
-            margin-top: 60px;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: #ffdd57;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--secondary);
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #ecf0f1;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .footer-links a:hover {
-            color: #ffdd57;
-            transform: translateX(5px);
-        }
-        
-        .footer-links i {
-            width: 20px;
-            text-align: center;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-        
-        .social-link:hover {
-            background: var(--secondary);
-            transform: translateY(-5px);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            margin-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #bdc3c7;
-            font-size: 0.9rem;
-        }
-        
+               
         /* Responsive Design */
         @media (max-width: 992px) {
             .hero h1 {
@@ -701,30 +547,8 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-lightbulb"></i>
-                </div>
-                <div class="logo-text">MilindWeb Projects Hub</div>
-            </div>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="#"><i class="fas fa-project-diagram"></i> Projects</a></li>
-                <li><a href="#"><i class="fas fa-book"></i> Resources</a></li>
-                <li><a href="#"><i class="fas fa-users"></i> About</a></li>
-                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
-            </ul>
-        </div>
-    </header>
-
+     <!-- load header from page header.html - Header Placeholder -->
+  <div id="header"></div>
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
@@ -980,58 +804,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>MilindWeb Projects</h3>
-                <p>Your trusted partner for academic and industry-relevant projects. We help students turn ideas into innovative solutions.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Projects</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Resources</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Project Categories</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Electronics</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Computer Science</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Electrical</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Mechanical</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Civil</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Contact Info</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India</a></li>
-                    <li><a href="tel:+911234567890"><i class="fas fa-phone-alt"></i> +91 1234567890</a></li>
-                    <li><a href="mailto:contact@milindweb.com"><i class="fas fa-envelope"></i> contact@milindweb.com</a></li>
-                    <li><a href="#"><i class="fas fa-clock"></i> Mon-Sat: 9:00 AM - 6:00 PM</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            &copy; 2023 MilindWeb Projects Hub. All rights reserved.
-        </div>
-    </footer>
-
     <!-- JavaScript -->
     <script>
         // Mobile menu toggle
@@ -1187,5 +959,7 @@
             }
         });
     </script>
+      <!-- load footer from page footer.html -Footer Placeholder -->
+  <div id="footer"></div>
 </body>
 </html>
