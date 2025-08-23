@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MilindWeb - Expert Workshops</title>
+      <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- Font Awesome (for icons in footer) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- JS to load header/footer -->
+  <script src="js/headerfooter.js" defer></script>
     <style>
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
@@ -194,8 +200,8 @@
     </style>
 </head>
 <body>
-    <div id="header"></div>
-    
+  <!-- load header from page header.html - Header Placeholder -->
+  <div id="header"></div>    
     <div class="container">
         <h1 style="text-align: center; margin: 20px 0 30px; color: #2c3e50;">📚 Our Expert-Led Workshops</h1>
         
@@ -404,19 +410,7 @@
         </div>
     </div>
     
-    <div id="footer"></div>
-    
-    <script src="js/include.js"></script>
-    <script>
-        // Fetch header and footer
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('header').innerHTML = data);
-            
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer').innerHTML = data);
-            
+    <script>         
         // Add intersection observer for scroll animations
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.workshop-section');
@@ -438,5 +432,7 @@
             });
         });
     </script>
+      <!-- load footer from page footer.html -Footer Placeholder -->
+  <div id="footer"></div>
 </body>
 </html>
