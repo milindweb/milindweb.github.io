@@ -12,7 +12,8 @@ body {
     background-color: #f9f9f9;
 }
 
-.container {
+/* Blog Container Layout */
+.blog-container {
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
@@ -20,17 +21,17 @@ body {
     gap: 30px;
 }
 
-.content {
+.blog-content {
     flex: 1;
     min-width: 0; /* Prevent flex overflow */
 }
 
-.sidebar {
+.blog-sidebar {
     width: 300px;
     flex-shrink: 0;
 }
 
-/* Header styles */
+/* ========== BLOG HEADER ========== */
 .blog-header {
     background-color: #2c3e50;
     color: white;
@@ -38,7 +39,7 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-nav {
+.blog-nav {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
@@ -47,31 +48,31 @@ nav {
     align-items: center;
 }
 
-.logo {
+.blog-logo {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.nav-links {
+.blog-nav-links {
     display: flex;
     list-style: none;
 }
 
-.nav-links li {
+.blog-nav-links li {
     margin-left: 20px;
 }
 
-.nav-links a {
+.blog-nav-links a {
     color: white;
     text-decoration: none;
     transition: opacity 0.3s;
 }
 
-.nav-links a:hover {
+.blog-nav-links a:hover {
     opacity: 0.8;
 }
 
-/* Blog list styles */
+/* ========== BLOG LIST STYLES ========== */
 .blog-list {
     display: flex;
     flex-direction: column;
@@ -111,31 +112,31 @@ nav {
     margin-bottom: 10px;
 }
 
-/* Post styles */
-.post-meta {
+/* ========== SINGLE POST ========== */
+.blog-post-meta {
     color: #7f8c8d;
     margin-bottom: 20px;
 }
 
-.post-content {
+.blog-post-content {
     font-size: 1.1rem;
     line-height: 1.8;
 }
 
-.post-content img {
+.blog-post-content img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
     margin: 20px 0;
 }
 
-.post-tags {
+.blog-post-tags {
     margin-top: 30px;
     padding-top: 20px;
     border-top: 1px solid #eee;
 }
 
-.tag {
+.blog-tag {
     display: inline-block;
     background: #e7f4ff;
     color: #3498db;
@@ -146,44 +147,45 @@ nav {
     margin-bottom: 8px;
 }
 
-/* Comments */
-.comments {
+/* ========== COMMENTS ========== */
+.blog-comments {
     margin-top: 40px;
     padding-top: 30px;
     border-top: 1px solid #eee;
 }
 
-.comment {
+.blog-comment {
     background: #f8f9fa;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
 }
 
-.comment-meta {
+.blog-comment-meta {
     font-weight: bold;
     margin-bottom: 8px;
 }
 
-.comment-date {
+.blog-comment-date {
     color: #7f8c8d;
     font-size: 0.9rem;
     font-weight: normal;
     margin-left: 10px;
 }
 
-/* Forms */
-.form-group {
+/* ========== FORMS ========== */
+.blog-form-group {
     margin-bottom: 15px;
 }
 
-label {
+.blog-form-label {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
 }
 
-input, textarea {
+.blog-input,
+.blog-textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -191,7 +193,7 @@ input, textarea {
     font-family: inherit;
 }
 
-button {
+.blog-btn {
     background: #3498db;
     color: white;
     border: none;
@@ -202,11 +204,12 @@ button {
     transition: background 0.3s;
 }
 
-button:hover {
+.blog-btn:hover {
     background: #2980b9;
 }
 
-.pagination {
+/* ========== PAGINATION ========== */
+.blog-pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -214,13 +217,13 @@ button:hover {
     gap: 15px;
 }
 
-.pagination-btn:disabled {
+.blog-pagination-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
-/* Sidebar */
-.sidebar {
+/* ========== SIDEBAR ========== */
+.blog-sidebar {
     background: white;
     border-radius: 8px;
     padding: 20px;
@@ -228,28 +231,28 @@ button:hover {
     align-self: flex-start;
 }
 
-.recent-post {
+.blog-recent-post {
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid #eee;
 }
 
-.recent-post:last-child {
+.blog-recent-post:last-child {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.recent-post a {
+.blog-recent-post a {
     color: #2c3e50;
     text-decoration: none;
 }
 
-.recent-post a:hover {
+.blog-recent-post a:hover {
     color: #3498db;
 }
 
-/* Footer */
+/* ========== BLOG FOOTER ========== */
 .blog-footer {
     background: #2c3e50;
     color: white;
@@ -258,36 +261,37 @@ button:hover {
     margin-top: 40px;
 }
 
-/* Responsive design */
+/* ========== RESPONSIVE DESIGN ========== */
 @media (max-width: 900px) {
-    .container {
+    .blog-container {
         flex-direction: column;
     }
     
-    .sidebar {
+    .blog-sidebar {
         width: 100%;
     }
 }
 
 @media (max-width: 600px) {
-    .container {
+    .blog-container {
         padding: 15px;
     }
     
-    nav {
+    .blog-nav {
         flex-direction: column;
         text-align: center;
     }
     
-    .nav-links {
+    .blog-nav-links {
         margin-top: 15px;
     }
     
-    .nav-links li {
+    .blog-nav-links li {
         margin: 0 10px;
     }
     
-    .blog-item, .sidebar {
+    .blog-item, 
+    .blog-sidebar {
         padding: 15px;
     }
 }
