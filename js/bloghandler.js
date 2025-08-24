@@ -11,14 +11,14 @@ class Blog {
     
     initEventListeners() {
         // Pagination buttons
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('blog-prev-btn');
+        const nextBtn = document.getElementById('blog-next-btn');
         
         if (prevBtn) prevBtn.addEventListener('click', () => this.changePage(-1));
         if (nextBtn) nextBtn.addEventListener('click', () => this.changePage(1));
         
         // Comment form
-        const commentForm = document.getElementById('comment-form');
+        const commentForm = document.getElementById('blog-comment-form');
         if (commentForm) {
             commentForm.addEventListener('submit', (e) => this.handleCommentSubmit(e));
         }
@@ -64,9 +64,9 @@ class Blog {
     }
     
     updatePagination(pagination) {
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const pageInfo = document.getElementById('page-info');
+        const prevBtn = document.getElementById('blog-prev-btn');
+        const nextBtn = document.getElementById('blog-next-btn');
+        const pageInfo = document.getElementById('blog-page-info');
         
         if (prevBtn) prevBtn.disabled = !pagination.hasPrev;
         if (nextBtn) nextBtn.disabled = !pagination.hasNext;
@@ -110,16 +110,16 @@ class Blog {
         document.title = `${post.title} | My Dynamic Blog`;
         
         // Update post content
-        document.getElementById('post-title').textContent = post.title;
-        document.getElementById('post-date').textContent = this.formatDate(post.date);
-        document.getElementById('post-author').textContent = post.author || 'Unknown Author';
-        document.getElementById('post-content').innerHTML = post.content;
+        document.getElementById('blog-post-title').textContent = post.title;
+        document.getElementById('blog-post-date').textContent = this.formatDate(post.date);
+        document.getElementById('blog-post-author').textContent = post.author || 'Unknown Author';
+        document.getElementById('blog-post-content').innerHTML = post.content;
         
         // Render tags
-        const tagsContainer = document.getElementById('post-tags-list');
+        const tagsContainer = document.getElementById('blog-post-tags-list');
         if (tagsContainer) {
             tagsContainer.innerHTML = post.tags.map(tag => 
-                `<span class="tag">${tag}</span>`
+                `<span class="blog-tag">${tag}</span>`
             ).join('');
         }
         
@@ -128,7 +128,7 @@ class Blog {
     }
     
     renderComments(comments) {
-        const commentsContainer = document.getElementById('comments-list');
+        const commentsContainer = document.getElementById('blog-comments-list');
         
         if (!commentsContainer) return;
         
@@ -138,9 +138,9 @@ class Blog {
         }
         
         commentsContainer.innerHTML = comments.map(comment => `
-            <div class="comment">
-                <div class="comment-meta">
-                    ${comment.author} <span class="comment-date">${this.formatDate(comment.date)}</span>
+            <div class="blog-comment">
+                <div class="blog-comment-meta">
+                    ${comment.author} <span class="blog-comment-date">${this.formatDate(comment.date)}</span>
                 </div>
                 <p>${comment.text}</p>
             </div>
@@ -150,8 +150,8 @@ class Blog {
     async handleCommentSubmit(e) {
         e.preventDefault();
         
-        const authorInput = document.getElementById('comment-author');
-        const textInput = document.getElementById('comment-text');
+        const authorInput = document.getElementById('blog-comment-author');
+        const textInput = document.getElementById('blog-comment-text');
         const form = e.target;
         
         const author = authorInput.value.trim();
@@ -219,7 +219,7 @@ class Blog {
     }
     
     renderRecentPosts(posts) {
-        const recentPostsContainer = document.getElementById('recent-posts');
+        const recentPostsContainer = document.getElementById('blog-recent-posts');
         
         if (!recentPostsContainer) return;
         
@@ -229,7 +229,7 @@ class Blog {
         }
         
         recentPostsContainer.innerHTML = posts.map(post => `
-            <div class="recent-post">
+            <div class="blog-recent-post">
                 <a href="post.html?id=${post.id}">${post.title}</a>
                 <div class="blog-meta">${this.formatDate(post.date)}</div>
             </div>
