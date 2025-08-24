@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advanced Snake Game</title>
-    <!-- Header + Footer CSS -->
+  <title>Milindweb - Advanced Snake Game</title>
+  <!-- Header + Footer CSS -->
   <link rel="stylesheet" href="css/headerfooter.css">
 
   <!-- Font Awesome (for icons in footer) -->
@@ -13,7 +13,14 @@
   <!-- JS to load header/footer -->
   <script src="js/headerfooter.js" defer></script>
   <style>
-    body {
+    /* Reset only for game elements to prevent conflicts */
+    #game-container * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #game-container {
       margin: 0;
       display: flex;
       flex-direction: column;
@@ -25,9 +32,10 @@
       color: #fff;
       overflow-x: hidden;
       padding: 20px;
+      width: 100%;
     }
 
-    h1 {
+    #game-container h1 {
       margin: 10px 0;
       font-size: 2.5rem;
       color: #ffdd57;
@@ -95,7 +103,7 @@
       line-height: 1.4;
     }
 
-    .btn {
+    #game-container .btn {
       background: linear-gradient(to bottom, #ffdd57, #ffb347);
       color: #1a1a40;
       border: none;
@@ -108,12 +116,12 @@
       transition: all 0.2s ease;
     }
 
-    .btn:hover {
+    #game-container .btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0,0,0,0.4);
     }
 
-    .btn:active {
+    #game-container .btn:active {
       transform: translateY(0);
       box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
@@ -172,7 +180,7 @@
         height: 95vw;
       }
       
-      h1 {
+      #game-container h1 {
         font-size: 2rem;
       }
       
@@ -189,36 +197,43 @@
 <body>
   <!-- load header from page header.html - Header Placeholder -->
   <div id="header"></div>
-  <h1>🐍 Advanced Snake Game</h1>
   
-  <div class="btn-group">
-    <button id="easyBtn" class="btn difficulty-btn active">Easy</button>
-    <button id="mediumBtn" class="btn difficulty-btn">Medium</button>
-    <button id="hardBtn" class="btn difficulty-btn">Hard</button>
-  </div>
-  
-  <div id="gameContainer">
-    <canvas id="gameCanvas" width="500" height="500"></canvas>
-    <div id="uiOverlay">
-      <div class="game-title">SNAKE GAME</div>
-      <div id="gameMessage" class="game-message">Ready to play?</div>
-      <button id="startBtn" class="btn">Start Game</button>
-      <button id="restartBtn" class="btn" style="display: none;">Play Again</button>
+  <!-- Game container to scope our styles -->
+  <div id="game-container">
+    <h1>🐍 Advanced Snake Game</h1>
+    
+    <div class="btn-group">
+      <button id="easyBtn" class="btn difficulty-btn active">Easy</button>
+      <button id="mediumBtn" class="btn difficulty-btn">Medium</button>
+      <button id="hardBtn" class="btn difficulty-btn">Hard</button>
+    </div>
+    
+    <div id="gameContainer">
+      <canvas id="gameCanvas" width="500" height="500"></canvas>
+      <div id="uiOverlay">
+        <div class="game-title">SNAKE GAME</div>
+        <div id="gameMessage" class="game-message">Ready to play?</div>
+        <button id="startBtn" class="btn">Start Game</button>
+        <button id="restartBtn" class="btn" style="display: none;">Play Again</button>
+      </div>
+    </div>
+    
+    <div id="scoreBoard">
+      <span>Score: <span id="score">0</span></span>
+      <span>High Score: <span id="highScore">0</span></span>
+      <span id="speedBoost" class="power-up" style="display: none;">Speed Boost!</span>
+      <span id="scoreMultiplier" class="power-up" style="display: none;">2x Score!</span>
+    </div>
+    
+    <div id="instructions">
+      Use Arrow Keys or Swipe (on mobile) to control the snake. Collect food (red) to grow and earn points.
+      Avoid walls, obstacles (gray), and yourself! Press P to pause the game.
     </div>
   </div>
   
-  <div id="scoreBoard">
-    <span>Score: <span id="score">0</span></span>
-    <span>High Score: <span id="highScore">0</span></span>
-    <span id="speedBoost" class="power-up" style="display: none;">Speed Boost!</span>
-    <span id="scoreMultiplier" class="power-up" style="display: none;">2x Score!</span>
-  </div>
-  
-  <div id="instructions">
-    Use Arrow Keys or Swipe (on mobile) to control the snake. Collect food (red) to grow and earn points.
-    Avoid walls, obstacles (gray), and yourself! Press P to pause the game.
-  </div>
-  
+  <!-- load footer from page footer.html -Footer Placeholder -->
+  <div id="footer"></div>
+
   <script>
     // Game elements
     const canvas = document.getElementById("gameCanvas");
@@ -839,7 +854,5 @@
       };
     }
   </script>
-    <!-- load footer from page footer.html -Footer Placeholder -->
-  <div id="footer"></div>
 </body>
 </html>
