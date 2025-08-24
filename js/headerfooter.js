@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", () => {
    * Initialize Header Functionality
    */
   function initHeader() {
-    const mobileToggle = document.querySelector(".mobile-toggle");
-    const mobileMenu = document.querySelector(".mobile-menu");
-    const mobileOverlay = document.querySelector(".mobile-overlay");
-    const header = document.querySelector(".header");
+    const mobileToggle = document.querySelector(".hf-mobile-toggle");
+    const mobileMenu = document.querySelector(".hf-mobile-menu");
+    const mobileOverlay = document.querySelector(".hf-mobile-overlay");
+    const header = document.querySelector(".hf-header");
 
     if (!mobileToggle || !mobileMenu || !mobileOverlay || !header) return;
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileOverlay.addEventListener("click", closeMenu);
 
     // Close menu when clicking any nav link
-    document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    document.querySelectorAll(".hf-mobile-nav-link").forEach((link) => {
       link.addEventListener("click", closeMenu);
     });
 
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * Initialize Footer Functionality
    */
   function initFooter() {
-    document.querySelectorAll(".footer-links a[href^='#']").forEach((link) => {
+    document.querySelectorAll(".hf-footer-links a[href^='#']").forEach((link) => {
       link.addEventListener("click", function (e) {
         const target = document.querySelector(this.getAttribute("href"));
         if (target) {
