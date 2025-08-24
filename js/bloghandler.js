@@ -1,24 +1,23 @@
 class Blog {
     constructor() {
-        this.apiUrl = 'https://script.google.com/macros/s/AKfycbyY3FqdrO4ZZkD3SFNCJNqEePWNU41d-mQvgGMgcWXnFvJEqC8LYJDTl0LkQzfz7kFU/exec';
+        this.apiUrl = 'https://script.google.com/macros/s/AKfycbysXct3DlzcFOllCGzRVWAuHfb3EFsPWrOKg5IgxTB_yCc9drfDd9D_13oXHet5rVDp/exec';
         this.currentPage = 1;
         this.postsPerPage = 10;
         this.totalPosts = 0;
         
-        // Initialize event listeners
         this.initEventListeners();
     }
     
     initEventListeners() {
         // Pagination buttons
-        const prevBtn = document.getElementById('blog-prev-btn');
-        const nextBtn = document.getElementById('blog-next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
         
         if (prevBtn) prevBtn.addEventListener('click', () => this.changePage(-1));
         if (nextBtn) nextBtn.addEventListener('click', () => this.changePage(1));
         
         // Comment form
-        const commentForm = document.getElementById('blog-comment-form');
+        const commentForm = document.getElementById('comment-form');
         if (commentForm) {
             commentForm.addEventListener('submit', (e) => this.handleCommentSubmit(e));
         }
@@ -36,7 +35,7 @@ class Blog {
             this.totalPosts = data.pagination.total;
             this.renderPostList(data.posts);
             this.updatePagination(data.pagination);
-            this.loadRecentPosts(); // Also load recent posts for sidebar
+            this.loadRecentPosts();
         } catch (error) {
             console.error('Error loading posts:', error);
             document.getElementById('blog-list').innerHTML = 
@@ -64,9 +63,9 @@ class Blog {
     }
     
     updatePagination(pagination) {
-        const prevBtn = document.getElementById('blog-prev-btn');
-        const nextBtn = document.getElementById('blog-next-btn');
-        const pageInfo = document.getElementById('blog-page-info');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const pageInfo = document.getElementById('page-info');
         
         if (prevBtn) prevBtn.disabled = !pagination.hasPrev;
         if (nextBtn) nextBtn.disabled = !pagination.hasNext;
@@ -97,7 +96,7 @@ class Blog {
             }
             
             this.renderPost(post);
-            this.loadRecentPosts(); // Load recent posts for sidebar
+            this.loadRecentPosts();
         } catch (error) {
             console.error('Error loading post:', error);
             document.getElementById('blog-post').innerHTML = 
@@ -106,29 +105,25 @@ class Blog {
     }
     
     renderPost(post) {
-        // Update page title
         document.title = `${post.title} | My Dynamic Blog`;
         
-        // Update post content
-        document.getElementById('blog-post-title').textContent = post.title;
-        document.getElementById('blog-post-date').textContent = this.formatDate(post.date);
-        document.getElementById('blog-post-author').textContent = post.author || 'Unknown Author';
-        document.getElementById('blog-post-content').innerHTML = post.content;
+        document.getElementById('post-title').textContent = post.title;
+        document.getElementById('post-date').textContent = this.formatDate(post.date);
+        document.getElementById('post-author').textContent = post.author || 'Unknown Author';
+        document.getElementById('post-content').innerHTML = post.content;
         
-        // Render tags
-        const tagsContainer = document.getElementById('blog-post-tags-list');
+        const tagsContainer = document.getElementById('post-tags-list');
         if (tagsContainer) {
             tagsContainer.innerHTML = post.tags.map(tag => 
-                `<span class="blog-tag">${tag}</span>`
+                `<span class="tag">${tag}</span>`
             ).join('');
         }
         
-        // Render comments
         this.renderComments(post.comments);
     }
     
     renderComments(comments) {
-        const commentsContainer = document.getElementById('blog-comments-list');
+        const commentsContainer = document.getElementById('comments-list');
         
         if (!commentsContainer) return;
         
@@ -138,9 +133,9 @@ class Blog {
         }
         
         commentsContainer.innerHTML = comments.map(comment => `
-            <div class="blog-comment">
-                <div class="blog-comment-meta">
-                    ${comment.author} <span class="blog-comment-date">${this.formatDate(comment.date)}</span>
+            <div class="comment">
+                <div class="comment-meta">
+                    ${comment.author} <span class="comment-date">${this.formatDate(comment.date)}</span>
                 </div>
                 <p>${comment.text}</p>
             </div>
@@ -150,8 +145,8 @@ class Blog {
     async handleCommentSubmit(e) {
         e.preventDefault();
         
-        const authorInput = document.getElementById('blog-comment-author');
-        const textInput = document.getElementById('blog-comment-text');
+        const authorInput = document.getElementById('comment-author');
+        const textInput = document.getElementById('comment-text');
         const form = e.target;
         
         const author = authorInput.value.trim();
@@ -162,7 +157,6 @@ class Blog {
             return;
         }
         
-        // Get post ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('id');
         
@@ -171,7 +165,6 @@ class Blog {
             return;
         }
         
-        // Format comment data
         const commentData = `${author}|${text}|${new Date().toISOString().split('T')[0]}`;
         
         try {
@@ -190,10 +183,7 @@ class Blog {
                 throw new Error(result.error);
             }
             
-            // Clear form
             form.reset();
-            
-            // Reload post to show new comment
             alert('Comment submitted successfully!');
             this.loadPost(postId);
             
@@ -219,7 +209,7 @@ class Blog {
     }
     
     renderRecentPosts(posts) {
-        const recentPostsContainer = document.getElementById('blog-recent-posts');
+        const recentPostsContainer = document.getElementById('recent-posts');
         
         if (!recentPostsContainer) return;
         
@@ -229,7 +219,7 @@ class Blog {
         }
         
         recentPostsContainer.innerHTML = posts.map(post => `
-            <div class="blog-recent-post">
+            <div class="recent-post">
                 <a href="post.html?id=${post.id}">${post.title}</a>
                 <div class="blog-meta">${this.formatDate(post.date)}</div>
             </div>
