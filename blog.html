@@ -1,62 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dynamic Blog</title>
-    <link rel="stylesheet" href="css/blogstyle.css">
-      <!-- Header + Footer CSS -->
-    <link rel="stylesheet" href="css/headerfooter.css">
-      <!-- Font Awesome (for icons in footer) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Dynamic Blog</title>
+
+  <!-- Blog CSS -->
+  <link rel="stylesheet" href="css/blogstyle.css">
+  <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- Font Awesome (for icons in footer) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-      <!-- Header fetch from header.html, header placeholder -->
-    <div id="header"></div>
-    
-    <main class="container">
-        <div class="content">
-            <h1>Blog Posts</h1>
-            <div id="blog-list" class="blog-list"></div>
-            <div class="pagination">
-                <button id="prev-btn" class="pagination-btn">Previous</button>
-                <span id="page-info">Page 1</span>
-                <button id="next-btn" class="pagination-btn">Next</button>
-            </div>
-        </div>
-        
-        <aside class="sidebar">
-            <h2>Recent Posts</h2>
-            <div id="recent-posts"></div>
-        </aside>
-    </main>
+  <!-- Header fetch from header.html -->
+  <div id="header"></div>
 
- <!-- contact form and js fetch from contactform.html, & js/form-handler.js -->
-<div id="form-container"></div>
+  <!-- BLOG MAIN CONTAINER -->
+  <main class="blog-container">
+    <div class="blog-content">
+      <h1>Blog Posts</h1>
 
-<script>
-  fetch("contactform.html")
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById("form-container").innerHTML = html;
+      <!-- Dynamic Blog List -->
+      <div id="blog-list" class="blog-list"></div>
 
-      // Load JS
-      const script = document.createElement("script");
-      script.src = "js/form-handler.js";
-      document.body.appendChild(script);
-    });
-</script>
+      <!-- Pagination -->
+      <div class="blog-pagination">
+        <button id="prev-btn" class="blog-pagination-btn">Previous</button>
+        <span id="page-info">Page 1</span>
+        <button id="next-btn" class="blog-pagination-btn">Next</button>
+      </div>
+    </div>
 
-      <!-- footer fetch from footer.html, footer placeholder -->
-    <div id="footer"></div>
-    <!-- JS to load header/footer -->
-    <script src="js/headerfooter.js"></script>
-    <!-- JS to load blog functions google apps script and spreadsheets data -->
-    <script src="js/bloghandler.js"></script>
-    <script>
-        // Initialize blog listing
-        const blog = new Blog();
-        blog.loadPostList();
-    </script>
+    <!-- SIDEBAR -->
+    <aside class="blog-sidebar">
+      <h2>Recent Posts</h2>
+      <div id="recent-posts"></div>
+    </aside>
+  </main>
+
+  <!-- Contact form (fetched dynamically) -->
+  <div id="form-container"></div>
+
+  <script>
+    fetch("contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+
+        // Load JS for contact form
+        const script = document.createElement("script");
+        script.src = "js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
+  <!-- Footer fetch from footer.html -->
+  <div id="footer"></div>
+
+  <!-- JS for header/footer -->
+  <script src="js/headerfooter.js"></script>
+
+  <!-- JS for blog handling (Google Apps Script + Sheets) -->
+  <script src="js/bloghandler.js"></script>
+  <script>
+    // Initialize blog listing
+    const blog = new Blog();
+    blog.loadPostList();
+  </script>
 </body>
 </html>
