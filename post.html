@@ -4,17 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Post</title>
-    
+
     <!-- Header + Footer CSS -->
     <link rel="stylesheet" href="css/headerfooter.css">
-    
-    <!-- Font Awesome (for icons in footer) -->
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        main { display: flex; gap: 20px; padding: 20px; }
+        .content { flex: 3; }
+        .sidebar { flex: 1; }
+        .post-meta { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+        .post-tags { margin-top: 20px; }
+        .tag { display: inline-block; background: #eee; padding: 2px 6px; margin: 2px; border-radius: 3px; font-size: 0.85em; }
+        .comments { margin-top: 40px; }
+        .comment { border-top: 1px solid #ccc; padding: 10px 0; }
+        .comment-meta { font-size: 0.85em; color: #555; margin-bottom: 5px; }
+        form .form-group { margin-bottom: 10px; }
+        form input, form textarea { width: 100%; padding: 5px; }
+        form button { padding: 5px 10px; }
+    </style>
 </head>
 <body>
-    <!-- load header from page header.html - Header Placeholder -->
+    <!-- Header Placeholder -->
     <div id="header"></div>
-    
+
     <main>
         <div class="content">
             <article id="blog-post">
@@ -23,17 +38,17 @@
                     <span id="post-date"></span> • <span id="post-author"></span>
                 </div>
                 <div id="post-content" class="post-content"></div>
-                
+
                 <div class="post-tags">
                     <h3>Tags:</h3>
                     <div id="post-tags-list"></div>
                 </div>
             </article>
-            
+
             <section class="comments">
                 <h2>Comments</h2>
                 <div id="comments-list"></div>
-                
+
                 <form id="comment-form">
                     <h3>Add a Comment</h3>
                     <div class="form-group">
@@ -48,30 +63,29 @@
                 </form>
             </section>
         </div>
-        
+
         <aside class="sidebar">
             <h2>Recent Posts</h2>
             <div id="recent-posts"></div>
         </aside>
     </main>
-    
-    <!-- load footer from page footer.html - Footer Placeholder -->
+
+    <!-- Footer Placeholder -->
     <div id="footer"></div>
 
-    <!-- JS to load header/footer -->
+    <!-- JS -->
     <script src="js/headerfooter.js" defer></script>
-    
     <script src="js/bloghandler.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const postId = urlParams.get('id');
-        
+
         if (postId) {
             const blog = new Blog();
             blog.loadPost(postId);
         } else {
-            document.getElementById('blog-post').innerHTML = 
-                '<p>Post not found. <a href="blog.html">Return to blog list</a></p>';
+            const container = document.getElementById('blog-post');
+            if (container) container.innerHTML = '<p>Post not found. <a href="blog.html">Return to blog list</a></p>';
         }
     </script>
 </body>
