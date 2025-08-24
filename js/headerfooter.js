@@ -3,9 +3,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   /**
    * Load an external HTML component into a placeholder div
-   * @param {string} file - Path to the HTML file (header.html / footer.html)
+   * @param {string} file - Path to the HTML file
    * @param {string} placeholderId - ID of the target placeholder div
-   * @param {function} callback - Function to run after the component is loaded
+   * @param {function} callback - Run after the component is loaded
    */
   async function loadComponent(file, placeholderId, callback) {
     try {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         placeholder.innerHTML = html;
       }
 
-      if (typeof callback === "function") callback();
+      if (typeof callback === "function") callback(placeholder);
     } catch (err) {
       console.error("Error loading component:", file, err);
     }
@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
   /**
    * Initialize Header Functionality
    */
-  function initHeader() {
-    const mobileToggle = document.querySelector(".hf-mobile-toggle");
-    const mobileMenu = document.querySelector(".hf-mobile-menu");
-    const mobileOverlay = document.querySelector(".hf-mobile-overlay");
-    const header = document.querySelector(".hf-header");
+  function initHeader(headerRoot) {
+    const mobileToggle = headerRoot.querySelector(".hf-mobile-toggle");
+    const mobileMenu   = headerRoot.querySelector(".hf-mobile-menu");
+    const mobileOverlay= headerRoot.querySelector(".hf-mobile-overlay");
+    const header       = headerRoot.querySelector(".hf-header");
 
     if (!mobileToggle || !mobileMenu || !mobileOverlay || !header) return;
 
@@ -40,18 +40,22 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileToggle.classList.toggle("active");
       mobileMenu.classList.toggle("active");
       mobileOverlay.classList.toggle("active");
-
-      // Prevent body scroll when menu is open
-      document.body.style.overflow = mobileMenu.classList.contains("active")
-        ? "hidden"
-        : "";
+      document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
     });
+
+    // Close menu helper
+    function closeMenu() {
+      mobileToggle.classList.remove("active");
+      mobileMenu.classList.remove("active");
+      mobileOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    }
 
     // Close menu on overlay click
     mobileOverlay.addEventListener("click", closeMenu);
 
     // Close menu when clicking any nav link
-    document.querySelectorAll(".hf-mobile-nav-link").forEach((link) => {
+    headerRoot.querySelectorAll(".hf-mobile-nav-link").forEach((link) => {
       link.addEventListener("click", closeMenu);
     });
 
@@ -70,8 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Smooth scroll for internal anchor links
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    // Smooth scroll for internal anchors
+    headerRoot.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         const target = document.querySelector(this.getAttribute("href"));
         if (target) {
@@ -80,21 +84,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
-
-    // Helper to close menu
-    function closeMenu() {
-      mobileToggle.classList.remove("active");
-      mobileMenu.classList.remove("active");
-      mobileOverlay.classList.remove("active");
-      document.body.style.overflow = "";
-    }
   }
 
   /**
    * Initialize Footer Functionality
    */
-  function initFooter() {
-    document.querySelectorAll(".hf-footer-links a[href^='#']").forEach((link) => {
+  function initFooter(footerRoot) {
+    footerRoot.querySelectorAll(".hf-footer-links a[href^='#']").forEach((link) => {
       link.addEventListener("click", function (e) {
         const target = document.querySelector(this.getAttribute("href"));
         if (target) {
