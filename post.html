@@ -1,89 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Post</title>
-
-  <!-- Blog CSS -->
-  <link rel="stylesheet" href="css/blogstyle.css">
-  <!-- Header + Footer CSS -->
-  <link rel="stylesheet" href="css/headerfooter.css">
-  <!-- Font Awesome (for icons in footer) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- JS to load header/footer -->
-  <script src="js/headerfooter.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    
+    <!-- Header + Footer CSS -->
+    <link rel="stylesheet" href="css/headerfooter.css">
+    
+    <!-- Font Awesome (for icons in footer) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- Header placeholder -->
-  <div id="header"></div>
+    <!-- load header from page header.html - Header Placeholder -->
+    <div id="header"></div>
     
-  <!-- BLOG POST MAIN -->
-  <main class="blog-container">
-    <div class="blog-content">
-      <article id="blog-post" class="blog-post">
-        <h1 id="post-title" class="blog-post-title"></h1>
-
-        <div class="blog-post-meta">
-          <span id="post-date"></span> • <span id="post-author"></span>
+    <main>
+        <div class="content">
+            <article id="blog-post">
+                <h1 id="post-title"></h1>
+                <div class="post-meta">
+                    <span id="post-date"></span> • <span id="post-author"></span>
+                </div>
+                <div id="post-content" class="post-content"></div>
+                
+                <div class="post-tags">
+                    <h3>Tags:</h3>
+                    <div id="post-tags-list"></div>
+                </div>
+            </article>
+            
+            <section class="comments">
+                <h2>Comments</h2>
+                <div id="comments-list"></div>
+                
+                <form id="comment-form">
+                    <h3>Add a Comment</h3>
+                    <div class="form-group">
+                        <label for="comment-author">Name:</label>
+                        <input type="text" id="comment-author" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment-text">Comment:</label>
+                        <textarea id="comment-text" rows="4" required></textarea>
+                    </div>
+                    <button type="submit">Submit Comment</button>
+                </form>
+            </section>
         </div>
-
-        <div id="post-content" class="blog-post-content"></div>
         
-        <div class="blog-post-tags">
-          <h3>Tags:</h3>
-          <div id="post-tags-list"></div>
-        </div>
-      </article>
-      
-      <!-- COMMENTS SECTION -->
-      <section class="blog-comments">
-        <h2>Comments</h2>
-        <div id="comments-list" class="blog-comments-list"></div>
+        <aside class="sidebar">
+            <h2>Recent Posts</h2>
+            <div id="recent-posts"></div>
+        </aside>
+    </main>
+    
+    <!-- load footer from page footer.html - Footer Placeholder -->
+    <div id="footer"></div>
+
+    <!-- JS to load header/footer -->
+    <script src="js/headerfooter.js" defer></script>
+    
+    <script src="js/bloghandler.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const postId = urlParams.get('id');
         
-        <form id="comment-form" class="blog-comment-form">
-          <h3>Add a Comment</h3>
-
-          <div class="blog-form-group">
-            <label for="comment-author">Name:</label>
-            <input type="text" id="comment-author" required>
-          </div>
-
-          <div class="blog-form-group">
-            <label for="comment-text">Comment:</label>
-            <textarea id="comment-text" rows="4" required></textarea>
-          </div>
-
-          <button type="submit" class="blog-btn">Submit Comment</button>
-        </form>
-      </section>
-    </div>
-    
-    <!-- SIDEBAR -->
-    <aside class="blog-sidebar">
-      <h2>Recent Posts</h2>
-      <div id="recent-posts"></div>
-    </aside>
-  </main>
-
-  <!-- Blog JS -->
-  <script src="js/bloghandler.js"></script>
-  <script>
-    // Get post ID from URL and load the post
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('id');
-    
-    if (postId) {
-      const blog = new Blog();
-      blog.loadPost(postId);
-    } else {
-      document.getElementById('blog-post').innerHTML =
-        '<p>Post not found. <a href="blog.html">Return to blog list</a></p>';
-    }
-  </script>
-
-  <!-- Footer placeholder -->
-  <div id="footer"></div>
+        if (postId) {
+            const blog = new Blog();
+            blog.loadPost(postId);
+        } else {
+            document.getElementById('blog-post').innerHTML = 
+                '<p>Post not found. <a href="blog.html">Return to blog list</a></p>';
+        }
+    </script>
 </body>
 </html>
