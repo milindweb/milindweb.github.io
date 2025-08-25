@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css/headerfooter.css">
   <script src="js/headerfooter.js" defer></script>
 
-  <!-- Clean Card CSS -->
+  <!-- Scoped CSS -->
   <style>
     :root {
       --white: #ffffff;
@@ -28,28 +28,25 @@
       --transition: 0.3s ease;
     }
 
-    body {
-      font-family: 'Poppins', sans-serif;
+    /* Scope ONLY inside main-content */
+    .main-content {
+      flex: 1;
       background: #f5f7fa;
-      color: var(--text-primary);
-      margin: 0;
-      line-height: 1.6;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      align-items: center;
+      padding: 2rem 1rem;
     }
 
-    .container {
+    .main-content .container {
       width: 100%;
       max-width: 1100px;
-      margin: auto;
-      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
     }
 
-    .card {
+    .main-content .card {
       background: var(--white);
       border-radius: var(--border-radius);
       padding: 2rem;
@@ -61,12 +58,12 @@
       gap: 1rem;
     }
 
-    .card:hover {
+    .main-content .card:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-lg);
     }
 
-    .card__header {
+    .main-content .card__header {
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -74,21 +71,17 @@
       font-weight: 600;
       color: var(--text-primary);
     }
-    .card__header i {
+    .main-content .card__header i {
       font-size: 1.2rem;
     }
-    .card__header--primary i { color: var(--primary-color); }
-    .card__header--warning i { color: var(--warning-color); }
+    .main-content .card__header--primary i { color: var(--primary-color); }
+    .main-content .card__header--warning i { color: var(--warning-color); }
 
-    .card p {
+    .main-content .card p {
       color: var(--text-secondary);
       margin-bottom: 1rem;
     }
-    .card p:last-child { margin-bottom: 0; }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {}
-    @media (max-width: 480px) {}
+    .main-content .card p:last-child { margin-bottom: 0; }
   </style>
 </head>
 <body>
@@ -96,40 +89,42 @@
   <div id="header"></div>
 
   <!-- MAIN CONTENT -->
-  <section class="container">
-    <!-- INTRO CARD -->
-    <div class="card">
-      <div class="card__header card__header--primary">
-        <i class="fas fa-handshake"></i> Welcome to Our Community
+  <main class="main-content">
+    <div class="container">
+      <!-- INTRO CARD -->
+      <div class="card">
+        <div class="card__header card__header--primary">
+          <i class="fas fa-handshake"></i> Welcome to Our Community
+        </div>
+        <p>We're excited to have you join us on a journey into the world of technology, coding, and innovation. This is your gateway to hands-on learning, where you'll explore limitless possibilities.</p>
+        <p>If you have any questions or need assistance, feel free to reach out. We're here to help! Your curiosity and enthusiasm for technology are what drive us, and we're dedicated to making your experience as informative and enjoyable as possible.</p>
+        <p>Simply fill out the form below to get in touch, and don't hesitate to ask any questions or share your thoughts. We're looking forward to connecting with you and sharing exciting technological opportunities.</p>
       </div>
-      <p>We're excited to have you join us on a journey into the world of technology, coding, and innovation. This is your gateway to hands-on learning, where you'll explore limitless possibilities.</p>
-      <p>If you have any questions or need assistance, feel free to reach out. We're here to help! Your curiosity and enthusiasm for technology are what drive us, and we're dedicated to making your experience as informative and enjoyable as possible.</p>
-      <p>Simply fill out the form below to get in touch, and don't hesitate to ask any questions or share your thoughts. We're looking forward to connecting with you and sharing exciting technological opportunities.</p>
-    </div>
 
-    <!-- DISCLAIMER CARD -->
-    <div class="card">
-      <div class="card__header card__header--warning">
-        <i class="fas fa-exclamation-circle"></i> Content Disclaimer
+      <!-- DISCLAIMER CARD -->
+      <div class="card">
+        <div class="card__header card__header--warning">
+          <i class="fas fa-exclamation-circle"></i> Content Disclaimer
+        </div>
+        <p>We respect intellectual property rights and make every effort to ensure compliance with copyright regulations. Some content may be sourced from publicly available materials, AI-generated content, or third-party references.</p>
+        <p>If you believe that any content infringes upon your copyright, please contact us immediately. Upon verification, we will promptly remove the material in question. We do not claim ownership of content not originally created by us.</p>
+        <p>All third-party trademarks and copyrighted materials are the property of their respective owners. Any references to such materials are for informational purposes only.</p>
       </div>
-      <p>We respect intellectual property rights and make every effort to ensure compliance with copyright regulations. Some content may be sourced from publicly available materials, AI-generated content, or third-party references.</p>
-      <p>If you believe that any content infringes upon your copyright, please contact us immediately. Upon verification, we will promptly remove the material in question. We do not claim ownership of content not originally created by us.</p>
-      <p>All third-party trademarks and copyrighted materials are the property of their respective owners. Any references to such materials are for informational purposes only.</p>
-    </div>
 
-    <!-- CONTACT FORM -->
-    <div id="form-container"></div>
-    <script>
-      fetch("contactform.html")
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById("form-container").innerHTML = html;
-          const script = document.createElement("script");
-          script.src = "js/form-handler.js";
-          document.body.appendChild(script);
-        });
-    </script>
-  </section>
+      <!-- CONTACT FORM -->
+      <div id="form-container"></div>
+      <script>
+        fetch("contactform.html")
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById("form-container").innerHTML = html;
+            const script = document.createElement("script");
+            script.src = "js/form-handler.js";
+            document.body.appendChild(script);
+          });
+      </script>
+    </div>
+  </main>
 
   <!-- Footer Placeholder -->
   <div id="footer"></div>
