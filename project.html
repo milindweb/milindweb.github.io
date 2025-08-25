@@ -39,7 +39,7 @@
     /* Hero */
     .hero {
       background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
-      color: white; text-align: center; padding: 80px 0;
+      color: white; text-align: center; padding: 80px 20px;
     }
     .hero h1 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 700; line-height: 1.3; }
     .hero p { font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.9; }
@@ -72,40 +72,49 @@
       font-weight: 600; text-align: center;
     }
 
-    /* Projects Grid */
-    .projects-grid {
-      display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px;
+    /* Project Table */
+    .projects-table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      margin: 30px 0; background-color: white;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden;
     }
-    .project-card {
-      flex: 1 1 260px; max-width: 300px; background: white;
-      padding: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .projects-table th, .projects-table td {
+      padding: 15px 20px; text-align: left; border-bottom: 1px solid #f0f0f0;
     }
-    .project-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-    .project-card .project-icon { font-size: 2rem; margin-bottom: 12px; }
-    .project-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
-    .project-card .btn-view {
-      display: inline-block; padding: 6px 12px; border-radius: 6px;
-      border: 1px solid var(--secondary); color: var(--secondary); text-decoration: none;
-      transition: var(--transition);
+    .projects-table th {
+      background-color: var(--primary); color: white; font-weight: 600; font-size: 1.1rem;
     }
-    .project-card .btn-view:hover { background: var(--secondary); color: white; }
+    .projects-table tr:last-child td { border-bottom: none; }
+    .projects-table tr:nth-child(even) { background-color: #f9f9f9; }
+    .projects-table tr:hover { background-color: #f5f7ff; }
+    .project-icon { font-size: 1.6rem; text-align: center; width: 50px; }
+    .project-link {
+      color: var(--secondary); text-decoration: none; font-weight: 600;
+      transition: var(--transition); display: inline-block; padding: 6px 12px;
+      border-radius: 4px; border: 1px solid var(--secondary); background: transparent;
+    }
+    .project-link:hover { color: white; background: var(--secondary); }
+    .info-note { margin-top: 20px; color: #555; font-size: 1rem; text-align: center; max-width: 800px; margin-left:auto; margin-right:auto; }
 
     /* Responsive */
     @media (max-width: 992px) { .hero h1 { font-size: 2.2rem; } }
-    @media (max-width: 768px) {
-      .hero { padding: 60px 0; } .hero h1 { font-size: 2rem; }
+    @media (max-width: 768px) { 
+      .hero { padding: 60px 20px; } .hero h1 { font-size: 2rem; } 
       .section-title { font-size: 1.8rem; }
-      .project-card { max-width: 100%; }
+      .projects-table th, .projects-table td { padding: 12px 10px; font-size: 0.95rem; }
     }
-    @media (max-width: 576px) { .hero h1 { font-size: 1.8rem; } .hero p { font-size: 1rem; .section-title { font-size: 1.6rem; } }    
+    @media (max-width: 576px) { 
+      .hero h1 { font-size: 1.8rem; } 
+      .hero p { font-size: 1rem; } 
+      .section-title { font-size: 1.6rem; } 
+    }
   </style>
 </head>
 <body>
   <!-- Header -->
   <div id="header"></div>
 
-  <!-- Hero -->
+  <!-- Hero Section -->
   <section class="hero">
     <div class="container">
       <h1>🚀 Final Year & Mini Projects – Turning Ideas Into Innovation</h1>
@@ -122,17 +131,12 @@
         <div class="domain-card"><div class="domain-icon"><i class="fas fa-bolt"></i></div><h3>Electrical Engineering</h3><p>Power Systems, Solar Projects, Motor Control, EV Systems</p></div>
         <div class="domain-card"><div class="domain-icon"><i class="fas fa-laptop-code"></i></div><h3>Computer Science & IT</h3><p>Python, AI/ML, Web & App Development, Cybersecurity</p></div>
         <div class="domain-card"><div class="domain-icon"><i class="fas fa-cogs"></i></div><h3>Instrumentation & Automation</h3><p>PLC, SCADA, Industrial Automation, Control Panels</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-cube"></i></div><h3>Simulation & Modeling</h3><p>MATLAB, Simulink, LabVIEW, Proteus, ANSYS</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-cogs"></i></div><h3>Mechanical Engineering</h3><p>Mechatronics, CAD/CAM, 3D Printing, Automation</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-building"></i></div><h3>Civil Engineering</h3><p>Smart Infrastructure, Survey, Green Building, Structural Analysis</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-robot"></i></div><h3>AI & IoT Applications</h3><p>Smart Cities, Defense, Smart Health, Home Automation</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-tools"></i></div><h3>DIY Mini Projects</h3><p>Quick-build, budget-friendly practicals for workshops and exams</p></div>
       </div>
     </div>
   </section>
 
   <!-- Why Choose Us -->
-  <section class="section" style="background-color: #f0f7ff;">
+  <section class="section" style="background-color:#f0f7ff;">
     <div class="container">
       <h2 class="section-title">✅ Why Choose MilindWeb?</h2>
       <div class="benefits-container">
@@ -140,8 +144,6 @@
           <div class="benefit-item"><div class="benefit-icon">🔧</div><div><h3>Ready-to-Implement</h3><p>Fully tested and functional with documentation</p></div></div>
           <div class="benefit-item"><div class="benefit-icon">📄</div><div><h3>Complete Package</h3><p>Code, PPT, Report, Circuit Diagrams included</p></div></div>
           <div class="benefit-item"><div class="benefit-icon">💸</div><div><h3>Affordable & Customizable</h3><p>Designed to fit every student's budget and requirement</p></div></div>
-          <div class="benefit-item"><div class="benefit-icon">🧑‍🏫</div><div><h3>Expert Mentorship</h3><p>One-on-one support from concept to final submission</p></div></div>
-          <div class="benefit-item"><div class="benefit-icon">🏆</div><div><h3>Industry-Relevant</h3><p>Projects matching current skills demanded by employers</p></div></div>
         </div>
         <div class="highlight-box">
           ✅ Projects available for all branches. Custom projects accepted.<br>
@@ -151,53 +153,59 @@
     </div>
   </section>
 
-  <!-- Project Showcase -->
+  <!-- Project Showcase Table -->
   <section class="section">
     <div class="container">
       <h2 class="section-title">📁 Project Showcase</h2>
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-icon">⚡</div>
-          <h3>Smart Home Automation using ESP32 & Blynk</h3>
-          <a href="#" class="btn-view">View Project</a>
-        </div>
-        <div class="project-card">
-          <div class="project-icon">🔧</div>
-          <h3>Industrial Automation using PLC & SCADA</h3>
-          <a href="#" class="btn-view">View Project</a>
-        </div>
-        <div class="project-card">
-          <div class="project-icon">💡</div>
-          <h3>AI-Based Fire & Smoke Detection System</h3>
-          <a href="#" class="btn-view">View Project</a>
-        </div>
-        <div class="project-card">
-          <div class="project-icon">🌞</div>
-          <h3>Solar-Powered EV Charging Station</h3>
-          <a href="#" class="btn-view">View Project</a>
-        </div>
-        <div class="project-card">
-          <div class="project-icon">🏗️</div>
-          <h3>Intelligent Traffic Management with AI & IoT</h3>
-          <a href="#" class="btn-view">View Project</a>
-        </div>
-        <div class="project-card">
-          <div class="project-icon">🖥️</div>
-          <h3>Cybersecurity Threat Monitor using Python</h3>
-          <a href="#" class="btn-view">View Project</a>
-        </div>
-      </div>
-      <p class="info-note" style="text-align:center; margin-top:20px; max-width:800px; margin-left:auto; margin-right:auto;">
-        This is not an exhaustive list; we have a wide range of projects. Custom projects are also available on request.
+      <table class="projects-table">
+        <thead>
+          <tr><th style="width:50px;">Icon</th><th>Project Name</th><th style="width:120px;">View</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="project-icon">⚡</td>
+            <td>Smart Home Automation using ESP32 & Blynk</td>
+            <td><a href="#" class="project-link">View</a></td>
+          </tr>
+          <tr>
+            <td class="project-icon">🔧</td>
+            <td>Industrial Automation using PLC & SCADA</td>
+            <td><a href="#" class="project-link">View</a></td>
+          </tr>
+          <tr>
+            <td class="project-icon">💡</td>
+            <td>AI-Based Fire & Smoke Detection System</td>
+            <td><a href="#" class="project-link">View</a></td>
+          </tr>
+          <tr>
+            <td class="project-icon">🌞</td>
+            <td>Solar-Powered EV Charging Station</td>
+            <td><a href="#" class="project-link">View</a></td>
+          </tr>
+          <tr>
+            <td class="project-icon">🏗️</td>
+            <td>Intelligent Traffic Management with AI & IoT</td>
+            <td><a href="#" class="project-link">View</a></td>
+          </tr>
+          <tr>
+            <td class="project-icon">🖥️</td>
+            <td>Cybersecurity Threat Monitor using Python</td>
+            <td><a href="#" class="project-link">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="info-note">
+        This is not an exhaustive list of projects; we have a wide range of options available. You can also request a custom project tailored to your requirements. Our team will design and deliver projects according to your needs. Please feel free to contact us for more information.
       </p>
     </div>
   </section>
 
   <!-- Contact & Enquiry -->
-  <section class="section" style="background-color: #f0f7ff;">
+  <section class="section" style="background-color:#f0f7ff;">
     <div class="container">
       <h2 class="section-title">📞 Contact & Enquiry</h2>
-      <p style="text-align:center; max-width:800px; margin:0 auto 30px;">Fill out our enquiry form and our team will respond promptly!</p>
+      <p style="text-align:center; max-width:800px; margin:0 auto 30px;">
+        Fill out our enquiry form and our team will respond promptly!
+      </p>
       <div id="form-container"></div>
       <script>
         fetch("contactform.html")
