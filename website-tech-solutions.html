@@ -1,207 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milindweb - Professional web design and Digital Solutions</title>
-      <!-- Header + Footer CSS -->
-  <link rel="stylesheet" href="css/headerfooter.css">
-  <!-- Font Awesome (for icons in footer) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Milindweb - Professional web design and Digital Solutions</title>
+
+  <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- JS to load header/footer -->
   <script src="js/headerfooter.js" defer></script>
-    <style>
-        /* Base Styles */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        
-        /* Flexbox Container Styles */
-        .services-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin: 40px 0;
-        }
-        
-        .service-card {
-            flex: 1 1 300px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .benefits-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .benefit-item {
-            flex: 1 1 200px;
-            background: #e8f4f8;
-            padding: 15px;
-            border-left: 4px solid #3498db;
-            border-radius: 4px;
-        }
-        
-        /* Responsive Contact Form */
-        .contact-form {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 30px;
-        }
-        
-        .name, .email {
-            flex: 1 0 120px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        .email {
-            flex: 1 0 140px;
-        }
-        
-        button {
-            flex: 1 0 60px;
-            background: #3498db;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        button:hover {
-            background: #2980b9;
-        }
-        
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .service-card {
-                flex: 1 1 100%;
-            }
-            
-            .benefit-item {
-                flex: 1 1 100%;
-            }
-        }
-        
-        /* Decorative Elements */
-        .divider {
-            height: 2px;
-            background: linear-gradient(to right, transparent, #3498db, transparent);
-            margin: 40px 0;
-            border: none;
-        }
-        
-        .cta-section {
-            text-align: center;
-            margin: 50px 0;
-            padding: 30px;
-            background: #f0f8ff;
-            border-radius: 8px;
-        }
-    </style>
+
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    h1, h2, h3 {
+      color: #2c3e50;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    /* Flexbox Container Styles */
+    .services-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 30px 0;
+      justify-content: center;
+    }
+
+    .service-card {
+      flex: 1 1 260px;
+      max-width: 360px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .service-card h3 {
+      margin-bottom: 12px;
+    }
+
+    /* Benefits Grid */
+    .benefits-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 25px 0;
+      justify-content: center;
+    }
+
+    .benefit-item {
+      flex: 1 1 220px;
+      max-width: 280px;
+      background: #e8f4f8;
+      padding: 12px 15px;
+      border-left: 4px solid #3498db;
+      border-radius: 6px;
+    }
+
+    /* Contact Form Flex */
+    .contact-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .name, .email {
+      flex: 1 1 200px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      flex: 1 0 120px;
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    /* Decorative */
+    .divider {
+      height: 2px;
+      background: linear-gradient(to right, transparent, #3498db, transparent);
+      margin: 35px 0;
+      border: none;
+    }
+
+    .cta-section {
+      text-align: center;
+      margin: 40px 0;
+      padding: 25px;
+      background: #f0f8ff;
+      border-radius: 8px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      body {
+        padding: 0 12px;
+      }
+      .service-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+      .benefit-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+      button {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- load header from page header.html - Header Placeholder -->
+  <!-- Header Placeholder -->
   <div id="header"></div>
 
-    <main>
-        <h1>Professional Digital Solutions for Students & Startups</h1>
-        <p class="subtitle">Your One-Stop Hub for Smart Tech Services</p>
-        
-        <p>I provide modern, reliable, and affordable digital solutions to help students, startups, and small businesses grow faster in the digital world.</p>
-        
-        <hr class="divider">
-        
-        <h2>Services I Offer</h2>
-        
-        <div class="services-container">
-            <div class="service-card">
-                <h3>🌐 Website Design & Custom Scripts</h3>
-                <ul>
-                    <li>Responsive and SEO-friendly websites</li>
-                    <li>Portfolio, business, and e-commerce sites</li>
-                    <li>Custom HTML, CSS, and JavaScript scripts</li>
-                    <li>Integration with Google Sheets & APIs</li>
-                </ul>
-            </div>
-            
-            <div class="service-card">
-                <h3>📱 Android Apps Development</h3>
-                <ul>
-                    <li>Lightweight, user-friendly apps</li>
-                    <li>Educational & productivity apps</li>
-                    <li>Custom apps for startups and small businesses</li>
-                    <li>Kodular, Android Studio & Flutter solutions</li>
-                </ul>
-            </div>
-            
-            <div class="service-card">
-                <h3>💻 Software Development</h3>
-                <ul>
-                    <li>Tailor-made software for academic and business needs</li>
-                    <li>Tools for automation, reporting, and management</li>
-                    <li>Cross-platform compatibility (Windows/Linux)</li>
-                    <li>Data management & analytics solutions</li>
-                </ul>
-            </div>
-            
-            <div class="service-card">
-                <h3>🎓 Smart Tools for Students & Startups</h3>
-                <ul>
-                    <li>DIY electronic & coding projects</li>
-                    <li>Study aids and academic utilities</li>
-                    <li>Business productivity tools</li>
-                    <li>Custom calculators & digital utilities</li>
-                </ul>
-            </div>
-        </div>
-        
-        <hr class="divider">
-        
-        <h2>Why Choose My Services?</h2>
-        
-        <div class="benefits-grid">
-            <div class="benefit-item">✅ Affordable & Student-Friendly Pricing</div>
-            <div class="benefit-item">✅ Easy-to-Use Interfaces</div>
-            <div class="benefit-item">✅ Fast Delivery & Reliable Support</div>
-            <div class="benefit-item">✅ Custom Solutions Built for Your Needs</div>
-        </div>
-        
-        <div class="cta-section">
-            <h2>Let's Build Something Great Together!</h2>
-            <p>Whether you are a student looking for project help or a startup aiming to scale digitally, I provide the right tools and solutions to make it happen.</p>
-            
-            <form class="contact-form">
-                <input type="text" class="name" placeholder="Your Name">
-                <input type="email" class="email" placeholder="Your Email">
-                <button type="submit">Send</button>
-            </form>
-        </div>
-    </main>
-  <!-- load footer from page footer.html -Footer Placeholder -->
+  <main>
+    <h1>Professional Digital Solutions for Students & Startups</h1>
+    <p class="subtitle">Your One-Stop Hub for Smart Tech Services</p>
+    <p>I provide modern, reliable, and affordable digital solutions to help students, startups, and small businesses grow faster in the digital world.</p>
+
+    <hr class="divider" />
+
+    <h2>Services I Offer</h2>
+    <div class="services-container">
+      <div class="service-card">
+        <h3>🌐 Website Design & Custom Scripts</h3>
+        <ul>
+          <li>Responsive and SEO-friendly websites</li>
+          <li>Portfolio, business, and e-commerce sites</li>
+          <li>Custom HTML, CSS, and JavaScript scripts</li>
+          <li>Integration with Google Sheets & APIs</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3>📱 Android Apps Development</h3>
+        <ul>
+          <li>Lightweight, user-friendly apps</li>
+          <li>Educational & productivity apps</li>
+          <li>Custom apps for startups and small businesses</li>
+          <li>Kodular, Android Studio & Flutter solutions</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3>💻 Software Development</h3>
+        <ul>
+          <li>Tailor-made software for academic and business needs</li>
+          <li>Tools for automation, reporting, and management</li>
+          <li>Cross-platform compatibility (Windows/Linux)</li>
+          <li>Data management & analytics solutions</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <h3>🎓 Smart Tools for Students & Startups</h3>
+        <ul>
+          <li>DIY electronic & coding projects</li>
+          <li>Study aids and academic utilities</li>
+          <li>Business productivity tools</li>
+          <li>Custom calculators & digital utilities</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <h2>Why Choose My Services?</h2>
+    <div class="benefits-grid">
+      <div class="benefit-item">✅ Affordable & Student-Friendly Pricing</div>
+      <div class="benefit-item">✅ Easy-to-Use Interfaces</div>
+      <div class="benefit-item">✅ Fast Delivery & Reliable Support</div>
+      <div class="benefit-item">✅ Custom Solutions Built for Your Needs</div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Let's Build Something Great Together!</h2>
+      <p>Whether you are a student looking for project help or a startup aiming to scale digitally, I provide the right tools and solutions to make it happen.</p>
+    </div>
+  </main>
+
+  <!-- Contact Form Load -->
+  <div id="form-container"></div>
+  <script>
+    fetch("contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
+<!-- Footer Placeholder -->
   <div id="footer"></div>
+
 </body>
 </html>
