@@ -3,63 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MilindWeb - Graphics & Video Design</title>
+  <title>MilindWeb - Creative Graphics & Video Editing</title>
 
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
-  <!-- Font Awesome (for footer icons) -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- Header + Footer JS -->
+  <!-- Header + Footer Loader -->
   <script src="js/headerfooter.js" defer></script>
 
   <style>
     :root {
-      --white: #ffffff;
-      --bg-light: #f5f7fa;
-      --text-dark: #222222;
-      --text-muted: #555555;
+      --white: #fff;
+      --bg: #f5f7fa;
+      --text: #222;
+      --muted: #555;
       --primary: #005bea;
-      --primary-light: #00c6fb;
+      --secondary: #00c6fb;
       --border: #e5e7eb;
       --radius: 14px;
       --shadow: 0 2px 8px rgba(0,0,0,0.08);
-      --shadow-hover: 0 4px 16px rgba(0,0,0,0.15);
+      --shadow-hover: 0 4px 14px rgba(0,0,0,0.15);
       --transition: 0.3s ease;
     }
 
     body {
       margin: 0;
       font-family: "Poppins", Arial, sans-serif;
-      background: var(--bg-light);
-      color: var(--text-dark);
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
     }
 
-    /* HERO */
-    .hero-section {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: var(--white);
-      text-align: center;
-      padding: 3rem 1rem;
-    }
-    .hero-section h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    .hero-section p {
-      max-width: 720px;
-      margin: 0 auto;
-      font-size: 1rem;
-    }
-
-    /* LAYOUT */
+    /* Section Wrapper */
     .main-content {
       padding: 2rem 1rem;
       max-width: 1200px;
       margin: auto;
     }
+
     .section-title {
       text-align: center;
       font-size: 1.6rem;
@@ -67,7 +49,7 @@
       margin-bottom: 1.5rem;
     }
 
-    /* FLEX CONTAINER */
+    /* Flex/Grid */
     .flex-wrap {
       display: flex;
       flex-wrap: wrap;
@@ -75,7 +57,7 @@
       justify-content: center;
     }
 
-    /* CARDS */
+    /* Card */
     .card {
       background: var(--white);
       border-radius: var(--radius);
@@ -83,14 +65,18 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
       transition: var(--transition);
+      flex: 1 1 280px;
+      max-width: 320px;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
     }
+
     .card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-hover);
     }
+
     .card__header {
       display: flex;
       align-items: center;
@@ -98,69 +84,55 @@
       font-weight: 600;
       font-size: 1.1rem;
     }
+
     .card__header i {
       font-size: 1.4rem;
       color: var(--primary);
     }
+
     .card p {
       font-size: 0.95rem;
-      color: var(--text-muted);
+      color: var(--muted);
       margin: 0;
     }
 
-    /* SMALL CARD (Services & Gallery) */
-    .card.small {
-      flex: 1 1 260px;
-      max-width: 320px;
-    }
-
-    /* FULL-WIDTH CARD (Intro & Contact) */
+    /* Full-width Card */
     .card.full {
       flex: 1 1 100%;
       max-width: 100%;
     }
 
-    /* CARD IMAGE */
-    .card-img {
+    /* Images */
+    .card img {
       width: 100%;
       border-radius: var(--radius);
       object-fit: cover;
       height: 180px;
       transition: transform 0.3s ease;
     }
-    .card-img:hover {
+    .card img:hover {
       transform: scale(1.05);
     }
 
-    /* HIGHLIGHT */
-    .highlight {
-      border-left: 4px solid var(--primary);
-    }
-
-    /* RESPONSIVE */
+    /* Responsive */
     @media (max-width: 600px) {
-      .hero-section h1 {
-        font-size: 1.6rem;
+      .section-title {
+        font-size: 1.3rem;
       }
-      .hero-section p {
-        font-size: 0.9rem;
+      .card {
+        flex: 1 1 100%;
+        max-width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header Placeholder -->
+  <!-- Header -->
   <div id="header"></div>
 
-  <!-- HERO -->
-  <section class="hero-section">
-    <h1>Creative Graphics & Video</h1>
-    <p>Custom banners, invitations, logos, and video edits — crafted with passion and precision for events, branding, and social media.</p>
-  </section>
-
-  <!-- INTRO CARD (full width) -->
+  <!-- INTRO -->
   <section class="main-content">
-    <div class="card full highlight">
+    <div class="card full">
       <div class="card__header"><i class="bi bi-stars"></i> <span>Intro</span></div>
       <p><strong>Creative Graphics & Video Editing</strong></p>
       <p>We design custom advertisements, banners, cards, logos, and video edits for your events, brand, and social media presence.</p>
@@ -168,44 +140,44 @@
   </section>
 
   <!-- SERVICES -->
-  <main class="main-content">
+  <section class="main-content">
     <h2 class="section-title">Services</h2>
     <div class="flex-wrap">
-      <div class="card small">
+      <div class="card">
         <div class="card__header"><i class="bi bi-brush"></i> <span>Banners</span></div>
-        <p>Custom banners for birthdays, anniversaries, and promotional events.</p>
+        <p>Custom banners for birthdays, anniversaries, and promotions.</p>
       </div>
-      <div class="card small">
+      <div class="card">
         <div class="card__header"><i class="bi bi-heart-fill"></i> <span>Invites</span></div>
-        <p>Elegant wedding & invitation cards tailored to your style.</p>
+        <p>Elegant wedding & invitation cards designed to your style.</p>
       </div>
-      <div class="card small">
+      <div class="card">
         <div class="card__header"><i class="bi bi-palette-fill"></i> <span>Logos</span></div>
-        <p>Professional logos & branding kits for a strong identity.</p>
+        <p>Professional logos & branding kits for a unique identity.</p>
       </div>
-      <div class="card small">
+      <div class="card">
         <div class="card__header"><i class="bi bi-camera-video"></i> <span>Videos</span></div>
-        <p>Reels, intros, ads & vlogs — edited for impact and growth.</p>
+        <p>Reels, intros, ads & vlogs — edited for engagement and growth.</p>
       </div>
     </div>
-  </main>
+  </section>
 
   <!-- GALLERY -->
   <section class="main-content">
     <h2 class="section-title">Showcase</h2>
     <div class="flex-wrap">
-      <div class="card small"><img src="img/graphics/birthday.jpg" alt="Birthday Banner" class="card-img"></div>
-      <div class="card small"><img src="img/graphics/wedding.jpg" alt="Wedding Card" class="card-img"></div>
-      <div class="card small"><img src="img/graphics/logo.jpg" alt="Logo Design" class="card-img"></div>
-      <div class="card small"><img src="img/graphics/video.jpg" alt="Video Editing" class="card-img"></div>
+      <div class="card"><img src="img/graphics/birthday.jpg" alt="Birthday Banner"></div>
+      <div class="card"><img src="img/graphics/wedding.jpg" alt="Wedding Card"></div>
+      <div class="card"><img src="img/graphics/logo.jpg" alt="Logo Design"></div>
+      <div class="card"><img src="img/graphics/video.jpg" alt="Video Editing"></div>
     </div>
   </section>
 
-  <!-- CTA + CONTACT (full width) -->
+  <!-- CONTACT -->
   <section class="main-content">
-    <div class="card full highlight">
+    <div class="card full">
       <div class="card__header"><i class="bi bi-envelope"></i> <span>Contact</span></div>
-      <p>Let’s create something amazing together! Fill out the form below to start your custom project.</p>
+      <p>Let’s create something amazing together! Fill out the form below to start your project.</p>
       <div id="form-container"></div>
       <script>
         fetch("contactform.html")
@@ -220,7 +192,7 @@
     </div>
   </section>
 
-  <!-- Footer Placeholder -->
+  <!-- Footer -->
   <div id="footer"></div>
 </body>
 </html>
