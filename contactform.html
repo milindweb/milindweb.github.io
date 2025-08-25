@@ -1,4 +1,4 @@
-<div class="container">
+<div class="contact-form-wrapper">
   <h2>Contact Us</h2>
   <form id="contactForm">
     <div class="form-row">
@@ -41,42 +41,40 @@
 </div>
 
 <style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f7fa;
-    margin: 0;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  .container {
+  .contact-form-wrapper {
     background: #fff;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     width: 100%;
     max-width: 600px;
+    margin: 0 auto;
   }
-  h2 {
+
+  .contact-form-wrapper h2 {
     text-align: center;
     margin-bottom: 12px;
     color: #333;
     font-size: 20px;
   }
-  .form-row {
+
+  .contact-form-wrapper .form-row {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 8px;
   }
-  label {
-    flex: 0 0 100px; /* fixed width for labels */
+
+  .contact-form-wrapper label {
+    flex: 0 0 100px;
     font-size: 13px;
     font-weight: 500;
     color: #444;
   }
-  input, select, textarea {
+
+  .contact-form-wrapper input,
+  .contact-form-wrapper select,
+  .contact-form-wrapper textarea {
     flex: 1;
     padding: 6px 8px;
     border: 1px solid #ccc;
@@ -85,16 +83,21 @@
     min-height: 32px;
     transition: border 0.2s, box-shadow 0.2s;
   }
-  input:focus, select:focus, textarea:focus {
+
+  .contact-form-wrapper input:focus,
+  .contact-form-wrapper select:focus,
+  .contact-form-wrapper textarea:focus {
     border-color: #0056b3;
     box-shadow: 0 0 4px rgba(0,86,179,0.3);
     outline: none;
   }
-  textarea {
+
+  .contact-form-wrapper textarea {
     min-height: 60px;
     resize: vertical;
   }
-  button {
+
+  .contact-form-wrapper button {
     background: #0056b3;
     color: white;
     font-size: 15px;
@@ -105,43 +108,49 @@
     width: 100%;
     transition: background 0.2s, transform 0.2s;
   }
-  button:hover {
+
+  .contact-form-wrapper button:hover {
     background: #004080;
     transform: translateY(-1px);
   }
-  .error-msg {
+
+  .contact-form-wrapper .error-msg {
     color: red;
     font-size: 12px;
-    margin: -4px 0 6px 108px; /* aligns with inputs */
+    margin: -4px 0 6px 108px;
     display: none;
   }
-  .alert {
+
+  .contact-form-wrapper .alert {
     text-align: center;
     font-weight: 500;
     margin-top: 10px;
     padding: 6px;
     border-radius: 6px;
   }
-  .success {
+
+  .contact-form-wrapper .success {
     background: #e6f9ed;
     color: #155724;
     border: 1px solid #c3e6cb;
   }
-  .error {
+
+  .contact-form-wrapper .error {
     background: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
   }
+
   @media (max-width: 480px) {
-    .form-row {
+    .contact-form-wrapper .form-row {
       flex-direction: column;
       align-items: stretch;
     }
-    label {
+    .contact-form-wrapper label {
       flex: none;
       width: 100%;
     }
-    .error-msg {
+    .contact-form-wrapper .error-msg {
       margin-left: 0;
     }
   }
