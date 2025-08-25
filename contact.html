@@ -3,14 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Milindweb - Contact Us for business, any query, registration</title>
+  <title>Milindweb - Contact Us for Business, Queries, Registration</title>
+  
+  <!-- Fonts & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <!-- Header + Footer CSS -->
   <link rel="stylesheet" href="css/headerfooter.css">
+  
   <!-- JS to load header/footer -->
   <script src="js/headerfooter.js" defer></script>
+
+  <!-- Clean Card/Grid CSS Theme -->
   <style>
+    :root {
+      --white: #ffffff;
+      --text-primary: #222222;
+      --text-secondary: #555555;
+      --primary-color: #3498db;
+      --warning-color: #ffc107;
+      --border-light: #e5e7eb;
+      --border-radius: 12px;
+      --shadow-md: 0 2px 6px rgba(0,0,0,0.08);
+      --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+      --transition: 0.3s ease;
+    }
+
     /* RESET + GLOBAL */
     * {
       margin: 0;
@@ -18,14 +37,16 @@
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
+
     body {
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       background: #f5f7fa;
-      color: #333;
+      color: var(--text-primary);
       line-height: 1.6;
     }
+
     .container {
       width: 100%;
       max-width: 1100px;
@@ -36,7 +57,7 @@
       gap: 1.5rem;
     }
 
-    /* HERO */
+    /* HERO SECTION */
     .hero {
       display: flex;
       flex-direction: column;
@@ -44,10 +65,11 @@
       align-items: center;
       padding: 3rem 1rem;
       text-align: center;
-      background: linear-gradient(rgba(44,62,80,0.9), rgba(44,62,80,0.95)),
+      background: linear-gradient(rgba(44,62,80,0.85), rgba(44,62,80,0.9)),
                   url("https://picsum.photos/1200/400?blur") center/cover;
       color: #fff;
     }
+
     .hero h2 {
       font-size: 2.2rem;
       margin-bottom: 0.8rem;
@@ -58,47 +80,69 @@
       opacity: 0.85;
     }
 
-    /* INTRO + DISCLAIMER */
-    .intro, .disclaimer-box {
-      background: #fff;
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    /* MAIN CONTENT GRID */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    /* CLEAN CARD STYLE */
+    .card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-light);
+      transition: var(--transition);
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      transition: transform 0.25s ease;
     }
-    .intro:hover { transform: translateY(-4px); }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
 
-    .intro h3, .disclaimer-box h4 {
+    .card__header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 1.3rem;
-      color: #2c3e50;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
     }
-    .intro h3 i { color: #3498db; }
-    .disclaimer-box {
-      background: #fff8e1;
-      border-left: 4px solid #ffc107;
+
+    .card__header i {
+      font-size: 1.2rem;
     }
-    .disclaimer-box h4 { color: #e65100; }
+
+    .card__header--primary i { color: var(--primary-color); }
+    .card__header--warning i { color: var(--warning-color); }
+
+    .card p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .card p:last-child { margin-bottom: 0; }
 
     /* FORM CONTAINER */
     .form-container {
-      background: #fff;
-      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      padding: 0;
     }
+
     .form-header {
-      background: linear-gradient(90deg, #3498db, #2c3e50);
+      background: linear-gradient(90deg, var(--primary-color), #2c3e50);
       color: #fff;
       text-align: center;
       padding: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
     }
-    .form-header h3 { font-size: 1.4rem; }
+
     .google-form-container {
       width: 100%;
       height: 700px;
@@ -109,62 +153,61 @@
       border: none;
     }
 
-    /* FLEX CLEANUP */
-    .content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
     /* RESPONSIVE */
     @media (max-width: 768px) {
       .hero h2 { font-size: 1.8rem; }
       .hero p { font-size: 0.95rem; }
-      .intro, .disclaimer-box { padding: 1.2rem; }
       .google-form-container { height: 950px; }
     }
     @media (max-width: 480px) {
       .hero { padding: 2.5rem 1rem; }
       .hero h2 { font-size: 1.6rem; }
-      .form-header h3 { font-size: 1.2rem; }
       .google-form-container { height: 1100px; }
     }
   </style>
 </head>
 <body>
-  <!-- load header from page header.html - Header Placeholder -->
+  <!-- Header Placeholder -->
   <div id="header"></div>
 
-  <!-- Hero Section -->
+  <!-- HERO SECTION -->
   <section class="hero">
     <div class="container">
       <h2>Contact Us</h2>
-      <p>Have questions? We're here to help you on your journey into technology and innovation</p>
+      <p>Have questions? We're here to help you on your journey into technology and innovation.</p>
     </div>
   </section>
 
-  <!-- Main Content -->
+  <!-- MAIN CONTENT -->
   <section class="content">
     <div class="container">
-      <!-- Introduction Section -->
-      <div class="intro">
-        <h3><i class="fas fa-handshake"></i> Welcome to Our Community</h3>
+      <!-- INTRO CARD -->
+      <div class="card">
+        <div class="card__header card__header--primary">
+          <i class="fas fa-handshake"></i> Welcome to Our Community
+        </div>
         <p>We're excited to have you join us on a journey into the world of technology, coding, and innovation. This is your gateway to hands-on learning, where you'll explore limitless possibilities.</p>
-        <p>If you have any questions or need assistance, feel free to reach out to us. We're here to help! Your curiosity and enthusiasm for technology are what drive us, and we're dedicated to making your experience as informative and enjoyable as possible.</p>
-        <p>Simply fill out the form below to get in touch, and don't hesitate to ask any questions or share your thoughts with us. We're looking forward to connecting with you and sharing exciting technological opportunities.</p>
+        <p>If you have any questions or need assistance, feel free to reach out. We're here to help! Your curiosity and enthusiasm for technology are what drive us, and we're dedicated to making your experience as informative and enjoyable as possible.</p>
+        <p>Simply fill out the form below to get in touch, and don't hesitate to ask any questions or share your thoughts. We're looking forward to connecting with you and sharing exciting technological opportunities.</p>
       </div>
 
-      <!-- Disclaimer Section -->
-      <div class="disclaimer-box">
-        <h4><i class="fas fa-exclamation-circle"></i> Content Disclaimer</h4>
-        <p>We respect intellectual property rights and make every effort to ensure compliance with copyright regulations. Some content on this website may be sourced from publicly available materials, AI-generated content, or third-party references.</p>
-        <p>If you believe that any content infringes upon your copyright, please contact us immediately. Upon verification, we will promptly remove the material in question. We do not claim ownership or credit for copyrighted content not originally created by us.</p>
+      <!-- DISCLAIMER CARD -->
+      <div class="card">
+        <div class="card__header card__header--warning">
+          <i class="fas fa-exclamation-circle"></i> Content Disclaimer
+        </div>
+        <p>We respect intellectual property rights and make every effort to ensure compliance with copyright regulations. Some content may be sourced from publicly available materials, AI-generated content, or third-party references.</p>
+        <p>If you believe that any content infringes upon your copyright, please contact us immediately. Upon verification, we will promptly remove the material in question. We do not claim ownership of content not originally created by us.</p>
         <p>All third-party trademarks and copyrighted materials are the property of their respective owners. Any references to such materials are for informational purposes only.</p>
       </div>
 
-      <!-- Contact Form -->
-      <div id="form-container"></div>
+      <!-- CONTACT FORM CARD -->
+      <div class="card form-container">
+        <div class="form-header">Get in Touch</div>
+        <div class="google-form-container" id="form-container"></div>
+      </div>
+
+      <!-- Load Contact Form -->
       <script>
         fetch("contactform.html")
           .then(res => res.text())
@@ -178,7 +221,7 @@
     </div>
   </section>
 
-  <!-- load footer from page footer.html - Footer Placeholder -->
+  <!-- Footer Placeholder -->
   <div id="footer"></div>
 </body>
 </html>
