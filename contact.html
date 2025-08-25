@@ -102,7 +102,16 @@
       transform: rotate(180deg);
     }
 
-    /* Keep contact form always visible */
+    /* Always visible cards */
+    .card.always-visible .card__header {
+      cursor: default;
+      background: #fdfdfd;
+    }
+    .card.always-visible .card__content {
+      display: block !important;
+    }
+
+    /* Contact form always visible */
     #form-container {
       background: var(--white);
       border: 1px solid var(--border-light);
@@ -119,6 +128,16 @@
   <!-- MAIN CONTENT -->
   <main class="main-content">
     <div class="container">
+
+      <!-- About & Services (Always Visible at Top) -->
+      <div class="card always-visible">
+        <div class="card__header card__header--primary">
+          <span><i class="fas fa-briefcase"></i> About & Services</span>
+        </div>
+        <div class="card__content">
+          <p>Hi, I’m Milind 👋 — creator of MilindWeb, a platform dedicated to creativity, learning, and small business services. I support businesses in expanding their online presence through SEO & Digital Marketing, design clean and responsive websites, develop custom software tools for automation, craft logos, posters, and visual branding, and conduct projects and workshops that deliver practical, hands-on learning experiences.</p>
+        </div>
+      </div>
 
       <!-- Privacy Policy -->
       <div class="card">
@@ -164,17 +183,6 @@
         </div>
       </div>
 
-      <!-- About & Services -->
-      <div class="card">
-        <div class="card__header card__header--primary">
-          <span><i class="fas fa-briefcase"></i> About & Services</span>
-          <i class="fas fa-chevron-down card__toggle"></i>
-        </div>
-        <div class="card__content">
-          <p>Hi, I’m Milind 👋 — creator of MilindWeb, a platform dedicated to creativity, learning, and small business services. I support businesses in expanding their online presence through SEO & Digital Marketing, design clean and responsive websites, develop custom software tools for automation, craft logos, posters, and visual branding, and conduct projects and workshops that deliver practical, hands-on learning experiences.</p>
-        </div>
-      </div>
-
       <!-- Feedback & Suggestions -->
       <div class="card">
         <div class="card__header card__header--success">
@@ -186,7 +194,7 @@
         </div>
       </div>
 
-      <!-- Contact Form (Always Visible) -->
+      <!-- Contact Form (Always Visible at Bottom) -->
       <div id="form-container"></div>
       <script>
         fetch("contactform.html")
@@ -207,10 +215,12 @@
   <!-- Accordion Script -->
   <script>
     document.querySelectorAll('.card__header').forEach(header => {
-      header.addEventListener('click', () => {
-        const card = header.parentElement;
-        card.classList.toggle('active');
-      });
+      if (!header.parentElement.classList.contains('always-visible')) {
+        header.addEventListener('click', () => {
+          const card = header.parentElement;
+          card.classList.toggle('active');
+        });
+      }
     });
   </script>
 </body>
