@@ -13,8 +13,8 @@
   <script src="js/headerfooter.js" defer></script>
 
   <style>
-    /* Base Styles */
-    body {
+    /* Limit all custom styling only inside <main> */
+    main {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.6;
       color: #333;
@@ -23,18 +23,20 @@
       padding: 0 16px;
     }
 
-    h1, h2, h3 {
+    main h1, 
+    main h2, 
+    main h3 {
       color: #2c3e50;
     }
 
-    .subtitle {
+    main .subtitle {
       font-size: 1.1rem;
       color: #555;
       margin-bottom: 15px;
     }
 
     /* Flexbox Container Styles */
-    .services-container {
+    main .services-container {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
@@ -42,7 +44,7 @@
       justify-content: center;
     }
 
-    .service-card {
+    main .service-card {
       flex: 1 1 260px;
       max-width: 360px;
       background: #f9f9f9;
@@ -52,17 +54,17 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .service-card:hover {
+    main .service-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
 
-    .service-card h3 {
+    main .service-card h3 {
       margin-bottom: 12px;
     }
 
     /* Benefits Grid */
-    .benefits-grid {
+    main .benefits-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
@@ -70,7 +72,7 @@
       justify-content: center;
     }
 
-    .benefit-item {
+    main .benefit-item {
       flex: 1 1 220px;
       max-width: 280px;
       background: #e8f4f8;
@@ -80,21 +82,22 @@
     }
 
     /* Contact Form Flex */
-    .contact-form {
+    main .contact-form {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 25px;
     }
 
-    .name, .email {
+    main .name, 
+    main .email {
       flex: 1 1 200px;
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 4px;
     }
 
-    button {
+    main button {
       flex: 1 0 120px;
       background: #3498db;
       color: white;
@@ -105,19 +108,19 @@
       transition: background 0.3s;
     }
 
-    button:hover {
+    main button:hover {
       background: #2980b9;
     }
 
     /* Decorative */
-    .divider {
+    main .divider {
       height: 2px;
       background: linear-gradient(to right, transparent, #3498db, transparent);
       margin: 35px 0;
       border: none;
     }
 
-    .cta-section {
+    main .cta-section {
       text-align: center;
       margin: 40px 0;
       padding: 25px;
@@ -127,18 +130,18 @@
 
     /* Responsive Adjustments */
     @media (max-width: 768px) {
-      body {
+      main {
         padding: 0 12px;
       }
-      .service-card {
+      main .service-card {
         flex: 1 1 100%;
         max-width: 100%;
       }
-      .benefit-item {
+      main .benefit-item {
         flex: 1 1 100%;
         max-width: 100%;
       }
-      button {
+      main button {
         flex: 1 1 100%;
       }
     }
@@ -209,10 +212,14 @@
       <h2>Let's Build Something Great Together!</h2>
       <p>Whether you are a student looking for project help or a startup aiming to scale digitally, I provide the right tools and solutions to make it happen.</p>
     </div>
+
+    <!-- Contact Form Load -->
+    <div id="form-container"></div>
   </main>
 
-  <!-- Contact Form Load -->
-  <div id="form-container"></div>
+  <!-- Footer Placeholder -->
+  <div id="footer"></div>
+
   <script>
     fetch("contactform.html")
       .then(res => res.text())
@@ -223,8 +230,5 @@
         document.body.appendChild(script);
       });
   </script>
-<!-- Footer Placeholder -->
-  <div id="footer"></div>
-
 </body>
 </html>
