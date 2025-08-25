@@ -21,6 +21,8 @@
       --text-secondary: #555555;
       --primary-color: #3498db;
       --warning-color: #ffc107;
+      --success-color: #2ecc71;
+      --info-color: #17a2b8;
       --border-light: #e5e7eb;
       --border-radius: 12px;
       --shadow-md: 0 2px 6px rgba(0,0,0,0.08);
@@ -28,7 +30,6 @@
       --transition: 0.3s ease;
     }
 
-    /* Scope ONLY inside main-content */
     .main-content {
       flex: 1;
       background: #f5f7fa;
@@ -46,42 +47,69 @@
       gap: 1.5rem;
     }
 
-    .main-content .card {
+    .card {
       background: var(--white);
       border-radius: var(--border-radius);
-      padding: 2rem;
-      box-shadow: var(--shadow-md);
       border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-md);
       transition: var(--transition);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+      overflow: hidden;
     }
 
-    .main-content .card:hover {
+    .card:hover {
       transform: translateY(-2px);
       box-shadow: var(--shadow-lg);
     }
 
-    .main-content .card__header {
+    .card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: #f9fafb;
+    }
+
+    .card__header span {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--text-primary);
     }
-    .main-content .card__header i {
-      font-size: 1.2rem;
-    }
-    .main-content .card__header--primary i { color: var(--primary-color); }
-    .main-content .card__header--warning i { color: var(--warning-color); }
 
-    .main-content .card p {
+    .card__header i { font-size: 1.2rem; }
+    .card__header--primary i { color: var(--primary-color); }
+    .card__header--warning i { color: var(--warning-color); }
+    .card__header--success i { color: var(--success-color); }
+    .card__header--info i { color: var(--info-color); }
+
+    .card__content {
+      padding: 1.5rem;
+      display: none;
       color: var(--text-secondary);
-      margin-bottom: 1rem;
     }
-    .main-content .card p:last-child { margin-bottom: 0; }
+
+    .card.active .card__content {
+      display: block;
+    }
+
+    .card__toggle {
+      transition: transform var(--transition);
+    }
+    .card.active .card__toggle {
+      transform: rotate(180deg);
+    }
+
+    /* Keep contact form always visible */
+    #form-container {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      padding: 2rem;
+    }
   </style>
 </head>
 <body>
@@ -91,27 +119,74 @@
   <!-- MAIN CONTENT -->
   <main class="main-content">
     <div class="container">
-      <!-- INTRO CARD -->
+
+      <!-- Privacy Policy -->
       <div class="card">
         <div class="card__header card__header--primary">
-          <i class="fas fa-handshake"></i> Welcome to Our Community
+          <span><i class="fas fa-user-shield"></i> Privacy Policy</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
         </div>
-        <p>We're excited to have you join us on a journey into the world of technology, coding, and innovation. This is your gateway to hands-on learning, where you'll explore limitless possibilities.</p>
-        <p>If you have any questions or need assistance, feel free to reach out. We're here to help! Your curiosity and enthusiasm for technology are what drive us, and we're dedicated to making your experience as informative and enjoyable as possible.</p>
-        <p>Simply fill out the form below to get in touch, and don't hesitate to ask any questions or share your thoughts. We're looking forward to connecting with you and sharing exciting technological opportunities.</p>
+        <div class="card__content">
+          <p>At MilindWeb, your privacy matters. We only collect basic details you choose to share (such as name, email, or phone) when you contact us. These are used solely for communication and service purposes. We do not sell, rent, or misuse your personal data.</p>
+        </div>
       </div>
 
-      <!-- DISCLAIMER CARD -->
+      <!-- Disclaimer -->
       <div class="card">
         <div class="card__header card__header--warning">
-          <i class="fas fa-exclamation-circle"></i> Content Disclaimer
+          <span><i class="fas fa-exclamation-circle"></i> Disclaimer</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
         </div>
-        <p>We respect intellectual property rights and make every effort to ensure compliance with copyright regulations. Some content may be sourced from publicly available materials, AI-generated content, or third-party references.</p>
-        <p>If you believe that any content infringes upon your copyright, please contact us immediately. Upon verification, we will promptly remove the material in question. We do not claim ownership of content not originally created by us.</p>
-        <p>All third-party trademarks and copyrighted materials are the property of their respective owners. Any references to such materials are for informational purposes only.</p>
+        <div class="card__content">
+          <p>Content on MilindWeb is created for educational, creative, and small business purposes. While we aim for accuracy, we cannot guarantee completeness of all information. Some material may be AI-generated, publicly sourced, or referenced from third parties. All trademarks and copyrights remain with their respective owners.</p>
+        </div>
       </div>
 
-      <!-- CONTACT FORM -->
+      <!-- Terms & Conditions -->
+      <div class="card">
+        <div class="card__header card__header--success">
+          <span><i class="fas fa-file-contract"></i> Terms & Conditions</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>By using this website, you agree to access content responsibly and respect intellectual property rights. Services offered through MilindWeb are subject to availability and mutual agreement. Any misuse, plagiarism, or unauthorized use of content is strictly prohibited.</p>
+        </div>
+      </div>
+
+      <!-- Terms of Use -->
+      <div class="card">
+        <div class="card__header card__header--info">
+          <span><i class="fas fa-gavel"></i> Terms of Use</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>MilindWeb is designed for learning, creativity, and light business engagement. Visitors are free to explore resources, provide feedback, and reach out for services. By continuing to use this site, you acknowledge acceptance of these terms.</p>
+        </div>
+      </div>
+
+      <!-- About & Services -->
+      <div class="card">
+        <div class="card__header card__header--primary">
+          <span><i class="fas fa-briefcase"></i> About & Services</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>Hi, I’m Milind 👋 — creator of MilindWeb, a platform dedicated to creativity, learning, and small business services. I support businesses in expanding their online presence through SEO & Digital Marketing, design clean and responsive websites, develop custom software tools for automation, craft logos, posters, and visual branding, and conduct projects and workshops that deliver practical, hands-on learning experiences.</p>
+        </div>
+      </div>
+
+      <!-- Feedback & Suggestions -->
+      <div class="card">
+        <div class="card__header card__header--success">
+          <span><i class="fas fa-comment-dots"></i> Feedback & Suggestions</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>Your ideas matter! If you have suggestions for improvement, new service requests, or feedback about MilindWeb, feel free to share. Every input helps shape this platform better.</p>
+        </div>
+      </div>
+
+      <!-- Contact Form (Always Visible) -->
       <div id="form-container"></div>
       <script>
         fetch("contactform.html")
@@ -128,5 +203,15 @@
 
   <!-- Footer Placeholder -->
   <div id="footer"></div>
+
+  <!-- Accordion Script -->
+  <script>
+    document.querySelectorAll('.card__header').forEach(header => {
+      header.addEventListener('click', () => {
+        const card = header.parentElement;
+        card.classList.toggle('active');
+      });
+    });
+  </script>
 </body>
 </html>
