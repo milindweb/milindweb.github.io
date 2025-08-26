@@ -1,179 +1,169 @@
-<div class="contact-form-wrapper">
-  <h2>CONTACT US</h2>
-  <form id="contactForm">
-    <div class="form-row">
-      <label for="service">Service</label>
-      <select id="service" name="service" required>
-        <option value="">Select Service</option>
-        <option>SEO & Digital Marketing</option>
-        <option>Web Designing</option>
-        <option>Software Solutions</option>
-        <option>Graphics Designing</option>
-        <option>Projects & Workshop</option>
-        <option>Other</option>
-      </select>
-    </div>
+<div class="contact-form-wrapper">  
+  <h2>Contact Us</h2>  
+  <p class="form-intro">
+    For any queries, suggestions, collaborations, or project requests, our team is here to help.  
+    Share your message with us, and we’ll get back to you shortly.  
+  </p>  
 
-    <div class="form-row">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
-    </div>
+  <form id="contactForm">  
+    <div class="form-row">  
+      <label for="service">Service</label>  
+      <select id="service" name="service" required>  
+        <option value="">Select Service</option>  
+        <option>SEO & Digital Marketing</option>  
+        <option>Web Designing</option>  
+        <option>Software Solutions</option>  
+        <option>Graphics Designing</option>  
+        <option>Projects & Workshop</option>  
+        <option>Other</option>  
+      </select>  
+    </div>  
 
-    <div class="form-row">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-    </div>
+    <div class="form-row">  
+      <label for="name">Name</label>  
+      <input type="text" id="name" name="name" placeholder="Your full name" required>  
+    </div>  
 
-    <div class="form-row">
-      <label for="phone">Mobile No.</label>
-      <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" required>
-    </div>
-    <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6-9.</div>
+    <div class="form-row">  
+      <label for="email">Email</label>  
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>  
+    </div>  
 
-    <div class="form-row">
-      <label for="message">Message</label>
-      <textarea id="message" name="message" maxlength="500" required></textarea>
-    </div>
+    <div class="form-row">  
+      <label for="phone">Mobile No.</label>  
+      <input type="tel" id="phone" name="phone" placeholder="10-digit mobile no." pattern="^[6-9][0-9]{9}$" required>  
+    </div>  
+    <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6–9.</div>  
 
-    <button type="submit">Submit</button>
-  </form>
-  <div id="response"></div>
-</div>
+    <div class="form-row">  
+      <label for="message">Message</label>  
+      <textarea id="message" name="message" placeholder="Write your message..." maxlength="500" required></textarea>  
+    </div>  
 
-<style>
-  .contact-form-wrapper {
-    background: #f7fbff; /* light professional blue */
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    width: 100%;
-    max-width: 600px;
-    margin: 40px auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+    <button type="submit">Submit</button>  
+  </form>  
+  <div id="response"></div>  
+</div>  
 
-  .contact-form-wrapper h2 {
-    text-align: center;
-    margin-bottom: 10px;
-    color: #0056b3;
-    font-size: 22px;
-    font-weight: 600;
-  }
+<style>  
+  .contact-form-wrapper {  
+    background: #fff;  
+    padding: 20px;  
+    border-radius: 12px;  
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);  
+    width: 100%;  
+    max-width: 600px;  
+    margin: 20px auto;  
+  }  
 
-  .contact-form-wrapper .form-row {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    gap: 10px;
-  }
+  .contact-form-wrapper h2 {  
+    text-align: center;  
+    margin-bottom: 6px;  
+    color: #222;  
+    font-size: 24px;  
+  }  
 
-  .contact-form-wrapper label {
-    flex: 0 0 120px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-  }
+  .contact-form-wrapper .form-intro {  
+    text-align: center;  
+    font-size: 14px;  
+    color: #555;  
+    margin-bottom: 18px;  
+  }  
 
-  .contact-form-wrapper input,
-  .contact-form-wrapper select,
-  .contact-form-wrapper textarea {
-    flex: 1;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    min-height: 36px;
-    transition: all 0.25s ease;
-    background: #fff;
-  }
+  .contact-form-wrapper .form-row {  
+    display: flex;  
+    align-items: center;  
+    gap: 10px;  
+    margin-bottom: 12px;  
+  }  
 
-  .contact-form-wrapper input:focus,
-  .contact-form-wrapper select:focus,
-  .contact-form-wrapper textarea:focus {
-    border-color: #0056b3;
-    box-shadow: 0 0 6px rgba(0,86,179,0.3);
-    transform: scale(1.01);
-    outline: none;
-  }
+  .contact-form-wrapper label {  
+    flex: 0 0 110px;  
+    font-size: 14px;  
+    font-weight: 500;  
+    color: #333;  
+  }  
 
-  .contact-form-wrapper textarea {
-    min-height: 80px;
-    resize: vertical;
-  }
+  .contact-form-wrapper input,  
+  .contact-form-wrapper select,  
+  .contact-form-wrapper textarea {  
+    flex: 1;  
+    padding: 8px 10px;  
+    border: 1px solid #ccc;  
+    border-radius: 6px;  
+    font-size: 14px;  
+    min-height: 36px;  
+    transition: border 0.2s, box-shadow 0.2s;  
+  }  
 
-  .contact-form-wrapper button {
-    background: #0056b3;
-    color: white;
-    font-size: 16px;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 100%;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
+  .contact-form-wrapper input:focus,  
+  .contact-form-wrapper select:focus,  
+  .contact-form-wrapper textarea:focus {  
+    border-color: #0056b3;  
+    box-shadow: 0 0 4px rgba(0,86,179,0.3);  
+    outline: none;  
+  }  
 
-  .contact-form-wrapper button:hover {
-    background: #004080;
-    transform: translateY(-2px);
-  }
+  .contact-form-wrapper textarea {  
+    min-height: 80px;  
+    resize: vertical;  
+  }  
 
-  .contact-form-wrapper button:active {
-    transform: scale(0.98);
-  }
+  .contact-form-wrapper button {  
+    background: #0056b3;  
+    color: white;  
+    font-size: 15px;  
+    padding: 10px;  
+    border: none;  
+    border-radius: 6px;  
+    cursor: pointer;  
+    width: 100%;  
+    transition: background 0.2s, transform 0.2s;  
+  }  
 
-  /* Sticky Button for Mobile */
-  @media (max-width: 600px) {
-    .contact-form-wrapper button {
-      position: sticky;
-      bottom: 0;
-      z-index: 5;
-    }
-  }
+  .contact-form-wrapper button:hover {  
+    background: #004080;  
+    transform: translateY(-1px);  
+  }  
 
-  /* Error + Alerts */
-  .contact-form-wrapper .error-msg {
-    color: red;
-    font-size: 12px;
-    margin-top: -4px;
-    margin-left: 130px;
-    display: none;
-  }
+  .contact-form-wrapper .error-msg {  
+    color: red;  
+    font-size: 12px;  
+    margin: -4px 0 8px 120px;  
+    display: none;  
+  }  
 
-  .contact-form-wrapper .alert {
-    text-align: center;
-    font-weight: 500;
-    margin-top: 10px;
-    padding: 8px;
-    border-radius: 6px;
-  }
+  .contact-form-wrapper .alert {  
+    text-align: center;  
+    font-weight: 500;  
+    margin-top: 12px;  
+    padding: 8px;  
+    border-radius: 6px;  
+  }  
 
-  .contact-form-wrapper .success {
-    background: #e6f9ed;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-  }
+  .contact-form-wrapper .success {  
+    background: #e6f9ed;  
+    color: #155724;  
+    border: 1px solid #c3e6cb;  
+  }  
 
-  .contact-form-wrapper .error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-  }
+  .contact-form-wrapper .error {  
+    background: #f8d7da;  
+    color: #721c24;  
+    border: 1px solid #f5c6cb;  
+  }  
 
-  /* Responsive Fix */
-  @media (max-width: 600px) {
-    .contact-form-wrapper .form-row {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .contact-form-wrapper label {
-      width: 100%;
-      margin-bottom: 4px;
-    }
-    .contact-form-wrapper .error-msg {
-      margin-left: 0;
-    }
-  }
+  @media (max-width: 480px) {  
+    .contact-form-wrapper .form-row {  
+      flex-direction: column;  
+      align-items: stretch;  
+    }  
+    .contact-form-wrapper label {  
+      flex: none;  
+      width: 100%;  
+    }  
+    .contact-form-wrapper .error-msg {  
+      margin-left: 0;  
+    }  
+  }  
 </style>
