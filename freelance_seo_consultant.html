@@ -540,7 +540,26 @@
                     <div class="section-header">
                         <h2>Let's Grow Your Business Together 🚀</h2>
                         <p>Looking to rank higher on Google, attract quality leads, and scale your business online? I can help with affordable, data-driven freelance digital marketing solutions.</p>
-                        <a href="https://wa.me/9198697887575" class="btn">📩 Contact me today for a free consultation</a>
+                       <h2> 📩 Contact me today for a free consultation</h2>
+
+<br>
+<!-- contact form and js fetch from contactform.html, & js/form-handler.js -->
+<div id="form-container"></div>
+
+<script>
+  fetch("contactform.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("form-container").innerHTML = html;
+
+      // Load JS
+      const script = document.createElement("script");
+      script.src = "js/form-handler.js";
+      document.body.appendChild(script);
+    });
+</script>
+
+
                     </div>
                 </div>
             </section>
