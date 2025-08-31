@@ -15,8 +15,8 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #fff;   /* 🔹 Page background */
-      color: #000;        /* 🔹 Default text color */
+      background: #fff;
+      color: #000;
       text-align: center;
     }
 
@@ -26,7 +26,7 @@
       font-size: 1.8rem;
     }
 
-    /* ===== Controls Section (Year Selector & Buttons) ===== */
+    /* ===== Controls ===== */
     .cy-controls {
       margin: 10px;
       display: flex;
@@ -38,7 +38,7 @@
       padding: 6px 12px;
       font-size: 15px;
       border-radius: 4px;
-      border: 1px solid #999; /* 🔹 Border for dropdown/buttons */
+      border: 1px solid #999;
       cursor: pointer;
     }
 
@@ -53,7 +53,7 @@
     .cy-month {
       flex: 1 1 230px;
       max-width: 250px;
-      border: 1px solid #999; /* 🔹 Border around month */
+      border: 1px solid #999;   /* 🔹 only single border around month */
       border-radius: 4px;
       overflow: hidden;
     }
@@ -68,8 +68,9 @@
       border-collapse: collapse;
       font-size: 0.8rem;
     }
+    /* 🔹 remove all inner borders */
     .cy-month th, .cy-month td {
-      border: 1px solid #ccc;  /* 🔹 Date cell borders */
+      border: none;
       padding: 4px;
       text-align: center;
       min-width: 24px;
@@ -78,41 +79,27 @@
       font-weight: bold;
     }
 
-    /* ===== Month Header Colors (easy to change) ===== */
-    .cy-m0 h2 { background: #99ccff; }   /* 🔹 Jan */
-    .cy-m1 h2 { background: #ccffff; }   /* 🔹 Feb */
-    .cy-m2 h2 { background: #99ffcc; }   /* 🔹 Mar */
-    .cy-m3 h2 { background: #ccff99; }   /* 🔹 Apr */
-    .cy-m4 h2 { background: #ccff66; }   /* 🔹 May */
-    .cy-m5 h2 { background: #ffff99; }   /* 🔹 Jun */
-    .cy-m6 h2 { background: #ffcc66; }   /* 🔹 Jul */
-    .cy-m7 h2 { background: #ff9966; }   /* 🔹 Aug */
-    .cy-m8 h2 { background: #ffcc99; }   /* 🔹 Sep */
-    .cy-m9 h2 { background: #ff9999; }   /* 🔹 Oct */
-    .cy-m10 h2 { background: #cc99ff; }  /* 🔹 Nov */
-    .cy-m11 h2 { background: #cc99cc; }  /* 🔹 Dec */
-
     /* ===== Date Styles ===== */
     .cy-sunday {
-      color: red; /* 🔹 Sunday text */
+      color: red;
       font-weight: bold;
     }
     .cy-weekend {
-      background: #3399ff; /* 🔹 2nd & 4th Saturday background */
+      background: #3399ff;
       color: white;
       font-weight: bold;
     }
     .cy-holiday {
-      background: red !important; /* 🔹 Holiday background */
+      background: red !important;
       color: white !important;
       font-weight: bold;
     }
     .cy-month td:hover {
-      background: #ffe680; /* 🔹 Hover highlight */
+      background: #ffe680;
       cursor: pointer;
     }
 
-    /* ===== Holiday List ===== */
+    /* ===== Holiday List (unchanged, your working version) ===== */
     .cy-holiday-list {
       display: flex;
       justify-content: flex-start;
@@ -122,9 +109,9 @@
       max-width: 1000px;
     }
     .cy-holiday-column {
-      flex: 1 1 calc(25% - 20px); /* 🔹 Up to 4 columns */
+      flex: 1 1 calc(25% - 20px);
       max-width: 220px;
-      border: 1px solid #000; /* 🔹 Column border */
+      border: 1px solid #000;
       padding: 10px;
     }
     .cy-holiday-column h3 {
@@ -168,7 +155,6 @@
     <button onclick="cyNextYear()">Next ⏭</button>
   </div>
 
-  <!-- 🔹 Title moved below controls -->
   <h1>Calendar Year (<span id="cy-dynamicYear"></span>)</h1>
 
   <div class="cy-calendar" id="cy-calendar"></div>
@@ -205,7 +191,6 @@
         cyHolidays[year].forEach(h => holidayDates[h.date] = h.name);
       }
 
-      // === Calendar Months ===
       for (let m = 0; m < 12; m++) {
         let div = document.createElement("div");
         div.className = "cy-month cy-m"+m;
@@ -229,16 +214,11 @@
           let cls = "";
           let tooltip = "";
 
-          // Sunday
           if (day === 0) cls = "cy-sunday";
-
-          // ✅ Correct 2nd & 4th Saturdays
           if (day === 6) {
             let weekNum = Math.floor((d + firstDay - 1) / 7) + 1;
             if (weekNum === 2 || weekNum === 4) cls = "cy-weekend";
           }
-
-          // Holiday
           if (holidayDates[dateKey]) {
             cls = "cy-holiday";
             tooltip = `${d} ${cyMonthAbbr[m]} ${year} - ${holidayDates[dateKey]}`;
@@ -255,7 +235,6 @@
         calendar.appendChild(div);
       }
 
-      // === Holidays List ===
       const list = document.getElementById("cy-holidayList");
       list.innerHTML = "";
       if (cyHolidays[year]) {
@@ -266,7 +245,6 @@
             colDiv.className = "cy-holiday-column";
             list.appendChild(colDiv);
           }
-          // convert "MM-DD" -> "DD MMM"
           let [mm, dd] = h.date.split("-");
           let formatted = parseInt(dd) + " " + cyMonthAbbr[parseInt(mm)-1];
 
