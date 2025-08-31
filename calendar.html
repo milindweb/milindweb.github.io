@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Holiday Calendar</title>
+  <title>Calendar Year</title>
 
   <!-- Shared Header + Footer CSS -->
   <link rel="stylesheet" href="css/headerfooter.css">
@@ -13,13 +13,20 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
       padding: 0;
-      background: #f8f9fa;
+      background: #f5f7fa;
+      color: #222;
+      text-align: center;
     }
-    h1 { margin: 10px; font-size: 2rem; }
 
+    h1 {
+      margin: 15px 0;
+      font-size: 2rem;
+      color: #0f172a;
+    }
+
+    /* 🔘 Controls */
     .controls {
       margin: 15px;
       display: flex;
@@ -36,31 +43,33 @@
     }
     button:hover, select:hover { background: #e5e7eb; }
 
-    /* 📅 Calendar flex */
+    /* 📅 Calendar Layout */
     .calendar {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
-      padding: 15px;
+      gap: 20px;
+      padding: 20px;
     }
     .month {
       flex: 1 1 300px;
-      max-width: 350px;
+      max-width: 340px;
       min-width: 250px;
-      border: 2px solid #333;
-      border-radius: 10px;
+      border-radius: 12px;
       background: white;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
       overflow: hidden;
+      transition: transform 0.2s ease;
     }
+    .month:hover { transform: scale(1.02); }
+
     .month h2 {
       margin: 0;
-      padding: 8px;
-      font-size: 1.2rem;
-      color: white;
+      padding: 10px;
+      font-size: 1.1rem;
+      color: #fff;
       text-align: center;
-      background: #1e293b;
+      background: linear-gradient(90deg, #2563eb, #1d4ed8);
     }
     .month table {
       width: 100%;
@@ -68,24 +77,23 @@
       font-size: 0.9rem;
     }
     th, td {
-      border: 1px solid #ddd;
+      border: 1px solid #e2e8f0;
       padding: 6px;
       text-align: center;
       position: relative;
     }
-    th { background: #f1f1f1; }
+    th { background: #f1f5f9; }
 
-    /* 🔴 Holiday */
+    /* 🎨 Color Rules */
     .holiday {
-      background: #ff0000 !important;
+      background: #dc2626 !important; /* holiday red */
       color: #fff !important;
       font-weight: bold;
       cursor: pointer;
     }
-    /* 🔵 Sunday + 2nd & 4th Sat */
     .weekend {
-      background: #007bff !important;
-      color: #ff0000 !important;
+      background: #1e40af !important; /* weekend blue */
+      color: #dc2626 !important;
       font-weight: bold;
     }
 
@@ -103,32 +111,38 @@
       white-space: nowrap;
       border-radius: 4px;
       pointer-events: none;
-      opacity: 0.9;
+      opacity: 0.95;
     }
 
     /* 📋 Holiday List */
-    h2 { margin-top: 30px; font-size: 1.5rem; }
+    h2 {
+      margin-top: 30px;
+      font-size: 1.6rem;
+      color: #0f172a;
+    }
     .holiday-list {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
-      padding: 15px;
+      gap: 20px;
+      padding: 20px;
     }
     .holiday-month {
       flex: 1 1 220px;
       max-width: 280px;
-      border: 2px solid #333;
-      border-radius: 10px;
-      background: white;
+      border-radius: 12px;
+      background: #ffffff;
       box-shadow: 0 3px 6px rgba(0,0,0,0.1);
       overflow: hidden;
+      transition: transform 0.2s ease;
     }
+    .holiday-month:hover { transform: translateY(-4px); }
+
     .holiday-month h3 {
       margin: 0;
       padding: 8px;
       font-size: 1.1rem;
-      background: #1e293b;
+      background: linear-gradient(90deg, #0f766e, #115e59);
       color: white;
     }
     .holiday-month ul {
@@ -138,8 +152,9 @@
       text-align: left;
     }
     .holiday-month li {
-      padding: 6px 10px;
-      border-bottom: 1px solid #ddd;
+      padding: 8px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.9rem;
     }
     .holiday-month li:last-child { border-bottom: none; }
 
@@ -160,7 +175,7 @@
   <!-- Header -->
   <div id="header"></div>
 
-  <h1>Holiday Calendar</h1>
+  <h1>Calendar Year (<span id="dynamicYear"></span>)</h1>
 
   <div class="controls">
     <button onclick="prevYear()">⏮ Prev</button>
@@ -170,7 +185,7 @@
 
   <div class="calendar" id="calendar"></div>
 
-  <h2>Holiday List</h2>
+  <h2>List of Holidays (<span id="dynamicYear2"></span>)</h2>
   <div class="holiday-list" id="holidayList"></div>
 
   <!-- Calendar Script -->
@@ -192,6 +207,9 @@
     }
 
     function generateYearCalendar(year) {
+      document.getElementById("dynamicYear").innerText = year;
+      document.getElementById("dynamicYear2").innerText = year;
+
       const calendar = document.getElementById("calendar");
       calendar.innerHTML = "";
       let holidayDates = {};
