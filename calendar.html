@@ -13,18 +13,13 @@
     /* === CALENDAR + HOLIDAY WIDGET ONLY === */
     .cy-container {
       font-family: Arial, sans-serif;
-      background: #fff; /* widget background */
-      color: #000; /* text color */
+      background: #fff; /* overall background */
+      color: #000;      /* default text color */
       text-align: center;
       padding: 10px;
     }
 
-    .cy-container h1 {
-      margin: 10px 0;
-      font-size: 1.8rem;
-    }
-
-    /* Controls */
+    /* Controls (Year navigation) */
     .cy-controls {
       margin: 10px;
       display: flex;
@@ -36,11 +31,18 @@
       padding: 6px 12px;
       font-size: 15px;
       border-radius: 4px;
-      border: 1px solid #999; /* control border */
+      border: 1px solid #999; /* border of select/button */
       cursor: pointer;
     }
 
-    /* Calendar */
+    /* Year Title */
+    .cy-container h1 {
+      margin: 10px 0 20px 0;
+      font-size: 1.8rem;
+      color: #333; /* heading color */
+    }
+
+    /* Calendar layout */
     .cy-calendar {
       display: flex;
       flex-wrap: wrap;
@@ -51,15 +53,16 @@
     .cy-month {
       flex: 1 1 230px;
       max-width: 250px;
-      border: 1px solid #999; /* calendar border */
+      border: 1px solid #999; /* border around month */
       border-radius: 4px;
       overflow: hidden;
     }
     .cy-month h2 {
       margin: 0;
-      padding: 4px;
+      padding: 6px;
       font-size: 1rem;
       color: #000;
+      text-align: center;
     }
     .cy-month table {
       width: 100%;
@@ -73,22 +76,39 @@
     }
     .cy-month th { font-weight: bold; }
 
-    /* Sundays */
+    /* === COLORS === */
+    /* Month header background (change freely) */
+    .cy-m0 h2 { background: #99ccff; }   /* January */
+    .cy-m1 h2 { background: #ccffff; }   /* February */
+    .cy-m2 h2 { background: #99ffcc; }   /* March */
+    .cy-m3 h2 { background: #ccff99; }   /* April */
+    .cy-m4 h2 { background: #ccff66; }   /* May */
+    .cy-m5 h2 { background: #ffff99; }   /* June */
+    .cy-m6 h2 { background: #ffcc66; }   /* July */
+    .cy-m7 h2 { background: #ff9966; }   /* August */
+    .cy-m8 h2 { background: #ffcc99; }   /* September */
+    .cy-m9 h2 { background: #ff9999; }   /* October */
+    .cy-m10 h2 { background: #cc99ff; }  /* November */
+    .cy-m11 h2 { background: #cc99cc; }  /* December */
+
+    /* Sundays (red text) */
     .cy-sunday { color: red; font-weight: bold; }
-    /* 2nd + 4th Saturdays */
+
+    /* 2nd + 4th Saturdays (blue background, red text) */
     .cy-weekend { background: #3399ff; color: red; font-weight: bold; }
-    /* Holidays */
+
+    /* Holidays (red background, white text) */
     .cy-holiday { background: red !important; color: white !important; font-weight: bold; }
 
-    /* Holiday List */
+    /* === HOLIDAY LIST === */
     .cy-holiday-list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: flex-start;
+      justify-content: space-between; /* spread evenly, removes right gap */
       gap: 15px;
       margin: 20px auto;
       max-width: 1000px;
-      border: 1px solid #000; /* border around list */
+      border: 1px solid #000; /* border around the entire list */
       padding: 15px;
     }
     .cy-holiday-column {
@@ -103,12 +123,12 @@
       border-radius: 4px;
       transition: background 0.3s;
     }
-    .cy-holiday-item:hover { background: #f0f0f0; }
+    .cy-holiday-item:hover { background: #f0f0f0; } /* hover highlight */
     .cy-holiday-date {
       display: inline-block;
       width: 70px;
       font-weight: bold;
-      cursor: help;
+      cursor: help; /* shows "help" pointer */
     }
 
     /* Responsive Rules */
@@ -127,7 +147,7 @@
         flex-direction: row;
       }
       .cy-holiday-column {
-        flex: 1 1 22%; /* ~4 columns */
+        flex: 1 1 22%; /* 4 columns on bigger screen */
       }
     }
   </style>
@@ -138,16 +158,20 @@
   <div id="header"></div>
 
   <div class="cy-container">
-    <h1>Calendar Year (<span id="cy-dynamicYear"></span>)</h1>
-
+    <!-- Controls first -->
     <div class="cy-controls">
       <button onclick="cyPrevYear()">⏮ Prev</button>
       <select id="cy-yearSelect" onchange="cyUpdateCalendar()"></select>
       <button onclick="cyNextYear()">Next ⏭</button>
     </div>
 
+    <!-- Year heading moved below controls -->
+    <h1>Calendar Year (<span id="cy-dynamicYear"></span>)</h1>
+
+    <!-- Calendar -->
     <div class="cy-calendar" id="cy-calendar"></div>
 
+    <!-- Holidays -->
     <h2>Holidays List (<span id="cy-dynamicYear2"></span>)</h2>
     <div class="cy-holiday-list" id="cy-holidayList"></div>
   </div>
@@ -180,7 +204,7 @@
         cyHolidays[year].forEach(h => holidayDates[h.date] = h.name);
       }
 
-      // === Months ===
+      // === Calendar Months ===
       for (let m = 0; m < 12; m++) {
         let div = document.createElement("div");
         div.className = "cy-month cy-m"+m;
@@ -203,13 +227,13 @@
           let day = new Date(year, m, d).getDay();
           let cls = "";
 
-          if (day === 0) cls = "cy-sunday";
+          if (day === 0) cls = "cy-sunday"; // Sunday
           if (day === 6) {
-            // ✅ FIXED: mark 2nd + 4th Saturdays
+            // ✅ Correct 2nd & 4th Saturdays
             let weekNum = Math.floor((d + firstDay - 1) / 7) + 1;
             if (weekNum === 2 || weekNum === 4) cls = "cy-weekend";
           }
-          if (holidayDates[dateKey]) cls = "cy-holiday";
+          if (holidayDates[dateKey]) cls = "cy-holiday"; // Holiday override
 
           row += `<td class="${cls}">${d}</td>`;
           if (day === 6) { row += "</tr><tr>"; }
