@@ -10,23 +10,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* ===== Base Page Style ===== */
-    body {
+    /* === CALENDAR + HOLIDAY WIDGET === */
+    .cy-container {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #fff;
-      color: #000;
+      background: #fff;   /* page background */
+      color: #000;        /* default text color */
       text-align: center;
+      padding: 10px;
     }
 
-    /* ===== Title ===== */
-    h1 {
-      margin: 10px 0;
-      font-size: 1.8rem;
-    }
-
-    /* ===== Controls ===== */
+    /* === Year navigation controls (Prev, Year dropdown, Next) === */
     .cy-controls {
       margin: 10px;
       display: flex;
@@ -42,7 +35,14 @@
       cursor: pointer;
     }
 
-    /* ===== Calendar Layout ===== */
+    /* === Calendar Year heading === */
+    .cy-container h1 {
+      margin: 10px 0 20px 0;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    /* === Calendar layout === */
     .cy-calendar {
       display: flex;
       flex-wrap: wrap;
@@ -53,93 +53,97 @@
     .cy-month {
       flex: 1 1 230px;
       max-width: 250px;
-      border: 1px solid #999;   /* 🔹 only single border around month */
+      border: 1px solid #999;   /* border around each month box */
       border-radius: 4px;
       overflow: hidden;
     }
     .cy-month h2 {
       margin: 0;
-      padding: 4px;
+      padding: 6px;
       font-size: 1rem;
       color: #000;
+      text-align: center;
     }
     .cy-month table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.8rem;
     }
-    /* 🔹 remove all inner borders */
     .cy-month th, .cy-month td {
-      border: none;
       padding: 4px;
       text-align: center;
       min-width: 24px;
     }
-    .cy-month th {
-      font-weight: bold;
-    }
+    .cy-month th { font-weight: bold; }
 
-    /* ===== Date Styles ===== */
-    .cy-sunday {
-      color: red;
-      font-weight: bold;
-    }
-    .cy-weekend {
-      background: #3399ff;
-      color: white;
-      font-weight: bold;
-    }
-    .cy-holiday {
-      background: red !important;
-      color: white !important;
-      font-weight: bold;
-    }
-    .cy-month td:hover {
-      background: #ffe680;
-      cursor: pointer;
-    }
+    /* === COLORS for Month headers === */
+    /* 👉 Change these freely for different look */
+    .cy-m0 h2 { background: #99ccff; }   /* January */
+    .cy-m1 h2 { background: #ccffff; }   /* February */
+    .cy-m2 h2 { background: #99ffcc; }   /* March */
+    .cy-m3 h2 { background: #ccff99; }   /* April */
+    .cy-m4 h2 { background: #ccff66; }   /* May */
+    .cy-m5 h2 { background: #ffff99; }   /* June */
+    .cy-m6 h2 { background: #ffcc66; }   /* July */
+    .cy-m7 h2 { background: #ff9966; }   /* August */
+    .cy-m8 h2 { background: #ffcc99; }   /* September */
+    .cy-m9 h2 { background: #ff9999; }   /* October */
+    .cy-m10 h2 { background: #cc99ff; }  /* November */
+    .cy-m11 h2 { background: #cc99cc; }  /* December */
 
-    /* ===== Holiday List (unchanged, your working version) ===== */
+    /* === Date Cell Coloring === */
+    .cy-sunday { color: red; font-weight: bold; }                     /* Sundays */
+    .cy-weekend { background: #3399ff; color: red; font-weight: bold; } /* 2nd & 4th Sat */
+    .cy-holiday { background: red !important; color: white !important; font-weight: bold; } /* Holidays */
+
+    /* === Holidays List Section === */
     .cy-holiday-list {
       display: flex;
-      justify-content: flex-start;
       flex-wrap: wrap;
-      gap: 20px;
+      justify-content: space-between; /* evenly spread */
+      gap: 15px;
       margin: 20px auto;
       max-width: 1000px;
+      border: 1px solid #000; /* border around the full list */
+      padding: 15px;
     }
     .cy-holiday-column {
-      flex: 1 1 calc(25% - 20px);
+      flex: 1 1 220px;
       max-width: 220px;
-      border: 1px solid #000;
-      padding: 10px;
-    }
-    .cy-holiday-column h3 {
-      margin-top: 0;
-      font-size: 1rem;
-      border-bottom: 1px solid #000;
-      text-align: left;
-      padding-bottom: 4px;
     }
     .cy-holiday-item {
       text-align: left;
       font-size: 0.9rem;
       margin: 4px 0;
+      padding: 4px;
+      border-radius: 4px;
+      transition: background 0.3s;
     }
+    .cy-holiday-item:hover { background: #f0f0f0; } /* hover highlight */
     .cy-holiday-date {
       display: inline-block;
       width: 70px;
       font-weight: bold;
+      cursor: help; /* cursor shows “help” style on hover */
     }
 
-    /* ===== Responsive Holiday List ===== */
+    /* === Responsive Rules === */
     @media (max-width: 768px) {
       .cy-holiday-list {
         flex-direction: column;
         align-items: center;
       }
       .cy-holiday-column {
-        width: 90%;
+        width: 100%;
+        max-width: none;
+      }
+    }
+    @media (min-width: 769px) {
+      .cy-holiday-list {
+        flex-direction: row;
+      }
+      .cy-holiday-column {
+        flex: 1 1 22%; /* 4 columns on bigger screen */
       }
     }
   </style>
@@ -149,27 +153,35 @@
 <body>
   <div id="header"></div>
 
-  <div class="cy-controls">
-    <button onclick="cyPrevYear()">⏮ Prev</button>
-    <select id="cy-yearSelect" onchange="cyUpdateCalendar()"></select>
-    <button onclick="cyNextYear()">Next ⏭</button>
+  <div class="cy-container">
+    <!-- === Year Controls === -->
+    <div class="cy-controls">
+      <button onclick="cyPrevYear()">⏮ Prev</button>
+      <select id="cy-yearSelect" onchange="cyUpdateCalendar()"></select>
+      <button onclick="cyNextYear()">Next ⏭</button>
+    </div>
+
+    <!-- Year heading -->
+    <h1>Calendar Year (<span id="cy-dynamicYear"></span>)</h1>
+
+    <!-- Calendar months -->
+    <div class="cy-calendar" id="cy-calendar"></div>
+
+    <!-- Holidays list -->
+    <h2>Holidays List (<span id="cy-dynamicYear2"></span>)</h2>
+    <div class="cy-holiday-list" id="cy-holidayList"></div>
   </div>
-
-  <h1>Calendar Year (<span id="cy-dynamicYear"></span>)</h1>
-
-  <div class="cy-calendar" id="cy-calendar"></div>
-
-  <h2>Holidays List (<span id="cy-dynamicYear2"></span>)</h2>
-  <div class="cy-holiday-list" id="cy-holidayList"></div>
 
   <script>
     let cyHolidays = {};
+
     const cyMonthNames = [
       "January","February","March","April","May","June",
       "July","August","September","October","November","December"
     ];
     const cyMonthAbbr = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
+    // === Year dropdown setup ===
     const cyYearSelect = document.getElementById("cy-yearSelect");
     const thisYear = new Date().getFullYear();
     for (let y = thisYear-5; y <= thisYear+5; y++) {
@@ -180,24 +192,31 @@
       cyYearSelect.add(opt);
     }
 
+    // === Generate calendar for selected year ===
     function cyGenerateYearCalendar(year) {
       document.getElementById("cy-dynamicYear").innerText = year;
       document.getElementById("cy-dynamicYear2").innerText = year;
 
       const calendar = document.getElementById("cy-calendar");
       calendar.innerHTML = "";
+
+      // Make lookup { "MM-DD": "Holiday Name" }
       let holidayDates = {};
       if (cyHolidays[year]) {
         cyHolidays[year].forEach(h => holidayDates[h.date] = h.name);
       }
 
+      // === Build each month ===
       for (let m = 0; m < 12; m++) {
         let div = document.createElement("div");
         div.className = "cy-month cy-m"+m;
+
+        // Month title
         let h2 = document.createElement("h2");
         h2.innerText = cyMonthNames[m];
         div.appendChild(h2);
 
+        // Table for days
         let table = document.createElement("table");
         let header = "<tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr>";
         table.innerHTML = header;
@@ -208,17 +227,23 @@
         let row = "<tr>";
         for (let i=0; i<firstDay; i++) row += "<td></td>";
 
+        // Each day cell
         for (let d=1; d<=daysInMonth; d++) {
           let dateKey = String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
           let day = new Date(year, m, d).getDay();
           let cls = "";
           let tooltip = "";
 
+          // Sundays
           if (day === 0) cls = "cy-sunday";
+
+          // 2nd & 4th Saturdays
           if (day === 6) {
             let weekNum = Math.floor((d + firstDay - 1) / 7) + 1;
             if (weekNum === 2 || weekNum === 4) cls = "cy-weekend";
           }
+
+          // Holidays
           if (holidayDates[dateKey]) {
             cls = "cy-holiday";
             tooltip = `${d} ${cyMonthAbbr[m]} ${year} - ${holidayDates[dateKey]}`;
@@ -226,15 +251,18 @@
             tooltip = `${d} ${cyMonthAbbr[m]} ${year}`;
           }
 
+          // Add cell with tooltip
           row += `<td class="${cls}" title="${tooltip}">${d}</td>`;
           if (day === 6) { row += "</tr><tr>"; }
         }
         row += "</tr>";
+
         table.innerHTML += row;
         div.appendChild(table);
         calendar.appendChild(div);
       }
 
+      // === Holidays List ===
       const list = document.getElementById("cy-holidayList");
       list.innerHTML = "";
       if (cyHolidays[year]) {
@@ -245,21 +273,25 @@
             colDiv.className = "cy-holiday-column";
             list.appendChild(colDiv);
           }
+
+          // Format MM-DD into "DD MMM"
           let [mm, dd] = h.date.split("-");
           let formatted = parseInt(dd) + " " + cyMonthAbbr[parseInt(mm)-1];
 
           let item = document.createElement("div");
           item.className = "cy-holiday-item";
-          item.innerHTML = `<span class="cy-holiday-date">${formatted}</span> ${h.name}`;
+          item.innerHTML = `<span class="cy-holiday-date" title="${formatted} ${year} - ${h.name}">${formatted}</span> ${h.name}`;
           colDiv.appendChild(item);
         });
       }
     }
 
+    // === Navigation + Refresh ===
     function cyUpdateCalendar(){ cyGenerateYearCalendar(parseInt(cyYearSelect.value)); }
     function cyPrevYear(){ cyYearSelect.value = parseInt(cyYearSelect.value)-1; cyUpdateCalendar(); }
     function cyNextYear(){ cyYearSelect.value = parseInt(cyYearSelect.value)+1; cyUpdateCalendar(); }
 
+    // === Load holidays from JSON file ===
     fetch("data/holidays.json")
       .then(r=>r.json())
       .then(data=>{ cyHolidays=data; cyUpdateCalendar(); })
