@@ -91,10 +91,23 @@
     .cy-m10 h2 { background: #cc99ff; }  /* November */
     .cy-m11 h2 { background: #cc99cc; }  /* December */
 
-/* === Date Cell Coloring === */
-.cy-sunday { color: red; font-weight: bold; }                     /* Sundays */
-.cy-weekend { background: #d6eaff; color: red; font-weight: bold; } /* 2nd & 4th Sat */
-.cy-holiday { background: #ffb3b3 !important; color: white !important; font-weight: bold; } /* Holidays */
+    /* === Date Cell Coloring === */
+.cy-sunday { 
+  color: red; 
+  font-weight: bold; 
+}                     /* Sundays */
+
+.cy-weekend { 
+  background: rgba(51, 153, 255, 0.2);  /* soft blue */
+  color: red; 
+  font-weight: bold; 
+} /* 2nd & 4th Sat */
+
+.cy-holiday { 
+  background: rgba(255, 0, 0, 0.2) !important; /* soft red */
+  color: white !important; 
+  font-weight: bold; 
+} /* Holidays */
 
     
     /* === Holidays List Section === */
