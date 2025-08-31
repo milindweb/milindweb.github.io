@@ -1,0 +1,82 @@
+[
+  {
+    "id": "post1",
+    "title": "Top 5 Engineering Projects for Beginners",
+    "date": "2025-08-20",
+    "category": "Engineering Project",
+    "tags": ["engineering", "projects", "DIY"],
+    "excerpt": "Kickstart your career with these beginner-friendly engineering projects that help you learn core concepts while building practical systems.",
+    "thumbnail": "../assets/posts/eng-projects.jpg",
+    "url": "post1.html"
+  },
+  {
+    "id": "post2",
+    "title": "Mini Project: Smart Home Automation with Arduino",
+    "date": "2025-08-15",
+    "category": "Mini Projects",
+    "tags": ["arduino", "home automation", "electronics"],
+    "excerpt": "Build a mini project using Arduino to control lights, fans, and appliances via smartphone. A step-by-step guide with code.",
+    "thumbnail": "../assets/posts/arduino-home.jpg",
+    "url": "post2.html"
+  },
+  {
+    "id": "post3",
+    "title": "Complete Guide to Ultrasonic Sensor (HC-SR04)",
+    "date": "2025-08-10",
+    "category": "Sensors & modules",
+    "tags": ["sensors", "ultrasonic", "electronics"],
+    "excerpt": "Learn how to use the HC-SR04 ultrasonic sensor for distance measurement with Arduino and ESP32, with wiring and sample code.",
+    "thumbnail": "../assets/posts/ultrasonic.jpg",
+    "url": "post3.html"
+  },
+  {
+    "id": "post4",
+    "title": "Top 10 Tips & Tricks for Faster Coding",
+    "date": "2025-08-01",
+    "category": "Tip and Tricks",
+    "tags": ["coding", "productivity", "shortcuts"],
+    "excerpt": "Boost your programming productivity with these tips & tricks every developer should know.",
+    "thumbnail": "../assets/posts/coding-tips.jpg",
+    "url": "post4.html"
+  },
+  {
+    "id": "post5",
+    "title": "Personal Finance 101: How to Start Saving Early",
+    "date": "2025-07-25",
+    "category": "Finance",
+    "tags": ["money", "finance", "budget"],
+    "excerpt": "Understand the basics of personal finance, savings, and smart investment strategies for beginners.",
+    "thumbnail": "../assets/posts/finance.jpg",
+    "url": "post5.html"
+  },
+  {
+    "id": "post6",
+    "title": "Education System in India: Challenges & Opportunities",
+    "date": "2025-07-18",
+    "category": "Education",
+    "tags": ["education", "india", "future"],
+    "excerpt": "A detailed overview of the Indian education system, its challenges, and opportunities for the next generation.",
+    "thumbnail": "../assets/posts/education.jpg",
+    "url": "post6.html"
+  },
+  {
+    "id": "post7",
+    "title": "Job Interview Questions You Must Prepare",
+    "date": "2025-07-10",
+    "category": "Job & Interviews",
+    "tags": ["jobs", "interviews", "career"],
+    "excerpt": "The most frequently asked interview questions and how you can prepare for them effectively.",
+    "thumbnail": "../assets/posts/interview.jpg",
+    "url": "post7.html"
+  },
+  {
+    "id": "post8",
+    "title": "General Knowledge Quiz – August 2025",
+    "date": "2025-08-05",
+    "category": "General knowledge",
+    "tags": ["quiz", "knowledge", "gk"],
+    "excerpt": "Test your general knowledge with these latest quiz questions based on current events and facts.",
+    "thumbnail": "../assets/posts/gk-quiz.jpg",
+    "url": "post8.html"
+  }
+]
