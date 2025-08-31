@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calendar Year</title>
+  <title>Milindweb - Calendar Year</title>
 
   <!-- Shared Header + Footer CSS -->
   <link rel="stylesheet" href="css/headerfooter.css">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -15,167 +14,124 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f5f7fa;
-      color: #222;
+      background: #fff;
+      color: #000;
       text-align: center;
     }
-
     h1 {
-      margin: 15px 0;
-      font-size: 2rem;
-      color: #0f172a;
+      margin: 10px 0;
+      font-size: 1.8rem;
     }
 
-    /* 🔘 Controls */
+    /* Controls */
     .controls {
-      margin: 15px;
+      margin: 10px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
     }
     select, button {
-      padding: 8px 14px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      padding: 6px 12px;
+      font-size: 15px;
+      border-radius: 4px;
+      border: 1px solid #999;
       cursor: pointer;
     }
-    button:hover, select:hover { background: #e5e7eb; }
 
-    /* 📅 Calendar Layout */
+    /* Calendar Layout */
     .calendar {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
-      padding: 20px;
+      gap: 10px;
+      padding: 10px;
     }
     .month {
-      flex: 1 1 300px;
-      max-width: 340px;
-      min-width: 250px;
-      border-radius: 12px;
-      background: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+      flex: 1 1 230px;
+      max-width: 250px;
+      border: 1px solid #999;
+      border-radius: 4px;
       overflow: hidden;
-      transition: transform 0.2s ease;
     }
-    .month:hover { transform: scale(1.02); }
-
     .month h2 {
       margin: 0;
-      padding: 10px;
-      font-size: 1.1rem;
-      color: #fff;
-      text-align: center;
-      background: linear-gradient(90deg, #2563eb, #1d4ed8);
+      padding: 4px;
+      font-size: 1rem;
+      color: #000;
     }
     .month table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
     th, td {
-      border: 1px solid #e2e8f0;
-      padding: 6px;
+      border: 1px solid #999;
+      padding: 4px;
       text-align: center;
-      position: relative;
+      min-width: 24px;
     }
-    th { background: #f1f5f9; }
-
-    /* 🎨 Color Rules */
-    .holiday {
-      background: #dc2626 !important; /* holiday red */
-      color: #fff !important;
+    th {
       font-weight: bold;
-      cursor: pointer;
     }
+
+    /* Colors for months */
+    .m0 h2 { background: #99ccff; }   /* Jan */
+    .m1 h2 { background: #ccffff; }   /* Feb */
+    .m2 h2 { background: #99ffcc; }   /* Mar */
+    .m3 h2 { background: #ccff99; }   /* Apr */
+    .m4 h2 { background: #ccff66; }   /* May */
+    .m5 h2 { background: #ffff99; }   /* Jun */
+    .m6 h2 { background: #ffcc66; }   /* Jul */
+    .m7 h2 { background: #ff9966; }   /* Aug */
+    .m8 h2 { background: #ffcc99; }   /* Sep */
+    .m9 h2 { background: #ff9999; }   /* Oct */
+    .m10 h2 { background: #cc99ff; }  /* Nov */
+    .m11 h2 { background: #cc99cc; }  /* Dec */
+
+    /* Sundays */
+    .sunday {
+      color: red;
+      font-weight: bold;
+    }
+    /* 2nd/4th Saturdays */
     .weekend {
-      background: #1e40af !important; /* weekend blue */
-      color: #dc2626 !important;
+      background: #3399ff;
+      color: red;
+      font-weight: bold;
+    }
+    /* Holidays */
+    .holiday {
+      background: red !important;
+      color: white !important;
       font-weight: bold;
     }
 
-    /* 📝 Tooltip */
-    .holiday[data-title]:hover::after {
-      content: attr(data-title);
-      position: absolute;
-      bottom: 120%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #222;
-      color: #fff;
-      padding: 4px 8px;
-      font-size: 0.8rem;
-      white-space: nowrap;
-      border-radius: 4px;
-      pointer-events: none;
-      opacity: 0.95;
+    /* Holiday list */
+    .holiday-table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      width: 90%;
+      max-width: 800px;
     }
-
-    /* 📋 Holiday List */
-    h2 {
-      margin-top: 30px;
-      font-size: 1.6rem;
-      color: #0f172a;
-    }
-    .holiday-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 20px;
-    }
-    .holiday-month {
-      flex: 1 1 220px;
-      max-width: 280px;
-      border-radius: 12px;
-      background: #ffffff;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-    .holiday-month:hover { transform: translateY(-4px); }
-
-    .holiday-month h3 {
-      margin: 0;
-      padding: 8px;
-      font-size: 1.1rem;
-      background: linear-gradient(90deg, #0f766e, #115e59);
-      color: white;
-    }
-    .holiday-month ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    .holiday-table th, .holiday-table td {
+      border: 1px solid #000;
+      padding: 6px 10px;
       text-align: left;
     }
-    .holiday-month li {
-      padding: 8px 12px;
-      border-bottom: 1px solid #e2e8f0;
-      font-size: 0.9rem;
-    }
-    .holiday-month li:last-child { border-bottom: none; }
-
-    /* 📱 Responsive */
-    @media (max-width: 1024px) {
-      .holiday-month { flex: 1 1 45%; }
-    }
-    @media (max-width: 600px) {
-      .holiday-month { flex: 1 1 100%; }
+    .holiday-table th {
+      font-size: 1.2rem;
+      text-align: left;
     }
   </style>
 
-  <!-- JS Loader -->
   <script src="js/headerfooter.js" defer></script>
 </head>
 <body>
-
-  <!-- Header -->
   <div id="header"></div>
 
-  <h1>Calendar Year (<span id="dynamicYear"></span>)</h1>
+  <h1>Calendar Year <span id="dynamicYear"></span></h1>
 
   <div class="controls">
     <button onclick="prevYear()">⏮ Prev</button>
@@ -185,20 +141,20 @@
 
   <div class="calendar" id="calendar"></div>
 
-  <h2>List of Holidays (<span id="dynamicYear2"></span>)</h2>
-  <div class="holiday-list" id="holidayList"></div>
+  <table class="holiday-table">
+    <thead>
+      <tr><th colspan="3">Holidays List (<span id="dynamicYear2"></span>)</th></tr>
+    </thead>
+    <tbody id="holidayTableBody"></tbody>
+  </table>
 
-  <!-- Calendar Script -->
   <script>
     let holidays = {};
-    const monthNames = [
-      "January","February","March","April","May","June",
-      "July","August","September","October","November","December"
-    ];
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
     const yearSelect = document.getElementById("yearSelect");
     const thisYear = new Date().getFullYear();
-    for (let y = thisYear - 5; y <= thisYear + 5; y++) {
+    for (let y = thisYear-5; y <= thisYear+5; y++) {
       let opt = document.createElement("option");
       opt.value = y;
       opt.text = y;
@@ -217,104 +173,73 @@
         holidays[year].forEach(h => holidayDates[h.date] = h.name);
       }
 
-      for (let month = 0; month < 12; month++) {
+      for (let m = 0; m < 12; m++) {
         let div = document.createElement("div");
-        div.className = "month";
-
+        div.className = "month m"+m;
         let h2 = document.createElement("h2");
-        h2.innerText = monthNames[month] + " " + year;
+        h2.innerText = monthNames[m];
         div.appendChild(h2);
 
         let table = document.createElement("table");
         let header = "<tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr>";
         table.innerHTML = header;
 
-        const firstDay = new Date(year, month, 1).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const firstDay = new Date(year, m, 1).getDay();
+        const daysInMonth = new Date(year, m+1, 0).getDate();
 
         let row = "<tr>";
-        for (let i = 0; i < firstDay; i++) row += "<td></td>";
+        for (let i=0; i<firstDay; i++) row += "<td></td>";
 
-        for (let date = 1; date <= daysInMonth; date++) {
-          let current = new Date(year, month, date);
-          let day = current.getDay();
-          let classes = "";
-          let tooltip = "";
+        for (let d=1; d<=daysInMonth; d++) {
+          let dateKey = String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+          let day = new Date(year, m, d).getDay();
+          let cls = "";
 
-          const key = String(month+1).padStart(2,"0")+"-"+String(date).padStart(2,"0");
-          if (holidayDates[key]) {
-            classes = "holiday";
-            tooltip = ` data-title="${holidayDates[key]}"`;
-          }
-          if (day === 0) classes = "weekend"; // Sunday
+          if (day === 0) cls = "sunday";
           if (day === 6) {
-            let weekNumber = Math.floor((date + firstDay) / 7) + 1;
-            if (weekNumber === 2 || weekNumber === 4) classes = "weekend";
+            let weekNumber = Math.floor((d+firstDay)/7)+1;
+            if (weekNumber===2 || weekNumber===4) cls = "weekend";
           }
+          if (holidayDates[dateKey]) cls = "holiday";
 
-          row += `<td class="${classes}"${tooltip}>${date}</td>`;
+          row += `<td class="${cls}">${d}</td>`;
           if (day === 6) { row += "</tr><tr>"; }
         }
-
         row += "</tr>";
         table.innerHTML += row;
         div.appendChild(table);
         calendar.appendChild(div);
       }
 
-      // ✅ Holiday list
-      const listDiv = document.getElementById("holidayList");
-      listDiv.innerHTML = "";
+      // Holiday list
+      const tbody = document.getElementById("holidayTableBody");
+      tbody.innerHTML = "";
       if (holidays[year]) {
-        let grouped = {};
-        holidays[year].forEach(h => {
-          let m = parseInt(h.date.split("-")[0],10)-1;
-          if (!grouped[m]) grouped[m] = [];
-          grouped[m].push(h);
-        });
-
-        Object.keys(grouped).sort((a,b)=>a-b).forEach(m=>{
-          let box = document.createElement("div");
-          box.className = "holiday-month";
-          box.innerHTML = `<h3>${monthNames[m]}</h3>`;
-          let ul = document.createElement("ul");
-          grouped[m].forEach(h=>{
-            let li = document.createElement("li");
-            li.innerText = `${h.date} – ${h.name}`;
-            ul.appendChild(li);
-          });
-          box.appendChild(ul);
-          listDiv.appendChild(box);
-        });
+        let chunk = 3; // 3 columns
+        for (let i=0; i<holidays[year].length; i+=chunk) {
+          let tr = document.createElement("tr");
+          for (let j=0; j<chunk; j++) {
+            let td = document.createElement("td");
+            if (holidays[year][i+j]) {
+              td.innerText = holidays[year][i+j].date + "  " + holidays[year][i+j].name;
+            }
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+        }
       }
     }
 
-    function updateCalendar() {
-      generateYearCalendar(parseInt(yearSelect.value));
-    }
-    function prevYear() {
-      yearSelect.value = parseInt(yearSelect.value) - 1;
-      updateCalendar();
-    }
-    function nextYear() {
-      yearSelect.value = parseInt(yearSelect.value) + 1;
-      updateCalendar();
-    }
+    function updateCalendar(){ generateYearCalendar(parseInt(yearSelect.value)); }
+    function prevYear(){ yearSelect.value = parseInt(yearSelect.value)-1; updateCalendar(); }
+    function nextYear(){ yearSelect.value = parseInt(yearSelect.value)+1; updateCalendar(); }
 
     fetch("data/holidays.json")
-      .then(res => res.json())
-      .then(data => {
-        holidays = data;
-        updateCalendar();
-      })
-      .catch(err => {
-        console.error("Error loading holidays.json", err);
-        updateCalendar();
-      });
+      .then(r=>r.json())
+      .then(data=>{ holidays=data; updateCalendar(); })
+      .catch(()=>updateCalendar());
   </script>
 
-  <!-- Footer -->
   <div id="footer"></div>
-
 </body>
 </html>
