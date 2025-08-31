@@ -10,16 +10,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* === CALENDAR + HOLIDAY WIDGET ONLY === */
-    .cy-container {
+    /* ===== Base Page Style ===== */
+    body {
       font-family: Arial, sans-serif;
-      background: #fff; /* overall background */
-      color: #000;      /* default text color */
+      margin: 0;
+      padding: 0;
+      background: #fff;   /* 🔹 Page background */
+      color: #000;        /* 🔹 Default text color */
       text-align: center;
-      padding: 10px;
     }
 
-    /* Controls (Year navigation) */
+    /* ===== Title ===== */
+    h1 {
+      margin: 10px 0;
+      font-size: 1.8rem;
+    }
+
+    /* ===== Controls Section (Year Selector & Buttons) ===== */
     .cy-controls {
       margin: 10px;
       display: flex;
@@ -31,18 +38,11 @@
       padding: 6px 12px;
       font-size: 15px;
       border-radius: 4px;
-      border: 1px solid #999; /* border of select/button */
+      border: 1px solid #999; /* 🔹 Border for dropdown/buttons */
       cursor: pointer;
     }
 
-    /* Year Title */
-    .cy-container h1 {
-      margin: 10px 0 20px 0;
-      font-size: 1.8rem;
-      color: #333; /* heading color */
-    }
-
-    /* Calendar layout */
+    /* ===== Calendar Layout ===== */
     .cy-calendar {
       display: flex;
       flex-wrap: wrap;
@@ -53,16 +53,15 @@
     .cy-month {
       flex: 1 1 230px;
       max-width: 250px;
-      border: 1px solid #999; /* border around month */
+      border: 1px solid #999; /* 🔹 Border around month */
       border-radius: 4px;
       overflow: hidden;
     }
     .cy-month h2 {
       margin: 0;
-      padding: 6px;
+      padding: 4px;
       font-size: 1rem;
       color: #000;
-      text-align: center;
     }
     .cy-month table {
       width: 100%;
@@ -70,84 +69,90 @@
       font-size: 0.8rem;
     }
     .cy-month th, .cy-month td {
+      border: 1px solid #ccc;  /* 🔹 Date cell borders */
       padding: 4px;
       text-align: center;
       min-width: 24px;
     }
-    .cy-month th { font-weight: bold; }
+    .cy-month th {
+      font-weight: bold;
+    }
 
-    /* === COLORS === */
-    /* Month header background (change freely) */
-    .cy-m0 h2 { background: #99ccff; }   /* January */
-    .cy-m1 h2 { background: #ccffff; }   /* February */
-    .cy-m2 h2 { background: #99ffcc; }   /* March */
-    .cy-m3 h2 { background: #ccff99; }   /* April */
-    .cy-m4 h2 { background: #ccff66; }   /* May */
-    .cy-m5 h2 { background: #ffff99; }   /* June */
-    .cy-m6 h2 { background: #ffcc66; }   /* July */
-    .cy-m7 h2 { background: #ff9966; }   /* August */
-    .cy-m8 h2 { background: #ffcc99; }   /* September */
-    .cy-m9 h2 { background: #ff9999; }   /* October */
-    .cy-m10 h2 { background: #cc99ff; }  /* November */
-    .cy-m11 h2 { background: #cc99cc; }  /* December */
+    /* ===== Month Header Colors (easy to change) ===== */
+    .cy-m0 h2 { background: #99ccff; }   /* 🔹 Jan */
+    .cy-m1 h2 { background: #ccffff; }   /* 🔹 Feb */
+    .cy-m2 h2 { background: #99ffcc; }   /* 🔹 Mar */
+    .cy-m3 h2 { background: #ccff99; }   /* 🔹 Apr */
+    .cy-m4 h2 { background: #ccff66; }   /* 🔹 May */
+    .cy-m5 h2 { background: #ffff99; }   /* 🔹 Jun */
+    .cy-m6 h2 { background: #ffcc66; }   /* 🔹 Jul */
+    .cy-m7 h2 { background: #ff9966; }   /* 🔹 Aug */
+    .cy-m8 h2 { background: #ffcc99; }   /* 🔹 Sep */
+    .cy-m9 h2 { background: #ff9999; }   /* 🔹 Oct */
+    .cy-m10 h2 { background: #cc99ff; }  /* 🔹 Nov */
+    .cy-m11 h2 { background: #cc99cc; }  /* 🔹 Dec */
 
-    /* Sundays (red text) */
-    .cy-sunday { color: red; font-weight: bold; }
+    /* ===== Date Styles ===== */
+    .cy-sunday {
+      color: red; /* 🔹 Sunday text */
+      font-weight: bold;
+    }
+    .cy-weekend {
+      background: #3399ff; /* 🔹 2nd & 4th Saturday background */
+      color: white;
+      font-weight: bold;
+    }
+    .cy-holiday {
+      background: red !important; /* 🔹 Holiday background */
+      color: white !important;
+      font-weight: bold;
+    }
+    .cy-month td:hover {
+      background: #ffe680; /* 🔹 Hover highlight */
+      cursor: pointer;
+    }
 
-    /* 2nd + 4th Saturdays (blue background, red text) */
-    .cy-weekend { background: #3399ff; color: red; font-weight: bold; }
-
-    /* Holidays (red background, white text) */
-    .cy-holiday { background: red !important; color: white !important; font-weight: bold; }
-
-    /* === HOLIDAY LIST === */
+    /* ===== Holiday List ===== */
     .cy-holiday-list {
       display: flex;
+      justify-content: flex-start;
       flex-wrap: wrap;
-      justify-content: space-between; /* spread evenly, removes right gap */
-      gap: 15px;
+      gap: 20px;
       margin: 20px auto;
       max-width: 1000px;
-      border: 1px solid #000; /* border around the entire list */
-      padding: 15px;
     }
     .cy-holiday-column {
-      flex: 1 1 220px;
+      flex: 1 1 calc(25% - 20px); /* 🔹 Up to 4 columns */
       max-width: 220px;
+      border: 1px solid #000; /* 🔹 Column border */
+      padding: 10px;
+    }
+    .cy-holiday-column h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      border-bottom: 1px solid #000;
+      text-align: left;
+      padding-bottom: 4px;
     }
     .cy-holiday-item {
       text-align: left;
       font-size: 0.9rem;
       margin: 4px 0;
-      padding: 4px;
-      border-radius: 4px;
-      transition: background 0.3s;
     }
-    .cy-holiday-item:hover { background: #f0f0f0; } /* hover highlight */
     .cy-holiday-date {
       display: inline-block;
       width: 70px;
       font-weight: bold;
-      cursor: help; /* shows "help" pointer */
     }
 
-    /* Responsive Rules */
+    /* ===== Responsive Holiday List ===== */
     @media (max-width: 768px) {
       .cy-holiday-list {
         flex-direction: column;
         align-items: center;
       }
       .cy-holiday-column {
-        width: 100%;
-        max-width: none;
-      }
-    }
-    @media (min-width: 769px) {
-      .cy-holiday-list {
-        flex-direction: row;
-      }
-      .cy-holiday-column {
-        flex: 1 1 22%; /* 4 columns on bigger screen */
+        width: 90%;
       }
     }
   </style>
@@ -157,131 +162,131 @@
 <body>
   <div id="header"></div>
 
-  <div class="cy-container">
-    <!-- Controls first -->
-    <div class="cy-controls">
-      <button onclick="cyPrevYear()">⏮ Prev</button>
-      <select id="cy-yearSelect" onchange="cyUpdateCalendar()"></select>
-      <button onclick="cyNextYear()">Next ⏭</button>
-    </div>
-
-    <!-- Year heading moved below controls -->
-    <h1>Calendar Year (<span id="cy-dynamicYear"></span>)</h1>
-
-    <!-- Calendar -->
-    <div class="cy-calendar" id="cy-calendar"></div>
-
-    <!-- Holidays -->
-    <h2>Holidays List (<span id="cy-dynamicYear2"></span>)</h2>
-    <div class="cy-holiday-list" id="cy-holidayList"></div>
+  <div class="cy-controls">
+    <button onclick="cyPrevYear()">⏮ Prev</button>
+    <select id="cy-yearSelect" onchange="cyUpdateCalendar()"></select>
+    <button onclick="cyNextYear()">Next ⏭</button>
   </div>
 
+  <!-- 🔹 Title moved below controls -->
+  <h1>Calendar Year (<span id="cy-dynamicYear"></span>)</h1>
+
+  <div class="cy-calendar" id="cy-calendar"></div>
+
+  <h2>Holidays List (<span id="cy-dynamicYear2"></span>)</h2>
+  <div class="cy-holiday-list" id="cy-holidayList"></div>
+
   <script>
-  let cyHolidays = {};
-  const cyMonthNames = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
-  ];
-  const cyMonthAbbr = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    let cyHolidays = {};
+    const cyMonthNames = [
+      "January","February","March","April","May","June",
+      "July","August","September","October","November","December"
+    ];
+    const cyMonthAbbr = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-  const cyYearSelect = document.getElementById("cy-yearSelect");
-  const thisYear = new Date().getFullYear();
-  for (let y = thisYear-5; y <= thisYear+5; y++) {
-    let opt = document.createElement("option");
-    opt.value = y;
-    opt.text = y;
-    if (y === thisYear) opt.selected = true;
-    cyYearSelect.add(opt);
-  }
-
-  function cyGenerateYearCalendar(year) {
-    document.getElementById("cy-dynamicYear").innerText = year;
-    document.getElementById("cy-dynamicYear2").innerText = year;
-
-    const calendar = document.getElementById("cy-calendar");
-    calendar.innerHTML = "";
-    let holidayDates = {};
-    if (cyHolidays[year]) {
-      cyHolidays[year].forEach(h => holidayDates[h.date] = h.name);
+    const cyYearSelect = document.getElementById("cy-yearSelect");
+    const thisYear = new Date().getFullYear();
+    for (let y = thisYear-5; y <= thisYear+5; y++) {
+      let opt = document.createElement("option");
+      opt.value = y;
+      opt.text = y;
+      if (y === thisYear) opt.selected = true;
+      cyYearSelect.add(opt);
     }
 
-    // === Calendar Months ===
-    for (let m = 0; m < 12; m++) {
-      let div = document.createElement("div");
-      div.className = "cy-month cy-m"+m;
-      let h2 = document.createElement("h2");
-      h2.innerText = cyMonthNames[m];
-      div.appendChild(h2);
+    function cyGenerateYearCalendar(year) {
+      document.getElementById("cy-dynamicYear").innerText = year;
+      document.getElementById("cy-dynamicYear2").innerText = year;
 
-      let table = document.createElement("table");
-      let header = "<tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr>";
-      table.innerHTML = header;
-
-      const firstDay = new Date(year, m, 1).getDay();
-      const daysInMonth = new Date(year, m+1, 0).getDate();
-
-      let row = "<tr>";
-      for (let i=0; i<firstDay; i++) row += "<td></td>";
-
-      for (let d=1; d<=daysInMonth; d++) {
-        let dateKey = String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
-        let day = new Date(year, m, d).getDay();
-        let cls = "";
-        let tooltip = "";
-
-        if (day === 0) cls = "cy-sunday"; // Sunday
-        if (day === 6) {
-          // ✅ Correct 2nd & 4th Saturdays
-          let weekNum = Math.floor((d + firstDay - 1) / 7) + 1;
-          if (weekNum === 2 || weekNum === 4) cls = "cy-weekend";
-        }
-        if (holidayDates[dateKey]) {
-          cls = "cy-holiday"; // holiday override
-          tooltip = holidayDates[dateKey]; // tooltip with holiday name
-        }
-
-        row += `<td class="${cls}" ${tooltip ? `title="${tooltip}"` : ""}>${d}</td>`;
-        if (day === 6) { row += "</tr><tr>"; }
+      const calendar = document.getElementById("cy-calendar");
+      calendar.innerHTML = "";
+      let holidayDates = {};
+      if (cyHolidays[year]) {
+        cyHolidays[year].forEach(h => holidayDates[h.date] = h.name);
       }
-      row += "</tr>";
-      table.innerHTML += row;
-      div.appendChild(table);
-      calendar.appendChild(div);
-    }
 
-    // === Holidays List ===
-    const list = document.getElementById("cy-holidayList");
-    list.innerHTML = "";
-    if (cyHolidays[year]) {
-      let colDiv;
-      cyHolidays[year].forEach((h, idx) => {
-        if (idx % 6 === 0) {
-          colDiv = document.createElement("div");
-          colDiv.className = "cy-holiday-column";
-          list.appendChild(colDiv);
+      // === Calendar Months ===
+      for (let m = 0; m < 12; m++) {
+        let div = document.createElement("div");
+        div.className = "cy-month cy-m"+m;
+        let h2 = document.createElement("h2");
+        h2.innerText = cyMonthNames[m];
+        div.appendChild(h2);
+
+        let table = document.createElement("table");
+        let header = "<tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr>";
+        table.innerHTML = header;
+
+        const firstDay = new Date(year, m, 1).getDay();
+        const daysInMonth = new Date(year, m+1, 0).getDate();
+
+        let row = "<tr>";
+        for (let i=0; i<firstDay; i++) row += "<td></td>";
+
+        for (let d=1; d<=daysInMonth; d++) {
+          let dateKey = String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+          let day = new Date(year, m, d).getDay();
+          let cls = "";
+          let tooltip = "";
+
+          // Sunday
+          if (day === 0) cls = "cy-sunday";
+
+          // ✅ Correct 2nd & 4th Saturdays
+          if (day === 6) {
+            let weekNum = Math.floor((d + firstDay - 1) / 7) + 1;
+            if (weekNum === 2 || weekNum === 4) cls = "cy-weekend";
+          }
+
+          // Holiday
+          if (holidayDates[dateKey]) {
+            cls = "cy-holiday";
+            tooltip = `${d} ${cyMonthAbbr[m]} ${year} - ${holidayDates[dateKey]}`;
+          } else {
+            tooltip = `${d} ${cyMonthAbbr[m]} ${year}`;
+          }
+
+          row += `<td class="${cls}" title="${tooltip}">${d}</td>`;
+          if (day === 6) { row += "</tr><tr>"; }
         }
-        // convert "MM-DD" -> "DD MMM"
-        let [mm, dd] = h.date.split("-");
-        let formatted = parseInt(dd) + " " + cyMonthAbbr[parseInt(mm)-1];
+        row += "</tr>";
+        table.innerHTML += row;
+        div.appendChild(table);
+        calendar.appendChild(div);
+      }
 
-        let item = document.createElement("div");
-        item.className = "cy-holiday-item";
-        item.innerHTML = `<span class="cy-holiday-date" title="Holiday: ${h.name} on ${formatted} ${year}">${formatted}</span> ${h.name}`;
-        colDiv.appendChild(item);
-      });
+      // === Holidays List ===
+      const list = document.getElementById("cy-holidayList");
+      list.innerHTML = "";
+      if (cyHolidays[year]) {
+        let colDiv;
+        cyHolidays[year].forEach((h, idx) => {
+          if (idx % 6 === 0) {
+            colDiv = document.createElement("div");
+            colDiv.className = "cy-holiday-column";
+            list.appendChild(colDiv);
+          }
+          // convert "MM-DD" -> "DD MMM"
+          let [mm, dd] = h.date.split("-");
+          let formatted = parseInt(dd) + " " + cyMonthAbbr[parseInt(mm)-1];
+
+          let item = document.createElement("div");
+          item.className = "cy-holiday-item";
+          item.innerHTML = `<span class="cy-holiday-date">${formatted}</span> ${h.name}`;
+          colDiv.appendChild(item);
+        });
+      }
     }
-  }
 
-  function cyUpdateCalendar(){ cyGenerateYearCalendar(parseInt(cyYearSelect.value)); }
-  function cyPrevYear(){ cyYearSelect.value = parseInt(cyYearSelect.value)-1; cyUpdateCalendar(); }
-  function cyNextYear(){ cyYearSelect.value = parseInt(cyYearSelect.value)+1; cyUpdateCalendar(); }
+    function cyUpdateCalendar(){ cyGenerateYearCalendar(parseInt(cyYearSelect.value)); }
+    function cyPrevYear(){ cyYearSelect.value = parseInt(cyYearSelect.value)-1; cyUpdateCalendar(); }
+    function cyNextYear(){ cyYearSelect.value = parseInt(cyYearSelect.value)+1; cyUpdateCalendar(); }
 
-  fetch("data/holidays.json")
-    .then(r=>r.json())
-    .then(data=>{ cyHolidays=data; cyUpdateCalendar(); })
-    .catch(()=>cyUpdateCalendar());
-</script>
-
+    fetch("data/holidays.json")
+      .then(r=>r.json())
+      .then(data=>{ cyHolidays=data; cyUpdateCalendar(); })
+      .catch(()=>cyUpdateCalendar());
+  </script>
 
   <div id="footer"></div>
 </body>
