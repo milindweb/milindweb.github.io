@@ -1,0 +1,228 @@
+/* =========================================================
+   BLOG STYLES (namespaced with .bg-)
+   Author: MilindWeb
+   Safe from header/footer conflicts
+   ========================================================= */
+
+/* Variables for easy theme change */
+:root {
+  --bg-body: #f9fafb;
+  --bg-surface: #ffffff;
+  --bg-text: #1f2937;
+  --bg-text-light: #6b7280;
+  --bg-accent: #2563eb;
+  --bg-radius: 14px;
+  --bg-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+/* Dark mode */
+body.bg-dark {
+  --bg-body: #111827;
+  --bg-surface: #1f2937;
+  --bg-text: #f9fafb;
+  --bg-text-light: #9ca3af;
+  --bg-accent: #60a5fa;
+  --bg-shadow: 0 4px 14px rgba(0,0,0,0.5);
+}
+
+/* Base */
+.bg-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--bg-text);
+  background: var(--bg-body);
+}
+
+.bg-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.2em;
+}
+.bg-subtitle {
+  font-size: 1rem;
+  color: var(--bg-text-light);
+  margin-bottom: 2em;
+}
+
+/* Layout: posts + sidebar */
+.bg-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 25px;
+}
+@media (max-width: 900px) {
+  .bg-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Post Grid */
+.bg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Post Card */
+.bg-card {
+  background: var(--bg-surface);
+  border-radius: var(--bg-radius);
+  overflow: hidden;
+  box-shadow: var(--bg-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.bg-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+.bg-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.bg-card-body {
+  padding: 15px;
+  flex: 1;
+}
+.bg-card-body h3 {
+  margin: 8px 0;
+  font-size: 1.2em;
+}
+.bg-card-body h3 a {
+  text-decoration: none;
+  color: var(--bg-text);
+}
+.bg-card-body h3 a:hover {
+  color: var(--bg-accent);
+}
+.bg-card-body small {
+  color: var(--bg-text-light);
+  display: block;
+  margin-bottom: 8px;
+}
+.bg-card-body p {
+  font-size: 0.95em;
+  line-height: 1.4;
+  color: var(--bg-text-light);
+}
+
+/* Categories (badges) */
+.bg-category {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.75em;
+  border-radius: 8px;
+  color: #fff;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+.bg-cat-engineering { background: #2563eb; }
+.bg-cat-mini-projects { background: #9333ea; }
+.bg-cat-tech-tutorials { background: #10b981; }
+.bg-cat-sensors-modules { background: #f59e0b; }
+.bg-cat-tips-tricks { background: #ef4444; }
+.bg-cat-finance { background: #0ea5e9; }
+.bg-cat-education { background: #16a34a; }
+.bg-cat-job { background: #f97316; }
+.bg-cat-general { background: #475569; }
+.bg-cat-essay { background: #64748b; }
+.bg-cat-birthday { background: #db2777; }
+.bg-cat-anniversary { background: #7c3aed; }
+.bg-cat-jayanti { background: #22c55e; }
+.bg-cat-news { background: #dc2626; }
+
+/* Tags */
+.bg-tags {
+  margin-top: 10px;
+}
+.bg-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 3px;
+  font-size: 0.8em;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #374151;
+  transition: all 0.2s;
+}
+.bg-tag:hover {
+  background: var(--bg-accent);
+  color: #fff;
+}
+
+/* Sidebar */
+.bg-sidebar {
+  background: var(--bg-surface);
+  padding: 18px;
+  border-radius: var(--bg-radius);
+  box-shadow: var(--bg-shadow);
+}
+.bg-widget {
+  margin-bottom: 2em;
+}
+.bg-widget h3 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+  border-bottom: 2px solid var(--bg-accent);
+  display: inline-block;
+  padding-bottom: 4px;
+}
+.bg-widget ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.bg-widget ul li {
+  margin-bottom: 6px;
+}
+.bg-widget a {
+  text-decoration: none;
+  color: var(--bg-text);
+}
+.bg-widget a:hover {
+  color: var(--bg-accent);
+}
+#bg-search {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 0.9em;
+}
+
+/* Pagination */
+.bg-pagination {
+  text-align: center;
+  margin: 30px 0;
+}
+.bg-pagination button {
+  margin: 0 6px;
+  padding: 6px 12px;
+  border: none;
+  background: #f3f4f6;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 0.9em;
+}
+.bg-pagination button:hover {
+  background: #e5e7eb;
+}
+.bg-pagination button:disabled {
+  background: #ddd;
+  cursor: not-allowed;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
