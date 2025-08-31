@@ -10,72 +10,77 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* ===== Body ===== */
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #fff; /* body background color */
+      font-family: Arial, sans-serif; /* text font */
+      margin: 0; /* remove default margin */
+      padding: 0; /* remove default padding */
+      background: #fff; /* page background color */
       color: #000; /* default text color */
-      text-align: center;
-    }
-    h1 {
-      margin: 10px 0;
-      font-size: 1.8rem;
+      text-align: center; /* center headings */
     }
 
-    /* Controls */
+    h1 {
+      margin: 10px 0; /* spacing above/below */
+      font-size: 1.8rem; /* heading size */
+    }
+
+    /* ===== Controls ===== */
     .cy-controls {
-      margin: 10px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      margin: 10px; /* spacing */
+      display: flex; /* flex layout */
+      justify-content: center; /* center content horizontally */
+      flex-wrap: wrap; /* wrap on small screens */
+      gap: 10px; /* gap between buttons/select */
     }
     .cy-controls select, .cy-controls button {
-      padding: 6px 12px;
-      font-size: 15px;
-      border-radius: 4px;
+      padding: 6px 12px; /* inner spacing */
+      font-size: 15px; /* text size */
+      border-radius: 4px; /* rounded corners */
       border: 1px solid #999; /* border color */
-      cursor: pointer;
+      cursor: pointer; /* pointer on hover */
+      background: #fff; /* button background */
+      color: #000; /* button text color */
     }
 
-    /* Calendar Layout */
+    /* ===== Calendar Layout ===== */
     .cy-calendar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px;
+      display: flex; /* flex layout */
+      flex-wrap: wrap; /* wrap months */
+      justify-content: center; /* center months */
+      gap: 10px; /* spacing between months */
+      padding: 10px; /* padding around calendar */
     }
     .cy-month {
-      flex: 1 1 230px;
-      max-width: 250px;
-      border: 1px solid #999; /* month border color */
-      border-radius: 4px;
-      overflow: hidden;
+      flex: 1 1 230px; /* flexible width */
+      max-width: 250px; /* max width */
+      border: 1px solid #999; /* outer border of month */
+      border-radius: 4px; /* rounded corners */
+      overflow: hidden; /* hide overflow */
+      background: #f9f9f9; /* month background */
     }
     .cy-month h2 {
-      margin: 0;
-      padding: 4px;
-      font-size: 1rem;
-      color: #000; /* month header text color */
+      margin: 0; /* no margin */
+      padding: 4px; /* padding around text */
+      font-size: 1rem; /* text size */
+      color: #000; /* text color */
     }
     .cy-month table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
+      width: 100%; /* full width */
+      border-collapse: collapse; /* remove double borders */
+      font-size: 0.8rem; /* small text */
     }
     .cy-month th, .cy-month td {
-      border: 1px solid #999; /* table border color */
-      padding: 4px;
-      text-align: center;
-      min-width: 24px;
+      padding: 4px; /* cell padding */
+      text-align: center; /* center text */
+      min-width: 24px; /* minimum width */
+      border: none; /* remove cell borders */
     }
     .cy-month th {
-      font-weight: bold;
+      font-weight: bold; /* bold header text */
     }
 
-    /* Month header colors */
+    /* ===== Month header colors ===== */
     .cy-m0 h2 { background: #99ccff; }   /* Jan */
     .cy-m1 h2 { background: #ccffff; }   /* Feb */
     .cy-m2 h2 { background: #99ffcc; }   /* Mar */
@@ -89,60 +94,60 @@
     .cy-m10 h2 { background: #cc99ff; }  /* Nov */
     .cy-m11 h2 { background: #cc99cc; }  /* Dec */
 
-    /* Sundays */
+    /* ===== Special days ===== */
     .cy-sunday {
       color: red; /* Sunday text color */
-      font-weight: bold;
+      font-weight: bold; /* bold text */
     }
-    /* 2nd/4th Saturdays */
     .cy-weekend {
       background: #3399ff; /* 2nd/4th Saturday background */
-      color: red; /* Saturday text color */
-      font-weight: bold;
+      color: red; /* text color */
+      font-weight: bold; /* bold text */
     }
-    /* Holidays */
     .cy-holiday {
       background: red !important; /* holiday background color */
       color: white !important; /* holiday text color */
-      font-weight: bold;
+      font-weight: bold; /* bold text */
     }
 
-    /* Holiday list container */
+    /* ===== Holiday list container ===== */
     .cy-holiday-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin: 20px auto;
-      max-width: 1000px;
+      display: flex; /* flex layout for columns */
+      flex-wrap: wrap; /* wrap columns */
+      justify-content: center; /* center horizontally */
+      gap: 20px; /* gap between columns */
+      margin: 20px auto; /* spacing above/below */
+      max-width: 1000px; /* max width */
+      border: 1px solid #000; /* single border around list */
+      padding: 10px; /* inner padding */
+      background: #fff; /* list background */
     }
 
-    /* Each holiday column */
+    /* ===== Holiday columns ===== */
     .cy-holiday-column {
-      flex: 1 1 200px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+      flex: 1 1 200px; /* flexible column width */
+      display: flex; /* flex layout */
+      flex-direction: column; /* vertical items */
+      gap: 5px; /* spacing between items */
     }
-
     .cy-holiday-item {
-      text-align: left;
-      font-size: 0.9rem;
+      text-align: left; /* align text left */
+      font-size: 0.9rem; /* text size */
     }
-
     .cy-holiday-date {
-      display: inline-block;
-      width: 60px;
-      font-weight: bold;
+      display: inline-block; /* inline block for spacing */
+      width: 60px; /* fixed width for date */
+      font-weight: bold; /* bold text */
     }
 
+    /* ===== Responsive ===== */
     @media (max-width: 768px) {
       .cy-holiday-list {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: column; /* vertical layout */
+        align-items: center; /* center columns */
       }
       .cy-holiday-column {
-        width: 90%;
+        width: 90%; /* almost full width */
       }
     }
   </style>
@@ -228,12 +233,12 @@
         calendar.appendChild(div);
       }
 
-      // Dynamic Holiday list, max 4 per column
+      // Holiday list, max 5 per column
       const list = document.getElementById("cy-holidayList");
       list.innerHTML = "";
 
       if (cyHolidays[year]) {
-        const maxPerColumn = 4;
+        const maxPerColumn = 5;
         let holidays = [...cyHolidays[year]];
         let numCols = Math.ceil(holidays.length / maxPerColumn);
 
