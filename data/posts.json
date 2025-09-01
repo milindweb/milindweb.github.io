@@ -5,8 +5,8 @@
     "date": "2025-08-20",
     "category": "Engineering Project",
     "tags": ["engineering", "projects", "DIY"],
-    "excerpt": "Kickstart your career with these beginner-friendly engineering projects that help you learn core concepts while building practical systems.",
-    "thumbnail": "../assets/posts/eng-projects.jpg",
+    "description": "Kickstart your career with these beginner-friendly engineering projects that help you learn core concepts while building practical systems.",
+    "image": "eng-projects.jpg",
     "url": "post1.html"
   },
   {
@@ -15,28 +15,28 @@
     "date": "2025-08-15",
     "category": "Mini Projects",
     "tags": ["arduino", "home automation", "electronics"],
-    "excerpt": "Build a mini project using Arduino to control lights, fans, and appliances via smartphone. A step-by-step guide with code.",
-    "thumbnail": "../assets/posts/arduino-home.jpg",
+    "description": "Build a mini project using Arduino to control lights, fans, and appliances via smartphone. A step-by-step guide with code.",
+    "image": "arduino-home.jpg",
     "url": "post2.html"
   },
   {
     "id": "post3",
     "title": "Complete Guide to Ultrasonic Sensor (HC-SR04)",
     "date": "2025-08-10",
-    "category": "Sensors & modules",
+    "category": "Sensors & Modules",
     "tags": ["sensors", "ultrasonic", "electronics"],
-    "excerpt": "Learn how to use the HC-SR04 ultrasonic sensor for distance measurement with Arduino and ESP32, with wiring and sample code.",
-    "thumbnail": "../assets/posts/ultrasonic.jpg",
+    "description": "Learn how to use the HC-SR04 ultrasonic sensor for distance measurement with Arduino and ESP32, with wiring and sample code.",
+    "image": "ultrasonic.jpg",
     "url": "post3.html"
   },
   {
     "id": "post4",
     "title": "Top 10 Tips & Tricks for Faster Coding",
     "date": "2025-08-01",
-    "category": "Tip and Tricks",
+    "category": "Tips and Tricks",
     "tags": ["coding", "productivity", "shortcuts"],
-    "excerpt": "Boost your programming productivity with these tips & tricks every developer should know.",
-    "thumbnail": "../assets/posts/coding-tips.jpg",
+    "description": "Boost your programming productivity with these tips & tricks every developer should know.",
+    "image": "coding-tips.jpg",
     "url": "post4.html"
   },
   {
@@ -45,8 +45,8 @@
     "date": "2025-07-25",
     "category": "Finance",
     "tags": ["money", "finance", "budget"],
-    "excerpt": "Understand the basics of personal finance, savings, and smart investment strategies for beginners.",
-    "thumbnail": "../assets/posts/finance.jpg",
+    "description": "Understand the basics of personal finance, savings, and smart investment strategies for beginners.",
+    "image": "finance.jpg",
     "url": "post5.html"
   },
   {
@@ -55,8 +55,8 @@
     "date": "2025-07-18",
     "category": "Education",
     "tags": ["education", "india", "future"],
-    "excerpt": "A detailed overview of the Indian education system, its challenges, and opportunities for the next generation.",
-    "thumbnail": "../assets/posts/education.jpg",
+    "description": "A detailed overview of the Indian education system, its challenges, and opportunities for the next generation.",
+    "image": "education.jpg",
     "url": "post6.html"
   },
   {
@@ -65,18 +65,18 @@
     "date": "2025-07-10",
     "category": "Job & Interviews",
     "tags": ["jobs", "interviews", "career"],
-    "excerpt": "The most frequently asked interview questions and how you can prepare for them effectively.",
-    "thumbnail": "../assets/posts/interview.jpg",
+    "description": "The most frequently asked interview questions and how you can prepare for them effectively.",
+    "image": "interview.jpg",
     "url": "post7.html"
   },
   {
     "id": "post8",
     "title": "General Knowledge Quiz – August 2025",
     "date": "2025-08-05",
-    "category": "General knowledge",
+    "category": "General Knowledge",
     "tags": ["quiz", "knowledge", "gk"],
-    "excerpt": "Test your general knowledge with these latest quiz questions based on current events and facts.",
-    "thumbnail": "../assets/posts/gk-quiz.jpg",
+    "description": "Test your general knowledge with these latest quiz questions based on current events and facts.",
+    "image": "gk-quiz.jpg",
     "url": "post8.html"
   }
 ]
