@@ -1,0 +1,171 @@
+/* ===========================
+   SINGLE BLOG POST STYLES
+   Prefix: .bg-
+=========================== */
+
+/* --- Container --- */
+.bg-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #222;
+}
+
+/* --- Breadcrumb --- */
+.bg-breadcrumb {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.bg-breadcrumb a {
+  color: #1e88e5;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.bg-breadcrumb a:hover {
+  color: #0d47a1;
+}
+
+.bg-breadcrumb span {
+  color: #555;
+}
+
+/* --- Post Single Wrapper --- */
+.bg-post-single {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin-bottom: 50px;
+}
+
+/* --- Featured Image --- */
+.bg-post-image {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+/* --- Post Header --- */
+.bg-post-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.bg-post-meta {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+/* --- Post Body --- */
+.bg-post-body h2 {
+  font-size: 1.5rem;
+  margin-top: 25px;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.bg-post-body h3 {
+  font-size: 1.2rem;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.bg-post-body p,
+.bg-post-body ul,
+.bg-post-body ol,
+.bg-post-body blockquote {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.bg-post-body ul,
+.bg-post-body ol {
+  padding-left: 20px;
+}
+
+.bg-post-body blockquote {
+  border-left: 4px solid #1e88e5;
+  padding-left: 12px;
+  font-style: italic;
+  color: #333;
+  background: #f0f8ff;
+  border-radius: 6px;
+}
+
+/* --- Tags --- */
+.bg-post-tags {
+  margin-top: 25px;
+}
+
+.bg-post-tags .bg-tag {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 6px;
+  background: #e0f2ff;
+  color: #1e88e5;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bg-post-tags .bg-tag:hover {
+  background: #1e88e5;
+  color: #fff;
+}
+
+/* --- Post Navigation --- */
+.bg-post-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.bg-post-nav a {
+  text-decoration: none;
+  color: #1e88e5;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.bg-post-nav a:hover {
+  text-decoration: underline;
+  color: #0d47a1;
+}
+
+/* --- Animations --- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.6s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .bg-post-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .bg-post-body h2 {
+    font-size: 1.3rem;
+  }
+
+  .bg-post-body h3 {
+    font-size: 1.1rem;
+  }
+}
