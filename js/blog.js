@@ -1,6 +1,6 @@
 /* =========================================================
    BLOG ENGINE (MilindWeb)
-   Loads posts.json and builds blog index dynamically
+   Loads /data/posts.json and builds blog index dynamically
    ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -17,10 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const postsPerPage = 6;
 
   // Load posts.json
-  fetch("posts.json")
+  fetch("data/posts.json")
     .then(res => res.json())
     .then(data => {
-      allPosts = data;
+      // Sort posts newest first
+      allPosts = data.sort((a, b) => new Date(b.date) - new Date(a.date));
       filteredPosts = [...allPosts];
       renderBlog();
       renderSidebar();
@@ -50,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("article");
       card.className = "bg-card fade-in";
       card.innerHTML = `
-        <img src="${post.image}" alt="${post.title}">
+        <img src="img/${post.image}" alt="${post.title}">
         <div class="bg-card-body">
           <small>${formatDate(post.date)} · ${post.category}</small>
           <h3><a href="${post.url}">${post.title}</a></h3>
@@ -72,16 +73,17 @@ document.addEventListener("DOMContentLoaded", () => {
   ---------------------- */
   function renderSidebar() {
     // Categories
-    const categories = [...new Set(allPosts.map(p => p.category))];
+    const categories = [...new Set(allPosts.map(p => p.category))].sort();
     categoriesList.innerHTML = "";
     categories.forEach(cat => {
+      const count = allPosts.filter(p => p.category === cat).length;
       const li = document.createElement("li");
-      li.innerHTML = `<a href="#" data-cat="${cat}">${cat}</a>`;
+      li.innerHTML = `<a href="#" data-cat="${cat}">${cat} <span class="bg-count">(${count})</span></a>`;
       categoriesList.appendChild(li);
     });
 
     // Tags
-    const tags = [...new Set(allPosts.flatMap(p => p.tags))];
+    const tags = [...new Set(allPosts.flatMap(p => p.tags))].sort();
     tagsContainer.innerHTML = "";
     tags.forEach(tag => {
       const span = document.createElement("span");
@@ -166,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= totalPages; i++) {
       const btn = document.createElement("button");
       btn.textContent = i;
-      if (i === currentPage) btn.style.background = "var(--bg-accent)";
+      if (i === currentPage) btn.classList.add("active");
       btn.addEventListener("click", () => {
         currentPage = i;
         renderBlog();
