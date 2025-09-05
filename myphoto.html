@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Album</title>
+
+  <!-- Header/Footer Styles -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f7f7f7; }
+    .album-container { max-width: 1300px; margin: auto; padding: 20px; }
+
+    .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .controls input, .controls select {
+      padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.95rem;
+    }
+
+    .album { margin-bottom: 40px; }
+    .album h2 {
+      margin: 15px 0;
+      font-size: 1.8rem;
+      color: #0077cc;
+      border-left: 5px solid #0077cc;
+      padding-left: 10px;
+    }
+    .photo-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .photo-card {
+      flex: 1 1 calc(25% - 15px);
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .photo-card:hover { transform: scale(1.03); }
+    .photo-card img {
+      display: block;
+      width: 100%;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+    .photo-actions {
+      padding: 8px;
+      text-align: center;
+      background: #fafafa;
+    }
+    .photo-actions a {
+      color: #0077cc;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .photo-actions a:hover {
+      text-decoration: underline;
+    }
+
+    /* Lightbox Styling */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      flex-direction: column;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 8px;
+    }
+    .lightbox-close, .lightbox-prev, .lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      padding: 10px;
+    }
+    .lightbox-close {
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      transform: none;
+    }
+    .lightbox-prev { left: 30px; }
+    .lightbox-next { right: 30px; }
+
+    .lightbox-download {
+      margin-top: 15px;
+      text-decoration: none;
+      background: #0077cc;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    .lightbox-download:hover {
+      background: #005fa3;
+    }
+
+    @media (max-width: 992px) {
+      .photo-card { flex: 1 1 calc(33.3% - 15px); }
+    }
+    @media (max-width: 600px) {
+      .photo-card { flex: 1 1 calc(50% - 15px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <main class="album-container">
+    <div class="controls">
+      <input type="text" id="search" placeholder="Search photos...">
+      <select id="albumFilter" style="display:none;">
+        <option value="all">All Albums</option>
+      </select>
+    </div>
+    <div id="albums"><p>Loading photos...</p></div>
+  </main>
+
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <span class="lightbox-prev"><i class="fa fa-chevron-left"></i></span>
+    <img id="lightbox-img" src="" alt="">
+    <span class="lightbox-next"><i class="fa fa-chevron-right"></i></span>
+    <a id="lightbox-download" class="lightbox-download" href="#" target="_blank">
+      <i class="fa fa-download"></i> Download Original
+    </a>
+  </div>
+
+  <div id="footer"></div>
+  <script src="js/headerfooter.js" defer></script>
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbxh_Se7p6fLRnGB5bBRbychMFZ7-hNEkkX0EhJeDAzQ8lk7ff4CnNQJ6xUp_B_Vd5qbPA/exec";
+
+    const albumsContainer = document.getElementById("albums");
+    const searchInput = document.getElementById("search");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxDownload = document.getElementById("lightbox-download");
+    const prevBtn = document.querySelector(".lightbox-prev");
+    const nextBtn = document.querySelector(".lightbox-next");
+
+    let photos = [];
+    let currentIndex = -1;
+
+    function renderPhotos(filter = "") {
+      albumsContainer.innerHTML = "";
+      const grid = document.createElement("div");
+      grid.className = "photo-grid";
+      const filtered = photos.filter(p => p.name.toLowerCase().includes(filter));
+
+      filtered.forEach((photo, idx) => {
+        const card = document.createElement("div");
+        card.className = "photo-card";
+        card.innerHTML = `
+          <img src="${photo.thumbnail}" data-idx="${idx}" alt="${photo.name}" loading="lazy">
+          <div class="photo-actions">
+            <a href="${photo.original}" target="_blank"><i class="fa fa-download"></i> Download</a>
+          </div>`;
+        card.querySelector("img").onclick = () => openLightbox(idx);
+        grid.appendChild(card);
+      });
+
+      albumsContainer.appendChild(grid);
+    }
+
+    function openLightbox(idx) {
+      currentIndex = idx;
+      const photo = photos[currentIndex];
+      lightboxImg.src = photo.preview;
+      lightboxDownload.href = photo.original;
+      lightbox.classList.add("active");
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("active");
+      lightboxImg.src = "";
+    }
+
+    function showPrev() {
+      if (currentIndex > 0) openLightbox(currentIndex - 1);
+    }
+
+    function showNext() {
+      if (currentIndex < photos.length - 1) openLightbox(currentIndex + 1);
+    }
+
+    document.querySelector(".lightbox-close").onclick = closeLightbox;
+    prevBtn.onclick = showPrev;
+    nextBtn.onclick = showNext;
+
+    document.addEventListener("keydown", e => {
+      if (!lightbox.classList.contains("active")) return;
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "ArrowRight") showNext();
+    });
+
+    searchInput.oninput = () => renderPhotos(searchInput.value.trim().toLowerCase());
+
+    async function loadPhotos() {
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        photos = data.albums[0].photos;
+        renderPhotos();
+      } catch (e) {
+        albumsContainer.innerHTML = "<p>Error loading photos.</p>";
+        console.error("Error fetching data:", e);
+      }
+    }
+
+    loadPhotos();
+  </script>
+</body>
+</html>
