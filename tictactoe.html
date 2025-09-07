@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O and X Game</title>
+
+  <!-- Header/Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    #controls {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    select, button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    select {
+      background: #fff;
+      color: #333;
+    }
+
+    button {
+      background: #ff4c4c;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    button:hover { background: #e33a3a; }
+
+    #game {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 10px;
+    }
+
+    .cell {
+      background: #fff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #0077cc;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+    .cell:hover { transform: scale(1.05); background: #f1f7ff; }
+    .cell.taken { pointer-events: none; }
+
+    #status {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 600px) {
+      #game {
+        grid-template-columns: repeat(3, 80px);
+        grid-template-rows: repeat(3, 80px);
+        gap: 8px;
+      }
+      .cell { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <main>
+    <h1>O and X Game</h1>
+    <div id="controls">
+      <select id="mode">
+        <option value="pvp">Player vs Player</option>
+        <option value="ai">Player vs Computer</option>
+      </select>
+      <button onclick="resetGame()">Restart</button>
+    </div>
+    <div id="game"></div>
+    <div id="status">Player X's turn</div>
+  </main>
+
+  <div id="footer"></div>
+  <script src="js/headerfooter.js" defer></script>
+  <script>
+    const gameBoard = document.getElementById("game");
+    const statusText = document.getElementById("status");
+    const modeSelect = document.getElementById("mode");
+
+    let board = Array(9).fill("");
+    let currentPlayer = "X";
+    let gameActive = true;
+    let mode = "pvp"; // default mode
+
+    const winPatterns = [
+      [0,1,2], [3,4,5], [6,7,8], // rows
+      [0,3,6], [1,4,7], [2,5,8], // cols
+      [0,4,8], [2,4,6]           // diagonals
+    ];
+
+    function init() {
+      gameBoard.innerHTML = "";
+      board.forEach((_, idx) => {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.dataset.index = idx;
+        cell.addEventListener("click", handleClick);
+        gameBoard.appendChild(cell);
+      });
+    }
+
+    function handleClick(e) {
+      const idx = e.target.dataset.index;
+      if (board[idx] !== "" || !gameActive) return;
+
+      makeMove(idx, currentPlayer);
+      if (!gameActive) return;
+
+      if (mode === "ai" && currentPlayer === "O") {
+        setTimeout(computerMove, 500); // small delay for realism
+      }
+    }
+
+    function makeMove(idx, player) {
+      board[idx] = player;
+      const cell = gameBoard.children[idx];
+      cell.textContent = player;
+      cell.classList.add("taken", player === "X" ? "x" : "o");
+
+      checkWinner();
+      if (gameActive) {
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        statusText.textContent = `Player ${currentPlayer}'s turn`;
+      }
+    }
+
+    function checkWinner() {
+      for (let pattern of winPatterns) {
+        const [a,b,c] = pattern;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          statusText.textContent = `🎉 Player ${board[a]} Wins!`;
+          gameActive = false;
+          return;
+        }
+      }
+      if (!board.includes("")) {
+        statusText.textContent = "😅 It's a Draw!";
+        gameActive = false;
+      }
+    }
+
+    function computerMove() {
+      if (!gameActive) return;
+      // simple AI: pick random empty cell
+      let emptyCells = board.map((v, i) => v === "" ? i : null).filter(v => v !== null);
+      let idx = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      makeMove(idx, "O");
+    }
+
+    function resetGame() {
+      board = Array(9).fill("");
+      currentPlayer = "X";
+      gameActive = true;
+      statusText.textContent = "Player X's turn";
+      mode = modeSelect.value;
+      init();
+    }
+
+    modeSelect.addEventListener("change", () => {
+      resetGame();
+    });
+
+    init();
+  </script>
+</body>
+</html>
