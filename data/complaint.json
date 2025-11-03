@@ -1,0 +1,251 @@
+[
+  {
+    "chiefComplaint": "General / Fever / Weakness",
+    "subSymptoms": [
+      "Fever",
+      "Body Pain",
+      "Malaise",
+      "Fatigue",
+      "Loss of Appetite",
+      "Chills",
+      "Sweating",
+      "Weight Loss",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Respiratory System",
+    "subSymptoms": [
+      "Cough",
+      "Cold",
+      "Sore Throat",
+      "Breathlessness",
+      "Chest Pain",
+      "Wheezing",
+      "Phlegm",
+      "Nasal Blockage",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "ENT (Ear, Nose, Throat)",
+    "subSymptoms": [
+      "Ear Pain",
+      "Ear Discharge",
+      "Hearing Loss",
+      "Nasal Congestion",
+      "Sneezing",
+      "Throat Pain",
+      "Tonsillitis",
+      "Sinus Pain",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Cardiovascular System",
+    "subSymptoms": [
+      "Chest Pain",
+      "Palpitation",
+      "Breathlessness",
+      "Swelling of Feet",
+      "Syncope / Fainting",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Gastrointestinal System",
+    "subSymptoms": [
+      "Abdominal Pain",
+      "Nausea / Vomiting",
+      "Loose Motion",
+      "Constipation",
+      "Acidity",
+      "Indigestion",
+      "Loss of Appetite",
+      "Jaundice",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Genitourinary System",
+    "subSymptoms": [
+      "Burning Micturition",
+      "Frequency of Urine",
+      "Hematuria",
+      "Flank Pain",
+      "Discharge",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Musculoskeletal System",
+    "subSymptoms": [
+      "Joint Pain",
+      "Back Pain",
+      "Neck Pain",
+      "Swelling of Joints",
+      "Muscle Pain",
+      "Injury",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Neurology",
+    "subSymptoms": [
+      "Headache",
+      "Dizziness",
+      "Tingling / Numbness",
+      "Seizure",
+      "Weakness of Limb",
+      "Loss of Consciousness",
+      "Tremor",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Dermatology / Skin",
+    "subSymptoms": [
+      "Itching",
+      "Rash",
+      "Boil",
+      "Swelling",
+      "Hair Fall",
+      "Pigmentation",
+      "Burns",
+      "Allergy",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Ophthalmology / Eye",
+    "subSymptoms": [
+      "Redness",
+      "Pain",
+      "Discharge",
+      "Watering",
+      "Blurring of Vision",
+      "Itching",
+      "Swelling",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Dental / Oral",
+    "subSymptoms": [
+      "Tooth Pain",
+      "Swelling Gums",
+      "Bleeding Gums",
+      "Ulcer",
+      "Bad Breath",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Endocrine / Metabolic",
+    "subSymptoms": [
+      "Increased Thirst",
+      "Increased Urine",
+      "Weight Gain",
+      "Weight Loss",
+      "Tremor",
+      "Sweating",
+      "Fatigue",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Gynecology / Obstetric",
+    "subSymptoms": [
+      "Menstrual Irregularity",
+      "Pain Abdomen",
+      "White Discharge",
+      "Antenatal Checkup",
+      "Postnatal Checkup",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Psychiatric / Behavioral",
+    "subSymptoms": [
+      "Anxiety",
+      "Depression",
+      "Sleep Disturbance / Insomnia",
+      "Irritability",
+      "Stress / Work Pressure",
+      "Phobia / Panic Attack",
+      "Memory Loss",
+      "Behavioral Change",
+      "Suicidal Thoughts",
+      "Substance Abuse / Addiction",
+      "Hallucination / Delusion",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Pediatric / Child Health",
+    "subSymptoms": [
+      "Fever",
+      "Cough / Cold",
+      "Loose Motion / Diarrhea",
+      "Vomiting",
+      "Poor Appetite",
+      "Failure to Gain Weight",
+      "Abdominal Pain",
+      "Skin Rash",
+      "Crying / Irritable Child",
+      "Ear Pain / Discharge",
+      "Eye Redness / Watering",
+      "Sore Throat / Tonsillitis",
+      "Worm Infestation",
+      "Immunization Visit",
+      "Developmental Delay",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Injury / Trauma",
+    "subSymptoms": [
+      "Cut / Laceration",
+      "Swelling / Contusion",
+      "Fracture Suspected",
+      "Sprain / Strain",
+      "Burn Injury",
+      "Foreign Body",
+      "Animal Bite / Dog Bite",
+      "Road Traffic Accident (RTA)",
+      "Workplace Injury",
+      "Head Injury",
+      "Eye Injury",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Post-Op / Follow-Up",
+    "subSymptoms": [
+      "Suture Removal",
+      "Dressing Change",
+      "Wound Inspection",
+      "Pain / Swelling at Surgical Site",
+      "Discharge / Infection",
+      "Stitch Abscess",
+      "Post-Op Fever",
+      "Post-Op Weakness",
+      "Medication Review",
+      "Follow-Up Consultation",
+      "Other / Not Listed"
+    ]
+  },
+  {
+    "chiefComplaint": "Other",
+    "subSymptoms": [
+      "Routine Health Check-Up",
+      "Pre-Employment / Fitness Check",
+      "Blood Pressure Monitoring",
+      "Diabetes Monitoring",
+      "Medication Refill",
+      "Lab Report Review",
+      "Referral Follow-Up",
+      "Other / Not Listed"
+    ]
+  }
+]

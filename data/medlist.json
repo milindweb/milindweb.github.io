@@ -1,0 +1,4149 @@
+[
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Amoxicillin"
+   },
+   "Common Brand Names (India)": "Amoxil, Mox, Trimox, Novamox",
+   "Forms Available": "Tablet, Capsule, Syrup, Dry Syrup",
+   "Notes": {
+      "Typical Use": "Broad-spectrum antibiotic for respiratory, ENT, and skin infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Amoxicillin + Clavulanic Acid"
+   },
+   "Common Brand Names (India)": "Augmentin, Clavam, Megamox-CV",
+   "Forms Available": "Tablet, Syrup, Injection",
+   "Notes": {
+      "Typical Use": "Resistant bacterial infections (respiratory, urinary, dental, skin)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Ampicillin"
+   },
+   "Common Brand Names (India)": "Ampilox, Omnipen",
+   "Forms Available": "Capsule, Injection",
+   "Notes": {
+      "Typical Use": "Respiratory and urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Ampicillin + Cloxacillin"
+   },
+   "Common Brand Names (India)": "Ampiclox, Moxclav, Novaclox",
+   "Forms Available": "Capsule, Syrup, Injection",
+   "Notes": {
+      "Typical Use": "Skin, respiratory, and ENT infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Azithromycin"
+   },
+   "Common Brand Names (India)": "Azithral, Zithromax, Azee",
+   "Forms Available": "Tablet, Suspension, Injection",
+   "Notes": {
+      "Typical Use": "Throat, chest, and skin infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Clarithromycin"
+   },
+   "Common Brand Names (India)": "Klaricid, Claribid, Clarithro",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Respiratory, H. pylori infection"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Erythromycin"
+   },
+   "Common Brand Names (India)": "Erythrocin, Eromycin, Althrocin",
+   "Forms Available": "Tablet, Syrup",
+   "Notes": {
+      "Typical Use": "Throat, chest, and skin infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefixime"
+   },
+   "Common Brand Names (India)": "Taxim-O, Supacef, Zifi",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Typhoid, respiratory, urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefixime + Ofloxacin"
+   },
+   "Common Brand Names (India)": "Taxim-O-OZ, Zifi-O",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Typhoid, gastroenteritis, urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefuroxime Axetil"
+   },
+   "Common Brand Names (India)": "Ceftum, Zinacef, Cefakind",
+   "Forms Available": "Tablet, Suspension, Injection",
+   "Notes": {
+      "Typical Use": "Sinusitis, pneumonia, skin, urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefpodoxime Proxetil"
+   },
+   "Common Brand Names (India)": "Cefodem, Cefoprox, Cepodem",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "ENT, respiratory, skin infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefdinir"
+   },
+   "Common Brand Names (India)": "Omnicef, Cednir",
+   "Forms Available": "Capsule, Suspension",
+   "Notes": {
+      "Typical Use": "Respiratory tract infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Ceftriaxone"
+   },
+   "Common Brand Names (India)": "Monocef, Rocephin, Cefaxone",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Severe systemic infections, meningitis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Ceftriaxone + Sulbactam"
+   },
+   "Common Brand Names (India)": "Monocef-SB, Zosyn-SB",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Resistant bacterial infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefotaxime"
+   },
+   "Common Brand Names (India)": "Taxim, Claforan",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Meningitis, pneumonia, sepsis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefoperazone + Sulbactam"
+   },
+   "Common Brand Names (India)": "Magnex, Sulperazone",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Intra-abdominal, respiratory, urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Ceftazidime"
+   },
+   "Common Brand Names (India)": "Fortum, Ceftum, Ceftaz",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Pseudomonas and resistant infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefepime"
+   },
+   "Common Brand Names (India)": "Maxipime, Cepime",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Severe hospital-acquired infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefepime + Tazobactam"
+   },
+   "Common Brand Names (India)": "Zubapime, Cepotaz",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "ICU-grade resistant infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Cefalexin"
+   },
+   "Common Brand Names (India)": "Keflex, Sporanox",
+   "Forms Available": "Capsule, Suspension",
+   "Notes": {
+      "Typical Use": "Skin, throat, urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Ciprofloxacin"
+   },
+   "Common Brand Names (India)": "Cifran, Ciplox",
+   "Forms Available": "Tablet, Eye Drops, Injection",
+   "Notes": {
+      "Typical Use": "Urinary, respiratory, gastrointestinal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Levofloxacin"
+   },
+   "Common Brand Names (India)": "Levoflox, L-Cin, Tavanic",
+   "Forms Available": "Tablet, Eye Drops, Injection",
+   "Notes": {
+      "Typical Use": "Respiratory, urinary, and ENT infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Ofloxacin"
+   },
+   "Common Brand Names (India)": "Oflox, Oflin, Zanocin",
+   "Forms Available": "Tablet, Suspension, Eye/Ear Drops",
+   "Notes": {
+      "Typical Use": "Gastroenteritis, urinary, ENT infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Norfloxacin"
+   },
+   "Common Brand Names (India)": "Norflox, Norilet",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Urinary and intestinal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Moxifloxacin"
+   },
+   "Common Brand Names (India)": "Avelox, Moxicip",
+   "Forms Available": "Tablet, Eye Drops, Injection",
+   "Notes": {
+      "Typical Use": "Respiratory, sinus, and eye infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Sparfloxacin"
+   },
+   "Common Brand Names (India)": "Sparx, Sparquin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "ENT, respiratory infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Lomefloxacin"
+   },
+   "Common Brand Names (India)": "Lomaday, Lomex",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Tetracycline"
+   },
+   "Common Brand Names (India)": "Hostacycline, Tetran",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Acne, respiratory, and rickettsial infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Doxycycline"
+   },
+   "Common Brand Names (India)": "Doxy-1, Doxicip, Doxylin",
+   "Forms Available": "Tablet, Capsule",
+   "Notes": {
+      "Typical Use": "Typhoid, malaria, respiratory infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Minocycline"
+   },
+   "Common Brand Names (India)": "Minoz, Minicycline",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Acne, urinary infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Linezolid"
+   },
+   "Common Brand Names (India)": "Linospan, Zyvox, Lizolid",
+   "Forms Available": "Tablet, Suspension, Injection",
+   "Notes": {
+      "Typical Use": "MRSA, resistant Gram-positive infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Vancomycin"
+   },
+   "Common Brand Names (India)": "Vancocin, Vanco",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "MRSA, severe resistant infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Meropenem"
+   },
+   "Common Brand Names (India)": "Meronem, Merotrol",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "ICU-grade severe infections, sepsis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Imipenem + Cilastatin"
+   },
+   "Common Brand Names (India)": "Primaxin, Tienam",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Multidrug-resistant bacterial infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Piperacillin + Tazobactam"
+   },
+   "Common Brand Names (India)": "Zosyn, Pipzo, Tazact",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Severe systemic infections, hospital use"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Gentamicin"
+   },
+   "Common Brand Names (India)": "Gental, Genticyn",
+   "Forms Available": "Injection, Eye Drops",
+   "Notes": {
+      "Typical Use": "Severe infections, neonatal sepsis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Amikacin"
+   },
+   "Common Brand Names (India)": "Amikacin, Mikacin",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Hospital-acquired and resistant infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Tobramycin"
+   },
+   "Common Brand Names (India)": "Tobrex",
+   "Forms Available": "Injection, Eye Drops",
+   "Notes": {
+      "Typical Use": "Eye and systemic infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Clindamycin"
+   },
+   "Common Brand Names (India)": "Dalacin C, Clindac A",
+   "Forms Available": "Capsule, Injection, Gel",
+   "Notes": {
+      "Typical Use": "Dental, skin, and anaerobic infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Metronidazole"
+   },
+   "Common Brand Names (India)": "Flagyl, Metrogyl",
+   "Forms Available": "Tablet, Suspension, Injection, Gel",
+   "Notes": {
+      "Typical Use": "Anaerobic infections, amoebiasis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Tinidazole"
+   },
+   "Common Brand Names (India)": "Tiniba, Tini, Zolamide",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Amoebiasis, giardiasis, vaginal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Nitrofurantoin"
+   },
+   "Common Brand Names (India)": "Niftran, Macrobid",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Urinary tract infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Roxithromycin"
+   },
+   "Common Brand Names (India)": "Roxid, Roxith",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Throat and chest infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Spiramycin"
+   },
+   "Common Brand Names (India)": "Rovamycin, Spiracin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Dental and respiratory infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Chloramphenicol"
+   },
+   "Common Brand Names (India)": "Chloromycetin, Ceeclor",
+   "Forms Available": "Capsule, Eye Drops",
+   "Notes": {
+      "Typical Use": "Typhoid, eye infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Polymyxin B + Bacitracin + Neomycin"
+   },
+   "Common Brand Names (India)": "Neosporin",
+   "Forms Available": "Ointment",
+   "Notes": {
+      "Typical Use": "Topical bacterial infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Fusidic Acid"
+   },
+   "Common Brand Names (India)": "Fucidin, Fusiwal",
+   "Forms Available": "Cream, Ointment",
+   "Notes": {
+      "Typical Use": "Skin and soft-tissue infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Rifampicin"
+   },
+   "Common Brand Names (India)": "R-Cin, Rimactane",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Tuberculosis, leprosy"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Isoniazid + Rifampicin + Pyrazinamide + Ethambutol (HRZE)"
+   },
+   "Common Brand Names (India)": "AKT-4, Forecox",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Tuberculosis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Aztreonam"
+   },
+   "Common Brand Names (India)": "Azactam",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Gram-negative bacterial infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT1",
+   "Main Category": "Antibiotics",
+   "Generic ": {
+      " API (Single or Combination)": "Colistin (Polymyxin E)"
+   },
+   "Common Brand Names (India)": "Coly-Mycin, Xylistin",
+   "Forms Available": "Injection, Inhalation",
+   "Notes": {
+      "Typical Use": "Multidrug-resistant infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Acyclovir"
+   },
+   "Common Brand Names (India)": "Acivir, Zovirax",
+   "Forms Available": "Tablet, Cream, Ointment, Injection, Suspension",
+   "Notes": {
+      "Typical Use": "Herpes simplex, shingles, chickenpox"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Valacyclovir"
+   },
+   "Common Brand Names (India)": "Valcivir, Herpex",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Herpes zoster, genital herpes"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Famciclovir"
+   },
+   "Common Brand Names (India)": "Famtrex, Virovir",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Recurrent herpes, shingles"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Ganciclovir"
+   },
+   "Common Brand Names (India)": "Cytovene, Gancyclovir",
+   "Forms Available": "Injection, Capsule",
+   "Notes": {
+      "Typical Use": "CMV (Cytomegalovirus) infections (immunocompromised)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Valganciclovir"
+   },
+   "Common Brand Names (India)": "Valgan",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "CMV infection prevention in transplant patients"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Oseltamivir"
+   },
+   "Common Brand Names (India)": "Tamiflu, Fluvir",
+   "Forms Available": "Capsule, Suspension",
+   "Notes": {
+      "Typical Use": "Influenza (flu) treatment and prevention"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Zanamivir"
+   },
+   "Common Brand Names (India)": "Relenza",
+   "Forms Available": "Inhalation",
+   "Notes": {
+      "Typical Use": "Influenza A & B (rarely used, hospital)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Remdesivir"
+   },
+   "Common Brand Names (India)": "Covifor, Remdac, Desrem",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "COVID-19 (hospital use)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Favipiravir"
+   },
+   "Common Brand Names (India)": "Fabiflu, Covifor, Favivir",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Mild to moderate COVID-19, Influenza"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Sofosbuvir"
+   },
+   "Common Brand Names (India)": "SoviHep, Hepcinat",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Chronic Hepatitis C"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Ledipasvir + Sofosbuvir"
+   },
+   "Common Brand Names (India)": "Ledifos, Hepcinat-LP",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Chronic Hepatitis C"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Velpatasvir + Sofosbuvir"
+   },
+   "Common Brand Names (India)": "Velpanat, MyHep All",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Pan-genotypic Hepatitis C"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Daclatasvir + Sofosbuvir"
+   },
+   "Common Brand Names (India)": "Daclahep, MyHep DVIR",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Hepatitis C"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Tenofovir Disoproxil Fumarate (TDF)"
+   },
+   "Common Brand Names (India)": "Tenvir, HepBest",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV, Hepatitis B"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Tenofovir Alafenamide (TAF)"
+   },
+   "Common Brand Names (India)": "HepBest, Tenof-AL",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV, Hepatitis B (newer form)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Lamivudine"
+   },
+   "Common Brand Names (India)": "Lamivir, Lamivac",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV, Hepatitis B"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Lamivudine + Zidovudine"
+   },
+   "Common Brand Names (India)": "Duovir, Combivir",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV therapy (dual NRTI)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Tenofovir + Lamivudine + Efavirenz"
+   },
+   "Common Brand Names (India)": "Telura, Viraday",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "1st-line HIV therapy (ART)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Tenofovir + Emtricitabine + Efavirenz"
+   },
+   "Common Brand Names (India)": "Atripla (imported), Trioday",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV combination therapy"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Dolutegravir + Lamivudine + Tenofovir"
+   },
+   "Common Brand Names (India)": "TLD, Instgra-TL",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Latest HIV regimen (NACO preferred)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Lopinavir + Ritonavir"
+   },
+   "Common Brand Names (India)": "Lopimune, Kaletra",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "HIV protease inhibitor combo"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Atazanavir + Ritonavir"
+   },
+   "Common Brand Names (India)": "Atazor-R, Virataz-R",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "HIV therapy (PI-based)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Darunavir + Ritonavir"
+   },
+   "Common Brand Names (India)": "DuraR, Prezista-R",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Resistant HIV infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Raltegravir"
+   },
+   "Common Brand Names (India)": "Isentress",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV integrase inhibitor"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Dolutegravir"
+   },
+   "Common Brand Names (India)": "Instgra, Tivicay",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV (preferred integrase inhibitor)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Abacavir + Lamivudine"
+   },
+   "Common Brand Names (India)": "Abamune-L, Abacavir-L",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV (NRTI combo)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Efavirenz"
+   },
+   "Common Brand Names (India)": "Efavir, Sustiva",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "HIV (NNRTI)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Nevirapine"
+   },
+   "Common Brand Names (India)": "Nevimune",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "HIV (NNRTI)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Zidovudine (AZT)"
+   },
+   "Common Brand Names (India)": "Retrovir, Zidovir",
+   "Forms Available": "Capsule, Syrup",
+   "Notes": {
+      "Typical Use": "HIV (NRTI), pregnant women for prevention"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Entecavir"
+   },
+   "Common Brand Names (India)": "Entavir, X-Vir",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Hepatitis B"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Adefovir Dipivoxil"
+   },
+   "Common Brand Names (India)": "Adfovir, Adesera",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Hepatitis B"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Interferon Alpha-2B"
+   },
+   "Common Brand Names (India)": "Intron-A, Wokferon",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Hepatitis B, C, some cancers"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Pegylated Interferon Alpha-2A / 2B"
+   },
+   "Common Brand Names (India)": "Pegasys, PegIntron",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Chronic Hepatitis B & C"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Ribavirin"
+   },
+   "Common Brand Names (India)": "Ribasure, Rebetol",
+   "Forms Available": "Capsule, Injection",
+   "Notes": {
+      "Typical Use": "With interferon for Hepatitis C"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Cidofovir"
+   },
+   "Common Brand Names (India)": "Vistide",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "CMV, resistant viral infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT2",
+   "Main Category": "Antiviral Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Foscarnet"
+   },
+   "Common Brand Names (India)": "Foscavir",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Resistant CMV, HSV (rare hospital)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Fluconazole"
+   },
+   "Common Brand Names (India)": "Fluconaz, Zocon, Flucos",
+   "Forms Available": "Tablet, Capsule, Suspension, Injection",
+   "Notes": {
+      "Typical Use": "Candidiasis (oral, vaginal), systemic fungal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Itraconazole"
+   },
+   "Common Brand Names (India)": "Canditral, Itrazol, Sporanox",
+   "Forms Available": "Capsule, Oral Solution",
+   "Notes": {
+      "Typical Use": "Fungal nail, skin, systemic mycoses"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Voriconazole"
+   },
+   "Common Brand Names (India)": "Voritek, Vorizol, Voricon",
+   "Forms Available": "Tablet, Injection, Suspension",
+   "Notes": {
+      "Typical Use": "Aspergillosis, systemic fungal infection"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Posaconazole"
+   },
+   "Common Brand Names (India)": "Posanat, Posaforce",
+   "Forms Available": "Tablet, Suspension, Injection",
+   "Notes": {
+      "Typical Use": "Resistant/systemic fungal infections, prophylaxis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Ketoconazole"
+   },
+   "Common Brand Names (India)": "Ketozen, Ketofung, Nizoral",
+   "Forms Available": "Tablet, Cream, Shampoo",
+   "Notes": {
+      "Typical Use": "Skin, dandruff, fungal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Clotrimazole"
+   },
+   "Common Brand Names (India)": "Candid, Canesten",
+   "Forms Available": "Cream, Lotion, Vaginal Tablet, Mouth Paint",
+   "Notes": {
+      "Typical Use": "Vaginal, skin, oral fungal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Miconazole"
+   },
+   "Common Brand Names (India)": "Daktarin, Micogel",
+   "Forms Available": "Cream, Lotion, Oral Gel",
+   "Notes": {
+      "Typical Use": "Skin, oral candidiasis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Econazole Nitrate"
+   },
+   "Common Brand Names (India)": "Ecoderm, Ekozole",
+   "Forms Available": "Cream, Dusting Powder",
+   "Notes": {
+      "Typical Use": "Fungal skin infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Luliconazole"
+   },
+   "Common Brand Names (India)": "Lulibet, Lulimac, Lulican",
+   "Forms Available": "Cream, Lotion",
+   "Notes": {
+      "Typical Use": "Skin fungal infections (tinea, ringworm)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Sertaconazole Nitrate"
+   },
+   "Common Brand Names (India)": "Onabet, Sertac",
+   "Forms Available": "Cream, Lotion, Dusting Powder",
+   "Notes": {
+      "Typical Use": "Resistant dermatophytosis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Amorolfine"
+   },
+   "Common Brand Names (India)": "Loceryl, Amfogen",
+   "Forms Available": "Nail Lacquer, Cream",
+   "Notes": {
+      "Typical Use": "Fungal nail infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Terbinafine"
+   },
+   "Common Brand Names (India)": "Sebifin, Tyza, Terbiforce",
+   "Forms Available": "Tablet, Cream",
+   "Notes": {
+      "Typical Use": "Skin and nail fungal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Griseofulvin"
+   },
+   "Common Brand Names (India)": "Grisovin FP, Fulvicin",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Dermatophytosis (ringworm, scalp infection)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Nystatin"
+   },
+   "Common Brand Names (India)": "Mycostatin, Nystac",
+   "Forms Available": "Suspension, Cream, Tablet",
+   "Notes": {
+      "Typical Use": "Oral thrush, intestinal candidiasis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Amphotericin B (Conventional / Liposomal)"
+   },
+   "Common Brand Names (India)": "Fungizone, Ambisome, Amphonex",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Severe systemic mycoses, mucormycosis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Caspofungin"
+   },
+   "Common Brand Names (India)": "Cancidas",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Invasive candidiasis, aspergillosis (ICU)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Micafungin"
+   },
+   "Common Brand Names (India)": "Mycamine",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "ICU fungal infections, Candida"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Anidulafungin"
+   },
+   "Common Brand Names (India)": "Eraxis",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Hospital-use systemic Candida infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Clotrimazole + Beclomethasone + Neomycin"
+   },
+   "Common Brand Names (India)": "Candid-B, Lobate-GN",
+   "Forms Available": "Cream",
+   "Notes": {
+      "Typical Use": "Mixed fungal + bacterial + inflammatory skin infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Miconazole + Hydrocortisone"
+   },
+   "Common Brand Names (India)": "Daktacort",
+   "Forms Available": "Cream",
+   "Notes": {
+      "Typical Use": "Fungal skin infections with inflammation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Fluconazole + Tinidazole"
+   },
+   "Common Brand Names (India)": "Zocon-T, Fungizol-TZ",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Vaginal mixed fungal-bacterial infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Ketoconazole + Zinc Pyrithione"
+   },
+   "Common Brand Names (India)": "Ketozen-ZP, KZ Shampoo",
+   "Forms Available": "Shampoo",
+   "Notes": {
+      "Typical Use": "Dandruff, seborrheic dermatitis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Clioquinol + Flumetasone + Neomycin"
+   },
+   "Common Brand Names (India)": "Locacorten-Vioform",
+   "Forms Available": "Cream, Ear Drops",
+   "Notes": {
+      "Typical Use": "Otitis externa, fungal-bacterial ear infection"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Tolnaftate"
+   },
+   "Common Brand Names (India)": "Tinaderm, Tolfine",
+   "Forms Available": "Cream, Powder",
+   "Notes": {
+      "Typical Use": "Athlete�s foot, ringworm"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Ciclopirox Olamine"
+   },
+   "Common Brand Names (India)": "CWin, Anabru",
+   "Forms Available": "Cream, Nail Lacquer",
+   "Notes": {
+      "Typical Use": "Skin and nail fungal infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Naftifine Hydrochloride"
+   },
+   "Common Brand Names (India)": "Naftin",
+   "Forms Available": "Cream, Gel",
+   "Notes": {
+      "Typical Use": "Dermatophyte and yeast infections"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Undecylenic Acid + Zinc Undecylenate"
+   },
+   "Common Brand Names (India)": "Mycoderm",
+   "Forms Available": "Powder, Cream",
+   "Notes": {
+      "Typical Use": "Skin fungal infections, foot care"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Isavuconazole"
+   },
+   "Common Brand Names (India)": "Cresemba",
+   "Forms Available": "Capsule, Injection",
+   "Notes": {
+      "Typical Use": "Invasive aspergillosis, mucormycosis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT3",
+   "Main Category": "Antifungal Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Flucytosine"
+   },
+   "Common Brand Names (India)": "Ancobon",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Cryptococcal meningitis (with amphotericin B)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Chloroquine Phosphate"
+   },
+   "Common Brand Names (India)": "Lariago, Nivaquine, Resochin",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Treatment & prevention of P. vivax malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Hydroxychloroquine Sulfate"
+   },
+   "Common Brand Names (India)": "HCQS, Plaquenil, Qimal",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Antimalarial; also used for rheumatoid arthritis, lupus"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Quinine Sulfate"
+   },
+   "Common Brand Names (India)": "Quinarine, Qnate, Quinibex",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Severe or resistant P. falciparum malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Quinine Dihydrochloride"
+   },
+   "Common Brand Names (India)": "Quinimax",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Severe malaria treatment (hospital use)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Primaquine Phosphate"
+   },
+   "Common Brand Names (India)": "Primaquine, Malirid",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Radical cure for P. vivax and P. ovale malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artesunate"
+   },
+   "Common Brand Names (India)": "Falcigo, Alpha-Arte, Asunate",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Severe or resistant malaria; P. falciparum"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artemether"
+   },
+   "Common Brand Names (India)": "Larinate, Arteether, Armalar",
+   "Forms Available": "Injection, Suspension",
+   "Notes": {
+      "Typical Use": "Severe P. falciparum malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Arteether"
+   },
+   "Common Brand Names (India)": "E Mal, Artem, E-mal Injection",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Alternative artemisinin derivative"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artemether + Lumefantrine"
+   },
+   "Common Brand Names (India)": "Coartem, Arteether-L, Larinate",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "First-line therapy for P. falciparum"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artesunate + Sulfadoxine + Pyrimethamine"
+   },
+   "Common Brand Names (India)": "Falcigo-SP, Malither, Laridox",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Combination therapy for resistant malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artesunate + Amodiaquine"
+   },
+   "Common Brand Names (India)": "Winart AQ, Artequin, Larimal",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Combination therapy (WHO-recommended)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artemether + Piperaquine"
+   },
+   "Common Brand Names (India)": "Artequick, Arsuamoon, Malanil",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Treatment of P. falciparum malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Dihydroartemisinin + Piperaquine"
+   },
+   "Common Brand Names (India)": "Arterakine, Duo-Cotecxin, Malarial",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Effective combination for resistant malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Dihydroartemisinin + Piperaquine + Primaquine"
+   },
+   "Common Brand Names (India)": "Artekin-P",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Radical cure combination (Falciparum & Vivax)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Pyronaridine + Artesunate"
+   },
+   "Common Brand Names (India)": "Pyramax",
+   "Forms Available": "Tablet, Granules",
+   "Notes": {
+      "Typical Use": "Uncomplicated malaria (both P. falciparum and P. vivax)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Sulfadoxine + Pyrimethamine"
+   },
+   "Common Brand Names (India)": "Fansidar, Malodar, Malathar",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Older combination, still used in some regions"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Amodiaquine"
+   },
+   "Common Brand Names (India)": "Flavoquine, Camoquin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Treatment & prevention of malaria (resistant strains)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Doxycycline"
+   },
+   "Common Brand Names (India)": "Doxy 1, Doxicip",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Chemoprophylaxis in endemic zones"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Mefloquine"
+   },
+   "Common Brand Names (India)": "Lariam, Mefliam",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Preventive & treatment drug for resistant malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Atovaquone + Proguanil"
+   },
+   "Common Brand Names (India)": "Malarone, Atovas",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Prevention & treatment of P. falciparum"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Halofantrine"
+   },
+   "Common Brand Names (India)": "Halfan",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Rarely used due to cardiac toxicity"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Lumefantrine"
+   },
+   "Common Brand Names (India)": "Lumart, Lumeq",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Partner drug in artemisinin-based therapy"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Piperaquine Phosphate"
+   },
+   "Common Brand Names (India)": "Piprin, Piprax",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Used in fixed-dose combinations"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artesunate + Mefloquine"
+   },
+   "Common Brand Names (India)": "Artequin-M, Artequamef",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Alternative ACT combination"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Proguanil Hydrochloride"
+   },
+   "Common Brand Names (India)": "Paludrine",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Used with atovaquone or chloroquine prophylaxis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Tafenoquine"
+   },
+   "Common Brand Names (India)": "Arakoda, Krintafel",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Long-acting for P. vivax relapse prevention"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Clindamycin + Quinine"
+   },
+   "Common Brand Names (India)": "Clinarin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Alternative for pregnant women in resistant cases"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Azithromycin + Artesunate"
+   },
+   "Common Brand Names (India)": "Azimal",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Combination under study for resistant malaria"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Artemisinin"
+   },
+   "Common Brand Names (India)": "Arsuamoon, Artequick",
+   "Forms Available": "Tablet, Capsule",
+   "Notes": {
+      "Typical Use": "Derived from Artemisia annua; potent antimalarial"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT4",
+   "Main Category": "Antimalarial Medicines",
+   "Generic ": {
+      " API (Single or Combination)": "Piperaquine + Chloroquine"
+   },
+   "Common Brand Names (India)": "Pipraquine-C",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Experimental / limited use in India"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Paracetamol (Acetaminophen)"
+   },
+   "Common Brand Names (India)": "Crocin, Calpol, Dolo 650, Metacin",
+   "Forms Available": "Tablet, Syrup, Suspension, Injection, Suppository",
+   "Notes": {
+      "Typical Use": "Fever, mild to moderate pain relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Ibuprofen"
+   },
+   "Common Brand Names (India)": "Brufen, Ibugesic, Combiflam (with Paracetamol)",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Pain, fever, inflammation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Diclofenac Sodium / Potassium"
+   },
+   "Common Brand Names (India)": "Voveran, Dynapar, Dicloran",
+   "Forms Available": "Tablet, Injection, Gel, Spray",
+   "Notes": {
+      "Typical Use": "Pain and inflammation (joint, back, muscle)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Aceclofenac"
+   },
+   "Common Brand Names (India)": "Hifenac, Zerodol",
+   "Forms Available": "Tablet, Gel",
+   "Notes": {
+      "Typical Use": "Pain and inflammation in arthritis, sprains"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Aceclofenac + Paracetamol"
+   },
+   "Common Brand Names (India)": "Hifenac-P, Zerodol-P",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Musculoskeletal pain, dental pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Aceclofenac + Paracetamol + Serratiopeptidase"
+   },
+   "Common Brand Names (India)": "Hifenac-SP, Zerodol-SP",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Post-operative or injury-related pain and swelling"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Naproxen"
+   },
+   "Common Brand Names (India)": "Naprosyn, Synflex",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Menstrual pain, joint pain, inflammation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Naproxen + Domperidone"
+   },
+   "Common Brand Names (India)": "Naprosyn-D, Naprox-D",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Migraine-related pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Ketorolac Tromethamine"
+   },
+   "Common Brand Names (India)": "Ketanov, Dolokind",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Moderate to severe acute pain (short term)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Etoricoxib"
+   },
+   "Common Brand Names (India)": "Nucoxia, Etoshine, Etova",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Arthritis, gout, muscle pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Etoricoxib + Thiocolchicoside"
+   },
+   "Common Brand Names (India)": "Etoshine MR, Etova MR",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Pain with muscle spasm"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Nimesulide"
+   },
+   "Common Brand Names (India)": "Nimulid, Nise",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Fever, pain, inflammation (restricted use in children)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Nimesulide + Paracetamol"
+   },
+   "Common Brand Names (India)": "Nimulid-P, Nise-P",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Fever with pain or inflammation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Meloxicam"
+   },
+   "Common Brand Names (India)": "Melonex, Movexx",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Arthritis, musculoskeletal pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Piroxicam"
+   },
+   "Common Brand Names (India)": "Dolonex, Feldene",
+   "Forms Available": "Tablet, Injection, Gel",
+   "Notes": {
+      "Typical Use": "Long-term arthritis and muscle pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Lornoxicam"
+   },
+   "Common Brand Names (India)": "Lornit, Lorox",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Post-surgical and musculoskeletal pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Indomethacin"
+   },
+   "Common Brand Names (India)": "Indocap, Indocin",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Gout, arthritis, inflammation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Mefenamic Acid"
+   },
+   "Common Brand Names (India)": "Meftal, Ponstan",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Dysmenorrhea (period pain), fever"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Mefenamic Acid + Paracetamol"
+   },
+   "Common Brand Names (India)": "Meftal-P",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Pain and fever (pediatric & adult)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Tramadol Hydrochloride"
+   },
+   "Common Brand Names (India)": "Ultracet (with Paracetamol), Dolamide",
+   "Forms Available": "Tablet, Capsule, Injection",
+   "Notes": {
+      "Typical Use": "Moderate to severe pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Tramadol + Paracetamol"
+   },
+   "Common Brand Names (India)": "Ultracet, Dolostat Plus",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Musculoskeletal pain, neuralgia"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Tapentadol"
+   },
+   "Common Brand Names (India)": "Paladone, Tapenta",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Severe neuropathic or post-surgical pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Pregabalin + Methylcobalamin"
+   },
+   "Common Brand Names (India)": "Nervup PG, Lyrica, Pregabid M",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Neuropathic pain, diabetic nerve pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Paracetamol + Caffeine"
+   },
+   "Common Brand Names (India)": "Metacin Plus, Dolo Plus",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Headache, fever, fatigue"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Paracetamol + Ibuprofen"
+   },
+   "Common Brand Names (India)": "Combiflam, Flexura",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Pain, fever, headache, toothache"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Aspirin (Acetylsalicylic Acid)"
+   },
+   "Common Brand Names (India)": "Disprin, Ecosprin (low dose)",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Pain, inflammation, fever, antiplatelet (low dose)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Aspirin + Paracetamol + Caffeine"
+   },
+   "Common Brand Names (India)": "Saridon",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Headache, migraine"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Dextropropoxyphene (restricted)"
+   },
+   "Common Brand Names (India)": "Proxyvon, Spasmoproxyvon (banned)",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Former opioid analgesic (discontinued in India)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Pentazocine"
+   },
+   "Common Brand Names (India)": "Fortwin",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Severe pain (hospital use)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Morphine Sulfate"
+   },
+   "Common Brand Names (India)": "Morphgesic, Morphitec",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Severe chronic pain, cancer pain (controlled drug)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Buprenorphine"
+   },
+   "Common Brand Names (India)": "Norphin, Buprigesic",
+   "Forms Available": "Injection, Patch",
+   "Notes": {
+      "Typical Use": "Severe pain (hospital, controlled substance)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Fentanyl"
+   },
+   "Common Brand Names (India)": "Durogesic, Fentanyl Patch",
+   "Forms Available": "Injection, Patch",
+   "Notes": {
+      "Typical Use": "Post-operative, cancer pain management"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Tapentadol ER"
+   },
+   "Common Brand Names (India)": "Paladone ER, Tapenta ER",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Chronic pain requiring long-term opioid"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Thiocolchicoside"
+   },
+   "Common Brand Names (India)": "Myoril, Muscoril",
+   "Forms Available": "Capsule, Injection",
+   "Notes": {
+      "Typical Use": "Muscle relaxant for spasm relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Chlorzoxazone + Paracetamol"
+   },
+   "Common Brand Names (India)": "Flexura D, Myospaz",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Musculoskeletal pain with stiffness"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Methocarbamol + Paracetamol"
+   },
+   "Common Brand Names (India)": "Robaxin Plus",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Back or muscle strain pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Paracetamol + Tramadol + Chlorzoxazone"
+   },
+   "Common Brand Names (India)": "Dolodol MR",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Mixed analgesic with muscle relaxant"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Flurbiprofen"
+   },
+   "Common Brand Names (India)": "Froben, Ocuflur",
+   "Forms Available": "Tablet, Eye Drops",
+   "Notes": {
+      "Typical Use": "Pain, inflammation (ophthalmic and systemic)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Celecoxib"
+   },
+   "Common Brand Names (India)": "Celact, Oncoxia",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Arthritis, musculoskeletal pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Valdecoxib"
+   },
+   "Common Brand Names (India)": "Valus",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Pain, inflammation (limited use due to cardiac risk)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Dexketoprofen"
+   },
+   "Common Brand Names (India)": "Dolotroy, Ketanov-DX",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Acute pain, dental pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Paracetamol + Phenylephrine + Caffeine + Diphenhydramine"
+   },
+   "Common Brand Names (India)": "Sinarest, T-Minic",
+   "Forms Available": "Tablet, Syrup",
+   "Notes": {
+      "Typical Use": "Cold, headache, body ache with fever"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Serratiopeptidase (Enzyme)"
+   },
+   "Common Brand Names (India)": "Seradic, Bactimase",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Anti-inflammatory adjunct in pain management"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Magnesium Trisilicate + Paracetamol + Caffeine"
+   },
+   "Common Brand Names (India)": "P-Qid",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Analgesic-antacid combination"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Oxaceprol"
+   },
+   "Common Brand Names (India)": "Oxeltra",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Anti-inflammatory (arthritis)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Nabumetone"
+   },
+   "Common Brand Names (India)": "Nabumetone",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Chronic joint pain, osteoarthritis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Tenoxicam"
+   },
+   "Common Brand Names (India)": "Mobiflex",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Musculoskeletal pain relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Parecoxib"
+   },
+   "Common Brand Names (India)": "Dynapar AQ",
+   "Forms Available": "Injection",
+   "Notes": {
+      "Typical Use": "Short-term pain management (hospital)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Eperisone Hydrochloride"
+   },
+   "Common Brand Names (India)": "Myospaz Forte, Epidosin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Muscle relaxant for back or neck pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT5",
+   "Main Category": "Painkillers / NSAIDs / Analgesic-Antipyretic",
+   "Generic ": {
+      " API (Single or Combination)": "Paracetamol + Domperidone"
+   },
+   "Common Brand Names (India)": "Dolo-D",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Pain with nausea (migraine, fever)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Pantoprazole"
+   },
+   "Common Brand Names (India)": "Pantocid, Pan, Pantodac",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "GERD, acidity, peptic ulcer"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Pantoprazole + Domperidone"
+   },
+   "Common Brand Names (India)": "Pan-D, Pantocid-D, Pantodac-D",
+   "Forms Available": "Capsule, Tablet",
+   "Notes": {
+      "Typical Use": "Acidity with nausea or reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Pantoprazole + Levosulpiride"
+   },
+   "Common Brand Names (India)": "Pan-LS, Panza-LS, Pantodac-LS",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Severe reflux, gastritis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Omeprazole"
+   },
+   "Common Brand Names (India)": "Omez, Ocid, Omecap",
+   "Forms Available": "Capsule, Tablet",
+   "Notes": {
+      "Typical Use": "Gastritis, peptic ulcer, acidity"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Omeprazole + Domperidone"
+   },
+   "Common Brand Names (India)": "Omez-D, Ocid-D, Ocid-Dome",
+   "Forms Available": "Capsule, Tablet",
+   "Notes": {
+      "Typical Use": "Acidity with nausea, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Rabeprazole"
+   },
+   "Common Brand Names (India)": "Aciloc-R, Rablet, Rabicip",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "GERD, ulcer, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Rabeprazole + Domperidone"
+   },
+   "Common Brand Names (India)": "Rablet-D, Rabicip-D",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Acid reflux, gastritis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Rabeprazole + Levosulpiride"
+   },
+   "Common Brand Names (India)": "Rabium-LS, Rabekind-LS",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Refractory reflux or bloating"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Esomeprazole"
+   },
+   "Common Brand Names (India)": "Nexpro, Esoz, Somac",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "GERD, ulcer, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Esomeprazole + Domperidone"
+   },
+   "Common Brand Names (India)": "Nexpro-D, Esoz-D",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "GERD, acid reflux with nausea"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Lansoprazole"
+   },
+   "Common Brand Names (India)": "Lanzol, Lansec",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Ulcers, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Dexlansoprazole"
+   },
+   "Common Brand Names (India)": "Dexlanz, Dexpro",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Reflux disease resistant to other PPIs"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Famotidine"
+   },
+   "Common Brand Names (India)": "Famocid, Pepfiz, Pepcid",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Acidity, ulcer"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Ranitidine"
+   },
+   "Common Brand Names (India)": "Rantac, Zinetac",
+   "Forms Available": "Tablet, Injection, Syrup",
+   "Notes": {
+      "Typical Use": "Acidity, heartburn, ulcer"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Nizatidine"
+   },
+   "Common Brand Names (India)": "Axid, Nizit",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Ulcer, reflux (less common now)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Sucralfate"
+   },
+   "Common Brand Names (India)": "Sucral, Mucaine Gel, Sucrate",
+   "Forms Available": "Suspension",
+   "Notes": {
+      "Typical Use": "Ulcer, gastritis (mucosal protection)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Sucralfate + Oxetacaine"
+   },
+   "Common Brand Names (India)": "Mucaine Gel, Sucral-O, Sucral-O Gel",
+   "Forms Available": "Suspension",
+   "Notes": {
+      "Typical Use": "Painful gastritis, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Aluminum Hydroxide + Magnesium Hydroxide"
+   },
+   "Common Brand Names (India)": "Digene, Gelusil",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Symptomatic relief in acidity"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Simethicone (with antacids)"
+   },
+   "Common Brand Names (India)": "Digene, Eno Gel",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Gas, bloating with acidity"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Sodium Bicarbonate"
+   },
+   "Common Brand Names (India)": "Eno, Fruit Salt",
+   "Forms Available": "Powder",
+   "Notes": {
+      "Typical Use": "Quick antacid relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Calcium Carbonate + Magnesium Hydroxide + Simethicone"
+   },
+   "Common Brand Names (India)": "Tums Fresh, Rolac",
+   "Forms Available": "Chewable Tablet",
+   "Notes": {
+      "Typical Use": "Hyperacidity"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Domperidone"
+   },
+   "Common Brand Names (India)": "Domstal, Motilium",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Nausea, reflux, bloating"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Levosulpiride"
+   },
+   "Common Brand Names (India)": "Levomac, Lesuride",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "GERD, dyspepsia"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Itopride"
+   },
+   "Common Brand Names (India)": "Ganaton, Itomac",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Functional dyspepsia, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Mosapride"
+   },
+   "Common Brand Names (India)": "Mosapride, Gasmotin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "GERD, slow gastric emptying"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Cisapride"
+   },
+   "Common Brand Names (India)": "Ciza, Perinorm-C",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Reflux, motility disorders (restricted use)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Hyoscine Butylbromide"
+   },
+   "Common Brand Names (India)": "Buscopan",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Abdominal cramps, spasm pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Drotaverine + Omeprazole"
+   },
+   "Common Brand Names (India)": "Drotin-O",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Cramps with acidity"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Rebamipide"
+   },
+   "Common Brand Names (India)": "Rebanox, Mucop",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Gastric mucosal protection"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Misoprostol"
+   },
+   "Common Brand Names (India)": "Cytotec, Misotab",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Ulcer prevention (esp. NSAID users)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Bismuth Subcitrate + Metronidazole + Tetracycline"
+   },
+   "Common Brand Names (India)": "Pylera Kit, Helidac",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "H. pylori eradication"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Clarithromycin + Amoxicillin + PPI (H. pylori Kit)"
+   },
+   "Common Brand Names (India)": "HP Kit, Helicure, RAB H-Pyl Kit",
+   "Forms Available": "Kit Pack",
+   "Notes": {
+      "Typical Use": "H. pylori infection treatment"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Probiotic combinations (Lactic Acid Bacillus, Saccharomyces boulardii)"
+   },
+   "Common Brand Names (India)": "Econorm, Darolac, Vizylac",
+   "Forms Available": "Capsule, Sachet",
+   "Notes": {
+      "Typical Use": "Prevent antibiotic-associated gastritis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Ondansetron"
+   },
+   "Common Brand Names (India)": "Emeset, Periset, Vomikind",
+   "Forms Available": "Tablet, Syrup, Injection",
+   "Notes": {
+      "Typical Use": "Nausea, vomiting due to gastritis or drug use"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Domperidone + Pantoprazole + Simethicone"
+   },
+   "Common Brand Names (India)": "Pan-DM",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Gas, reflux, acidity combination"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Esomeprazole + Rebamipide"
+   },
+   "Common Brand Names (India)": "Esoreb, Rebagen-ES",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Gastritis and mucosal protection"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Dexrabeprazole"
+   },
+   "Common Brand Names (India)": "Dexorab, D-Rab",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "GERD, ulcer"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Ilaprazole"
+   },
+   "Common Brand Names (India)": "Ilapro, ILA",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Acid reflux, gastritis (newer PPI)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Potassium-competitive acid blockers (Vonoprazan)"
+   },
+   "Common Brand Names (India)": "Voquezna, Vonozan",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Next-gen acid blocker for GERD"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Magnesium Trisilicate + Dried Aluminum Hydroxide + Simethicone"
+   },
+   "Common Brand Names (India)": "Mucogel, Digecid",
+   "Forms Available": "Suspension",
+   "Notes": {
+      "Typical Use": "Gas & acidity relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Ursodeoxycholic Acid"
+   },
+   "Common Brand Names (India)": "Udiliv, Ursocol",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Gallstone, reflux due to bile reflux gastritis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT6",
+   "Main Category": "Antacids / Anti-ulcer / Gastroprotective",
+   "Generic ": {
+      " API (Single or Combination)": "Sodium Alginate + Sodium Bicarbonate + Calcium Carbonate"
+   },
+   "Common Brand Names (India)": "Gaviscon, Gasycid",
+   "Forms Available": "Suspension",
+   "Notes": {
+      "Typical Use": "Reflux, heartburn, GERD"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Oral Rehydration Salts (ORS)"
+   },
+   "Common Brand Names (India)": "Electral, Enerzal, DripDrop",
+   "Forms Available": "Powder, Liquid",
+   "Notes": {
+      "Typical Use": "Dehydration, diarrhea fluid replacement"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Loperamide"
+   },
+   "Common Brand Names (India)": "Imodium, Lopamide",
+   "Forms Available": "Tablet, Capsule, Suspension",
+   "Notes": {
+      "Typical Use": "Diarrhea control"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Racecadotril"
+   },
+   "Common Brand Names (India)": "Econorm-H, Redotil",
+   "Forms Available": "Capsule, Sachet",
+   "Notes": {
+      "Typical Use": "Acute watery diarrhea"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Ofloxacin + Ornidazole"
+   },
+   "Common Brand Names (India)": "O2, Oflomac-OZ, Ornof",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Infectious diarrhea, dysentery"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Norfloxacin + Tinidazole"
+   },
+   "Common Brand Names (India)": "Norflox-TZ, Niftas-TZ",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Gastroenteritis, bacterial diarrhea"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Nitazoxanide"
+   },
+   "Common Brand Names (India)": "Nizonide, Netazox",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Protozoal & parasitic diarrhea"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Rifaximin"
+   },
+   "Common Brand Names (India)": "Rifagut, Xifaxan",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Traveler�s diarrhea, IBS-D"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Lactulose"
+   },
+   "Common Brand Names (India)": "Duphalac, Cremaffin-L, Lactihep",
+   "Forms Available": "Syrup",
+   "Notes": {
+      "Typical Use": "Constipation, hepatic encephalopathy"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Polyethylene Glycol (PEG)"
+   },
+   "Common Brand Names (India)": "Peglec, Looz PEG",
+   "Forms Available": "Powder, Solution",
+   "Notes": {
+      "Typical Use": "Constipation, bowel cleansing"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Sodium Picosulfate"
+   },
+   "Common Brand Names (India)": "Dulcolax SP, Cremaffin-Plus",
+   "Forms Available": "Drops, Syrup, Tablet",
+   "Notes": {
+      "Typical Use": "Constipation relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Bisacodyl"
+   },
+   "Common Brand Names (India)": "Dulcolax, Bisodyl",
+   "Forms Available": "Tablet, Suppository",
+   "Notes": {
+      "Typical Use": "Constipation, bowel evacuation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Liquid Paraffin + Milk of Magnesia + Sodium Picosulfate"
+   },
+   "Common Brand Names (India)": "Cremaffin Plus, Smuth",
+   "Forms Available": "Syrup",
+   "Notes": {
+      "Typical Use": "Constipation (stool softener + stimulant)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Lactitol Monohydrate + Lactulose"
+   },
+   "Common Brand Names (India)": "Livoluk-L, Emulac",
+   "Forms Available": "Syrup",
+   "Notes": {
+      "Typical Use": "Constipation management"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Psyllium Husk (Isabgol)"
+   },
+   "Common Brand Names (India)": "Sat-Isabgol, Fybogel",
+   "Forms Available": "Powder",
+   "Notes": {
+      "Typical Use": "Dietary fiber supplement for constipation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Digestive Enzyme combinations (Fungal Diastase + Pepsin)"
+   },
+   "Common Brand Names (India)": "Aristozyme, Digene Enzyme",
+   "Forms Available": "Syrup, Tablet",
+   "Notes": {
+      "Typical Use": "Indigestion, flatulence"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Alpha-Galactosidase + Simethicone"
+   },
+   "Common Brand Names (India)": "Gasex, Gastica",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Bloating, gas relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Simethicone"
+   },
+   "Common Brand Names (India)": "Digene Gas Relief, Eno Gel",
+   "Forms Available": "Tablet, Suspension, Drops",
+   "Notes": {
+      "Typical Use": "Flatulence, colic"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Charcoal Activated"
+   },
+   "Common Brand Names (India)": "CharcoCaps, Charcoal Tablets",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Gas, bloating, poisoning (adsorbent)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Domperidone"
+   },
+   "Common Brand Names (India)": "Domstal, Motilium",
+   "Forms Available": "Tablet, Suspension",
+   "Notes": {
+      "Typical Use": "Nausea, vomiting, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Itopride"
+   },
+   "Common Brand Names (India)": "Ganaton, Itomac",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Functional dyspepsia, reflux"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Levosulpiride"
+   },
+   "Common Brand Names (India)": "Lesuride, Levomac",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Dyspepsia, bloating, nausea"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Mosapride"
+   },
+   "Common Brand Names (India)": "Mosapride, Gasmotin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Gastric motility disorders"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Metoclopramide"
+   },
+   "Common Brand Names (India)": "Perinorm, Reglan",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Nausea, vomiting, delayed gastric emptying"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Ondansetron"
+   },
+   "Common Brand Names (India)": "Emeset, Vomikind",
+   "Forms Available": "Tablet, Syrup, Injection",
+   "Notes": {
+      "Typical Use": "Nausea, vomiting (GI or post-drug)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Cisapride"
+   },
+   "Common Brand Names (India)": "Ciza, Perinorm-C",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "GERD, dyspepsia (limited use)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Hyoscine Butylbromide"
+   },
+   "Common Brand Names (India)": "Buscopan",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Abdominal cramp, colic pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Drotaverine"
+   },
+   "Common Brand Names (India)": "Drotin, Doverin",
+   "Forms Available": "Tablet, Injection",
+   "Notes": {
+      "Typical Use": "Spasm, abdominal pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Drotaverine + Mefenamic Acid"
+   },
+   "Common Brand Names (India)": "Drotin-M",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Spasmodic abdominal pain"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Trimebutine Maleate"
+   },
+   "Common Brand Names (India)": "Trimspa, Trimebutin",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "IBS, intestinal motility regulation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Mebeverine"
+   },
+   "Common Brand Names (India)": "Colospa, Mebaspa",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "IBS, functional bowel disorder"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Dicyclomine + Simethicone"
+   },
+   "Common Brand Names (India)": "Cyclopam, Spasmindon",
+   "Forms Available": "Syrup, Tablet",
+   "Notes": {
+      "Typical Use": "Infantile colic, abdominal cramps"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Domperidone + Simethicone"
+   },
+   "Common Brand Names (India)": "Dom-DT, GasStop",
+   "Forms Available": "Suspension, Tablet",
+   "Notes": {
+      "Typical Use": "Gas, nausea relief"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Pancreatin (Digestive Enzyme)"
+   },
+   "Common Brand Names (India)": "Creon, Panlipase, Enzom",
+   "Forms Available": "Capsule",
+   "Notes": {
+      "Typical Use": "Pancreatic enzyme deficiency, indigestion"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Ursodeoxycholic Acid"
+   },
+   "Common Brand Names (India)": "Udiliv, Ursocol",
+   "Forms Available": "Tablet",
+   "Notes": {
+      "Typical Use": "Gallstones, bile reflux gastritis"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Silymarin"
+   },
+   "Common Brand Names (India)": "Silybon, Hepa-Merz",
+   "Forms Available": "Tablet, Capsule",
+   "Notes": {
+      "Typical Use": "Liver tonic, hepatitis support"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Ornithine Aspartate"
+   },
+   "Common Brand Names (India)": "Hepamerz, L-Ornithine",
+   "Forms Available": "Sachet, Injection",
+   "Notes": {
+      "Typical Use": "Liver detox, hepatic encephalopathy"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Sorbitol + Tricholine Citrate"
+   },
+   "Common Brand Names (India)": "Livfit, Cholibion",
+   "Forms Available": "Syrup",
+   "Notes": {
+      "Typical Use": "Fatty liver, indigestion"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Choline Salicylate + Lignocaine"
+   },
+   "Common Brand Names (India)": "Dologel, Zytee",
+   "Forms Available": "Gel",
+   "Notes": {
+      "Typical Use": "Mouth ulcers, oral inflammation"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Bismuth Subsalicylate"
+   },
+   "Common Brand Names (India)": "Pepto-Bismol (import), Bismol",
+   "Forms Available": "Suspension",
+   "Notes": {
+      "Typical Use": "Diarrhea, nausea, heartburn"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "L-Glutamine + Zinc + Prebiotic + Probiotic"
+   },
+   "Common Brand Names (India)": "Enterogermina Plus, Vizylac",
+   "Forms Available": "Capsule, Sachet",
+   "Notes": {
+      "Typical Use": "Gut health restoration after infection"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "Zinc Acetate / Sulfate"
+   },
+   "Common Brand Names (India)": "Zinconia, Becozinc-Z",
+   "Forms Available": "Tablet, Syrup",
+   "Notes": {
+      "Typical Use": "Adjunct in diarrhea management (esp. pediatric)"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT7",
+   "Main Category": "Gastrointestinal / Digestive",
+   "Generic ": {
+      " API (Single or Combination)": "ORS + Zinc Combination Pack"
+   },
+   "Common Brand Names (India)": "Electral-Z",
+   "Forms Available": "Kit",
+   "Notes": {
+      "Typical Use": "Pediatric diarrhea, dehydration"
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "",
+   "Main Category": "",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT8",
+   "Main Category": "Vitamins / Minerals / Nutritional Supplements",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT9",
+   "Main Category": "Anti-allergic / Antihistamines",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT10",
+   "Main Category": "Respiratory / Cough / Cold / Asthma",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT11",
+   "Main Category": "Antihypertensive (BP Medicines)",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT12",
+   "Main Category": "Cardiac Medicines",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT13",
+   "Main Category": "Antidiabetic Medicines",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT14",
+   "Main Category": "Hormonal / Endocrine",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT15",
+   "Main Category": "Psychiatric / Neurological / CNS",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT16",
+   "Main Category": "Dermatology / Skin Care",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT17",
+   "Main Category": "ENT / Ophthalmic / Nasal Preparations",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT18",
+   "Main Category": "Gynecology / Women�s Health",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT19",
+   "Main Category": "Urology / Nephrology",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT20",
+   "Main Category": "Orthopedic / Bone & Joint Health",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT21",
+   "Main Category": "Antiseptics / Disinfectants",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT22",
+   "Main Category": "Emergency / Life-Saving / ICU",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT23",
+   "Main Category": "OTC / Wellness / General Health",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT24",
+   "Main Category": "Ayurvedic / Herbal / Homeopathic",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT25",
+   "Main Category": "Surgical / Diagnostic / Consumables",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+},
+ {
+   "Category No": "CAT26",
+   "Main Category": "Pediatric Tag (Not a Category)",
+   "Generic ": {
+      " API (Single or Combination)": ""
+   },
+   "Common Brand Names (India)": "",
+   "Forms Available": "",
+   "Notes": {
+      "Typical Use": ""
+   },
+   "Remark": ""
+}
+]

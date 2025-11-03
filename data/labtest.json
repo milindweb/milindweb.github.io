@@ -1,0 +1,769 @@
+{
+  "laboratoryTests": [
+    {
+      "category": "Hematology",
+      "tests": [
+        {
+          "testName": "Hemoglobin (Hb)",
+          "normalRange": "Male: 13–17 g/dL; Female: 12–15 g/dL"
+        },
+        {
+          "testName": "Total RBC Count",
+          "normalRange": "Male: 4.5–5.9 million/µL; Female: 4.1–5.1 million/µL"
+        },
+        {
+          "testName": "Hematocrit (PCV)",
+          "normalRange": "Male: 40–50%; Female: 36–44%"
+        },
+        {
+          "testName": "MCV / MCH / MCHC",
+          "normalRange": "80–100 fL / 27–32 pg / 32–36 g/dL"
+        },
+        {
+          "testName": "WBC Count (TLC)",
+          "normalRange": "4,000–10,000 /µL"
+        },
+        {
+          "testName": "Differential Count (N/L/M/E/B)",
+          "normalRange": "N: 40–75%, L: 20–45%, M: 2–10%, E: 1–6%, B: <1%"
+        },
+        {
+          "testName": "Platelet Count",
+          "normalRange": "1.5–4.0 lakh/µL"
+        },
+        {
+          "testName": "ESR",
+          "normalRange": "Male <15 mm/hr; Female <20 mm/hr"
+        },
+        {
+          "testName": "Reticulocyte Count",
+          "normalRange": "0.5–1.5%"
+        },
+        {
+          "testName": "Peripheral Smear",
+          "normalRange": "RBC/WBC/Platelet morphology"
+        },
+        {
+          "testName": "Sickle Cell Test",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Hb Electrophoresis",
+          "normalRange": "Normal HbA pattern"
+        },
+        {
+          "testName": "Coombs Test (Direct/Indirect)",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "G6PD Deficiency",
+          "normalRange": "Normal enzyme activity"
+        },
+        {
+          "testName": "Malaria Parasite / Rapid Antigen",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Dengue NS1 / IgM / IgG",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Widal (Typhoid)",
+          "normalRange": "TO/TH <1:80"
+        },
+        {
+          "testName": "Blood Grouping & Rh Typing",
+          "normalRange": "As per system"
+        },
+        {
+          "testName": "Cross Matching",
+          "normalRange": "Compatible"
+        },
+        {
+          "testName": "LDH (Hematology relevance)",
+          "normalRange": "140–280 U/L"
+        }
+      ]
+    },
+    {
+      "category": "Biochemistry / Metabolic Panel",
+      "tests": [
+        {
+          "testName": "Fasting Blood Sugar",
+          "normalRange": "70–99 mg/dL"
+        },
+        {
+          "testName": "Post Prandial Blood Sugar",
+          "normalRange": "<140 mg/dL"
+        },
+        {
+          "testName": "Random Blood Sugar",
+          "normalRange": "<200 mg/dL"
+        },
+        {
+          "testName": "HbA1c",
+          "normalRange": "4–5.6% Normal"
+        },
+        {
+          "testName": "Urea (BUN)",
+          "normalRange": "7–20 mg/dL"
+        },
+        {
+          "testName": "Serum Creatinine",
+          "normalRange": "0.6–1.2 mg/dL"
+        },
+        {
+          "testName": "Uric Acid",
+          "normalRange": "M: 3.4–7.0; F: 2.4–6.0 mg/dL"
+        },
+        {
+          "testName": "Sodium",
+          "normalRange": "135–145 mEq/L"
+        },
+        {
+          "testName": "Potassium",
+          "normalRange": "3.5–5.0 mEq/L"
+        },
+        {
+          "testName": "Chloride",
+          "normalRange": "96–106 mEq/L"
+        },
+        {
+          "testName": "Calcium",
+          "normalRange": "8.5–10.5 mg/dL"
+        },
+        {
+          "testName": "Phosphorus",
+          "normalRange": "2.5–4.5 mg/dL"
+        },
+        {
+          "testName": "Magnesium",
+          "normalRange": "1.7–2.4 mg/dL"
+        },
+        {
+          "testName": "eGFR",
+          "normalRange": ">90 mL/min/1.73m²"
+        },
+        {
+          "testName": "Osmolality",
+          "normalRange": "275–295 mOsm/kg"
+        },
+        {
+          "testName": "Total Protein",
+          "normalRange": "6.0–8.3 g/dL"
+        },
+        {
+          "testName": "Albumin",
+          "normalRange": "3.5–5.0 g/dL"
+        },
+        {
+          "testName": "Globulin",
+          "normalRange": "2.0–3.5 g/dL"
+        },
+        {
+          "testName": "A/G Ratio",
+          "normalRange": "1.2–2.0"
+        }
+      ]
+    },
+    {
+      "category": "Liver Function Test (LFT)",
+      "tests": [
+        {
+          "testName": "Total Bilirubin",
+          "normalRange": "0.3–1.2 mg/dL"
+        },
+        {
+          "testName": "Direct Bilirubin",
+          "normalRange": "<0.3 mg/dL"
+        },
+        {
+          "testName": "Indirect Bilirubin",
+          "normalRange": "<0.9 mg/dL"
+        },
+        {
+          "testName": "SGOT (AST)",
+          "normalRange": "<40 U/L"
+        },
+        {
+          "testName": "SGPT (ALT)",
+          "normalRange": "<40 U/L"
+        },
+        {
+          "testName": "Alkaline Phosphatase (ALP)",
+          "normalRange": "40–120 U/L"
+        },
+        {
+          "testName": "GGT (Gamma GT)",
+          "normalRange": "9–48 U/L"
+        },
+        {
+          "testName": "Total Protein",
+          "normalRange": "6–8.3 g/dL"
+        },
+        {
+          "testName": "Albumin",
+          "normalRange": "3.5–5.0 g/dL"
+        },
+        {
+          "testName": "Prothrombin Time / INR",
+          "normalRange": "11–13 sec / 0.8–1.2"
+        }
+      ]
+    },
+    {
+      "category": "Kidney Function Test (KFT)",
+      "tests": [
+        {
+          "testName": "Urea",
+          "normalRange": "7–20 mg/dL"
+        },
+        {
+          "testName": "Serum Creatinine",
+          "normalRange": "0.6–1.2 mg/dL"
+        },
+        {
+          "testName": "Uric Acid",
+          "normalRange": "2.4–7.0 mg/dL"
+        },
+        {
+          "testName": "Electrolytes (Na, K, Cl)",
+          "normalRange": "Na 135–145, K 3.5–5.0, Cl 96–106 mEq/L"
+        },
+        {
+          "testName": "Calcium / Phosphorus",
+          "normalRange": "8.5–10.5 / 2.5–4.5 mg/dL"
+        },
+        {
+          "testName": "eGFR",
+          "normalRange": ">90 mL/min/1.73m²"
+        },
+        {
+          "testName": "Microalbumin (Urine)",
+          "normalRange": "<30 mg/day"
+        },
+        {
+          "testName": "BUN/Creatinine Ratio",
+          "normalRange": "10–20"
+        }
+      ]
+    },
+    {
+      "category": "Lipid Profile",
+      "tests": [
+        {
+          "testName": "Total Cholesterol",
+          "normalRange": "<200 mg/dL"
+        },
+        {
+          "testName": "Triglycerides",
+          "normalRange": "<150 mg/dL"
+        },
+        {
+          "testName": "HDL",
+          "normalRange": ">40 (M), >50 (F) mg/dL"
+        },
+        {
+          "testName": "LDL",
+          "normalRange": "<130 mg/dL (Optimal <100)"
+        },
+        {
+          "testName": "VLDL",
+          "normalRange": "5–40 mg/dL"
+        },
+        {
+          "testName": "TC/HDL Ratio",
+          "normalRange": "<4.5"
+        },
+        {
+          "testName": "LDL/HDL Ratio",
+          "normalRange": "<3.0"
+        }
+      ]
+    },
+    {
+      "category": "Thyroid Profile",
+      "tests": [
+        {
+          "testName": "T3",
+          "normalRange": "80–200 ng/dL"
+        },
+        {
+          "testName": "T4",
+          "normalRange": "5.0–12.0 µg/dL"
+        },
+        {
+          "testName": "TSH",
+          "normalRange": "0.4–4.5 µIU/mL"
+        },
+        {
+          "testName": "Free T3 / Free T4",
+          "normalRange": "FT3: 2.3–4.2 pg/mL; FT4: 0.8–2.0 ng/dL"
+        },
+        {
+          "testName": "Anti-TPO Antibody",
+          "normalRange": "<35 IU/mL"
+        },
+        {
+          "testName": "Anti-Thyroglobulin",
+          "normalRange": "<115 IU/mL"
+        }
+      ]
+    },
+    {
+      "category": "Hormone & Reproductive Profile",
+      "tests": [
+        {
+          "testName": "β-hCG (Pregnancy / Tumor)",
+          "normalRange": "<5 mIU/mL"
+        },
+        {
+          "testName": "FSH",
+          "normalRange": "2–15 mIU/mL"
+        },
+        {
+          "testName": "LH",
+          "normalRange": "2–15 mIU/mL"
+        },
+        {
+          "testName": "Prolactin",
+          "normalRange": "M: 2–18; F: 2–29 ng/mL"
+        },
+        {
+          "testName": "Estradiol (E2)",
+          "normalRange": "30–400 pg/mL"
+        },
+        {
+          "testName": "Progesterone",
+          "normalRange": "<1 ng/mL (follicular); 5–20 ng/mL (luteal)"
+        },
+        {
+          "testName": "Testosterone",
+          "normalRange": "M: 300–1000 ng/dL; F: 15–70 ng/dL"
+        },
+        {
+          "testName": "DHEA-S",
+          "normalRange": "M: 80–560; F: 35–430 µg/dL"
+        },
+        {
+          "testName": "AMH",
+          "normalRange": "1–4 ng/mL"
+        },
+        {
+          "testName": "Cortisol (Morning)",
+          "normalRange": "5–25 µg/dL"
+        },
+        {
+          "testName": "ACTH",
+          "normalRange": "10–60 pg/mL"
+        },
+        {
+          "testName": "Insulin (Fasting)",
+          "normalRange": "2–25 µIU/mL"
+        },
+        {
+          "testName": "C-Peptide",
+          "normalRange": "0.8–3.1 ng/mL"
+        }
+      ]
+    },
+    {
+      "category": "Serology / Infection",
+      "tests": [
+        {
+          "testName": "HIV 1 & 2",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "HBsAg",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Anti-HCV",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "VDRL",
+          "normalRange": "Non-Reactive"
+        },
+        {
+          "testName": "CRP",
+          "normalRange": "<6 mg/L"
+        },
+        {
+          "testName": "RA Factor",
+          "normalRange": "<14 IU/mL"
+        },
+        {
+          "testName": "ASO Titre",
+          "normalRange": "<200 IU/mL"
+        },
+        {
+          "testName": "Dengue NS1 / IgM / IgG",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Typhoid (Widal)",
+          "normalRange": "TO/TH <1:80"
+        },
+        {
+          "testName": "Malaria (MP / Rapid)",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "COVID / Influenza",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Leptospira IgM",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Scrub Typhus IgM",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Chikungunya IgM",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "HSV 1 & 2",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "TORCH Panel",
+          "normalRange": "Negative / Immune"
+        },
+        {
+          "testName": "HBsAb",
+          "normalRange": "Positive = Immune"
+        },
+        {
+          "testName": "Quantiferon TB Gold",
+          "normalRange": "Negative"
+        }
+      ]
+    },
+    {
+      "category": "Urine / Stool / Body Fluids",
+      "tests": [
+        {
+          "testName": "Urine Routine & Microscopy",
+          "normalRange": "Normal (Clear)"
+        },
+        {
+          "testName": "Urine Sugar",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Urine Protein",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Urine Pus Cells",
+          "normalRange": "<5 /HPF"
+        },
+        {
+          "testName": "Urine RBCs",
+          "normalRange": "<3 /HPF"
+        },
+        {
+          "testName": "Urine Culture",
+          "normalRange": "No Growth"
+        },
+        {
+          "testName": "Urine Ketones",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Urine pH",
+          "normalRange": "4.5–8.0"
+        },
+        {
+          "testName": "Specific Gravity",
+          "normalRange": "1.005–1.030"
+        },
+        {
+          "testName": "Stool Routine",
+          "normalRange": "Normal flora"
+        },
+        {
+          "testName": "Stool Occult Blood",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Stool Ova / Cyst / Parasite",
+          "normalRange": "Not detected"
+        },
+        {
+          "testName": "Pleural / Ascitic / CSF Analysis",
+          "normalRange": "Normal appearance, protein/glucose normal"
+        },
+        {
+          "testName": "CSF Protein",
+          "normalRange": "15–45 mg/dL"
+        },
+        {
+          "testName": "CSF Glucose",
+          "normalRange": "50–80 mg/dL"
+        }
+      ]
+    },
+    {
+      "category": "Cardiac Markers",
+      "tests": [
+        {
+          "testName": "Troponin I / T",
+          "normalRange": "<0.04 ng/mL"
+        },
+        {
+          "testName": "CK-MB",
+          "normalRange": "<25 U/L"
+        },
+        {
+          "testName": "LDH",
+          "normalRange": "140–280 U/L"
+        },
+        {
+          "testName": "BNP",
+          "normalRange": "<100 pg/mL"
+        },
+        {
+          "testName": "hs-CRP",
+          "normalRange": "<3 mg/L"
+        },
+        {
+          "testName": "Homocysteine",
+          "normalRange": "4–15 µmol/L"
+        }
+      ]
+    },
+    {
+      "category": "Bone & Vitamin Profile",
+      "tests": [
+        {
+          "testName": "Vitamin D (25-OH)",
+          "normalRange": "30–100 ng/mL"
+        },
+        {
+          "testName": "Vitamin B12",
+          "normalRange": "200–900 pg/mL"
+        },
+        {
+          "testName": "Ferritin",
+          "normalRange": "M: 30–400; F: 15–150 ng/mL"
+        },
+        {
+          "testName": "Serum Iron",
+          "normalRange": "M: 65–175; F: 50–170 µg/dL"
+        },
+        {
+          "testName": "TIBC",
+          "normalRange": "240–450 µg/dL"
+        },
+        {
+          "testName": "PTH",
+          "normalRange": "10–65 pg/mL"
+        }
+      ]
+    },
+    {
+      "category": "Tumor Markers",
+      "tests": [
+        {
+          "testName": "PSA",
+          "normalRange": "<4 ng/mL"
+        },
+        {
+          "testName": "AFP",
+          "normalRange": "<10 ng/mL"
+        },
+        {
+          "testName": "CEA",
+          "normalRange": "<3 ng/mL"
+        },
+        {
+          "testName": "CA-125",
+          "normalRange": "<35 U/mL"
+        },
+        {
+          "testName": "CA 19-9",
+          "normalRange": "<37 U/mL"
+        },
+        {
+          "testName": "CA 15-3",
+          "normalRange": "<30 U/mL"
+        },
+        {
+          "testName": "β-hCG",
+          "normalRange": "<5 mIU/mL"
+        },
+        {
+          "testName": "Calcitonin",
+          "normalRange": "<10 pg/mL"
+        }
+      ]
+    },
+    {
+      "category": "Autoimmune Profile",
+      "tests": [
+        {
+          "testName": "ANA",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Anti-dsDNA",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Anti-CCP",
+          "normalRange": "<20 U/mL"
+        },
+        {
+          "testName": "HLA-B27",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Complement C3 / C4",
+          "normalRange": "90–180 / 10–40 mg/dL"
+        },
+        {
+          "testName": "ESR / CRP",
+          "normalRange": "Normal"
+        }
+      ]
+    },
+    {
+      "category": "Respiratory / Allergy",
+      "tests": [
+        {
+          "testName": "Spirometry (FEV1/FVC)",
+          "normalRange": ">70%"
+        },
+        {
+          "testName": "Peak Expiratory Flow",
+          "normalRange": ">80% predicted"
+        },
+        {
+          "testName": "Serum IgE",
+          "normalRange": "<100 IU/mL"
+        },
+        {
+          "testName": "Sputum for AFB",
+          "normalRange": "Negative"
+        },
+        {
+          "testName": "Montoux (PPD)",
+          "normalRange": "<10 mm"
+        },
+        {
+          "testName": "Allergy Panel (IgE specific)",
+          "normalRange": "<0.35 kU/L"
+        }
+      ]
+    },
+    {
+      "category": "Toxicology / Heavy Metals",
+      "tests": [
+        {
+          "testName": "Blood Lead",
+          "normalRange": "<10 µg/dL"
+        },
+        {
+          "testName": "Arsenic",
+          "normalRange": "<10 µg/L"
+        },
+        {
+          "testName": "Mercury",
+          "normalRange": "<10 µg/L"
+        },
+        {
+          "testName": "Copper",
+          "normalRange": "70–150 µg/dL"
+        },
+        {
+          "testName": "Zinc",
+          "normalRange": "60–120 µg/dL"
+        },
+        {
+          "testName": "Alcohol",
+          "normalRange": "<10 mg/dL"
+        },
+        {
+          "testName": "Drug Screen (Urine)",
+          "normalRange": "Negative"
+        }
+      ]
+    },
+    {
+      "category": "Genetic / Special Tests",
+      "tests": [
+        {
+          "testName": "Karyotyping",
+          "normalRange": "Normal (46,XX / 46,XY)"
+        },
+        {
+          "testName": "PCR (Gene / Mutation)",
+          "normalRange": "As required"
+        },
+        {
+          "testName": "HLA Typing",
+          "normalRange": "As per indication"
+        },
+        {
+          "testName": "Prenatal Screening (Double/Triple/Quad Test)",
+          "normalRange": "Within gestational norms"
+        },
+        {
+          "testName": "NIPT",
+          "normalRange": "Low Risk"
+        }
+      ]
+    },
+    {
+      "category": "Radiology / Imaging",
+      "tests": [
+        {
+          "testName": "X-Ray Chest",
+          "normalRange": "No active lesion"
+        },
+        {
+          "testName": "Ultrasound Abdomen",
+          "normalRange": "Normal"
+        },
+        {
+          "testName": "ECG",
+          "normalRange": "Normal Sinus Rhythm"
+        },
+        {
+          "testName": "2D Echo",
+          "normalRange": "Normal LV Function"
+        },
+        {
+          "testName": "CT / MRI Brain / Abdomen",
+          "normalRange": "As per findings"
+        },
+        {
+          "testName": "Mammography",
+          "normalRange": "Normal"
+        },
+        {
+          "testName": "Bone DEXA",
+          "normalRange": "T-score > -1"
+        },
+        {
+          "testName": "Doppler (USG)",
+          "normalRange": "Normal Flow"
+        },
+        {
+          "testName": "PET Scan",
+          "normalRange": "As per indication"
+        }
+      ]
+    },
+    {
+      "category": "Other/ Not Listed",
+      "tests": []
+    }
+  ]
+}
