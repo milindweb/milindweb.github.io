@@ -1,362 +1,216 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Patient Management Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Patient Form</title>
 
-  <!-- Header & Footer CSS -->
+  <!-- Basic styles (you can adapt to your headerfooter.css) -->
   <link rel="stylesheet" href="css/headerfooter.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f6f8fb;
-      margin: 0;
-      padding: 0;
+    :root{
+      --card-bg:#fff; --muted:#666; --accent:#0b6efd; --radius:12px;
     }
-
-    .container {
-      max-width: 1100px;
-      background: #fff;
-      margin: 20px auto;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      background: #007bff;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .form-row label {
-      flex: 1 1 150px;
-      min-width: 120px;
-      font-weight: 500;
-    }
-
-    .form-row input, .form-row select, .form-row textarea {
-      flex: 1 1 200px;
-      padding: 6px 8px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      min-height: 30px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 5px;
-      font-size: 13px;
-      text-align: left;
-    }
-
-    th {
-      background: #e9f1ff;
-    }
-
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 8px 14px;
-      cursor: pointer;
-      font-size: 14px;
-      margin-top: 8px;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    .btn-small {
-      padding: 4px 8px;
-      font-size: 12px;
-    }
-
-    .total-box {
-      text-align: right;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .actions {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .form-row {
-        flex-direction: column;
-      }
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:#f4f6f9;color:#111;}
+    .container{max-width:1100px;margin:18px auto;padding:16px;}
+    header.page-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    .card{background:var(--card-bg);border-radius:var(--radius);box-shadow:0 6px 18px rgba(20,30,60,0.06);padding:16px;margin-bottom:12px;}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+    input[type=text], input[type=number], textarea, select {width:100%;padding:8px 10px;border:1px solid #e3e6ee;border-radius:8px;font-size:15px;box-sizing:border-box;}
+    .row-actions{display:flex;gap:8px;align-items:center;}
+    button{background:var(--accent);border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600;}
+    button.secondary{background:#6c757d;}
+    .small{padding:6px 9px;font-size:13px;border-radius:8px;}
+    .muted{color:var(--muted);font-size:13px;}
+    .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+    .inline{display:flex;gap:8px;align-items:center;}
+    .table-like{width:100%;border-collapse:collapse;}
+    .table-like th, .table-like td{border-bottom:1px solid #eef2f6;padding:8px;text-align:left;}
+    .actions-col{width:120px;}
+    .add-btn{background:#198754;}
+    .danger{background:#dc3545;}
+    .totals{display:flex;justify-content:flex-end;gap:8px;align-items:center;margin-top:8px;}
+    .suggestion-list{position:relative;}
+    .suggestion-box{position:absolute;z-index:10;left:0;right:0;background:#fff;border:1px solid #e6e9ef;border-radius:6px;max-height:160px;overflow:auto;}
+    .suggestion-box div{padding:8px;cursor:pointer;}
+    .suggestion-box div:hover{background:#f2f6ff;}
+    @media (max-width:640px){
+      .grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+      .actions-col{width:90px;}
     }
   </style>
 </head>
 <body>
-
-  <!-- Header -->
   <div id="header"></div>
 
-  <div class="container">
-    <form id="patientForm">
+  <main class="container">
+    <header class="page-header">
+      <h1 style="margin:0;font-size:20px">Patient Registration</h1>
+      <div class="muted">Quick OPD / Billing / Investigations</div>
+    </header>
 
-      <h2>Basic Information</h2>
-      <div class="form-row">
-        <label>Mobile No</label>
-        <input type="tel" id="mobile" required pattern="^[6-9][0-9]{9}$">
-        <label>Patient Name</label>
-        <input type="text" id="patientName" required>
-        <label>Gender</label>
-        <select id="gender" required>
-          <option value="">Select</option>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-        <label>Age</label>
-        <input type="number" id="age" min="0" max="99">
-      </div>
+    <form id="patientForm" class="card" autocomplete="off" novalidate>
+      <section class="card">
+        <div class="grid">
+          <div>
+            <label>Date (auto)</label>
+            <input type="text" id="date" name="Date" readonly>
+          </div>
+          <div>
+            <label>OPD No (auto)</label>
+            <input type="text" id="opdNo" name="OPD No" readonly>
+          </div>
+          <div>
+            <label>Mobile No *</label>
+            <input type="text" id="mobile" name="Mobile No" required inputmode="tel" maxlength="15" placeholder="e.g. 9876543210">
+          </div>
+          <div>
+            <label>Patient Name *</label>
+            <input type="text" id="patientName" name="Patient Name" required>
+          </div>
+          <div>
+            <label>Gender *</label>
+            <select id="gender" name="Gender" required>
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Age</label>
+            <input type="number" id="age" name="Age" min="0" max="99">
+          </div>
+          <div>
+            <label>Department</label>
+            <div class="suggestion-list">
+              <input type="text" id="department" name="Department" placeholder="Start typing or select">
+              <div id="deptSuggestions" class="suggestion-box" style="display:none"></div>
+            </div>
+          </div>
+          <div>
+            <label>Doctor Name</label>
+            <div class="suggestion-list">
+              <input type="text" id="doctorName" name="Doctor Name" placeholder="Start typing or select">
+              <div id="doctorSuggestions" class="suggestion-box" style="display:none"></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <div class="form-row">
-        <label>Department</label>
-        <input list="deptList" id="department" required>
-        <datalist id="deptList"></datalist>
-        <label>Doctor Name</label>
-        <input list="drList" id="doctorName" required>
-        <datalist id="drList"></datalist>
-      </div>
+      <section class="card">
+        <div class="grid">
+          <div>
+            <label>Chief Complaint</label>
+            <div class="suggestion-list">
+              <input type="text" id="chiefComplaint" name="Chief Complaint" placeholder="start typing">
+              <div id="chiefSuggestions" class="suggestion-box" style="display:none"></div>
+            </div>
+          </div>
+          <div>
+            <label>Sub-Symptoms</label>
+            <div class="suggestion-list">
+              <input type="text" id="subSymptoms" name="Sub-Symptoms" placeholder="related to chief complaint">
+              <div id="subSuggestions" class="suggestion-box" style="display:none"></div>
+            </div>
+          </div>
+          <div>
+            <label>Specific Complaint</label>
+            <input type="text" id="specificComplaint" name="Specific Complaint">
+          </div>
+        </div>
+      </section>
 
-      <h2>Clinical Information</h2>
-      <div class="form-row">
-        <label>Chief Complaint</label>
-        <input list="chiefList" id="chiefComplaint">
-        <datalist id="chiefList"></datalist>
-        <label>Sub-Symptoms</label>
-        <input list="subList" id="subSymptoms">
-        <datalist id="subList"></datalist>
-        <label>Specific Complaint</label>
-        <input type="text" id="specificComplaint">
-      </div>
+      <section class="card">
+        <h3 class="section-title"><span>Vitals</span><span class="muted">Numeric only where applicable</span></h3>
+        <div class="grid">
+          <div><label>Weight (kg)</label><input type="number" id="weight" name="Weight" step="0.1" min="0"></div>
+          <div><label>BP (mmHg)</label><input type="text" id="bp" name="BP" placeholder="120/80"></div>
+          <div><label>Pulse</label><input type="number" id="pulse" name="Pulse" min="0"></div>
+          <div><label>Temp (°C)</label><input type="number" id="temp" name="Temp" step="0.1" min="0"></div>
+          <div><label>Sugar (mg/dL)</label><input type="number" id="sugar" name="Sugar" min="0"></div>
+        </div>
+      </section>
 
-      <h2>Vitals</h2>
-      <div class="form-row">
-        <label>Weight</label><input type="number" id="weight">
-        <label>BP</label><input type="text" id="bp" placeholder="120/80">
-        <label>Pulse</label><input type="number" id="pulse">
-        <label>Temp</label><input type="number" id="temp">
-        <label>Sugar</label><input type="number" id="sugar">
-      </div>
+      <!-- Investigations -->
+      <section class="card" id="investigationSection">
+        <div class="section-title">
+          <div><strong>Investigations</strong> <span class="muted">add up to 20 rows</span></div>
+          <div class="inline">
+            <button type="button" id="addInvestigation" class="small add-btn">Add Row</button>
+            <button type="button" id="clearInvestigations" class="small secondary">Clear</button>
+          </div>
+        </div>
 
-      <h2>Investigations</h2>
-      <table id="investTable">
-        <thead>
-          <tr>
-            <th>Category</th><th>Test Name</th><th>Normal Range</th><th>Report</th><th>Remark</th><th></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button type="button" id="addInv">+ Add Investigation</button>
+        <table class="table-like" id="investigationTable">
+          <thead>
+            <tr>
+              <th>Test Category</th>
+              <th>Test Name</th>
+              <th>Normal Range / Limit</th>
+              <th>Reports</th>
+              <th>Test Remark</th>
+              <th class="actions-col">Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
 
-      <h2>Prescriptions</h2>
-      <table id="presTable">
-        <thead>
-          <tr><th>Form</th><th>Prescription</th><th>Note</th><th></th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button type="button" id="addPres">+ Add Prescription</button>
+      <!-- Prescriptions -->
+      <section class="card" id="prescriptionSection">
+        <div class="section-title">
+          <div><strong>Prescriptions</strong> <span class="muted">add up to 20 rows</span></div>
+          <div class="inline">
+            <button type="button" id="addPrescription" class="small add-btn">Add Row</button>
+            <button type="button" id="clearPrescriptions" class="small secondary">Clear</button>
+          </div>
+        </div>
 
-      <h2>Billing</h2>
-      <table id="billTable">
-        <thead>
-          <tr>
-            <th>Description</th><th>Rate</th><th>Qty</th><th>Discount</th><th>Amount</th><th></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button type="button" id="addBill">+ Add Item</button>
-      <div class="total-box">Total: ₹<span id="totalAmount">0</span></div>
+        <table class="table-like" id="prescriptionTable">
+          <thead>
+            <tr>
+              <th>Form Available</th>
+              <th>Prescription</th>
+              <th>Treatment Note</th>
+              <th class="actions-col">Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
 
-      <h2>Doctor Notes</h2>
-      <div class="form-row">
-        <label>Diagnosis</label><input id="diagnosis">
-        <label>Advice</label><input id="advice">
-        <label>Effect After Treatment</label>
-        <select id="effect">
-          <option>NA</option>
-          <option>Improved</option>
-          <option>No Change</option>
-          <option>Worse</option>
-        </select>
-        <label>Dr Note</label><input id="drNote">
-      </div>
+      <!-- Billing -->
+      <section class="card" id="billingSection">
+        <div class="section-title">
+          <div><strong>Billing</strong> <span class="muted">auto-calculated</span></div>
+          <div class="inline">
+            <button type="button" id="addBilling" class="small add-btn">Add Row</button>
+            <button type="button" id="clearBilling" class="small secondary">Clear</button>
+          </div>
+        </div>
 
-      <div class="actions">
-        <button type="button" id="previewBtn">PREVIEW</button>
-        <button type="submit">SUBMIT</button>
-      </div>
+        <table class="table-like" id="billingTable">
+          <thead>
+            <tr>
+              <th>Bill / Description</th>
+              <th>Rate</th>
+              <th>Quantity</th>
+              <th>Discount</th>
+              <th>Amount</th>
+              <th class="actions-col">Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
 
-      <div id="response"></div>
-    </form>
-  </div>
+        <div class="totals">
+          <div class="muted">Total:</div>
+          <div><input id="totalAmount" name="Total Amount" readonly></div>
+        </div>
+      </section>
 
-  <!-- Footer -->
-  <div id="footer"></div>
-
-  <script src="js/headerfooter.js" defer></script>
-
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbw5Fq8xJeXjPilVb01Iz4lArtrgfq5jd8A55U8Zjp3taVRkni20QrXgHiYa1eEUN1ly/exec";
-
-    // Load JSON lists for datalists
-    async function loadData() {
-      const files = {
-        deptList: "data/dept.json",
-        drList: "data/drname.json",
-        chiefList: "data/compliant.json"
-      };
-      for (let [id, url] of Object.entries(files)) {
-        const list = document.getElementById(id);
-        const res = await fetch(url);
-        const data = await res.json();
-
-        if (id === "deptList") data.forEach(d => list.innerHTML += `<option value="${d.department}">`);
-        if (id === "drList") data.doctors.forEach(n => list.innerHTML += `<option value="${n}">`);
-        if (id === "chiefList") list.innerHTML += `<option value="${data.chiefComplaint}">`;
-      }
-    }
-
-    loadData();
-
-    // Add dynamic rows
-    const invTbody = document.querySelector("#investTable tbody");
-    const presTbody = document.querySelector("#presTable tbody");
-    const billTbody = document.querySelector("#billTable tbody");
-
-    document.getElementById("addInv").onclick = () => addRow(invTbody, 5);
-    document.getElementById("addPres").onclick = () => addRow(presTbody, 3);
-    document.getElementById("addBill").onclick = () => addRow(billTbody, 5);
-
-    function addRow(tbody, cols) {
-      if (tbody.rows.length >= 20) return alert("Maximum 20 rows allowed");
-      const row = tbody.insertRow();
-      for (let i = 0; i < cols - 1; i++) {
-        const cell = row.insertCell();
-        const inp = document.createElement("input");
-        inp.type = "text";
-        cell.appendChild(inp);
-      }
-      const delCell = row.insertCell();
-      const btn = document.createElement("button");
-      btn.innerText = "🗑";
-      btn.type = "button";
-      btn.className = "btn-small";
-      btn.onclick = () => row.remove();
-      delCell.appendChild(btn);
-    }
-
-    // Auto calc billing
-    billTbody.addEventListener("input", calcTotal);
-    function calcTotal() {
-      let total = 0;
-      [...billTbody.rows].forEach(r => {
-        const rate = parseFloat(r.cells[1].querySelector("input").value) || 0;
-        const qty = parseFloat(r.cells[2].querySelector("input").value) || 1;
-        const disc = parseFloat(r.cells[3].querySelector("input").value) || 0;
-        const amt = rate * qty - disc;
-        r.cells[4].querySelector("input").value = amt.toFixed(2);
-        total += amt;
-      });
-      document.getElementById("totalAmount").innerText = total.toFixed(2);
-    }
-
-    // Preview Button
-    document.getElementById("previewBtn").onclick = () => {
-      localStorage.setItem("patientData", JSON.stringify(getFormData()));
-      window.open("patientpreview.html", "_blank");
-    };
-
-    // Submit
-    document.getElementById("patientForm").onsubmit = (e) => {
-      e.preventDefault();
-      const data = getFormData();
-      fetch(scriptURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(() => {
-        document.getElementById("response").innerHTML = "<div style='color:green;'>✅ Saved Successfully</div>";
-        e.target.reset();
-      })
-      .catch(() => {
-        document.getElementById("response").innerHTML = "<div style='color:red;'>❌ Error saving data</div>";
-      });
-    };
-
-    function getFormData() {
-      return {
-        mobile: mobile.value,
-        patientName: patientName.value,
-        gender: gender.value,
-        age: age.value,
-        department: department.value,
-        doctorName: doctorName.value,
-        chiefComplaint: chiefComplaint.value,
-        subSymptoms: subSymptoms.value.split(","),
-        specificComplaint: specificComplaint.value,
-        weight: weight.value,
-        bp: bp.value,
-        pulse: pulse.value,
-        temp: temp.value,
-        sugar: sugar.value,
-        investigations: [...invTbody.rows].map(r => ({
-          category: r.cells[0].querySelector("input").value,
-          testName: r.cells[1].querySelector("input").value,
-          normalRange: r.cells[2].querySelector("input").value,
-          reports: r.cells[3].querySelector("input").value,
-          remark: r.cells[4].querySelector("input").value
-        })),
-        prescriptions: [...presTbody.rows].map(r => ({
-          formAvailable: r.cells[0].querySelector("input").value,
-          prescription: r.cells[1].querySelector("input").value,
-          treatmentNote: r.cells[2].querySelector("input").value
-        })),
-        billing: [...billTbody.rows].map(r => ({
-          description: r.cells[0].querySelector("input").value,
-          rate: r.cells[1].querySelector("input").value,
-          quantity: r.cells[2].querySelector("input").value,
-          discount: r.cells[3].querySelector("input").value,
-          amount: r.cells[4].querySelector("input").value
-        })),
-        diagnosis: diagnosis.value,
-        advice: advice.value,
-        effectAfterTreatment: effect.value,
-        doctorNote: drNote.value
-      };
-    }
-  </script>
-</body>
-</html>
+      <!-- Other fields -->
+      <section class="card">
+        <
