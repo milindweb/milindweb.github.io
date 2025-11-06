@@ -1,341 +1,880 @@
-<!DOCTYPE html> 
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patient Form - NAD Patient Management</title>
-  <link rel="stylesheet" href="css/headerfooter.css">
-  <script src="js/headerfooter.js" defer></script>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; margin:0; background:#f5f7fa; }
-    .section { background:#fff; margin:10px auto; border-radius:10px; padding:15px; box-shadow:0 2px 6px rgba(0,0,0,0.1); width:95%; max-width:1200px; }
-    .section h3 { display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
-    .section h3 span { font-size:0.8em; color:#007bff; }
-    .form-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
-    .form-group { flex:1 1 200px; display:flex; flex-direction:column; }
-    label { font-size:0.9em; font-weight:600; color:#444; margin-bottom:3px; }
-    input, select, textarea { padding:8px; border:1px solid #ccc; border-radius:5px; font-size:0.9em; }
-    textarea { resize:vertical; min-height:40px; }
-    table { width:100%; border-collapse:collapse; margin-top:10px; }
-    table th, table td { border:1px solid #ddd; padding:6px; font-size:0.9em; }
-    table th { background:#e9ecef; }
-    button { background:#007bff; color:white; border:none; padding:8px 14px; border-radius:5px; cursor:pointer; }
-    button:hover { background:#0056b3; }
-    .hidden { display:none; }
-  </style>
-</head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Patient Form - NAD</title>
 
+  <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="css/headerfooter.css">
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    /* Compact, responsive flexbox layout for the patient form */
+    :root{
+      --card-bg: #fff;
+      --muted: #6b7280;
+      --accent: #0ea5a6;
+      --shadow: 0 6px 18px rgba(12,18,24,0.06);
+      --gap: 10px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:#f3f6f9;color:#0f172a;}
+    .container{max-width:1100px;margin:18px auto;padding:18px;box-sizing:border-box;}
+    .card{background:var(--card-bg);border-radius:12px;padding:14px;border:1px solid #e6edf3;box-shadow:var(--shadow);margin-bottom:14px;}
+    header.form-head{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:8px}
+    header.form-head h1{font-size:18px;margin:0}
+    .row{display:flex;gap:var(--gap);flex-wrap:wrap;}
+    .col{flex:1 1 220px;min-width:180px;}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="number"], input[type="tel"], input[type="datetime-local"], select, textarea{
+      width:100%;padding:8px 10px;border-radius:8px;border:1px solid #dbe7ee;font-size:14px;box-sizing:border-box;background:#fff;
+    }
+    .compact {padding:8px 10px;height:38px}
+    .small {font-size:13px;padding:6px 8px}
+    .muted {color:var(--muted);font-size:13px}
+    .hint {font-size:12px;color:#9aa4ad;margin-top:6px}
+
+    /* Multi-row table style */
+    table.multi {width:100%;border-collapse:collapse;margin-top:8px}
+    table.multi th, table.multi td {padding:6px;border-bottom:1px dashed #eef4f7;text-align:left;vertical-align:middle}
+    table.multi input[type="text"], table.multi input[type="number"], table.multi select {height:36px;padding:6px}
+    .actions {display:flex;gap:8px;align-items:center}
+    button {background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+    button.ghost {background:transparent;color:var(--accent);border:1px solid #cde;}
+    .btn-danger{background:#ef4444}
+    .btn-small{padding:6px 8px;font-size:13px;border-radius:6px}
+    .flex-right{display:flex;gap:8px;align-items:center;justify-content:flex-end}
+    .text-right{text-align:right}
+    .summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0}
+    .required {color:#ef4444;margin-left:6px}
+
+    /* responsive */
+    @media (max-width:840px){
+      .col{min-width:48%}
+    }
+    @media (max-width:520px){
+      .col{min-width:100%}
+      header.form-head{flex-direction:column;align-items:flex-start;gap:8px}
+    }
+  </style>
+  <!-- JS to load header/footer -->
+  <script src="js/headerfooter.js" defer></script>
+</head>
 <body>
+  <!-- header placeholder -->
   <div id="header"></div>
 
-  <div class="section" id="basic-info">
-    <h3 onclick="toggleSection('basic-body')">Basic Info <span>Show/Hide</span></h3>
-    <div id="basic-body">
-      <div class="form-row">
-        <div class="form-group"><label>Date</label><input type="text" id="date"></div>
-        <div class="form-group"><label>OPD No</label><input type="text" id="opd"></div>
-        <div class="form-group"><label>Patient Name</label><input type="text" id="pname"></div>
-        <div class="form-group"><label>Mobile No.</label><input type="text" id="mobile"></div>
-        <div class="form-group"><label>Gender</label>
-          <select id="gender"><option>Male</option><option>Female</option><option>Other</option></select>
+  <main class="container">
+    <form id="patientForm" class="card" autocomplete="off">
+      <header class="form-head">
+        <h1>Patient Registration & Billing</h1>
+        <div class="muted">Compact • Responsive • Dynamic</div>
+      </header>
+
+      <!-- BASIC INFO -->
+      <section class="card" style="padding:12px;margin-bottom:12px">
+        <h3 style="margin:0 0 8px 0;font-size:15px">Basic Information</h3>
+        <div class="row">
+          <div class="col">
+            <label>Date</label>
+            <input id="fldDate" name="Date" type="text" class="compact" readonly>
+          </div>
+
+          <div class="col">
+            <label>OPD No <span class="required">*</span></label>
+            <input id="fldOPD" name="OPD No" type="text" class="compact" readonly>
+          </div>
+
+          <div class="col">
+            <label>Mobile No. <span class="required">*</span></label>
+            <input id="fldMobile" name="Mobile No." type="tel" pattern="[0-9]*" inputmode="numeric" maxlength="15" class="compact" required>
+          </div>
+
+          <div class="col">
+            <label>Patient Name <span class="required">*</span></label>
+            <input id="fldName" name="Patient Name" type="text" class="compact" required>
+          </div>
+
+          <div class="col">
+            <label>Gender <span class="required">*</span></label>
+            <select id="fldGender" name="Gender" class="compact" required>
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label>Age (0-99)</label>
+            <input id="fldAge" name="Age" type="number" min="0" max="99" class="compact">
+          </div>
+
+          <div class="col">
+            <label>Department</label>
+            <input id="fldDept" name="Department" list="deptList" placeholder="Type or choose dept" class="compact">
+            <datalist id="deptList"></datalist>
+          </div>
+
+          <div class="col">
+            <label>Doctor Name</label>
+            <input id="fldDoctor" name="Doctor Name" list="docList" placeholder="Type or choose doctor" class="compact">
+            <datalist id="docList"></datalist>
+          </div>
         </div>
-        <div class="form-group"><label>Age</label><input type="number" id="age"></div>
-        <div class="form-group"><label>Department</label>
-          <select id="dept"><option>General</option><option>Gynaecology</option></select>
+      </section>
+
+      <!-- CLINICAL -->
+      <section class="card" style="padding:12px;margin-bottom:12px">
+        <h3 style="margin:0 0 8px 0;font-size:15px">Clinical Information</h3>
+        <div class="row">
+          <div class="col">
+            <label>Chief Complaint</label>
+            <input id="fldChief" name="Chief Complaint" list="complaintList" placeholder="Type or choose" class="compact">
+            <datalist id="complaintList"></datalist>
+          </div>
+
+          <div class="col">
+            <label>Sub-Symptoms</label>
+            <input id="fldSub" name="Sub-Symptoms" list="subList" placeholder="Dependent on chief" class="compact">
+            <datalist id="subList"></datalist>
+          </div>
+
+          <div class="col" style="flex:2 1 360px;">
+            <label>Specific Complaint</label>
+            <input id="fldSpecific" name="Specific Complaint" type="text" class="compact">
+          </div>
         </div>
-        <div class="form-group"><label>Doctor</label><select id="doctor"></select></div>
-      </div>
-    </div>
-  </div>
+      </section>
 
-  <div class="section" id="clinical">
-    <h3 onclick="toggleSection('clinical-body')">Clinical Info <span>Show/Hide</span></h3>
-    <div id="clinical-body">
-      <div class="form-row">
-        <div class="form-group"><label>Chief Complaint</label><select id="chief"></select></div>
-        <div class="form-group"><label>Sub-Symptoms</label><select id="subsym"></select></div>
-        <div class="form-group"><label>Specific Complaint</label><textarea id="specific"></textarea></div>
-      </div>
-    </div>
-  </div>
+      <!-- VITALS -->
+      <section class="card" style="padding:12px;margin-bottom:12px">
+        <h3 style="margin:0 0 8px 0;font-size:15px">Vitals</h3>
+        <div class="row">
+          <div class="col">
+            <label>Weight (kg) <span class="muted">Normal: 50–80 kg</span></label>
+            <input id="fldWeight" name="Weight" type="number" step="0.1" class="compact">
+          </div>
 
-  <div class="section" id="vitals">
-    <h3 onclick="toggleSection('vitals-body')">Vitals <span>Show/Hide</span></h3>
-    <div id="vitals-body">
-      <div class="form-row">
-        <div class="form-group"><label>Weight (kg)</label><input id="weight" type="number"><small>Normal: 50–80</small></div>
-        <div class="form-group"><label>BP</label><input id="bp" type="text"><small>Normal: 120/80</small></div>
-        <div class="form-group"><label>Pulse</label><input id="pulse" type="number"><small>Normal: 60–100</small></div>
-        <div class="form-group"><label>Temp (°F)</label><input id="temp" type="number"><small>Normal: 97–99</small></div>
-        <div class="form-group"><label>Sugar</label><input id="sugar" type="number"><small>Normal: 70–120</small></div>
-      </div>
-    </div>
-  </div>
+          <div class="col">
+            <label>BP <span class="muted">Normal: 90/60–120/80</span></label>
+            <input id="fldBP" name="BP" type="text" placeholder="e.g., 120/80" class="compact">
+          </div>
 
-  <div class="section" id="investigations">
-    <h3 onclick="toggleSection('invest-body')">Investigations <span>Show/Hide</span></h3>
-    <div id="invest-body">
-      <div class="form-row">
-        <input placeholder="Test Category" id="testcat" list="catList">
-        <datalist id="catList"></datalist>
-        <input placeholder="Test Name" id="testname" list="testList">
-        <datalist id="testList"></datalist>
-        <input placeholder="Reports" id="reports">
-        <input placeholder="Normal Range / Limit" id="range" readonly>
-        <input placeholder="Dr.Remark" id="drremark">
-        <button onclick="addInvestigation()">Add</button>
-      </div>
-      <table id="investTable"><thead><tr><th>Category</th><th>Name</th><th>Report</th><th>Limit</th><th>Remark</th></tr></thead><tbody></tbody></table>
-    </div>
-  </div>
+          <div class="col">
+            <label>Pulse <span class="muted">Normal: 60–100 bpm</span></label>
+            <input id="fldPulse" name="Pulse" type="number" class="compact" min="0">
+          </div>
 
-  <div class="section" id="treatment">
-    <h3 onclick="toggleSection('treat-body')">Treatment <span>Show/Hide</span></h3>
-    <div id="treat-body">
-      <div class="form-group"><label>Diagnosis</label><textarea id="diagnosis"></textarea></div>
-      <div class="form-row">
-        <input placeholder="Form (Tablet/Syrup/Injection)" id="formavail" list="formList">
-        <datalist id="formList"></datalist>
-        <input placeholder="Generic / API / Brand" id="generic" list="medList">
-        <datalist id="medList"></datalist>
-        <input placeholder="Comment" id="comment">
-        <button onclick="addPrescription()">Add</button>
-      </div>
-      <table id="rxTable"><thead><tr><th>Form</th><th>Medicine</th><th>Comment</th></tr></thead><tbody></tbody></table>
-      <div class="form-group"><label>Advice</label><textarea id="advice"></textarea></div>
-      <div class="form-group"><label>Effect After Treatment</label>
-        <select id="effect"><option>Improved</option><option>No Change</option><option>Worse</option></select>
-      </div>
-      <div class="form-group"><label>Dr. Note / Remarks</label><textarea id="remarks"></textarea></div>
-    </div>
-  </div>
+          <div class="col">
+            <label>Temp (°C) <span class="muted">Normal: 36.1–37.2</span></label>
+            <input id="fldTemp" name="Temp" type="number" step="0.1" class="compact" min="30" max="45">
+          </div>
 
-  <div class="section">
-    <div class="form-row" style="justify-content:space-between;">
-      <button onclick="previewData()">Preview</button>
-      <button onclick="submitForm()">Submit</button>
-    </div>
-  </div>
+          <div class="col">
+            <label>Sugar (mg/dL) <span class="muted">If pre/post prandial</span></label>
+            <input id="fldSugar" name="Sugar" type="number" class="compact" min="0">
+          </div>
+        </div>
+      </section>
 
+      <!-- INVESTIGATIONS (multi-row) -->
+      <section class="card" id="investigationsSection" style="padding:12px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0;font-size:15px">Investigations</h3>
+          <div class="actions">
+            <button type="button" id="addInvestBtn" class="btn-small">+ Add</button>
+            <button type="button" id="delInvestBtn" class="btn-small ghost">Delete</button>
+          </div>
+        </div>
+
+        <table id="investTable" class="multi" aria-label="Investigations">
+          <thead>
+            <tr>
+              <th style="width:18%">Test Category</th>
+              <th style="width:22%">Test Name</th>
+              <th style="width:18%">Normal Range / Limit</th>
+              <th style="width:18%">Reports</th>
+              <th style="width:18%">Test Remark</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="hint muted">You can type or choose categories and tests. Up to 20 rows.</div>
+      </section>
+
+      <!-- PRESCRIPTIONS (multi-row) -->
+      <section class="card" id="prescriptionsSection" style="padding:12px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0;font-size:15px">Prescriptions</h3>
+          <div class="actions">
+            <button type="button" id="addPresBtn" class="btn-small">+ Add</button>
+            <button type="button" id="delPresBtn" class="btn-small ghost">Delete</button>
+          </div>
+        </div>
+
+        <table id="presTable" class="multi" aria-label="Prescriptions">
+          <thead>
+            <tr>
+              <th style="width:28%">Form Available</th>
+              <th style="width:36%">Prescription (Generic / Brand)</th>
+              <th style="width:36%">Treatment Note</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="hint muted">Type or choose medicines (autocomplete available). Up to 20 rows.</div>
+      </section>
+
+      <!-- BILLING (multi-row) -->
+      <section class="card" id="billingSection" style="padding:12px;margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0;font-size:15px">Billing</h3>
+          <div class="actions">
+            <button type="button" id="addBillBtn" class="btn-small">+ Add</button>
+            <button type="button" id="delBillBtn" class="btn-small ghost">Delete</button>
+          </div>
+        </div>
+
+        <table id="billTable" class="multi" aria-label="Billing">
+          <thead>
+            <tr>
+              <th style="width:36%">Bill / Description</th>
+              <th style="width:12%">Rate</th>
+              <th style="width:12%">Qty</th>
+              <th style="width:12%">Discount</th>
+              <th style="width:14%">Amount</th>
+              <th style="width:14%">Remark</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div class="summary-row">
+          <div class="muted">Max 20 billing items</div>
+          <div style="min-width:260px">
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="text-right" style="flex:1"><strong>Total Amount</strong></div>
+              <div style="width:140px;text-align:right"><input id="totalAmount" type="text" readonly class="compact" style="text-align:right"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OTHER FIELDS -->
+      <section class="card" style="padding:12px;margin-bottom:12px">
+        <div class="row">
+          <div class="col">
+            <label>Diagnosis</label>
+            <input id="fldDiagnosis" name="Diagnosis" type="text" class="compact">
+          </div>
+
+          <div class="col">
+            <label>Form Available</label>
+            <input id="fldFormAvailable" name="Form Available" type="text" list="medList" placeholder="type or choose" class="compact">
+            <datalist id="medList"></datalist>
+          </div>
+
+          <div class="col">
+            <label>Advice</label>
+            <input id="fldAdvice" name="Advice" type="text" class="compact">
+          </div>
+
+          <div class="col">
+            <label>Effect After Treatment</label>
+            <select id="fldEffect" name="Effect After Treatment" class="compact">
+              <option>NA</option>
+              <option>Improved</option>
+              <option>No Change</option>
+              <option>Worse</option>
+            </select>
+          </div>
+
+          <div class="col" style="flex: 1 1 100%;">
+            <label>Dr. Note / Remarks</label>
+            <input id="fldRemarks" name="Dr. Note / Remarks" type="text" class="compact">
+          </div>
+        </div>
+      </section>
+
+      <!-- FORM ACTIONS -->
+      <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center;margin-top:8px">
+        <button type="button" id="previewBtn"><i class="fa fa-eye"></i> PREVIEW</button>
+        <button type="submit" id="submitBtn"><i class="fa fa-paper-plane"></i> SUBMIT</button>
+      </div>
+      <div id="formMsg" class="muted hint" style="margin-top:8px"></div>
+    </form>
+  </main>
+
+  <!-- footer placeholder -->
   <div id="footer"></div>
 
- <script>
-const APP_URL = "https://script.google.com/macros/s/AKfycbysvWwETA5lDzsx6_zi8yPEWFTY05fxNFIUiDIZZ0VvrvwzyefX1WtEcfFTkohdJDqi/exec";
+<script>
+/*
+  patientform.html script
+  - loads JSON data files from /data/
+  - builds datalists
+  - handles dynamic multi-row sections (Invest, Prescriptions, Billing)
+  - preview via sessionStorage and open patientpreview.html
+  - submit to Google Apps Script web app (action=add), multi-row values joined by '\n'
+*/
 
-let investigations = [];
-let prescriptions = [];
+(() => {
+  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw5Fq8xJeXjPilVb01Iz4lArtrgfq5jd8A55U8Zjp3taVRkni20QrXgHiYa1eEUN1ly/exec';
 
-// -------------------- Helper Functions --------------------
-function toggleSection(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle("hidden");
-}
+  // header row mapping for the Google Sheet (exact column names)
+  const SHEET_HEADERS = [
+    "Date","OPD No","Mobile No.","Patient Name","Gender","Age","Department","Doctor Name",
+    "Chief Complaint","Sub-Symptoms","Specific Complaint",
+    "Weight","BP","Pulse","Temp","Sugar",
+    "Test Category","Test Name","Reports","Normal Range / Limit","Test Remark",
+    "Diagnosis","Form Available","Prescription","Treatment Note","Advice","Effect After Treatment","Dr. Note / Remarks",
+    "Bill / Description","Rate","Quantity","Discount","Amount","Total Amount","Bill Remark"
+  ];
 
-function val(id) { return document.getElementById(id).value.trim(); }
-function clear(ids) { ids.forEach(i => document.getElementById(i).value = ""); }
+  // elements
+  const fldDate = document.getElementById('fldDate');
+  const fldOPD  = document.getElementById('fldOPD');
+  const form = document.getElementById('patientForm');
+  const previewBtn = document.getElementById('previewBtn');
+  const msg = document.getElementById('formMsg');
 
-function generateOPD() {
-  const now = new Date();
-  return `${now.getFullYear().toString().slice(2)}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
-}
+  // datalists (populated from data files)
+  const deptList = document.getElementById('deptList');
+  const docList = document.getElementById('docList');
+  const complaintList = document.getElementById('complaintList');
+  const subList = document.getElementById('subList');
+  const medList = document.getElementById('medList');
 
-async function loadJSON(path) {
-  const res = await fetch(path);
-  return await res.json();
-}
+  // tables
+  const investTbody = document.querySelector('#investTable tbody');
+  const presTbody = document.querySelector('#presTable tbody');
+  const billTbody = document.querySelector('#billTable tbody');
 
-// -------------------- Initial Load --------------------
-document.addEventListener("DOMContentLoaded", async () => {
-  document.getElementById("date").value = new Date().toLocaleDateString('en-GB');
-  document.getElementById("opd").value = generateOPD();
+  // buttons
+  const addInvestBtn = document.getElementById('addInvestBtn');
+  const delInvestBtn = document.getElementById('delInvestBtn');
+  const addPresBtn = document.getElementById('addPresBtn');
+  const delPresBtn = document.getElementById('delPresBtn');
+  const addBillBtn = document.getElementById('addBillBtn');
+  const delBillBtn = document.getElementById('delBillBtn');
 
-  await Promise.all([
-    loadDoctors(),
-    loadComplaints(),
-    loadLabTests(),
-    loadMedicines()
-  ]);
-});
+  const totalAmountField = document.getElementById('totalAmount');
 
-// -------------------- Load Doctors --------------------
-async function loadDoctors() {
-  const data = await loadJSON("data/drname.json");
-  const sel = document.getElementById("doctor");
-  data.doctors.forEach(name => {
-    const opt = document.createElement("option");
-    opt.textContent = name;
-    sel.appendChild(opt);
-  });
-}
+  // data caches
+  let departments = [];
+  let doctors = [];
+  let complaints = []; // expect array of {chief: '...', subs: ['...']}
+  let labtests = [];   // flexible; could be array of {category, test, normalRange}
+  let meds = [];       // array of med names or objects
 
-// -------------------- Load Complaints --------------------
-async function loadComplaints() {
-  const data = await loadJSON("data/complaint.json");
-  const chiefSel = document.getElementById("chief");
-  const subSel = document.getElementById("subsym");
+  // --- Initialization ---
+  function init(){
+    // set Date and OPD (YYMMDDHHmm)
+    const now = new Date();
+    fldDate.value = now.toLocaleString();
+    fldOPD.value = makeOPD(now);
 
-  data.forEach(item => {
-    const opt = document.createElement("option");
-    opt.textContent = item.chiefComplaint;
-    chiefSel.appendChild(opt);
-  });
+    // load JSON data files (best-effort; if missing, continue)
+    Promise.allSettled([
+      fetch('data/dept.json').then(r=>r.json()).catch(()=>[]),
+      fetch('data/drname.json').then(r=>r.json()).catch(()=>[]),
+      fetch('data/compliant.json').then(r=>r.json()).catch(()=>[]),
+      fetch('data/labtest.json').then(r=>r.json()).catch(()=>[]),
+      fetch('data/medlist.json').then(r=>r.json()).catch(()=>[])
+    ]).then(results => {
+      departments = (results[0].status==='fulfilled' && Array.isArray(results[0].value)) ? results[0].value : (results[0].value||[]);
+      doctors = (results[1].status==='fulfilled' && Array.isArray(results[1].value)) ? results[1].value : (results[1].value||[]);
+      complaints = (results[2].status==='fulfilled' && Array.isArray(results[2].value)) ? results[2].value : (results[2].value||[]);
+      labtests = (results[3].status==='fulfilled' && Array.isArray(results[3].value)) ? results[3].value : (results[3].value||[]);
+      meds = (results[4].status==='fulfilled' && Array.isArray(results[4].value)) ? results[4].value : (results[4].value||[]);
 
-  chiefSel.addEventListener("change", () => {
-    subSel.innerHTML = "";
-    const found = data.find(c => c.chiefComplaint === chiefSel.value);
-    if (found && found.subSymptoms) {
-      found.subSymptoms.forEach(sub => {
-        const o = document.createElement("option");
-        o.textContent = sub;
-        subSel.appendChild(o);
-      });
-    }
-  });
-}
+      populateDatalist(deptList, departments);
+      populateDatalist(docList, doctors);
+      // complaints may be either array of strings or objects
+      populateDatalist(complaintList, complaints.map(c => (typeof c==='string' ? c : (c.chief||c.name||'')).trim()).filter(Boolean));
+      populateDatalist(medList, meds.map(m => (typeof m==='string' ? m : (m.name||m.brand||'')).trim()).filter(Boolean));
 
-// -------------------- Load Lab Tests --------------------
-let labData = [];
-async function loadLabTests() {
-  const data = await loadJSON("data/labtest.json");
-  labData = data.laboratoryTests || [];
-  const catList = document.getElementById("catList");
-
-  labData.forEach(cat => {
-    const opt = document.createElement("option");
-    opt.value = cat.category;
-    catList.appendChild(opt);
-  });
-
-  // On category change, populate test names
-  document.getElementById("testcat").addEventListener("input", e => {
-    const testList = document.getElementById("testList");
-    testList.innerHTML = "";
-    const cat = labData.find(c => c.category === e.target.value);
-    if (cat) {
-      cat.tests.forEach(t => {
-        const opt = document.createElement("option");
-        opt.value = t.testName;
-        testList.appendChild(opt);
-      });
-    }
-  });
-
-  // On test name change, show normal range
-  document.getElementById("testname").addEventListener("input", e => {
-    const cat = labData.find(c => c.category === document.getElementById("testcat").value);
-    if (cat) {
-      const test = cat.tests.find(t => t.testName === e.target.value);
-      if (test) document.getElementById("range").value = test.normalRange;
-    }
-  });
-}
-
-// -------------------- Load Medicines --------------------
-async function loadMedicines() {
-  const data = await loadJSON("data/medlist.json");
-  const medList = document.getElementById("medList");
-  const formList = document.getElementById("formList");
-  const forms = new Set();
-
-  data.forEach(m => {
-    const genericName = m["Generic "][" API (Single or Combination)"];
-    const brandNames = m["Common Brand Names (India)"];
-    const opt = document.createElement("option");
-    opt.value = `${genericName} (${brandNames})`;
-    medList.appendChild(opt);
-
-    if (m["Forms Available"]) {
-      m["Forms Available"].split(",").forEach(f => forms.add(f.trim()));
-    }
-  });
-
-  forms.forEach(f => {
-    const opt = document.createElement("option");
-    opt.value = f;
-    formList.appendChild(opt);
-  });
-}
-
-// -------------------- Investigation & Prescription --------------------
-function addInvestigation() {
-  const t = [val("testcat"), val("testname"), val("reports"), val("range"), val("drremark")];
-  if (!t[1]) return alert("Enter test name");
-  investigations.push(t);
-  renderTable("investTable", investigations);
-  clear(["testcat","testname","reports","range","drremark"]);
-}
-
-function addPrescription() {
-  const t = [val("formavail"), val("generic"), val("comment")];
-  if (!t[1]) return alert("Enter medicine name");
-  prescriptions.push(t);
-  renderTable("rxTable", prescriptions);
-  clear(["formavail","generic","comment"]);
-}
-
-function renderTable(id, data) {
-  const tbody = document.querySelector(`#${id} tbody`);
-  tbody.innerHTML = "";
-  data.forEach(r => {
-    const tr = document.createElement("tr");
-    r.forEach(c => {
-      const td = document.createElement("td");
-      td.textContent = c;
-      tr.appendChild(td);
+      // if complaints has mapping for subs, keep it; else fallback to empty
+      // labtests: may be [{category, testName, normalRange}, ...] or {category: [...tests]}
+      // Keep labtests raw and handle lookups
+    }).finally(()=> {
+      // create initial single rows
+      addInvestRow();
+      addPresRow();
+      addBillRow();
+      calcTotal();
     });
-    tbody.appendChild(tr);
-  });
-}
 
-// -------------------- Collect and Submit --------------------
-function collectFormData() {
-  return {
-    date: val("date"),
-    opd: val("opd"),
-    patientName: val("pname"),
-    mobile: val("mobile"),
-    gender: val("gender"),
-    age: val("age"),
-    department: val("dept"),
-    doctor: val("doctor"),
-    chiefComplaint: val("chief"),
-    subSymptoms: val("subsym"),
-    specificComplaint: val("specific"),
-    weight: val("weight"),
-    bp: val("bp"),
-    pulse: val("pulse"),
-    temp: val("temp"),
-    sugar: val("sugar"),
-    investigations,
-    prescriptions,
-    diagnosis: val("diagnosis"),
-    advice: val("advice"),
-    effect: val("effect"),
-    drRemarks: val("remarks")
-  };
-}
+    // wire events
+    addInvestBtn.addEventListener('click', addInvestRow);
+    delInvestBtn.addEventListener('click', deleteInvestRow);
+    addPresBtn.addEventListener('click', addPresRow);
+    delPresBtn.addEventListener('click', deletePresRow);
+    addBillBtn.addEventListener('click', addBillRow);
+    delBillBtn.addEventListener('click', deleteBillRow);
 
-function submitForm() {
-  const data = collectFormData();
-  if (!data.patientName) { alert("Enter patient name"); return; }
+    // preview
+    previewBtn.addEventListener('click', doPreview);
 
-  fetch(APP_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action: "save", data })
-  })
-  .then(r => r.json())
-  .then(res => {
-    if (res.success) {
-      alert("Data Saved Successfully!");
-      location.reload();
-    } else alert("Error: " + res.message);
-  })
-  .catch(err => alert("Error: " + err));
-}
+    // sub-symptoms dependent on chief complaint
+    document.getElementById('fldChief').addEventListener('change', onChiefChange);
+
+    // submit
+    form.addEventListener('submit', onSubmit);
+  }
+
+  // utils
+  function makeOPD(d){
+    // YYMMDDHHmm
+    const pad=(n)=>n.toString().padStart(2,'0');
+    const y = d.getFullYear().toString().slice(-2);
+    return `${y}${pad(d.getMonth()+1)}${pad(d.getDate())}${pad(d.getHours())}${pad(d.getMinutes())}`;
+  }
+
+  function populateDatalist(datalistEl, arr){
+    if(!datalistEl || !Array.isArray(arr)) return;
+    datalistEl.innerHTML = '';
+    // ensure unique
+    Array.from(new Set(arr.filter(Boolean))).forEach(v=>{
+      const opt = document.createElement('option');
+      opt.value = v;
+      datalistEl.appendChild(opt);
+    });
+  }
+
+  // --- INVESTIGATIONS rows ---
+  function addInvestRow(data = {}) {
+    const max = 20;
+    if (investTbody.children.length >= max) return;
+    const tr = document.createElement('tr');
+
+    // create fields: testCategory, testName, normalRange, reports, testRemark
+    const catTd = document.createElement('td');
+    const catInp = document.createElement('input');
+    catInp.type = 'text'; catInp.className = 'small'; catInp.placeholder = 'Category'; catInp.value = data['Test Category']||'';
+    catInp.setAttribute('list','labCatList');
+    catInp.addEventListener('change', onInvestCategoryChange);
+    catInp.addEventListener('input', onInvestCategoryChange);
+    catTd.appendChild(catInp);
+
+    const testTd = document.createElement('td');
+    const testInp = document.createElement('input');
+    testInp.type = 'text'; testInp.className = 'small'; testInp.placeholder = 'Test Name'; testInp.value = data['Test Name']||'';
+    testInp.setAttribute('list','labTestList');
+    testInp.addEventListener('change', onInvestTestChange);
+    testInp.addEventListener('input', onInvestTestChange);
+    testTd.appendChild(testInp);
+
+    const normTd = document.createElement('td');
+    const normInp = document.createElement('input');
+    normInp.type = 'text'; normInp.className = 'small'; normInp.placeholder = 'Range'; normInp.value = data['Normal Range / Limit']||'';
+    normInp.readOnly = true;
+    normTd.appendChild(normInp);
+
+    const repTd = document.createElement('td');
+    const repInp = document.createElement('input');
+    repInp.type = 'text'; repInp.className = 'small'; repInp.placeholder = 'Reports'; repInp.value = data['Reports']||'';
+    repTd.appendChild(repInp);
+
+    const remTd = document.createElement('td');
+    const remInp = document.createElement('input');
+    remInp.type = 'text'; remInp.className = 'small'; remInp.placeholder = 'Remark'; remInp.value = data['Test Remark']||'';
+    remTd.appendChild(remInp);
+
+    tr.append(catTd, testTd, normTd, repTd, remTd);
+    investTbody.appendChild(tr);
+
+    // ensure datalists for lab categories & tests (use a combined datalist)
+    ensureLabDatalists();
+  }
+
+  function deleteInvestRow(){
+    if(investTbody.children.length>1){
+      investTbody.removeChild(investTbody.lastElementChild);
+    }
+  }
+
+  // when category changes, try to populate test datalist and set normal range if mapping found
+  function onInvestCategoryChange(e){
+    const input = e.target;
+    const tr = input.closest('tr');
+    const testInput = tr.querySelector('td:nth-child(2) input');
+    // try to suggest tests based on labtests data
+    const cat = input.value.trim();
+    // build test options for this category
+    const testsForCat = findLabTestsByCategory(cat);
+    if(testsForCat.length>0){
+      // update labTestList datalist (global)
+      populateDatalist(document.getElementById('labTestList'), testsForCat.map(t=>t.testName||t.test||''));
+    }
+    // if single test is available and testInput empty, leave test for user to choose
+  }
+
+  function onInvestTestChange(e){
+    const input = e.target;
+    const tr = input.closest('tr');
+    const catInput = tr.querySelector('td:nth-child(1) input');
+    const normInput = tr.querySelector('td:nth-child(3) input');
+    const testName = input.value.trim();
+    const cat = catInput.value.trim();
+
+    // try find lab test entry
+    const lt = findLabTestEntry(cat, testName) || findLabTestByAny(testName);
+    if(lt && (lt.normalRange || lt.normal)) normInput.value = lt.normalRange || lt.normal || '';
+    else normInput.value = '';
+  }
+
+  function ensureLabDatalists(){
+    // build a datalist for categories and tests
+    const labCatListId = 'labCatList';
+    if(!document.getElementById(labCatListId)){
+      const dl = document.createElement('datalist'); dl.id = labCatListId; document.body.appendChild(dl);
+    }
+    const labTestListId = 'labTestList';
+    if(!document.getElementById(labTestListId)){
+      const dl2 = document.createElement('datalist'); dl2.id = labTestListId; document.body.appendChild(dl2);
+    }
+    // populate category list
+    const cats = [];
+    // labtests may be array of objects or object mapping
+    if(Array.isArray(labtests)){
+      labtests.forEach(item=>{
+        if(typeof item === 'string') cats.push(item);
+        else if(item.category) cats.push(item.category);
+        else if(item.cat) cats.push(item.cat);
+      });
+    } else if(typeof labtests === 'object'){
+      Object.keys(labtests).forEach(k=>cats.push(k));
+    }
+    populateDatalist(document.getElementById(labCatListId), cats);
+    // tests list - all tests
+    const tests = [];
+    if(Array.isArray(labtests)){
+      labtests.forEach(item=>{
+        if(typeof item === 'string') tests.push(item);
+        else if(item.testName) tests.push(item.testName);
+        else if(item.test) tests.push(item.test);
+        else if(Array.isArray(item.tests)) item.tests.forEach(t=>tests.push(t));
+      });
+    } else if(typeof labtests === 'object'){
+      Object.values(labtests).forEach(arr=>{
+        if(Array.isArray(arr)) arr.forEach(t=>tests.push((t.testName||t.test||t)));
+      });
+    }
+    populateDatalist(document.getElementById('labTestList'), tests);
+  }
+
+  function findLabTestsByCategory(cat){
+    if(!cat) return [];
+    const out = [];
+    if(Array.isArray(labtests)){
+      labtests.forEach(item=>{
+        const itemCat = (item.category||item.cat||'').toString();
+        if(itemCat && itemCat.toLowerCase() === cat.toLowerCase()){
+          if(item.testName) out.push(item);
+          else if(item.tests && Array.isArray(item.tests)) item.tests.forEach(t=>out.push({testName:(t.testName||t)}));
+        }
+      });
+    } else if(typeof labtests === 'object'){
+      const arr = labtests[cat] || labtests[cat.toLowerCase()] || labtests[cat.toUpperCase()];
+      if(Array.isArray(arr)) arr.forEach(t=>out.push(typeof t === 'string' ? {testName:t} : t));
+    }
+    return out;
+  }
+
+  function findLabTestEntry(cat, testName){
+    if(!testName) return null;
+    if(Array.isArray(labtests)){
+      const low = testName.toLowerCase();
+      for(const item of labtests){
+        const tname = (item.testName||item.test||'').toString();
+        const itemCat = (item.category||item.cat||'').toString();
+        if(tname && tname.toLowerCase() === low){
+          if(!cat || !itemCat || itemCat.toLowerCase()===cat.toLowerCase()) return item;
+        }
+      }
+    } else if(typeof labtests === 'object'){
+      for(const [catKey, arr] of Object.entries(labtests)){
+        for(const t of arr){
+          const tname = (t.testName||t.test||'').toString();
+          if(tname.toLowerCase() === testName.toLowerCase()) return t;
+        }
+      }
+    }
+    return null;
+  }
+  function findLabTestByAny(testName){
+    return findLabTestEntry('', testName);
+  }
+
+  // --- PRESCRIPTIONS rows ---
+  function addPresRow(data = {}) {
+    const max = 20;
+    if (presTbody.children.length >= max) return;
+    const tr = document.createElement('tr');
+
+    const formTd = document.createElement('td');
+    const formInp = document.createElement('input');
+    formInp.type='text'; formInp.className='small'; formInp.placeholder='Form (Tablet/Injection)'; formInp.value = data['Form Available']||'';
+    formTd.appendChild(formInp);
+
+    const presTd = document.createElement('td');
+    const presInp = document.createElement('input');
+    presInp.type='text'; presInp.className='small'; presInp.placeholder='Medicine (Generic/Brand)'; presInp.setAttribute('list','medList'); presInp.value = data['Prescription']||'';
+    presTd.appendChild(presInp);
+
+    const noteTd = document.createElement('td');
+    const noteInp = document.createElement('input');
+    noteInp.type='text'; noteInp.className='small'; noteInp.placeholder='Treatment Note'; noteInp.value = data['Treatment Note']||'';
+    noteTd.appendChild(noteInp);
+
+    tr.append(formTd, presTd, noteTd);
+    presTbody.appendChild(tr);
+  }
+
+  function deletePresRow(){
+    if(presTbody.children.length>1){
+      presTbody.removeChild(presTbody.lastElementChild);
+    }
+  }
+
+  // --- BILLING rows ---
+  function addBillRow(data = {}) {
+    const max = 20;
+    if (billTbody.children.length >= max) return;
+    const tr = document.createElement('tr');
+
+    const descTd = document.createElement('td');
+    const descInp = document.createElement('input'); descInp.type='text'; descInp.className='small'; descInp.placeholder='Description'; descInp.value = data['Bill / Description']||'';
+    descTd.appendChild(descInp);
+
+    const rateTd = document.createElement('td');
+    const rateInp = document.createElement('input'); rateInp.type='number'; rateInp.min='0'; rateInp.step='0.01'; rateInp.className='small'; rateInp.placeholder='Rate'; rateInp.value = data['Rate']||'';
+    rateInp.addEventListener('input', onBillingChange);
+    rateTd.appendChild(rateInp);
+
+    const qtyTd = document.createElement('td');
+    const qtyInp = document.createElement('input'); qtyInp.type='number'; qtyInp.min='0'; qtyInp.step='1'; qtyInp.className='small'; qtyInp.placeholder='Qty'; qtyInp.value = data['Quantity']||'';
+    qtyInp.addEventListener('input', onBillingChange);
+    qtyTd.appendChild(qtyInp);
+
+    const discTd = document.createElement('td');
+    const discInp = document.createElement('input'); discInp.type='number'; discInp.min='0'; discInp.step='0.01'; discInp.className='small'; discInp.placeholder='Discount'; discInp.value = data['Discount']||'';
+    discInp.addEventListener('input', onBillingChange);
+    discTd.appendChild(discInp);
+
+    const amtTd = document.createElement('td');
+    const amtInp = document.createElement('input'); amtInp.type='text'; amtInp.readOnly=true; amtInp.className='small'; amtInp.style.textAlign='right'; amtInp.value = data['Amount']||'';
+    amtTd.appendChild(amtInp);
+
+    const remarkTd = document.createElement('td');
+    const remarkInp = document.createElement('input'); remarkInp.type='text'; remarkInp.className='small'; remarkInp.placeholder='Remark'; remarkInp.value = data['Bill Remark']||'';
+    remarkTd.appendChild(remarkInp);
+
+    tr.append(descTd, rateTd, qtyTd, discTd, amtTd, remarkTd);
+    billTbody.appendChild(tr);
+    calcRowAmount(tr);
+  }
+
+  function deleteBillRow(){
+    if(billTbody.children.length>1){
+      billTbody.removeChild(billTbody.lastElementChild);
+      calcTotal();
+    }
+  }
+
+  function onBillingChange(){
+    // find the row and update amount
+    const tr = this ? this.closest('tr') : null;
+    (tr ? calcRowAmount(tr) : Array.from(billTbody.children).forEach(r=>calcRowAmount(r)));
+    calcTotal();
+  }
+
+  function calcRowAmount(tr){
+    if(!tr) return;
+    const rate = parseFloat((tr.querySelector('td:nth-child(2) input').value || '0'))||0;
+    const qty = parseFloat((tr.querySelector('td:nth-child(3) input').value || '0'))||0;
+    const disc = parseFloat((tr.querySelector('td:nth-child(4) input').value || '0'))||0;
+    let amt = (rate * qty) - disc;
+    if(amt < 0) amt = 0;
+    tr.querySelector('td:nth-child(5) input').value = amt.toFixed(2);
+  }
+
+  function calcTotal(){
+    let total = 0;
+    Array.from(billTbody.children).forEach(tr=>{
+      const a = parseFloat((tr.querySelector('td:nth-child(5) input').value || '0'))||0;
+      total += a;
+    });
+    totalAmountField.value = total.toFixed(2);
+  }
+
+  // --- PREVIEW ---
+  function collectFormData(){
+    // basic single value fields
+    const single = {
+      "Date": fldDate.value,
+      "OPD No": fldOPD.value,
+      "Mobile No.": document.getElementById('fldMobile').value || '',
+      "Patient Name": document.getElementById('fldName').value || '',
+      "Gender": document.getElementById('fldGender').value || '',
+      "Age": document.getElementById('fldAge').value || '',
+      "Department": document.getElementById('fldDept').value || '',
+      "Doctor Name": document.getElementById('fldDoctor').value || '',
+      "Chief Complaint": document.getElementById('fldChief').value || '',
+      "Sub-Symptoms": document.getElementById('fldSub').value || '',
+      "Specific Complaint": document.getElementById('fldSpecific').value || '',
+      "Weight": document.getElementById('fldWeight').value || '',
+      "BP": document.getElementById('fldBP').value || '',
+      "Pulse": document.getElementById('fldPulse').value || '',
+      "Temp": document.getElementById('fldTemp').value || '',
+      "Sugar": document.getElementById('fldSugar').value || '',
+      "Diagnosis": document.getElementById('fldDiagnosis').value || '',
+      "Form Available": document.getElementById('fldFormAvailable').value || '',
+      "Advice": document.getElementById('fldAdvice').value || '',
+      "Effect After Treatment": document.getElementById('fldEffect').value || '',
+      "Dr. Note / Remarks": document.getElementById('fldRemarks').value || '',
+      "Total Amount": document.getElementById('totalAmount').value || ''
+    };
+
+    // Investigations rows -> join each column by '\n'
+    const invCats = [], invTests = [], invRanges = [], invReports = [], invRemarks = [];
+    Array.from(investTbody.children).forEach(tr=>{
+      const vals = Array.from(tr.querySelectorAll('input')).map(i=>i.value || '');
+      invCats.push(vals[0]||'');
+      invTests.push(vals[1]||'');
+      invRanges.push(vals[2]||'');
+      invReports.push(vals[3]||'');
+      invRemarks.push(vals[4]||'');
+    });
+
+    // Prescriptions
+    const presForms = [], presMeds = [], presNotes = [];
+    Array.from(presTbody.children).forEach(tr=>{
+      const vals = Array.from(tr.querySelectorAll('input')).map(i=>i.value || '');
+      presForms.push(vals[0]||'');
+      presMeds.push(vals[1]||'');
+      presNotes.push(vals[2]||'');
+    });
+
+    // Billing
+    const billDesc = [], billRate = [], billQty = [], billDisc = [], billAmount = [], billRemark = [];
+    Array.from(billTbody.children).forEach(tr=>{
+      const inputs = Array.from(tr.querySelectorAll('input')).map(i=>i.value || '');
+      billDesc.push(inputs[0]||'');
+      billRate.push(inputs[1]||'');
+      billQty.push(inputs[2]||'');
+      billDisc.push(inputs[3]||'');
+      billAmount.push(inputs[4]||'');
+      billRemark.push(inputs[5]||'');
+    });
+
+    // compose final object mapping to sheet header keys
+    const payload = {};
+    // single fields
+    Object.assign(payload, single);
+
+    // multi-row fields as newline-separated strings
+    payload["Test Category"] = invCats.join('\n');
+    payload["Test Name"] = invTests.join('\n');
+    payload["Normal Range / Limit"] = invRanges.join('\n');
+    payload["Reports"] = invReports.join('\n');
+    payload["Test Remark"] = invRemarks.join('\n');
+
+    payload["Form Available"] = presForms.join('\n'); // note: this collides with single "Form Available" earlier - we choose multi-row for prescriptions -> but sheet has "Form Available" single column; we'll append multi and keep single too
+    payload["Prescription"] = presMeds.join('\n');
+    payload["Treatment Note"] = presNotes.join('\n');
+
+    payload["Bill / Description"] = billDesc.join('\n');
+    payload["Rate"] = billRate.join('\n');
+    payload["Quantity"] = billQty.join('\n');
+    payload["Discount"] = billDisc.join('\n');
+    payload["Amount"] = billAmount.join('\n');
+    payload["Bill Remark"] = billRemark.join('\n');
+
+    // ensure every header key exists (even if empty)
+    SHEET_HEADERS.forEach(h => { if(!(h in payload)) payload[h] = payload[h] || ''; });
+
+    return payload;
+  }
+
+  function doPreview(){
+    const data = collectFormData();
+    // basic validation for required fields before preview
+    if(!data["Mobile No."] || !data["Patient Name"] || !data["Gender"]){
+      msg.textContent = 'Please fill required Basic Information (Mobile, Name, Gender) before preview.';
+      return;
+    }
+    // store in sessionStorage and open preview page in new tab
+    try{
+      sessionStorage.setItem('patient_preview', JSON.stringify(data));
+      window.open('patientpreview.html', '_blank');
+    }catch(err){
+      console.error(err);
+      msg.textContent = 'Unable to open preview: ' + err.message;
+    }
+  }
+
+  // --- SUBMIT TO GOOGLE SHEETS ---
+  async function onSubmit(e){
+    e.preventDefault();
+    msg.textContent = '';
+    const data = collectFormData();
+
+    // validate required
+    if(!data["Mobile No."] || !data["Patient Name"] || !data["Gender"]){
+      msg.textContent = 'Form validation failed: Mobile No., Patient Name and Gender are required.';
+      return;
+    }
+
+    // Build request body expected by Apps Script addHandler
+    // We will send a payload like { data: { "Date": "...", "OPD No": "...", ... } }
+    const body = { action: 'add', data };
+
+    msg.textContent = 'Submitting...';
+    try{
+      const res = await fetch(WEBAPP_URL + '?action=add', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(body)
+      });
+      const json = await res.json();
+      if(json && json.status === 'success'){
+        msg.textContent = 'Saved successfully (Row ' + (json.data && json.data.rowIndex ? json.data.rowIndex : '') + ').';
+        // Optionally reset form or leave as-is
+      } else {
+        msg.textContent = 'Save failed: ' + (json.message || JSON.stringify(json));
+      }
+    }catch(err){
+      msg.textContent = 'Network error: ' + err.message;
+    }
+  }
+
+  // chief->sub mapping (if complaint JSON provided as objects)
+  function onChiefChange(e){
+    const chief = e.target.value.trim();
+    // find in complaints
+    if(Array.isArray(complaints)){
+      const entry = complaints.find(c => {
+        if(typeof c === 'string') return c.toLowerCase() === chief.toLowerCase();
+        return ((c.chief||c.name||'').toString().toLowerCase() === chief.toLowerCase());
+      });
+      let subs = [];
+      if(entry && typeof entry === 'object'){
+        if(Array.isArray(entry.subs)) subs = entry.subs;
+        else if(Array.isArray(entry.subSymptoms)) subs = entry.subSymptoms;
+        else if(Array.isArray(entry.sub)) subs = entry.sub;
+      }
+      populateDatalist(subList, subs);
+    }
+  }
+
+  // kick off
+  init();
+})();
 </script>
-
 </body>
 </html>
-
-
