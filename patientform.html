@@ -4,267 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Registration Form</title>
-    
-    <!-- Header + Footer CSS -->
-    <link rel="stylesheet" href="css/headerfooter.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f5f5f5;
-            padding: 0;
-            margin: 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .form-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 25px;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            font-size: 1.2rem;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #3498db;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title i {
-            margin-right: 10px;
-            color: #3498db;
-        }
-
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            flex: 1 1 200px;
-            min-width: 0;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #555;
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.95rem;
-            transition: border 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: #3498db;
-            outline: none;
-            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
-        }
-
-        .required label::after {
-            content: " *";
-            color: #e74c3c;
-        }
-
-        .dynamic-section {
-            margin-top: 20px;
-        }
-
-        .dynamic-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-
-        .dynamic-table th {
-            background-color: #f8f9fa;
-            padding: 10px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 0.85rem;
-            border: 1px solid #dee2e6;
-        }
-
-        .dynamic-table td {
-            padding: 8px;
-            border: 1px solid #dee2e6;
-        }
-
-        .dynamic-table input {
-            width: 100%;
-            padding: 6px;
-            border: 1px solid #ced4da;
-            border-radius: 3px;
-            font-size: 0.85rem;
-        }
-
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-primary {
-            background-color: #3498db;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #2980b9;
-        }
-
-        .btn-success {
-            background-color: #27ae60;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background-color: #219a52;
-        }
-
-        .btn-danger {
-            background-color: #e74c3c;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #c0392b;
-        }
-
-        .btn-secondary {
-            background-color: #95a5a6;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background-color: #7f8c8d;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-
-        .compact-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .compact-group {
-            flex: 1 1 120px;
-            min-width: 0;
-        }
-
-        .compact-group label {
-            font-size: 0.8rem;
-            margin-bottom: 3px;
-        }
-
-        .compact-group input {
-            padding: 6px 8px;
-            font-size: 0.85rem;
-        }
-
-        .info-note {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            font-style: italic;
-            margin-top: 3px;
-        }
-
-        .auto-fill {
-            background-color: #f8f9fa;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f0f2f5; padding: 0; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 15px; }
+        .form-card { background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 15px; }
+        .section-title { font-size: 1.1rem; color: #2c3e50; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #3498db; display: flex; align-items: center; }
+        .section-title i { margin-right: 8px; color: #3498db; font-size: 0.9rem; }
+        .form-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+        .form-group { flex: 1 1 180px; min-width: 0; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: 600; color: #555; font-size: 0.85rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #3498db; outline: none; box-shadow: 0 0 3px rgba(52, 152, 219, 0.3); }
+        .required label::after { content: " *"; color: #e74c3c; }
+        .dynamic-section { margin-top: 15px; }
+        .dynamic-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 0.8rem; }
+        .dynamic-table th { background-color: #f8f9fa; padding: 8px; text-align: left; font-weight: 600; border: 1px solid #dee2e6; }
+        .dynamic-table td { padding: 6px; border: 1px solid #dee2e6; }
+        .dynamic-table input { width: 100%; padding: 4px; border: 1px solid #ced4da; border-radius: 3px; font-size: 0.8rem; }
+        .btn { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; transition: background 0.3s; display: inline-flex; align-items: center; gap: 4px; }
+        .btn-primary { background-color: #3498db; color: white; }
+        .btn-primary:hover { background-color: #2980b9; }
+        .btn-success { background-color: #27ae60; color: white; }
+        .btn-success:hover { background-color: #219a52; }
+        .btn-danger { background-color: #e74c3c; color: white; }
+        .btn-danger:hover { background-color: #c0392b; }
+        .btn-secondary { background-color: #95a5a6; color: white; }
+        .btn-secondary:hover { background-color: #7f8c8d; }
+        .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; }
+        .compact-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+        .compact-group { flex: 1 1 100px; min-width: 0; }
+        .compact-group label { font-size: 0.75rem; margin-bottom: 2px; }
+        .compact-group input { padding: 5px 6px; font-size: 0.8rem; }
+        .info-note { font-size: 0.7rem; color: #7f8c8d; font-style: italic; margin-top: 2px; }
+        .auto-fill { background-color: #f8f9fa; }
+        .vital-with-limit { position: relative; }
+        .limit-info { position: absolute; bottom: -12px; right: 0; font-size: 0.65rem; color: #7f8c8d; }
         @media (max-width: 768px) {
-            .form-row {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .form-group {
-                flex: 1 1 100%;
-            }
-            
-            .compact-row {
-                flex-direction: column;
-            }
-            
-            .compact-group {
-                flex: 1 1 100%;
-            }
-            
-            .dynamic-table {
-                display: block;
-                overflow-x: auto;
-            }
-        }
-
-        /* Limit indicators for vitals */
-        .vital-with-limit {
-            position: relative;
-        }
-
-        .limit-info {
-            position: absolute;
-            bottom: -15px;
-            right: 0;
-            font-size: 0.7rem;
-            color: #7f8c8d;
+            .form-row, .compact-row { flex-direction: column; gap: 8px; }
+            .form-group, .compact-group { flex: 1 1 100%; }
+            .dynamic-table { display: block; overflow-x: auto; }
         }
     </style>
 </head>
 <body>
-    <!-- Header will be loaded here -->
-    <div id="header"></div>
-
     <div class="container">
-        <h1 style="text-align: center; margin: 20px 0; color: #2c3e50;">Patient Registration Form</h1>
+        <h1 style="text-align: center; margin: 15px 0; color: #2c3e50; font-size: 1.5rem;">Patient Registration Form</h1>
         
         <form id="patientForm">
             <!-- Basic Information Section -->
@@ -502,8 +288,8 @@
                     <button type="button" class="btn btn-secondary" id="addBillingRow"><i class="fas fa-plus"></i> Add Row</button>
                 </div>
                 
-                <div class="form-row" style="justify-content: flex-end; margin-top: 15px;">
-                    <div class="form-group" style="flex: 0 1 200px;">
+                <div class="form-row" style="justify-content: flex-end; margin-top: 12px;">
+                    <div class="form-group" style="flex: 0 1 180px;">
                         <label for="totalAmount">Total Amount</label>
                         <input type="number" id="totalAmount" name="totalAmount" step="0.01" min="0" readonly class="auto-fill">
                     </div>
@@ -523,13 +309,6 @@
         </form>
     </div>
 
-    <!-- Footer will be loaded here -->
-    <div id="footer"></div>
-
-    <!-- JS to load header/footer -->
-    <script src="js/headerfooter.js" defer></script>
-    
-    <!-- Form-specific JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize date and OPD number
@@ -564,10 +343,122 @@
             });
         });
         
-        function loadJSONData() {
-            // This function will load all JSON data for autocomplete
-            // Implementation details will be in a separate JS file
-            console.log('Loading JSON data for autocomplete...');
+        // Load JSON data for autocomplete
+        async function loadJSONData() {
+            try {
+                // Load departments
+                const deptResponse = await fetch('data/dept.json');
+                const departments = await deptResponse.json();
+                populateDatalist('departmentList', departments.map(dept => dept.department));
+                
+                // Load doctors
+                const drResponse = await fetch('data/drname.json');
+                const doctors = await drResponse.json();
+                populateDatalist('doctorNameList', doctors.doctors);
+                
+                // Load complaints
+                const complaintResponse = await fetch('data/complaint.json');
+                const complaints = await complaintResponse.json();
+                populateDatalist('chiefComplaintList', [complaints.chiefComplaint]);
+                
+                // Load sub-symptoms
+                if (complaints.subSymptoms) {
+                    populateDatalist('subSymptomsList', complaints.subSymptoms);
+                }
+                
+                // Load lab tests
+                const labResponse = await fetch('data/labtest.json');
+                const labTests = await labResponse.json();
+                if (labTests.laboratoryTests) {
+                    const testCategories = [...new Set(labTests.laboratoryTests.map(test => test.category))];
+                    populateDatalist('testCategoryList', testCategories);
+                    
+                    // Store lab tests for later use
+                    window.labTests = labTests.laboratoryTests;
+                    
+                    // Add event listener to update test names when category changes
+                    document.addEventListener('input', function(e) {
+                        if (e.target.name === 'testCategory[]') {
+                            updateTestNames(e.target);
+                        }
+                    });
+                }
+                
+                // Load medicine list
+                const medResponse = await fetch('data/medlist.json');
+                const medicines = await medResponse.json();
+                
+                // Extract form available options
+                const formsAvailable = [...new Set(medicines.map(med => med['Forms Available']).filter(Boolean))];
+                populateDatalist('formAvailableList', formsAvailable);
+                
+                // Extract prescription options
+                const prescriptions = medicines.map(med => {
+                    const generic = med['Generic '] ? med['Generic '][' API (Single or Combination)'] : '';
+                    const brand = med['Common Brand Names (India)'] || '';
+                    return generic + (brand ? ` (${brand})` : '');
+                }).filter(Boolean);
+                
+                populateDatalist('prescriptionList', prescriptions);
+                
+                // Store medicines for later use
+                window.medicines = medicines;
+                
+            } catch (error) {
+                console.error('Error loading JSON data:', error);
+            }
+        }
+        
+        function populateDatalist(datalistId, options) {
+            const datalist = document.getElementById(datalistId);
+            if (!datalist) return;
+            
+            datalist.innerHTML = '';
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                datalist.appendChild(optionElement);
+            });
+        }
+        
+        function updateTestNames(categoryInput) {
+            const row = categoryInput.closest('tr');
+            const testNameInput = row.querySelector('input[name="testName[]"]');
+            const normalRangeInput = row.querySelector('input[name="normalRange[]"]');
+            
+            if (!window.labTests || !categoryInput.value) return;
+            
+            // Filter tests by category
+            const testsInCategory = window.labTests.filter(test => 
+                test.category === categoryInput.value
+            );
+            
+            // Update test name datalist
+            const testNames = testsInCategory.flatMap(test => 
+                test.tests ? test.tests.map(t => t.testName) : []
+            );
+            
+            // Create or update datalist for this row
+            let datalist = testNameInput.list;
+            if (!datalist) {
+                datalist = document.createElement('datalist');
+                datalist.id = 'testNameList-' + Math.random().toString(36).substr(2, 9);
+                testNameInput.setAttribute('list', datalist.id);
+                document.body.appendChild(datalist);
+            }
+            
+            populateDatalist(datalist.id, testNames);
+            
+            // Update normal range when test name is selected
+            testNameInput.addEventListener('change', function() {
+                const selectedTest = testsInCategory.flatMap(test => 
+                    test.tests ? test.tests : []
+                ).find(test => test.testName === testNameInput.value);
+                
+                if (selectedTest && selectedTest.normalRange) {
+                    normalRangeInput.value = selectedTest.normalRange;
+                }
+            });
         }
         
         function setupDynamicRows() {
@@ -613,7 +504,7 @@
             if (type === 'investigation') {
                 newRow.innerHTML = `
                     <td><input type="text" name="testCategory[]" list="testCategoryList"></td>
-                    <td><input type="text" name="testName[]" list="testNameList"></td>
+                    <td><input type="text" name="testName[]"></td>
                     <td><input type="text" name="normalRange[]" readonly class="auto-fill"></td>
                     <td><input type="text" name="reports[]"></td>
                     <td><input type="text" name="testRemark[]"></td>
@@ -628,7 +519,7 @@
                 `;
             } else if (type === 'billing') {
                 newRow.innerHTML = `
-                    <td><input type="text" name="billDescription[]" list="billDescriptionList"></td>
+                    <td><input type="text" name="billDescription[]"></td>
                     <td><input type="number" name="rate[]" step="0.01" min="0" class="billing-rate"></td>
                     <td><input type="number" name="quantity[]" min="0" class="billing-quantity"></td>
                     <td><input type="number" name="discount[]" step="0.01" min="0" class="billing-discount"></td>
@@ -663,7 +554,7 @@
             const discount = parseFloat(row.querySelector('.billing-discount').value) || 0;
             
             const amount = (rate * quantity) - discount;
-            row.querySelector('.billing-amount').value = amount.toFixed(2);
+            row.querySelector('.billing-amount').value = amount > 0 ? amount.toFixed(2) : 0;
             
             calculateTotalAmount();
         }
@@ -704,6 +595,7 @@
             for (const fieldName of requiredFields) {
                 const field = document.getElementById(fieldName);
                 if (!field.value.trim()) {
+                    field.focus();
                     return false;
                 }
             }
@@ -712,16 +604,89 @@
         }
         
         function prepareFormData() {
-            // This function will prepare the data in the format needed for Google Sheets
-            // Implementation details will be in a separate JS file
-            console.log('Preparing form data for submission...');
-            return {};
+            const form = document.getElementById('patientForm');
+            const formData = new FormData(form);
+            const data = {};
+            
+            // Process single-value fields
+            const singleFields = ['patientName', 'mobileNo', 'date', 'opdNo', 'gender', 'age', 
+                                 'department', 'doctorName', 'chiefComplaint', 'subSymptoms', 
+                                 'specificComplaint', 'weight', 'bp', 'pulse', 'temp', 'sugar', 
+                                 'diagnosis', 'advice', 'effectAfterTreatment', 'drNoteRemarks', 
+                                 'totalAmount', 'billRemark'];
+            
+            singleFields.forEach(field => {
+                data[field] = formData.get(field) || '';
+            });
+            
+            // Process multi-row sections (join with newlines)
+            data['testCategory'] = formData.getAll('testCategory[]').filter(val => val).join('\n');
+            data['testName'] = formData.getAll('testName[]').filter(val => val).join('\n');
+            data['normalRange'] = formData.getAll('normalRange[]').filter(val => val).join('\n');
+            data['reports'] = formData.getAll('reports[]').filter(val => val).join('\n');
+            data['testRemark'] = formData.getAll('testRemark[]').filter(val => val).join('\n');
+            
+            data['formAvailable'] = formData.getAll('formAvailable[]').filter(val => val).join('\n');
+            data['prescription'] = formData.getAll('prescription[]').filter(val => val).join('\n');
+            data['treatmentNote'] = formData.getAll('treatmentNote[]').filter(val => val).join('\n');
+            
+            data['billDescription'] = formData.getAll('billDescription[]').filter(val => val).join('\n');
+            data['rate'] = formData.getAll('rate[]').filter(val => val).join('\n');
+            data['quantity'] = formData.getAll('quantity[]').filter(val => val).join('\n');
+            data['discount'] = formData.getAll('discount[]').filter(val => val).join('\n');
+            data['amount'] = formData.getAll('amount[]').filter(val => val).join('\n');
+            
+            return data;
         }
         
         function submitToGoogleSheet(formData) {
-            // This function will handle the submission to Google Sheets
-            // Implementation details will be in a separate JS file
-            console.log('Submitting data to Google Sheet...');
+            const webAppURL = 'https://script.google.com/macros/s/AKfycbw5Fq8xJeXjPilVb01Iz4lArtrgfq5jd8A55U8Zjp3taVRkni20QrXgHiYa1eEUN1ly/exec';
+            
+            // Show loading state
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SUBMITTING...';
+            submitBtn.disabled = true;
+            
+            fetch(webAppURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'create',
+                    ...formData
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('Patient data saved successfully! OPD No: ' + result.opdNo);
+                    // Optionally reset form
+                    document.getElementById('patientForm').reset();
+                    
+                    // Reset date and OPD No
+                    const now = new Date();
+                    document.getElementById('date').valueAsDate = now;
+                    const opdNo = now.getFullYear().toString().substr(-2) + 
+                                 String(now.getMonth() + 1).padStart(2, '0') + 
+                                 String(now.getDate()).padStart(2, '0') + 
+                                 String(now.getHours()).padStart(2, '0') + 
+                                 String(now.getMinutes()).padStart(2, '0');
+                    document.getElementById('opdNo').value = opdNo;
+                } else {
+                    alert('Error saving data: ' + result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Submission error:', error);
+                alert('Failed to save data. Please check your connection and try again.');
+            })
+            .finally(() => {
+                // Restore button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
         }
     </script>
 </body>
