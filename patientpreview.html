@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Form Preview</title>
+
+<link rel="stylesheet" href="css/headerfooter.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f6f8fb;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 1100px;
+    background: #fff;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    background: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+  .section {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .grid label {
+    flex: 1 1 120px;
+    font-weight: 500;
+  }
+
+  .grid input, .grid select, .grid textarea {
+    flex: 1 1 200px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 14px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  th {
+    background: #e9f1ff;
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  button {
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+
+  .success {
+    text-align: center;
+    color: green;
+    font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    .grid {
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div id="header"></div>
+
+<div class="container">
+  <h1>🩺 Patient Preview & Final Submission</h1>
+
+  <div id="previewContent"></div>
+
+  <div class="actions">
+    <button id="editBtn">⬅ Back to Edit</button>
+    <button id="finalSubmit">✅ Final Submit</button>
+  </div>
+
+  <div id="response"></div>
+</div>
+
+<div id="footer"></div>
+
+<script src="js/headerfooter.js" defer></script>
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbw5Fq8xJeXjPilVb01Iz4lArtrgfq5jd8A55U8Zjp3taVRkni20QrXgHiYa1eEUN1ly/exec";
+const previewDiv = document.getElementById("previewContent");
+let patientData = {};
+
+window.onload = () => {
+  const data = localStorage.getItem("patientData");
+  if (!data) {
+    previewDiv.innerHTML = "<p style='color:red;'>⚠ No data found. Please fill the form first.</p>";
+    return;
+  }
+  patientData = JSON.parse(data);
+  renderPreview(patientData);
+};
+
+// Build editable preview layout
+function renderPreview(data) {
+  previewDiv.innerHTML = `
+    <div class="section">
+      <h2>Basic Information</h2>
+      <div class="grid">
+        <label>Mobile</label><input id="mobile" value="${data.mobile || ''}">
+        <label>Patient Name</label><input id="patientName" value="${data.patientName || ''}">
+        <label>Gender</label><input id="gender" value="${data.gender || ''}">
+        <label>Age</label><input id="age" value="${data.age || ''}">
+        <label>Department</label><input id="department" value="${data.department || ''}">
+        <label>Doctor Name</label><input id="doctorName" value="${data.doctorName || ''}">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Clinical Information</h2>
+      <div class="grid">
+        <label>Chief Complaint</label><input id="chiefComplaint" value="${data.chiefComplaint || ''}">
+        <label>Sub-Symptoms</label><input id="subSymptoms" value="${(data.subSymptoms || []).join(', ')}">
+        <label>Specific Complaint</label><input id="specificComplaint" value="${data.specificComplaint || ''}">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Vitals</h2>
+      <div class="grid">
+        <label>Weight</label><input id="weight" value="${data.weight || ''}">
+        <label>BP</label><input id="bp" value="${data.bp || ''}">
+        <label>Pulse</label><input id="pulse" value="${data.pulse || ''}">
+        <label>Temp</label><input id="temp" value="${data.temp || ''}">
+        <label>Sugar</label><input id="sugar" value="${data.sugar || ''}">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Investigations</h2>
+      <table><thead><tr>
+        <th>Category</th><th>Test Name</th><th>Normal Range</th><th>Reports</th><th>Remark</th>
+      </tr></thead><tbody>
+        ${data.investigations.map(i => `
+          <tr>
+            <td><input value="${i.category || ''}"></td>
+            <td><input value="${i.testName || ''}"></td>
+            <td><input value="${i.normalRange || ''}"></td>
+            <td><input value="${i.reports || ''}"></td>
+            <td><input value="${i.remark || ''}"></td>
+          </tr>`).join("")}
+      </tbody></table>
+    </div>
+
+    <div class="section">
+      <h2>Prescriptions</h2>
+      <table><thead><tr><th>Form</th><th>Prescription</th><th>Note</th></tr></thead><tbody>
+        ${data.prescriptions.map(p => `
+          <tr>
+            <td><input value="${p.formAvailable || ''}"></td>
+            <td><input value="${p.prescription || ''}"></td>
+            <td><input value="${p.treatmentNote || ''}"></td>
+          </tr>`).join("")}
+      </tbody></table>
+    </div>
+
+    <div class="section">
+      <h2>Billing</h2>
+      <table><thead><tr>
+        <th>Description</th><th>Rate</th><th>Qty</th><th>Discount</th><th>Amount</th>
+      </tr></thead><tbody>
+        ${data.billing.map(b => `
+          <tr>
+            <td><input value="${b.description || ''}"></td>
+            <td><input value="${b.rate || ''}" type="number"></td>
+            <td><input value="${b.quantity || ''}" type="number"></td>
+            <td><input value="${b.discount || ''}" type="number"></td>
+            <td><input value="${b.amount || ''}" type="number"></td>
+          </tr>`).join("")}
+      </tbody></table>
+    </div>
+
+    <div class="section">
+      <h2>Doctor Notes</h2>
+      <div class="grid">
+        <label>Diagnosis</label><input id="diagnosis" value="${data.diagnosis || ''}">
+        <label>Advice</label><input id="advice" value="${data.advice || ''}">
+        <label>Effect</label><input id="effect" value="${data.effectAfterTreatment || ''}">
+        <label>Dr. Note</label><input id="drNote" value="${data.doctorNote || ''}">
+      </div>
+    </div>
+  `;
+}
+
+// Back button → return to form
+document.getElementById("editBtn").onclick = () => {
+  window.open("patientform.html", "_self");
+};
+
+// Final Submit
+document.getElementById("finalSubmit").onclick = () => {
+  const newData = getEditedData();
+  fetch(scriptURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newData)
+  })
+  .then(() => {
+    document.getElementById("response").innerHTML = "<div class='success'>✅ Successfully saved to Google Sheet!</div>";
+    localStorage.removeItem("patientData");
+  })
+  .catch(() => {
+    document.getElementById("response").innerHTML = "<div style='color:red;'>❌ Failed to save</div>";
+  });
+};
+
+function getEditedData() {
+  const updated = { ...patientData };
+  updated.mobile = document.getElementById("mobile").value;
+  updated.patientName = document.getElementById("patientName").value;
+  updated.gender = document.getElementById("gender").value;
+  updated.age = document.getElementById("age").value;
+  updated.department = document.getElementById("department").value;
+  updated.doctorName = document.getElementById("doctorName").value;
+  updated.chiefComplaint = document.getElementById("chiefComplaint").value;
+  updated.subSymptoms = document.getElementById("subSymptoms").value.split(",");
+  updated.specificComplaint = document.getElementById("specificComplaint").value;
+  updated.weight = document.getElementById("weight").value;
+  updated.bp = document.getElementById("bp").value;
+  updated.pulse = document.getElementById("pulse").value;
+  updated.temp = document.getElementById("temp").value;
+  updated.sugar = document.getElementById("sugar").value;
+  updated.investigations = [...document.querySelectorAll("table:nth-of-type(1) tbody tr")].map(r => ({
+    category: r.cells[0].querySelector("input").value,
+    testName: r.cells[1].querySelector("input").value,
+    normalRange: r.cells[2].querySelector("input").value,
+    reports: r.cells[3].querySelector("input").value,
+    remark: r.cells[4].querySelector("input").value
+  }));
+  updated.prescriptions = [...document.querySelectorAll("table:nth-of-type(2) tbody tr")].map(r => ({
+    formAvailable: r.cells[0].querySelector("input").value,
+    prescription: r.cells[1].querySelector("input").value,
+    treatmentNote: r.cells[2].querySelector("input").value
+  }));
+  updated.billing = [...document.querySelectorAll("table:nth-of-type(3) tbody tr")].map(r => ({
+    description: r.cells[0].querySelector("input").value,
+    rate: r.cells[1].querySelector("input").value,
+    quantity: r.cells[2].querySelector("input").value,
+    discount: r.cells[3].querySelector("input").value,
+    amount: r.cells[4].querySelector("input").value
+  }));
+  updated.diagnosis = document.getElementById("diagnosis").value;
+  updated.advice = document.getElementById("advice").value;
+  updated.effectAfterTreatment = document.getElementById("effect").value;
+  updated.doctorNote = document.getElementById("drNote").value;
+  return updated;
+}
+</script>
+</body>
+</html>
