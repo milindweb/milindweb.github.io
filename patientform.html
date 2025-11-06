@@ -213,4 +213,29 @@
 
       <!-- Other fields -->
       <section class="card">
-        <
+        <div class="grid">
+          <div><label>Diagnosis</label><input type="text" name="Diagnosis" id="diagnosis"></div>
+          <div><label>Advice</label><input type="text" name="Advice" id="advice"></div>
+          <div><label>Effect After Treatment</label>
+            <select name="Effect After Treatment" id="effectAfter">
+              <option>NA</option><option>Improved</option><option>No Change</option><option>Worse</option>
+            </select>
+          </div>
+          <div><label>Dr. Note / Remarks</label><textarea name="Dr. Note / Remarks" id="drRemarks" rows="2"></textarea></div>
+          <div><label>Bill Remark</label><input type="text" name="Bill Remark" id="billRemark"></div>
+        </div>
+      </section>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button type="button" id="previewBtn" class="secondary">Preview</button>
+        <button type="submit" id="submitBtn">Submit</button>
+      </div>
+    </form>
+  </main>
+
+  <div id="footer"></div>
+
+  <script src="js/headerfooter.js" defer></script>
+  <script src="js/patientform.js" defer></script>
+</body>
+</html>
