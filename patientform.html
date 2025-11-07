@@ -148,17 +148,7 @@
       <form id="patientForm" novalidate autocomplete="on">
         <!-- ===== Row: Core A..G (ALL REQUIRED) ===== -->
         <div class="grid">
-          <!-- A1 OPD No (auto-generate) -->
-          <div class="col" data-key="OPD No">
-            <label class="req" for="opdNo">OPD No</label>
-            <div class="opd-row">
-              <input id="opdNo" name="opdNo" type="text" inputmode="latin" placeholder="YYMMDD-XXX" required readonly />
-              <button type="button" id="btnGenOpd" class="btn" title="Generate next OPD">Get OPD</button>
-            </div>
-            <div class="help">Auto: YYMMDD-XXX (e.g., 251107-023)</div>
-          </div>
-
-          <!-- B1 Patient Name -->
+         <!-- B1 Patient Name -->
           <div class="col" data-key="Patient Name">
             <label class="req" for="patientName">Patient Name</label>
             <input id="patientName" name="patientName" type="text" placeholder="Full name" required data-suggest="true" />
@@ -396,3 +386,4 @@
   <script type="module" src="data/patientform.js"></script>
 </body>
 </html>
+
