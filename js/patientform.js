@@ -17,6 +17,33 @@
    SECTION 1 — Config & Utilities
    ============================== */
 
+// static department list (frontend master)
+const DEPARTMENT_LIST = [
+  "General Medicine / Physician",
+  "General Surgery",
+  "Cardiology (Heart Specialist)",
+  "Dental / Oral Surgery",
+  "Dermatology (Skin & Hair)",
+  "Endocrinology (Diabetes / Thyroid)",
+  "ENT (Ear, Nose, Throat)",
+  "Gastroenterology (Digestive System)",
+  "Nephrology (Kidney)",
+  "Neurology (Brain & Nerves)",
+  "Obstetrics & Gynecology (Gynac)",
+  "Oncology (Cancer)",
+  "Ophthalmology (Eye)",
+  "Orthopedics",
+  "Pediatrics (Child Specialist)",
+  "Physiotherapy / Rehabilitation",
+  "Plastic & Reconstructive Surgery",
+  "Psychiatry (Mental Health)",
+  "Pulmonology / Chest Medicine",
+  "Radiology & Imaging",
+  "Urology (Urinary / Male Reproductive)",
+  "Others / Not Listed"
+];
+
+
 // Read global config injected by patientform.html
 const CFG = window.APP_CONFIG || {
   BASE_URL: "",
@@ -178,28 +205,18 @@ function resolveHeaderForField(fieldNorm) {
 /* =====================================
    SECTION 5 — Department List Management
    ===================================== */
-
-async function populateDepartments() {
-  const input = document.getElementById("department");
+function populateDeptStatic(){
   const datalist = document.getElementById("deptList");
-  if (!input || !datalist) return;
-
-  try {
-    const res = await fetch(CFG.BASE_URL + CFG.ENDPOINTS.DEPARTMENTS);
-    const j = await res.json();
-    const list = Array.isArray(j?.data) ? j.data : [];
-    if (list.length) {
-      datalist.innerHTML = "";
-      list.forEach(v => {
-        const opt = document.createElement("option");
-        opt.value = v;
-        datalist.appendChild(opt);
-      });
-    }
-  } catch {
-    // fallback: keep existing datalist from HTML
-  }
+  if(!datalist) return;
+  datalist.innerHTML = "";
+  DEPARTMENT_LIST.forEach(d=>{
+    const opt = document.createElement("option");
+    opt.value = d;
+    datalist.appendChild(opt);
+  });
 }
+
+// list added at top after config
 
 /* =========================================
    SECTION 6 — OPD Generation & Field Helpers
@@ -474,13 +491,8 @@ async function handleSubmit(ev) {
   toggleSubmitWaiting(true);
 
   try {
-    // Ensure OPD exists (auto-generate if empty)
-    const opdField = FIELD_MAP[normalizeKey("OPD No")]?.input || document.getElementById("opdNo");
-    if (opdField && !opdField.value) {
-      await generateOPD();
-    }
 
-    // Build payload based on current headers mapping
+     // Build payload based on current headers mapping
     const payload = collectPayload();
 
     // Validate required A..G
@@ -498,27 +510,30 @@ async function handleSubmit(ev) {
     }
     applySuggestionsToDatalist();
 
-    // Attempt submit (online) or queue (offline/error)
-    if (isOnline()) {
-      try {
-        const res = await submitNow(payload);
-        show("Form submitted", "ok", res?.data?.["OPD No"] || "");
-        // Update local cache (append)
-        const cache = loadRecordCache();
-        cache.unshift(payload);
-        saveRecordCache(cache.slice(0, 500)); // keep last 500
-        form.reset();
-        // keep OPD readonly empty after submit to avoid duplicate; generate fresh next time
-        const opd = FIELD_MAP[normalizeKey("OPD No")]?.input; if (opd) opd.value = "";
-      } catch (err) {
-        // Queue on error
-        queueSubmit(payload);
-        show("Server issue — saved to queue", "warn", err.message);
-      }
-    } else {
-      queueSubmit(payload);
-      show("Offline — saved to queue", "warn");
-    }
+   // Attempt submit (online) or queue (offline/error)
+if (isOnline()) {
+  try {
+    const res = await submitNow(payload);
+
+    // final acknowledge (NO OPD display)
+    show("Submitted Successfully", "ok");
+
+    // update cache + reset
+    const cache = loadRecordCache();
+    cache.unshift(payload);
+    saveRecordCache(cache.slice(0, 500));
+
+    form.reset();
+
+  } catch (err) {
+    queueSubmit(payload);
+    show("Server issue — saved to queue", "warn", err.message);
+  }
+} else {
+  queueSubmit(payload);
+  show("Offline — saved to queue", "warn");
+}
+
   } finally {
     toggleSubmitWaiting(false);
     btnSubmit.disabled = false;
@@ -549,17 +564,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 1) Fetch headers and build tolerant index
     await fetchHeaders();
 
-    // 2) Departments
-    await populateDepartments();
+    // 2) Departments from static list (frontend master)
+    populateDeptStatic();
 
     // 3) Apply saved suggestions to datalists
     applySuggestionsToDatalist();
 
     // 4) Wire events
     form?.addEventListener("submit", handleSubmit);
-
-    // Generate OPD on button click
-    btnGenOpd?.addEventListener("click", () => generateOPD().catch(()=>{}));
 
     // Save Offline button
     btnSaveLocal?.addEventListener("click", () => {
@@ -628,3 +640,4 @@ export async function deleteRecordById(opdNo) {
   }, { retries: 2, baseDelay: 700 });
   return data;
 }
+
