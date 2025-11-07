@@ -1,615 +1,630 @@
-// data/patientform.js
-// Place at: js/patientform.js or data/patientform.js (adjust the HTML src accordingly)
+/*******************************************************
+ * data/patientform.js (ES Module)
+ * Patient Form Frontend Logic — dynamic headers, offline,
+ * retry/backoff, suggestions, mobile auto-fill.
+ *
+ * Requirements satisfied:
+ *  - Fetch /meta/headers -> dynamic JSON mapping
+ *  - Fetch /meta/departments (fallback list if needed)
+ *  - Request /meta/opd for safe, unique OPD numbers
+ *  - POST/PUT /records with retry & offline queue
+ *  - Auto-fill by Mobile from cache/server
+ *  - Recent suggestions via localStorage
+ *  - Strong error handling with user-friendly toasts
+ *******************************************************/
 
-(() => {
-  "use strict";
+/* ==============================
+   SECTION 1 — Config & Utilities
+   ============================== */
 
-  // ---------- CONFIG ----------
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5Fq8xJeXjPilVb01Iz4lArtrgfq5jd8A55U8Zjp3taVRkni20QrXgHiYa1eEUN1ly/exec";
-  // Endpoint: GET ?action=list or ?action=get&id=OPD & ?action=recent&field=Doctor Name
-  const MAX_ROWS = 20;
+// Read global config injected by patientform.html
+const CFG = window.APP_CONFIG || {
+  BASE_URL: "",
+  ENDPOINTS: {
+    HEADERS: "/meta/headers",
+    DEPARTMENTS: "/meta/departments",
+    GENERATE_OPD: "/meta/opd",
+    RECORDS: "/records"
+  },
+  STORAGE_KEYS: {
+    RECENTS: "pm_recent_values",
+    RECORD_CACHE: "pm_record_cache",
+    QUEUE: "pm_offline_queue"
+  }
+};
 
-  // JSON lookup files (adjust paths)
-  const LOOKUP = {
-    complaints: "data/complaint.json",
-    dept: "data/dept.json",
-    drnames: "data/drname.json",
-    labtests: "data/labtest.json",
-    medlist: "data/medlist.json"
+// Normalizer: make header/field names comparable across variants.
+// - lowercase
+// - trim
+// - remove spaces, dots, symbols
+// - normalize unicode (spO₂ -> spO2)
+function normalizeKey(s) {
+  return String(s || "")
+    .normalize("NFKD")               // split diacritics/subscripts
+    .replace(/[\u2080-\u2089]/g, d => String("0123456789"["₀₁₂₃₄₅₆₇₈₉".indexOf(d)] || "")) // subscript digits -> normal
+    .replace(/[^\x00-\x7F]/g, c => { // specific replacements (subscript ₂)
+      if (c === "₂") return "2";
+      return ""; // drop other non-ascii
+    })
+    .toLowerCase()
+    .replace(/[\s._\-\/()&]+/g, "")  // remove separators & punctuation
+    .trim();
+}
+
+// Small sleep helper for backoff
+const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+function show(msg, type = "ok", sub = "") { try { window.toast(msg, type, sub); } catch (_) {} }
+function overlay(on = true) { try { on ? window.showOverlay() : window.hideOverlay(); } catch (_) {} }
+
+function isOnline() { return navigator.onLine; }
+
+// Safe JSON parse
+function safeJSON(str, fallback = null) {
+  try { return JSON.parse(str); } catch { return fallback; }
+}
+
+/* ==========================================
+   SECTION 2 — Local Storage Data Management
+   ========================================== */
+
+const KEYS = CFG.STORAGE_KEYS;
+
+// Recent suggestions store: { fieldKey(normalized): [value1, value2, ...] }
+function loadRecents() { return safeJSON(localStorage.getItem(KEYS.RECENTS), {} ) || {}; }
+function saveRecents(obj) { localStorage.setItem(KEYS.RECENTS, JSON.stringify(obj || {})); }
+
+// Record cache for quick lookups (array of records)
+function loadRecordCache() { return safeJSON(localStorage.getItem(KEYS.RECORD_CACHE), [] ) || []; }
+function saveRecordCache(arr) { localStorage.setItem(KEYS.RECORD_CACHE, JSON.stringify(arr || [])); }
+
+// Offline queue of pending submissions [{payload, tries, nextAt}]
+function loadQueue() { return safeJSON(localStorage.getItem(KEYS.QUEUE), [] ) || []; }
+function saveQueue(arr) { localStorage.setItem(KEYS.QUEUE, JSON.stringify(arr || [])); }
+
+// Update recents for a field (dedupe, keep newest first, cap N)
+function pushRecent(fieldNorm, value, N = 8) {
+  if (!value) return;
+  const rec = loadRecents();
+  const list = rec[fieldNorm] || [];
+  const idx = list.findIndex(v => String(v).toLowerCase() === String(value).toLowerCase());
+  if (idx >= 0) list.splice(idx, 1);
+  list.unshift(value);
+  rec[fieldNorm] = list.slice(0, N);
+  saveRecents(rec);
+}
+
+/* ==================================
+   SECTION 3 — DOM & Field Collection
+   ================================== */
+
+// Collect all fields declared in HTML via data-key (matches Sheet headers logically)
+const form = document.getElementById("patientForm");
+const btnSubmit = document.getElementById("btnSubmit");
+const btnGenOpd = document.getElementById("btnGenOpd");
+const btnSaveLocal = document.getElementById("btnSaveLocal");
+
+// Build field map: normalized data-key -> input/textarea/select element
+function buildFieldMap() {
+  const fields = {};
+  document.querySelectorAll("[data-key]").forEach(box => {
+    const key = box.getAttribute("data-key");
+    const input = box.querySelector("input, textarea, select");
+    if (!key || !input) return;
+    fields[normalizeKey(key)] = { key, input, box };
+  });
+  return fields;
+}
+
+let FIELD_MAP = buildFieldMap();
+
+/* ===========================================================
+   SECTION 4 — Dynamic Headers & Tolerant Field/Header Mapping
+   =========================================================== */
+
+let SHEET_HEADERS = [];          // actual headers returned by backend
+let HEADER_INDEX = {};           // normalized header -> actual header string
+
+async function fetchHeaders() {
+  const url = CFG.BASE_URL + CFG.ENDPOINTS.HEADERS;
+  const res = await fetch(url, { method: "GET" });
+  if (!res.ok) throw new Error(`Headers fetch failed: ${res.status}`);
+  const j = await res.json();
+  // Expect { status, success, data: [headers...] } from backend
+  const list = Array.isArray(j?.data) ? j.data : Array.isArray(j) ? j : [];
+  SHEET_HEADERS = list;
+  HEADER_INDEX = {};
+  list.forEach(h => HEADER_INDEX[normalizeKey(h)] = h);
+}
+
+// Lookup actual sheet header for a DOM field data-key
+function resolveHeaderForField(fieldNorm) {
+  // Direct normalized match
+  if (HEADER_INDEX[fieldNorm]) return HEADER_INDEX[fieldNorm];
+
+  // Special aliasing: tolerate common variants
+  const aliases = {
+    // Examples: 'spO₂' vs 'spO2'
+    "spo2": ["spO2", "spO₂", "spo₂", "spo 2"],
+    "drremarks": ["drremarks", "dr.remarks", "dr. remarks", "doctorremarks"],
+    "opdno": ["opdno", "opd no", "opd-number", "opd"],
+    "mobileno": ["mobile", "mobile no", "phone", "phone no"],
+    "doctorname": ["doctor", "drname", "dr name"],
+    "effectaftertreatment": ["effect", "treatment effect"],
+    "prescriptiongenericapibrandname": [
+      "prescription", "prescription (generic api brand name)", "rx"
+    ],
+    "reservedoptionalfutureuse": ["reserved", "reserved (optional future use)"],
   };
 
-  // Fields mapping (header names in sheet must match these)
-  const sheetHeaders = [
-    "Date","OPD No","Mobile No","Patient Name","Gender","Age","Department","Doctor Name",
-    "Chief Complaint","Sub-Symptoms","Specific Complaint","Weight","BP","Pulse","Temp","Sugar",
-    "Test Category","Test Name","Normal Range / Limit","Reports","Test Remark",
-    "Diagnosis","Form Available","Prescription (Generic API Brand Name)","Treatment Note","Advice",
-    "Effect After Treatment","Dr. Note / Remarks","Bill / Description","Rate","Quantity","Discount","Amount","Total Amount","Bill Remark"
+  for (const [norm, altArr] of Object.entries(aliases)) {
+    if (fieldNorm === norm || altArr.some(a => normalizeKey(a) === fieldNorm)) {
+      // Find any sheet header that normalizes to this alias group
+      for (const [normHeader, actual] of Object.entries(HEADER_INDEX)) {
+        if (normHeader === norm) return actual;
+      }
+    }
+  }
+
+  // Fallback: try fuzzy from header list by equality post-normalization
+  for (const h of SHEET_HEADERS) {
+    if (normalizeKey(h) === fieldNorm) return h;
+  }
+
+  // As a last resort, return null (field will be ignored on submit)
+  return null;
+}
+
+/* =====================================
+   SECTION 5 — Department List Management
+   ===================================== */
+
+async function populateDepartments() {
+  const input = document.getElementById("department");
+  const datalist = document.getElementById("deptList");
+  if (!input || !datalist) return;
+
+  try {
+    const res = await fetch(CFG.BASE_URL + CFG.ENDPOINTS.DEPARTMENTS);
+    const j = await res.json();
+    const list = Array.isArray(j?.data) ? j.data : [];
+    if (list.length) {
+      datalist.innerHTML = "";
+      list.forEach(v => {
+        const opt = document.createElement("option");
+        opt.value = v;
+        datalist.appendChild(opt);
+      });
+    }
+  } catch {
+    // fallback: keep existing datalist from HTML
+  }
+}
+
+/* =========================================
+   SECTION 6 — OPD Generation & Field Helpers
+   ========================================= */
+
+async function generateOPD() {
+  overlay(true);
+  try {
+    const res = await fetch(CFG.BASE_URL + CFG.ENDPOINTS.GENERATE_OPD, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({})
+    });
+    const j = await res.json();
+    if (!j?.success) throw new Error(j?.error?.message || "OPD generation failed");
+
+    const opd = j.data?.opd || j.opd || j?.data;
+    const fld = FIELD_MAP[normalizeKey("OPD No")]?.input || document.getElementById("opdNo");
+    if (fld) fld.value = opd;
+    show("OPD generated", "ok", opd);
+    return opd;
+  } catch (err) {
+    show("Failed to generate OPD", "error", err.message);
+    throw err;
+  } finally {
+    overlay(false);
+  }
+}
+
+/* =======================================
+   SECTION 7 — Build Payload (Dynamic Map)
+   ======================================= */
+
+function collectPayload() {
+  const payload = {};
+  // Iterate UI fields, map to actual headers
+  Object.entries(FIELD_MAP).forEach(([fieldNorm, { key, input }]) => {
+    const header = resolveHeaderForField(fieldNorm);
+    if (!header) return; // header not present in sheet; ignore field
+    let val = input.type === "number" ? (input.value === "" ? "" : Number(input.value)) : input.value;
+
+    // Special: add ₹ prefix visually but store plain number/string
+    if (normalizeKey(header) === "drfees") {
+      // Keep as numeric/empty; Sheets may format with ₹
+      if (val === "") { /* leave empty */ }
+    }
+
+    payload[header] = val;
+  });
+  return payload;
+}
+
+/* ===========================================
+   SECTION 8 — Validation for Required A..G
+   =========================================== */
+
+function validateRequired(payload) {
+  // Required headers list (normalized) in order A..G
+  const requiredKeys = [
+    "opdno",
+    "patientname",
+    "mobileno",
+    "gender",
+    "age",
+    "doctorname",
+    "department"
   ];
-
-  // ---------- UTIL ----------
-  const $ = (sel,parent=document) => parent.querySelector(sel);
-  const $$ = (sel,parent=document) => Array.from(parent.querySelectorAll(sel));
-  function qId(id){ return document.getElementById(id); }
-
-  function show(el){ if(el) el.style.display='block'; }
-  function hide(el){ if(el) el.style.display='none'; }
-
-  function formatDateISO(d=new Date()){
-    // returns YYYY-MM-DD HH:mm
-    const z = n => n.toString().padStart(2,'0');
-    return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`;
+  const missing = [];
+  for (const rk of requiredKeys) {
+    // Map to actual header present
+    let actual = HEADER_INDEX[rk];
+    if (!actual) {
+      // try resolving from UI
+      const uiHeader = resolveHeaderForField(rk);
+      if (uiHeader) actual = uiHeader;
+    }
+    if (!actual) {
+      // if header doesn't exist in sheet, skip (sheet mismatch)
+      continue;
+    }
+    const v = payload[actual];
+    if (v === undefined || v === null || v === "") {
+      missing.push(actual);
+    }
   }
-  function genOPD() {
-    const d = new Date();
-    const z = n => n.toString().padStart(2,'0');
-    // YYMMDDHHmm
-    return `${d.getFullYear().toString().slice(-2)}${z(d.getMonth()+1)}${z(d.getDate())}${z(d.getHours())}${z(d.getMinutes())}`;
-  }
+  return missing;
+}
 
-  function safeFetch(url, opts={}) {
-    return fetch(url, opts).then(res => {
-      if (!res.ok) throw new Error("Network response wasn't ok: " + res.statusText);
-      return res.json().catch(()=> { throw new Error("Invalid JSON in response"); });
+/* ==========================================================
+   SECTION 9 — Suggestions & Auto-fill (Local + Remote Lookup)
+   ========================================================== */
+
+// Which fields to remember for suggestions
+const SUGGEST_FIELDS = [
+  "Doctor Name",
+  "Department",
+  "Diagnosis",
+  "Prescription (Generic API Brand Name)",
+  "Treatment Note",
+  "Advice"
+].map(normalizeKey);
+
+function applySuggestionsToDatalist() {
+  const rec = loadRecents();
+  // For inputs with data-suggest="true", attach datalist dynamically if not present
+  document.querySelectorAll("[data-suggest='true']").forEach(inp => {
+    const normKey = normalizeKey(inp.closest("[data-key]")?.getAttribute("data-key"));
+    const values = rec[normKey] || [];
+    // ensure a datalist exists
+    let dl = inp.getAttribute("list") ? document.getElementById(inp.getAttribute("list")) : null;
+    if (!dl) {
+      const id = `${inp.id || normKey}List`;
+      dl = document.createElement("datalist");
+      dl.id = id;
+      document.body.appendChild(dl);
+      inp.setAttribute("list", id);
+    }
+    // fill items
+    dl.innerHTML = "";
+    values.forEach(v => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      dl.appendChild(opt);
     });
+  });
+}
+
+// Auto-fill by Mobile No.
+async function autofillByMobile(mobileVal) {
+  if (!mobileVal) return;
+  const mobileNorm = String(mobileVal).trim();
+
+  // 1) Local cache first
+  const cache = loadRecordCache();
+  const hit = cache.find(r => {
+    const key = Object.keys(r).find(h => normalizeKey(h) === "mobileno");
+    return key && String(r[key]).trim() === mobileNorm;
+  });
+  if (hit) {
+    fillFormFromRecord(hit);
+    show("Auto-filled from local history", "ok");
+    return;
   }
 
-  // join array newline safe
-  function joinNL(arr) {
-    return Array.isArray(arr) ? arr.map(x=>x||"").join("\n") : (arr||"");
+  // 2) Server fetch (all records) — then cache them for future
+  try {
+    overlay(true);
+    const res = await fetch(CFG.BASE_URL + CFG.ENDPOINTS.RECORDS);
+    const j = await res.json();
+    const list = Array.isArray(j?.data) ? j.data : [];
+    if (list.length) saveRecordCache(list);
+
+    const found = list.find(r => {
+      const key = Object.keys(r).find(h => normalizeKey(h) === "mobileno");
+      return key && String(r[key]).trim() === mobileNorm;
+    });
+    if (found) {
+      fillFormFromRecord(found);
+      show("Auto-filled from server records", "ok");
+      return;
+    }
+  } catch (_) {
+    // silent; will still allow manual entry
+  } finally {
+    overlay(false);
   }
+}
 
-  // ---------- STATE ----------
-  const STATE = {
-    lookups: {},
-    investigations: [],
-    prescriptions: [],
-    billing: []
-  };
+function fillFormFromRecord(record) {
+  // For each UI field, if matching header exists in record, set value
+  Object.entries(FIELD_MAP).forEach(([norm, { input }]) => {
+    const header = resolveHeaderForField(norm);
+    if (!header) return;
+    if (record.hasOwnProperty(header)) {
+      input.value = record[header];
+    }
+  });
+}
 
-  // ---------- INIT ----------
-  document.addEventListener("DOMContentLoaded", init);
+/* ===========================================
+   SECTION 10 — Networking with Retry/Backoff
+   =========================================== */
 
-  async function init(){
+async function safeFetchJSON(url, options = {}, { retries = 3, baseDelay = 600 } = {}) {
+  let attempt = 0;
+  let lastErr = null;
+  while (attempt <= retries) {
     try {
-      // set date & OPD
-      qId('date').value = formatDateISO();
-      qId('opdNo').value = genOPD();
-
-      // fetch lookups (non-blocking but robust)
-      await Promise.all(Object.keys(LOOKUP).map(k => fetchLookup(k)));
-      attachSuggestionHelpers();
-
-      // initialize first rows
-      addInvestigationRow();
-      addPrescriptionRow();
-      addBillingRow();
-
-      // wire up controls
-      qId('addInvestigation').addEventListener('click', addInvestigationRow);
-      qId('addPrescription').addEventListener('click', addPrescriptionRow);
-      qId('addBilling').addEventListener('click', addBillingRow);
-      qId('clearInvestigations').addEventListener('click', ()=> { STATE.investigations = []; renderInvestigations(); });
-      qId('clearPrescriptions').addEventListener('click', ()=> { STATE.prescriptions = []; renderPrescriptions(); });
-      qId('clearBilling').addEventListener('click', ()=> { STATE.billing = []; renderBilling(); recalcTotal(); });
-
-      qId('patientForm').addEventListener('submit', onSubmit);
-      qId('previewBtn').addEventListener('click', onPreview);
-
-      // suggestion inputs: department and doctor
-      setupAutocompleteInput('department', getDeptList());
-      setupAutocompleteInput('doctorName', getDoctorList());
-      setupAutocompleteInput('chiefComplaint', getChiefList());
-      setupAutocompleteInput('subSymptoms', getSubList());
-
+      const res = await fetch(url, options);
+      const isJSON = (res.headers.get("content-type") || "").includes("application/json");
+      const data = isJSON ? await res.json() : await res.text();
+      if (!res.ok || (isJSON && data?.success === false)) {
+        const msg = isJSON ? (data?.error?.message || `HTTP ${res.status}`) : `HTTP ${res.status}`;
+        throw new Error(msg);
+      }
+      return data;
     } catch (err) {
-      console.error("Init error:", err);
-      alert("Initialization error: " + err.message);
+      lastErr = err;
+      if (attempt === retries) break;
+      const wait = Math.round(baseDelay * Math.pow(2, attempt) + Math.random() * 250);
+      await delay(wait);
+      attempt++;
     }
   }
+  throw lastErr || new Error("Network error");
+}
 
-  // ---------- Lookups ----------
-  async function fetchLookup(key) {
-    try {
-      const url = LOOKUP[key];
-      if (!url) return;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`${url} fetch failed: ${res.status}`);
-      const json = await res.json();
-      STATE.lookups[key] = json;
-    } catch (err) {
-      console.warn("Lookup fetch failed for", key, err);
-      STATE.lookups[key] = null;
+/* ==================================
+   SECTION 11 — Submit & Offline Queue
+   ================================== */
+
+async function submitNow(payload) {
+  const url = CFG.BASE_URL + CFG.ENDPOINTS.RECORDS;
+  const data = await safeFetchJSON(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }, { retries: 3, baseDelay: 800 });
+  return data;
+}
+
+function queueSubmit(payload) {
+  const q = loadQueue();
+  q.push({
+    payload,
+    tries: 0,
+    nextAt: Date.now()
+  });
+  saveQueue(q);
+}
+
+async function processQueue() {
+  if (!isOnline()) return;
+  let q = loadQueue();
+  if (!q.length) return;
+
+  // Process a copy to avoid racing with saves
+  const next = q[0];
+  if (Date.now() < (next.nextAt || 0)) return;
+
+  try {
+    await submitNow(next.payload);
+    // Success: drop the first and continue
+    q.shift();
+    saveQueue(q);
+    show("Queued form synced", "ok");
+    // try process next immediately
+    processQueue();
+  } catch (err) {
+    // Exponential backoff
+    next.tries = (next.tries || 0) + 1;
+    const delayMs = Math.min(15 * 60 * 1000, 1000 * Math.pow(2, next.tries)); // up to 15 min
+    next.nextAt = Date.now() + delayMs;
+    q[0] = next;
+    saveQueue(q);
+    show("Sync failed, will retry", "warn", err.message);
+  }
+}
+
+// Kick queue processing on connectivity changes & periodically
+window.addEventListener("online", () => processQueue());
+setInterval(processQueue, 20_000);
+
+/* =======================================
+   SECTION 12 — Form Event Wiring / Handlers
+   ======================================= */
+
+async function handleSubmit(ev) {
+  ev.preventDefault();
+  overlay(true);
+  btnSubmit.disabled = true;
+  toggleSubmitWaiting(true);
+
+  try {
+    // Ensure OPD exists (auto-generate if empty)
+    const opdField = FIELD_MAP[normalizeKey("OPD No")]?.input || document.getElementById("opdNo");
+    if (opdField && !opdField.value) {
+      await generateOPD();
     }
-  }
 
-  function getDeptList(){
-    const d = STATE.lookups.dept || [];
-    // if array of objects with property 'department'
-    return d.map(x => x.department || (x.department && x.department.trim()) || x).filter(Boolean);
-  }
-  function getDoctorList(){
-    const d = STATE.lookups.drnams || []; // in case of key mismatch
-    // fallback check
-    if (STATE.lookups.drnams) return STATE.lookups.drnams.doctors || STATE.lookups.drnams;
-    if (STATE.lookups.drnname) return STATE.lookups.drnname.doctors || STATE.lookups.drnname;
-    if (STATE.lookups.drnames) return STATE.lookups.drnames.doctors || STATE.lookups.drnames;
-    if (STATE.lookups.drnames) return STATE.lookups.drnames;
-    const alt = STATE.lookups.drnames || STATE.lookups.drname || STATE.lookups.drnname;
-    if (Array.isArray(alt)) return alt;
-    if (alt && alt.doctors) return alt.doctors;
-    return [];
-  }
-  function getChiefList(){
-    const c = STATE.lookups.complaints || STATE.lookups.complaint || {};
-    if (c && c.chiefComplaint) return [c.chiefComplaint];
-    // if array of objects
-    if (Array.isArray(c)) return c.map(x => x.chiefComplaint || x).filter(Boolean);
-    if (c.chiefComplaints) return c.chiefComplaints;
-    if (c.chiefComplaintList) return c.chiefComplaintList;
-    return [];
-  }
-  function getSubList(){
-    const c = STATE.lookups.complaints || STATE.lookups.complaint || {};
-    if (c && c.subSymptoms) return c.subSymptoms || [];
-    // try structures in lab-like lists
-    if (Array.isArray(c)) {
-      return c.flatMap(x => x.subSymptoms || []).filter(Boolean);
+    // Build payload based on current headers mapping
+    const payload = collectPayload();
+
+    // Validate required A..G
+    const missing = validateRequired(payload);
+    if (missing.length) {
+      show("Missing required fields", "error", missing.join(", "));
+      return;
     }
-    return [];
-  }
-  function getLabTests(){
-    const l = STATE.lookups.labtests || STATE.lookups.labtest || {};
-    if (l && l.laboratoryTests) return l.laboratoryTests;
-    if (Array.isArray(l)) return l;
-    return [];
-  }
 
-  // ---------- Autocomplete helpers ----------
-  function setupAutocompleteInput(id, list) {
-    const inp = qId(id);
-    if (!inp) return;
-    const box = inp.parentElement.querySelector('.suggestion-box');
-    inp.addEventListener('input', ()=> {
-      const q = inp.value.trim().toLowerCase();
-      const arr = (Array.isArray(list) ? list : (typeof list === 'function' ? list() : [])).filter(v => v && v.toLowerCase().includes(q)).slice(0,20);
-      renderSuggestions(box,arr, (val)=> { inp.value = val; hide(box); });
-    });
-    inp.addEventListener('focus', ()=> {
-      const arr = (Array.isArray(list) ? list : (typeof list === 'function' ? list() : [])).slice(0,20);
-      renderSuggestions(box,arr, (val)=> { inp.value=val; hide(box); });
-    });
-    document.addEventListener('click', e => { if (!inp.parentElement.contains(e.target)) hide(box); });
-  }
-
-  function renderSuggestions(box, list, onSelect) {
-    if (!box) return;
-    box.innerHTML = "";
-    if (!list || list.length === 0) { hide(box); return; }
-    list.forEach(v=>{
-      const div = document.createElement('div');
-      div.textContent = v;
-      div.addEventListener('click', ()=> onSelect(v));
-      box.appendChild(div);
-    });
-    show(box);
-  }
-
-  function attachSuggestionHelpers(){
-    // for department & doctor we already setup, ensure dynamic update if lookups arrive later
-    // additional: specific mapping to fill normal range when test selected
-  }
-
-  // ---------- Investigations dynamic rows ----------
-  function addInvestigationRow(prefill) {
-    if (STATE.investigations.length >= MAX_ROWS) return alert("Max investigations reached");
-    const record = Object.assign({
-      "Test Category": "",
-      "Test Name": "",
-      "Normal Range / Limit": "",
-      "Reports": "",
-      "Test Remark": ""
-    }, prefill || {});
-    STATE.investigations.push(record);
-    renderInvestigations();
-  }
-  function removeInvestigationRow(idx) {
-    STATE.investigations.splice(idx,1);
-    renderInvestigations();
-  }
-
-  function renderInvestigations() {
-    const tbody = qId('investigationTable').querySelector('tbody');
-    tbody.innerHTML = "";
-    STATE.investigations.forEach((r,i) => {
-      const tr = document.createElement('tr');
-
-      // Test Category (select from labtests categories)
-      const tdCat = document.createElement('td');
-      const catInput = document.createElement('input');
-      catInput.type = 'text';
-      catInput.value = r["Test Category"] || "";
-      catInput.placeholder = "Category";
-      catInput.addEventListener('input', ()=> {
-        r["Test Category"] = catInput.value;
-      });
-      tdCat.appendChild(catInput);
-      tr.appendChild(tdCat);
-
-      // Test Name
-      const tdName = document.createElement('td');
-      const nameInput = document.createElement('input');
-      nameInput.type='text';
-      nameInput.value = r["Test Name"] || "";
-      nameInput.placeholder = "Test name";
-      nameInput.addEventListener('input', ()=> {
-        r["Test Name"] = nameInput.value;
-        // auto-fill range from labtests lookup
-        const lab = findLabTest(catInput.value, nameInput.value);
-        if (lab) {
-          r["Normal Range / Limit"] = lab.normalRange || lab.normalRange || lab.normalRange;
-          nrInput.value = r["Normal Range / Limit"];
-        }
-      });
-      tdName.appendChild(nameInput);
-      tr.appendChild(tdName);
-
-      // Normal Range
-      const tdNR = document.createElement('td');
-      const nrInput = document.createElement('input'); nrInput.type='text';
-      nrInput.value = r["Normal Range / Limit"] || "";
-      nrInput.placeholder = "Auto / Manual";
-      nrInput.addEventListener('input', ()=> r["Normal Range / Limit"] = nrInput.value);
-      tdNR.appendChild(nrInput);
-      tr.appendChild(tdNR);
-
-      // Reports
-      const tdRep = document.createElement('td');
-      const repInput = document.createElement('input'); repInput.type='text';
-      repInput.value = r["Reports"] || "";
-      repInput.addEventListener('input', ()=> r["Reports"] = repInput.value);
-      tdRep.appendChild(repInput);
-      tr.appendChild(tdRep);
-
-      // Test Remark
-      const tdRem = document.createElement('td');
-      const remInput = document.createElement('input'); remInput.type='text';
-      remInput.value = r["Test Remark"] || "";
-      remInput.addEventListener('input', ()=> r["Test Remark"] = remInput.value);
-      tdRem.appendChild(remInput);
-      tr.appendChild(tdRem);
-
-      // Actions
-      const tdAct = document.createElement('td');
-      const del = document.createElement('button'); del.type='button';
-      del.className='small danger';
-      del.textContent='Delete';
-      del.addEventListener('click', ()=> removeInvestigationRow(i));
-      tdAct.appendChild(del);
-      tr.appendChild(tdAct);
-
-      tbody.appendChild(tr);
-    });
-  }
-
-  function findLabTest(category, testName) {
-    const labs = getLabTests();
-    if (!labs || labs.length===0) return null;
-    const cat = labs.find(c => (c.category||"").toLowerCase() === (category||"").toLowerCase());
-    if (cat) {
-      const t = (cat.tests||[]).find(tt => (tt.testName||"").toLowerCase() === (testName||"").toLowerCase());
-      if (t) return t;
+    // Save recents for selected fields
+    for (const [norm, { input }] of Object.entries(FIELD_MAP)) {
+      if (SUGGEST_FIELDS.includes(norm)) {
+        pushRecent(norm, input.value);
+      }
     }
-    // fallback search across all tests
-    for (const c of labs) {
-      const t = (c.tests||[]).find(tt => (tt.testName||"").toLowerCase() === (testName||"").toLowerCase());
-      if (t) return t;
+    applySuggestionsToDatalist();
+
+    // Attempt submit (online) or queue (offline/error)
+    if (isOnline()) {
+      try {
+        const res = await submitNow(payload);
+        show("Form submitted", "ok", res?.data?.["OPD No"] || "");
+        // Update local cache (append)
+        const cache = loadRecordCache();
+        cache.unshift(payload);
+        saveRecordCache(cache.slice(0, 500)); // keep last 500
+        form.reset();
+        // keep OPD readonly empty after submit to avoid duplicate; generate fresh next time
+        const opd = FIELD_MAP[normalizeKey("OPD No")]?.input; if (opd) opd.value = "";
+      } catch (err) {
+        // Queue on error
+        queueSubmit(payload);
+        show("Server issue — saved to queue", "warn", err.message);
+      }
+    } else {
+      queueSubmit(payload);
+      show("Offline — saved to queue", "warn");
     }
-    return null;
+  } finally {
+    toggleSubmitWaiting(false);
+    btnSubmit.disabled = false;
+    overlay(false);
   }
+}
 
-  // ---------- Prescriptions ----------
-  function addPrescriptionRow(prefill){
-    if (STATE.prescriptions.length >= MAX_ROWS) return alert("Max prescriptions reached");
-    STATE.prescriptions.push({
-      "Form Available":"",
-      "Prescription":"",
-      "Treatment Note":""
-    });
-    renderPrescriptions();
+function toggleSubmitWaiting(waiting) {
+  const t = document.getElementById("submitText");
+  const w = document.getElementById("submitWait");
+  if (t && w) {
+    t.style.display = waiting ? "none" : "inline";
+    w.style.display = waiting ? "inline" : "none";
   }
-  function removePrescriptionRow(idx){
-    STATE.prescriptions.splice(idx,1); renderPrescriptions();
-  }
-  function renderPrescriptions() {
-    const tbody = qId('prescriptionTable').querySelector('tbody');
-    tbody.innerHTML = "";
-    STATE.prescriptions.forEach((r,i) => {
-      const tr = document.createElement('tr');
+}
 
-      // Form Available
-      const tdForm = document.createElement('td');
-      const formInput = document.createElement('input'); formInput.type='text';
-      formInput.value = r["Form Available"]||"";
-      formInput.placeholder="Tablet/Syrup";
-      formInput.addEventListener('input', ()=> r["Form Available"]=formInput.value);
-      tdForm.appendChild(formInput); tr.appendChild(tdForm);
+/* ===========================================
+   SECTION 13 — Boot Sequence (DOMContentLoaded)
+   =========================================== */
 
-      // Prescription
-      const tdPres = document.createElement('td');
-      const presInput = document.createElement('input'); presInput.type='text';
-      presInput.value = r["Prescription"]||"";
-      presInput.addEventListener('input', ()=> r["Prescription"]=presInput.value);
-      tdPres.appendChild(presInput); tr.appendChild(tdPres);
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    overlay(true);
 
-      // Treatment Note
-      const tdNote = document.createElement('td');
-      const noteInput = document.createElement('input'); noteInput.type='text';
-      noteInput.value = r["Treatment Note"]||"";
-      noteInput.addEventListener('input', ()=> r["Treatment Note"]=noteInput.value);
-      tdNote.appendChild(noteInput); tr.appendChild(tdNote);
+    // Rebuild field map (in case DOM changed)
+    FIELD_MAP = buildFieldMap();
 
-      // actions
-      const tdAct = document.createElement('td');
-      const del = document.createElement('button'); del.type='button';
-      del.className='small danger'; del.textContent='Delete';
-      del.addEventListener('click', ()=> removePrescriptionRow(i));
-      tdAct.appendChild(del); tr.appendChild(tdAct);
+    // 1) Fetch headers and build tolerant index
+    await fetchHeaders();
 
-      tbody.appendChild(tr);
-    });
-  }
+    // 2) Departments
+    await populateDepartments();
 
-  // ---------- Billing ----------
-  function addBillingRow(prefill) {
-    if (STATE.billing.length >= MAX_ROWS) return alert("Max billing rows reached");
-    STATE.billing.push({
-      "Bill / Description":"",
-      "Rate":0,
-      "Quantity":1,
-      "Discount":0,
-      "Amount":0
-    });
-    renderBilling();
-  }
-  function removeBillingRow(idx) {
-    STATE.billing.splice(idx,1); renderBilling(); recalcTotal();
-  }
-  function renderBilling(){
-    const tbody = qId('billingTable').querySelector('tbody');
-    tbody.innerHTML = "";
-    STATE.billing.forEach((r,i) => {
-      const tr = document.createElement('tr');
+    // 3) Apply saved suggestions to datalists
+    applySuggestionsToDatalist();
 
-      const tdDesc = document.createElement('td');
-      const desc = document.createElement('input'); desc.type='text'; desc.value=r["Bill / Description"]||"";
-      desc.addEventListener('input', ()=> r["Bill / Description"]=desc.value);
-      tdDesc.appendChild(desc); tr.appendChild(tdDesc);
+    // 4) Wire events
+    form?.addEventListener("submit", handleSubmit);
 
-      const tdRate = document.createElement('td');
-      const rate = document.createElement('input'); rate.type='number'; rate.min=0; rate.step='0.01'; rate.value=r["Rate"]||0;
-      rate.addEventListener('input', ()=> { r["Rate"]=parseFloat(rate.value)||0; computeRowAmount(i); });
-      tdRate.appendChild(rate); tr.appendChild(tdRate);
+    // Generate OPD on button click
+    btnGenOpd?.addEventListener("click", () => generateOPD().catch(()=>{}));
 
-      const tdQty = document.createElement('td');
-      const qty = document.createElement('input'); qty.type='number'; qty.min=0; qty.value=r["Quantity"]||1;
-      qty.addEventListener('input', ()=> { r["Quantity"]=parseFloat(qty.value)||0; computeRowAmount(i);});
-      tdQty.appendChild(qty); tr.appendChild(tdQty);
-
-      const tdDisc = document.createElement('td');
-      const disc = document.createElement('input'); disc.type='number'; disc.min=0; disc.value=r["Discount"]||0;
-      disc.addEventListener('input', ()=> { r["Discount"]=parseFloat(disc.value)||0; computeRowAmount(i);});
-      tdDisc.appendChild(disc); tr.appendChild(tdDisc);
-
-      const tdAmt = document.createElement('td');
-      const amt = document.createElement('input'); amt.type='number'; amt.readOnly=true; amt.value=r["Amount"]||0;
-      tdAmt.appendChild(amt); tr.appendChild(tdAmt);
-
-      const tdAct = document.createElement('td');
-      const del = document.createElement('button'); del.type='button'; del.className='small danger'; del.textContent='Delete';
-      del.addEventListener('click', ()=> removeBillingRow(i));
-      tdAct.appendChild(del); tr.appendChild(tdAct);
-
-      tbody.appendChild(tr);
-    });
-    recalcTotal();
-  }
-
-  function computeRowAmount(i) {
-    const r = STATE.billing[i];
-    if (!r) return;
-    const amount = (Number(r.Rate)||0) * (Number(r.Quantity)||0);
-    const discount = Number(r.Discount)||0;
-    const final = Math.max(0, amount - discount);
-    r.Amount = Number(final.toFixed(2));
-    renderBilling(); // re-render to reflect values
-  }
-
-  function recalcTotal() {
-    const total = STATE.billing.reduce((s,r)=> s + (Number(r.Amount)||0), 0);
-    qId('totalAmount').value = total.toFixed(2);
-  }
-
-  // ---------- Preview & Submission ----------
-  function collectFormData() {
-    // collect fields from DOM + join multi-row sections with newline
-    const data = {};
-    // basic fields (use sheet header names)
-    sheetHeaders.forEach(h => data[h] = "");
-    // date & OPD
-    data["Date"] = qId('date').value;
-    data["OPD No"] = qId('opdNo').value;
-    data["Mobile No"] = qId('mobile').value.trim();
-    data["Patient Name"] = qId('patientName').value.trim();
-    data["Gender"] = qId('gender').value;
-    data["Age"] = qId('age').value;
-    data["Department"] = qId('department').value.trim();
-    data["Doctor Name"] = qId('doctorName').value.trim();
-
-    data["Chief Complaint"] = qId('chiefComplaint').value.trim();
-    data["Sub-Symptoms"] = qId('subSymptoms').value.trim();
-    data["Specific Complaint"] = qId('specificComplaint').value.trim();
-
-    data["Weight"] = qId('weight').value;
-    data["BP"] = qId('bp').value;
-    data["Pulse"] = qId('pulse').value;
-    data["Temp"] = qId('temp').value;
-    data["Sugar"] = qId('sugar').value;
-
-    // Investigations — each column joined by newline
-    const invCols = {
-      "Test Category": STATE.investigations.map(i => i["Test Category"]||""),
-      "Test Name": STATE.investigations.map(i => i["Test Name"]||""),
-      "Normal Range / Limit": STATE.investigations.map(i => i["Normal Range / Limit"]||""),
-      "Reports": STATE.investigations.map(i => i["Reports"]||""),
-      "Test Remark": STATE.investigations.map(i => i["Test Remark"]||"")
-    };
-    data["Test Category"] = joinNL(invCols["Test Category"]);
-    data["Test Name"] = joinNL(invCols["Test Name"]);
-    data["Normal Range / Limit"] = joinNL(invCols["Normal Range / Limit"]);
-    data["Reports"] = joinNL(invCols["Reports"]);
-    data["Test Remark"] = joinNL(invCols["Test Remark"]);
-
-    // Treatment / Prescriptions
-    data["Diagnosis"] = qId('diagnosis').value;
-    data["Form Available"] = joinNL(STATE.prescriptions.map(p=>p["Form Available"]||""));
-    data["Prescription (Generic API Brand Name)"] = joinNL(STATE.prescriptions.map(p=>p["Prescription"]||""));
-    data["Treatment Note"] = joinNL(STATE.prescriptions.map(p=>p["Treatment Note"]||""));
-    data["Advice"] = qId('advice').value;
-    data["Effect After Treatment"] = qId('effectAfter').value;
-    data["Dr. Note / Remarks"] = qId('drRemarks').value;
-
-    // Billing -> join each column
-    data["Bill / Description"] = joinNL(STATE.billing.map(b=>b["Bill / Description"]||""));
-    data["Rate"] = joinNL(STATE.billing.map(b=>b["Rate"]||""));
-    data["Quantity"] = joinNL(STATE.billing.map(b=>b["Quantity"]||""));
-    data["Discount"] = joinNL(STATE.billing.map(b=>b["Discount"]||""));
-    data["Amount"] = joinNL(STATE.billing.map(b=>b["Amount"]||""));
-    data["Total Amount"] = qId('totalAmount').value || "0";
-    data["Bill Remark"] = qId('billRemark').value;
-
-    return data;
-  }
-
-  async function onPreview(e) {
-    try {
-      const data = collectFormData();
-      // perform basic required validation
-      const missing = [];
-      if (!data["Mobile No"]) missing.push("Mobile No");
-      if (!data["Patient Name"]) missing.push("Patient Name");
-      if (!data["Gender"]) missing.push("Gender");
+    // Save Offline button
+    btnSaveLocal?.addEventListener("click", () => {
+      const payload = collectPayload();
+      const missing = validateRequired(payload);
       if (missing.length) {
-        alert("Please fill required: " + missing.join(", "));
+        show("Missing required fields", "error", missing.join(", "));
         return;
       }
-      // open preview in new tab
-      const w = window.open("", "_blank");
-      const html = buildPreviewHTML(data);
-      w.document.open();
-      w.document.write(html);
-      w.document.close();
-    } catch (err) {
-      console.error("Preview error", err);
-      alert("Preview error: " + err.message);
-    }
-  }
-
-  function buildPreviewHTML(data) {
-    const rows = Object.entries(data).map(([k,v]) => `<tr><th style="text-align:left;padding:6px;border-bottom:1px solid #eee;width:260px">${k}</th><td style="padding:6px;border-bottom:1px solid #eee">${escapeHtml(String(v||""))}</td></tr>`).join("");
-    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Preview - ${escapeHtml(data["Patient Name"]||"")}</title>
-      <style>body{font-family:system-ui,Arial;padding:12px;background:#f8fbff;color:#111}table{border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 8px 20px rgba(20,30,60,0.06)}th,td{padding:8px}</style>
-      </head><body>
-      <h2>Patient Preview</h2>
-      <table>${rows}</table>
-      <div style="margin-top:12px"><button id="edit">Edit</button><button id="submit" style="margin-left:8px">Submit to Server</button></div>
-      <script>
-        const data = ${JSON.stringify(data)};
-        document.getElementById('edit').addEventListener('click', ()=> { window.close(); });
-        document.getElementById('submit').addEventListener('click', async ()=> {
-          document.getElementById('submit').disabled=true;
-          try {
-            const res = await fetch("${WEB_APP_URL}", {
-              method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(Object.assign({action:"create"}, data))
-            });
-            const json = await res.json();
-            alert("Server response: "+ JSON.stringify(json));
-            window.close();
-          } catch (e) { alert("Submit error: "+ e.message); document.getElementById('submit').disabled=false; }
-        });
-      </script>
-      </body></html>`;
-  }
-
-  function escapeHtml(s){ return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-
-  async function onSubmit(e) {
-    e.preventDefault();
-    try {
-      const data = collectFormData();
-      // required validation
-      const missing = [];
-      if (!data["Mobile No"]) missing.push("Mobile No");
-      if (!data["Patient Name"]) missing.push("Patient Name");
-      if (!data["Gender"]) missing.push("Gender");
-      if (missing.length) return alert("Please fill required: " + missing.join(", "));
-      // prepare payload
-      const payload = Object.assign({action:"create"}, data);
-      qId('submitBtn').disabled = true;
-      qId('submitBtn').textContent = "Submitting...";
-
-      const resp = await fetch(WEB_APP_URL, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
-      const json = await resp.json();
-      if (json && json.code === 200) {
-        alert("Saved successfully: " + JSON.stringify(json.body));
-        // remember recent suggestions to localStorage for quick re-use
-        saveRecentLocal(data);
-        // reset form for new entry
-        resetFormAfterSubmit();
-      } else {
-        // try to show server message
-        const msg = (json && json.body) ? JSON.stringify(json.body) : "Unknown server response";
-        alert("Server error: " + msg);
+      queueSubmit(payload);
+      // Also push recents now
+      for (const [norm, { input }] of Object.entries(FIELD_MAP)) {
+        if (SUGGEST_FIELDS.includes(norm)) {
+          pushRecent(norm, input.value);
+        }
       }
-    } catch (err) {
-      console.error("Submit error", err);
-      alert("Submit failed: " + err.message);
-    } finally {
-      qId('submitBtn').disabled = false;
-      qId('submitBtn').textContent = "Submit";
+      applySuggestionsToDatalist();
+      show("Saved offline for later sync", "ok");
+    });
+
+    // Mobile auto-fill as user types (debounced)
+    const mobileInput = FIELD_MAP[normalizeKey("Mobile No.")]?.input || document.getElementById("mobile");
+    if (mobileInput) {
+      let timer = null;
+      mobileInput.addEventListener("input", () => {
+        clearTimeout(timer);
+        const val = mobileInput.value.trim();
+        if (!val || val.length < 5) return; // basic threshold
+        timer = setTimeout(() => autofillByMobile(val), 400);
+      });
     }
-  }
 
-  function saveRecentLocal(data) {
-    try {
-      const key = "patient_recent";
-      const existing = JSON.parse(localStorage.getItem(key) || "{}");
-      // store a few fields
-      existing.lastMobile = data["Mobile No"];
-      existing.lastDoctor = data["Doctor Name"];
-      existing.lastDept = data["Department"];
-      existing.lastChief = data["Chief Complaint"];
-      localStorage.setItem(key, JSON.stringify(existing));
-    } catch (e) { /* ignore */ }
-  }
+    // If online, try a quick queue flush on load
+    processQueue();
 
-  function resetFormAfterSubmit() {
-    // keep recent mobile maybe; for now generate new OPD & date and clear non-compulsory fields
-    qId('date').value = formatDateISO();
-    qId('opdNo').value = genOPD();
-    qId('mobile').value = "";
-    qId('patientName').value = "";
-    qId('gender').value = "";
-    qId('age').value = "";
-    qId('department').value = "";
-    qId('doctorName').value = "";
-    qId('chiefComplaint').value = "";
-    qId('subSymptoms').value = "";
-    qId('specificComplaint').value = "";
-    qId('weight').value = ""; qId('bp').value=""; qId('pulse').value=""; qId('temp').value=""; qId('sugar').value="";
-    STATE.investigations = []; STATE.prescriptions = []; STATE.billing = [];
-    addInvestigationRow(); addPrescriptionRow(); addBillingRow();
-    renderInvestigations(); renderPrescriptions(); renderBilling();
+    show("Form ready", "ok");
+  } catch (err) {
+    show("Init failed", "error", err.message);
+  } finally {
+    overlay(false);
   }
+});
 
-})();
+/* ==================================================
+   SECTION 14 — Optional: PUT/DELETE helpers (unused)
+   ================================================== */
+
+// Example update (PUT via method override, if needed later)
+export async function updateRecordById(opdNo, partial) {
+  const url = `${CFG.BASE_URL}/records/${encodeURIComponent(opdNo)}`;
+  const data = await safeFetchJSON(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...partial, _method: "PUT" })
+  }, { retries: 2, baseDelay: 700 });
+  return data;
+}
+
+// Example delete (DELETE via method override)
+export async function deleteRecordById(opdNo) {
+  const url = `${CFG.BASE_URL}/records/${encodeURIComponent(opdNo)}`;
+  const data = await safeFetchJSON(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ _method: "DELETE" })
+  }, { retries: 2, baseDelay: 700 });
+  return data;
+}
