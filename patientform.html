@@ -1,22 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- =========================
-       patientform.html
-       Responsive, compact OPD Patient Form (no header/footer)
-       - Flexbox layout, mobile-first
-       - A..G fields required; others optional
-       - Hooks for dynamic headers, suggestions, autofill, offline queue
-       - Toasts + loading overlay + offline indicator
-       ========================= -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Patient Form</title>
+  <title>Patient Registration Form</title>
 
-  <!-- ========== Minimal, production-safe CSS (no frameworks) ========== -->
   <style>
     :root{
-      --bg:#0b1727;           /* dark canvas for compact focus */
+      --bg:#0b1727;
       --card:#0f213a;
       --muted:#6b87a8;
       --text:#e8f1ff;
@@ -29,16 +20,13 @@
       --radius:14px;
       --gap:10px;
     }
-    html,body{height:100%}
     body{
-      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-      background:var(--bg); color:var(--text); line-height:1.35;
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      background:var(--bg);
+      color:var(--text);
     }
-    .wrap{
-      max-width:1100px; margin:0 auto; padding:16px;
-    }
-
-    /* ---- Card container for the form ---- */
+    .wrap{max-width:1100px;margin:0 auto;padding:16px;}
     .card{
       background:var(--card);
       border:1px solid var(--border);
@@ -46,314 +34,172 @@
       box-shadow:var(--shadow);
       padding:16px;
     }
-
-    /* ---- Title row ---- */
-    .titlebar{
-      display:flex; align-items:center; gap:12px; margin-bottom:12px;
-    }
-    .titlebar h1{
-      font-size:1.1rem; margin:0; font-weight:650; letter-spacing:.2px;
-    }
-    .badges{margin-left:auto; display:flex; gap:8px; align-items:center}
+    .titlebar{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+    .titlebar h1{font-size:1.1rem;margin:0;font-weight:650;}
+    .badges{margin-left:auto;display:flex;gap:8px;align-items:center}
     .badge{
-      font-size:.75rem; padding:4px 8px; border-radius:999px; border:1px solid var(--border); color:var(--muted);
+      font-size:.75rem;padding:4px 8px;border-radius:999px;
+      border:1px solid var(--border);color:var(--muted);
       background:rgba(255,255,255,.03);
     }
-    .badge.offline{border-color:transparent; background:#2e3440; color:#ffdd88; display:none}
-
-    /* ---- Form grid (compact, responsive) ---- */
-    form{
-      display:flex; flex-direction:column; gap:14px;
-    }
-    .grid{
-      display:flex; flex-wrap:wrap; gap:var(--gap);
-    }
+    .badge.offline{display:none;background:#2e3440;color:#ffdd88}
+    form{display:flex;flex-direction:column;gap:14px;}
+    .grid{display:flex;flex-wrap:wrap;gap:var(--gap);}
     .col{
-      flex:1 1 260px; min-width:240px; display:flex; flex-direction:column; gap:6px;
-      background:rgba(255,255,255,.02); border:1px solid var(--border); border-radius:12px; padding:10px;
+      flex:1 1 260px;min-width:240px;
+      display:flex;flex-direction:column;gap:6px;
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--border);border-radius:12px;padding:10px;
     }
-    label{font-size:.82rem; color:var(--muted)}
-    .req::after{content:" *"; color:#f39c12}
-
-    input[type="text"], input[type="number"], input[type="tel"], input[type="search"], select, textarea{
-      width:100%; border-radius:10px; border:1px solid var(--border);
-      background:rgba(255,255,255,.03); color:var(--text);
-      padding:10px 12px; font-size:.95rem; outline:none;
+    label{font-size:.82rem;color:var(--muted)}
+    .req::after{content:" *";color:#f39c12}
+    input,select,textarea{
+      width:100%;border-radius:10px;border:1px solid var(--border);
+      background:rgba(255,255,255,.03);color:var(--text);
+      padding:10px 12px;font-size:.95rem;outline:none;
     }
-    textarea{min-height:74px; resize:vertical}
-
-    .row{display:flex; gap:var(--gap); flex-wrap:wrap}
-
-    /* OPD row: field + button inline */
-    .opd-row{display:flex; gap:8px}
-    .opd-row input{flex:1 1 auto}
+    textarea{min-height:74px;resize:vertical}
     .btn{
-      appearance:none; border:1px solid var(--border); background:rgba(255,255,255,.06);
-      color:var(--text); border-radius:10px; padding:10px 12px; font-weight:600; cursor:pointer;
-      transition:transform .06s ease, opacity .2s ease;
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:10px 12px;
+      cursor:pointer;
+      color:var(--text);
+      background:rgba(255,255,255,.06);
+      transition:.2s;
     }
-    .btn:active{transform:translateY(1px)}
-    .btn.primary{background:linear-gradient(180deg, #3caef0, #248ac7); border-color:transparent}
-    .btn.ghost{background:transparent}
-    .btn.warn{background:#3a2a00; border-color:#5b4300; color:#ffd98a}
-    .btn.success{background:#1b4d40; border-color:#1e6b57; color:#afffe2}
-
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
-    .help{font-size:.8rem; color:var(--muted)}
-
-    /* ---- Loading overlay ---- */
+    .btn.primary{background:linear-gradient(180deg,#3caef0,#248ac7);border-color:transparent;}
+    .btn.warn{background:#3a2a00;border-color:#5b4300;color:#ffd98a;}
+    .btn.ghost{background:transparent;}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .help{font-size:.8rem;color:var(--muted)}
     .overlay{
-      position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.45); z-index:50;
+      position:fixed;inset:0;display:none;place-items:center;
+      background:rgba(0,0,0,.45);z-index:50;
     }
     .spinner{
-      width:54px; height:54px; border-radius:50%; border:5px solid rgba(255,255,255,.15);
-      border-top-color:var(--accent); animation:spin 1s linear infinite;
+      width:54px;height:54px;border-radius:50%;
+      border:5px solid rgba(255,255,255,.15);
+      border-top-color:var(--accent);animation:spin 1s linear infinite;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* ---- Toasts ---- */
-    .toasts{position:fixed; right:12px; bottom:12px; display:flex; flex-direction:column; gap:8px; z-index:60}
+    .toasts{
+      position:fixed;right:12px;bottom:12px;
+      display:flex;flex-direction:column;gap:8px;z-index:60;
+    }
     .toast{
-      background:#0e1c31; color:var(--text); border:1px solid var(--border);
-      padding:10px 12px; border-radius:12px; box-shadow:var(--shadow); min-width:220px; max-width:min(92vw,420px);
+      background:#0e1c31;color:var(--text);
+      border:1px solid var(--border);
+      padding:10px 12px;border-radius:12px;
+      box-shadow:var(--shadow);
+      min-width:220px;max-width:min(92vw,420px);
       font-size:.92rem;
     }
-    .toast.ok    {border-color:rgba(39,196,152,.45)}
-    .toast.warn  {border-color:rgba(255,204,0,.45)}
-    .toast.error {border-color:rgba(255,107,107,.45)}
-    .toast small{display:block; color:var(--muted); margin-top:4px}
-
-    /* Tighten gaps on small screens */
-    @media (max-width:540px){
-      .col{min-width:100%}
-      .titlebar h1{font-size:1rem}
-    }
+    .toast.ok{border-color:rgba(39,196,152,.45)}
+    .toast.warn{border-color:rgba(255,204,0,.45)}
+    .toast.error{border-color:rgba(255,107,107,.45)}
+    .toast small{display:block;color:var(--muted);margin-top:4px}
+    @media (max-width:540px){.col{min-width:100%}}
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="card">
-      <!-- ===================== Title / Status Row ===================== -->
       <div class="titlebar">
         <h1>OPD Patient Registration</h1>
         <div class="badges">
-          <span class="badge" id="baseUrlBadge" title="Backend URL used by this page"></span>
-          <span class="badge offline" id="offlineBadge">Offline Mode</span>
+          <span class="badge" id="baseUrlBadge"></span>
+          <span class="badge offline" id="offlineBadge">Offline</span>
         </div>
       </div>
 
-      <!-- ===================== Form (data-keys map to sheet headers) ===================== -->
-      <!-- NOTE: Each .col has data-key matching the Google Sheet header exactly. 
-           JS (patientform.js) will read these to build payload dynamically. -->
       <form id="patientForm" novalidate autocomplete="on">
-        <!-- ===== Row: Core A..G (ALL REQUIRED) ===== -->
         <div class="grid">
-         <!-- B1 Patient Name -->
           <div class="col" data-key="Patient Name">
-            <label class="req" for="patientName">Patient Name</label>
-            <input id="patientName" name="patientName" type="text" placeholder="Full name" required data-suggest="true" />
+            <label class="req">Patient Name</label>
+            <input id="patientName" required placeholder="Full name" />
           </div>
-
-          <!-- C1 Mobile No. -->
           <div class="col" data-key="Mobile No.">
-            <label class="req" for="mobile">Mobile No.</label>
-            <input id="mobile" name="mobile" type="tel" placeholder="e.g., 9876543210" required
-                   autocomplete="tel" data-autofill="mobile" />
-            <div class="help">Start typing to auto-fill if seen before.</div>
+            <label class="req">Mobile No.</label>
+            <input id="mobile" type="tel" required placeholder="9876543210" />
           </div>
-
-          <!-- D1 Gender -->
           <div class="col" data-key="Gender">
-            <label class="req" for="gender">Gender</label>
-            <select id="gender" name="gender" required>
-              <option value="" selected disabled>Choose...</option>
+            <label class="req">Gender</label>
+            <select id="gender" required>
+              <option value="">Select</option>
               <option>Male</option>
               <option>Female</option>
               <option>Other</option>
             </select>
           </div>
-
-          <!-- E1 Age -->
           <div class="col" data-key="Age">
-            <label class="req" for="age">Age</label>
-            <input id="age" name="age" type="number" min="0" step="1" placeholder="Years" required />
+            <label class="req">Age</label>
+            <input id="age" type="number" required min="0" placeholder="Years" />
           </div>
-
-          <!-- F1 Doctor Name -->
           <div class="col" data-key="Doctor Name">
-            <label class="req" for="doctor">Doctor Name</label>
-            <input list="doctorList" id="doctor" name="doctor" placeholder="Select / type" required data-suggest="true" />
+            <label class="req">Doctor</label>
+            <input id="doctor" list="doctorList" required placeholder="Dr. Name" />
             <datalist id="doctorList">
-              <!-- fallback suggestions; JS will keep your recent picks -->
-              <option value="Dr. ABCD"></option>
-              <option value="Dr. ABC"></option>
-              <option value="Dr. BCD"></option>
+              <option>Dr. ABC</option>
+              <option>Dr. XYZ</option>
             </datalist>
           </div>
-
-          <!-- G1 Department -->
           <div class="col" data-key="Department">
-            <label class="req" for="department">Department</label>
-            <input list="deptList" id="department" name="department" placeholder="Select / type" required data-suggest="true" />
-            <datalist id="deptList">
-              <!-- JS will fetch /meta/departments and populate dynamically (these are fallbacks) -->
-              <option value="General Medicine / Physician"></option>
-              <option value="General Surgery"></option>
-              <option value="Cardiology (Heart Specialist)"></option>
-              <option value="Dental / Oral Surgery"></option>
-              <option value="Dermatology (Skin & Hair)"></option>
-              <option value="Endocrinology (Diabetes / Thyroid)"></option>
-              <option value="ENT (Ear, Nose, Throat)"></option>
-              <option value="Gastroenterology (Digestive System)"></option>
-              <option value="Nephrology (Kidney)"></option>
-              <option value="Neurology (Brain & Nerves)"></option>
-              <option value="Obstetrics & Gynecology (Gynac)"></option>
-              <option value="Oncology (Cancer)"></option>
-              <option value="Ophthalmology (Eye)"></option>
-              <option value="Orthopedics"></option>
-              <option value="Pediatrics (Child Specialist)"></option>
-              <option value="Physiotherapy / Rehabilitation"></option>
-              <option value="Plastic & Reconstructive Surgery"></option>
-              <option value="Psychiatry (Mental Health)"></option>
-              <option value="Pulmonology / Chest Medicine"></option>
-              <option value="Radiology & Imaging"></option>
-              <option value="Urology (Urinary / Male Reproductive)"></option>
-              <option value="Others / Not Listed"></option>
-            </datalist>
+            <label class="req">Department</label>
+            <input id="department" list="deptList" required placeholder="Select" />
+            <datalist id="deptList"></datalist>
           </div>
         </div>
 
-        <!-- ===== Row: Symptoms / Vitals ===== -->
         <div class="grid">
           <div class="col" data-key="Symptoms">
-            <label for="symptoms">Symptoms</label>
-            <textarea id="symptoms" name="symptoms" placeholder="Chief complaints / notes" data-suggest="true"></textarea>
+            <label>Symptoms</label>
+            <textarea id="symptoms"></textarea>
           </div>
-          <div class="col" data-key="Weight">
-            <label for="weight">Weight</label>
-            <input id="weight" name="weight" type="number" min="0" step="0.1" placeholder="kg" />
-          </div>
-          <div class="col" data-key="BP">
-            <label for="bp">BP</label>
-            <input id="bp" name="bp" type="text" placeholder="e.g., 120/80" />
-          </div>
-          <div class="col" data-key="Pulse">
-            <label for="pulse">Pulse</label>
-            <input id="pulse" name="pulse" type="number" min="0" step="1" placeholder="bpm" />
-          </div>
-          <div class="col" data-key="Respiratory Rate">
-            <label for="respRate">Respiratory Rate</label>
-            <input id="respRate" name="respRate" type="number" min="0" step="1" placeholder="breaths/min" />
-          </div>
-          <div class="col" data-key="spO₂">
-            <label for="spo2">spO₂</label>
-            <input id="spo2" name="spo2" type="number" min="0" max="100" step="1" placeholder="%" />
-          </div>
-          <div class="col" data-key="Temp">
-            <label for="temp">Temp</label>
-            <input id="temp" name="temp" type="number" step="0.1" placeholder="°C" />
-          </div>
-          <div class="col" data-key="Sugar">
-            <label for="sugar">Sugar</label>
-            <input id="sugar" name="sugar" type="number" step="0.1" placeholder="mg/dL" />
-          </div>
+          <div class="col" data-key="BP"><label>BP</label><input id="bp" /></div>
+          <div class="col" data-key="Pulse"><label>Pulse</label><input id="pulse" type="number" /></div>
+          <div class="col" data-key="Temp"><label>Temp</label><input id="temp" type="number" /></div>
         </div>
 
-        <!-- ===== Row: Tests / Diagnosis ===== -->
         <div class="grid">
-          <div class="col" data-key="Test Details">
-            <label for="testDetails">Test Details</label>
-            <textarea id="testDetails" name="testDetails" placeholder="Ordered tests / notes" data-suggest="true"></textarea>
-          </div>
-          <div class="col" data-key="Test Reports">
-            <label for="testReports">Test Reports</label>
-            <textarea id="testReports" name="testReports" placeholder="Key results / attachments ref" data-suggest="true"></textarea>
-          </div>
           <div class="col" data-key="Diagnosis">
-            <label for="diagnosis">Diagnosis</label>
-            <input id="diagnosis" name="diagnosis" type="text" placeholder="Primary diagnosis" data-suggest="true" />
+            <label>Diagnosis</label><input id="diagnosis" />
           </div>
-        </div>
-
-        <!-- ===== Row: Prescription / Treatment / Advice ===== -->
-        <div class="grid">
           <div class="col" data-key="Prescription (Generic API Brand Name)">
-            <label for="prescription">Prescription (Generic / API / Brand)</label>
-            <textarea id="prescription" name="prescription" placeholder="e.g., Paracetamol 500 mg TDS × 3 days" data-suggest="true"></textarea>
-          </div>
-          <div class="col" data-key="Treatment Note">
-            <label for="treatmentNote">Treatment Note</label>
-            <textarea id="treatmentNote" name="treatmentNote" placeholder="Process / procedure notes" data-suggest="true"></textarea>
+            <label>Prescription</label><textarea id="prescription"></textarea>
           </div>
           <div class="col" data-key="Advice">
-            <label for="advice">Advice</label>
-            <textarea id="advice" name="advice" placeholder="Diet / rest / follow-up" data-suggest="true"></textarea>
+            <label>Advice</label><textarea id="advice"></textarea>
           </div>
         </div>
 
-        <!-- ===== Row: Effects / Fees / Remarks / Reserved ===== -->
-        <div class="grid">
-          <div class="col" data-key="Effect After Treatment">
-            <label for="effect">Effect After Treatment</label>
-            <select id="effect" name="effect">
-              <option value="">—</option>
-              <option>NA</option>
-              <option>Improved</option>
-              <option>No Change</option>
-              <option>Worse</option>
-            </select>
-          </div>
-          <div class="col" data-key="Dr. Remarks">
-            <label for="drRemarks">Dr. Remarks</label>
-            <textarea id="drRemarks" name="drRemarks" placeholder="Additional notes"></textarea>
-          </div>
-          <div class="col" data-key="Dr Fees">
-            <label for="drFees">Dr Fees (₹)</label>
-            <input id="drFees" name="drFees" type="number" min="0" step="1" placeholder="e.g., 300" />
-          </div>
-          <div class="col" data-key="Reserved (Optional future use)">
-            <label for="reserved">Reserved (Optional future use)</label>
-            <input id="reserved" name="reserved" type="text" placeholder="—" />
-          </div>
-        </div>
-
-        <!-- ===== Actions ===== -->
         <div class="actions">
           <button type="submit" class="btn primary" id="btnSubmit">
             <span id="submitText">Submit</span>
-            <span id="submitWait" style="display:none">Submitting…</span>
+            <span id="submitWait" style="display:none">Submitting...</span>
           </button>
-          <a href="patientpreview.html" target="_blank" rel="noopener" class="btn ghost" id="btnPreview">Preview</a>
-          <button type="button" class="btn warn" id="btnSaveLocal" title="Save locally for later sync">Save Offline</button>
+          <a href="patientpreview.html" target="_blank" class="btn ghost">Preview</a>
+          <button type="button" class="btn warn" id="btnSaveLocal">Save Offline</button>
           <button type="reset" class="btn ghost">Clear</button>
         </div>
-        <div class="help">Tip: Works offline. Unsent forms are queued and will sync when back online.</div>
+        <div class="help">Works offline. Queued submissions sync automatically.</div>
       </form>
     </div>
   </div>
 
-  <!-- ===================== Loading Overlay ===================== -->
-  <div class="overlay" id="overlay"><div class="spinner" aria-label="Loading"></div></div>
+  <div class="overlay" id="overlay"><div class="spinner"></div></div>
+  <div class="toasts" id="toasts"></div>
 
-  <!-- ===================== Toast Container ===================== -->
-  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- ===================== Config + Boot (kept minimal; main logic in data/patientform.js) ===================== -->
   <script>
-    /* 
-     * Minimal inline boot:
-     * - Sets your backend base URL (from your message)
-     * - Registers service worker if available (optional)
-     * - Exposes small helpers for toasts/overlay used by patientform.js
-     */
+    // ------------------ CONFIG ------------------
     window.APP_CONFIG = {
       BASE_URL: "https://script.google.com/macros/s/AKfycbyfWMwKwuEsztaCTuQaL4tLda2u7Zl974RBngPqyYxjahdoWPCVsX_iDU5dV7eKNGtk/exec",
-      // API endpoints expected by patientform.js:
       ENDPOINTS: {
-        HEADERS: "/meta/headers",
-        DEPARTMENTS: "/meta/departments",
-        GENERATE_OPD: "/meta/opd",
-        RECORDS: "/records"
+        HEADERS: "meta/headers",
+        DEPARTMENTS: "meta/departments",
+        GENERATE_OPD: "meta/opd",
+        RECORDS: "records"
       },
       STORAGE_KEYS: {
         RECENTS: "pm_recent_values",
@@ -362,28 +208,24 @@
       }
     };
 
-    // Show base URL in badge
     document.addEventListener("DOMContentLoaded", () => {
       const b = document.getElementById("baseUrlBadge");
       if (b) b.textContent = new URL(APP_CONFIG.BASE_URL).host;
+      updateOfflineBadge();
     });
 
-    // Offline/online badge
-    function updateOfflineBadge(){
+    function updateOfflineBadge() {
       const badge = document.getElementById("offlineBadge");
       if (!badge) return;
       badge.style.display = navigator.onLine ? "none" : "inline-flex";
     }
     window.addEventListener("online", updateOfflineBadge);
     window.addEventListener("offline", updateOfflineBadge);
-    updateOfflineBadge();
 
-    // Loading overlay controls (used by patientform.js)
-    window.showOverlay = () => { const o = document.getElementById("overlay"); if (o) o.style.display = "grid"; };
-    window.hideOverlay = () => { const o = document.getElementById("overlay"); if (o) o.style.display = "none"; };
+    window.showOverlay = () => { document.getElementById("overlay").style.display = "grid"; };
+    window.hideOverlay = () => { document.getElementById("overlay").style.display = "none"; };
 
-    // Toast helper (used by patientform.js)
-    window.toast = (msg, type="ok", sub="") => {
+    window.toast = (msg, type = "ok", sub = "") => {
       const box = document.getElementById("toasts");
       if (!box) return;
       const el = document.createElement("div");
@@ -392,19 +234,9 @@
       box.appendChild(el);
       setTimeout(() => el.remove(), 5200);
     };
-
-    // Optional: register a basic service worker if you add one later
-    if ("serviceWorker" in navigator) {
-      // navigator.serviceWorker.register("/sw.js").catch(()=>{});
-    }
   </script>
 
-  <!-- ===================== Main Logic (next file you’ll get): data/patientform.js ===================== -->
+  <!-- JS main logic -->
   <script type="module" src="js/patientform.js"></script>
 </body>
 </html>
-
-
-
-
-
