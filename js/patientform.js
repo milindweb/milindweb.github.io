@@ -16,11 +16,6 @@
 /* ==============================
    SECTION 1 — Config & Utilities
    ============================== */
-// ======== backend base url ========
-const BASE_URL = "https://script.google.com/macros/s/AKfycbyfWMwKwuEsztaCTuQaL4tLda2u7Zl974RBngPqyYxjahdoWPCVsX_iDU5dV7eKNGtk/exec";
-window.APP_CONFIG = { BASE_URL };
-
-
 
 // static department list (frontend master)
 const DEPARTMENT_LIST = [
@@ -645,5 +640,6 @@ export async function deleteRecordById(opdNo) {
   }, { retries: 2, baseDelay: 700 });
   return data;
 }
+
 
 
