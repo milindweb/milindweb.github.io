@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileToggle.classList.toggle("active");
       mobileMenu.classList.toggle("active");
       mobileOverlay.classList.toggle("active");
-      document.body.style.overflow = mobileMenu.classList.contains("active") ? "hidden" : "";
     });
 
     // Close menu helper
