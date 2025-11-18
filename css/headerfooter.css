@@ -160,6 +160,21 @@
   }
 }
 
+/* Allow mobile menu to scroll independently */
+.hf-mobile-menu {
+    overflow-y: auto !important;
+    max-height: 100vh;
+    pointer-events: auto;
+}
+
+/* Allow background page to scroll even when menu is open */
+.hf-mobile-overlay {
+    pointer-events: none;   /* overlay visible but does not block scroll */
+    background: rgba(0,0,0,0.4);
+}
+
+
+
 /* ============ FOOTER ============ */
 .hf-footer {
   background: linear-gradient(160deg, #0f172a, #1e293b);
