@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>MilindWeb – Digital Marketing Consultant & Smart Technical Services</title>
 
-  <!-- Header + Footer CSS -->
+  <!-- ============================ -->
+  <!-- Header + Footer CSS Includes -->
+  <!-- ============================ -->
   <link rel="stylesheet" href="css/headerfooter.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+  <!-- ============================ -->
+  <!-- MAIN PAGE CSS (Light/Dark Friendly) -->
+  <!-- ============================ -->
   <style>
+
+    /* ROOT THEME VARIABLES (Light Mode & Dark Mode Compatible) */
     :root {
       --primary-bg: #ffffff;
       --secondary-bg: #f8fafc;
@@ -24,6 +32,7 @@
       --transition: all .3s ease;
     }
 
+    /* DARK MODE VARIABLES */
     .dark-mode {
       --primary-bg: #0f172a;
       --secondary-bg: #1e293b;
@@ -36,22 +45,27 @@
       --shadow: 0 4px 14px rgba(0,0,0,0.4);
     }
 
+    /* GLOBAL BODY STYLING */
     body {
       background: var(--primary-bg);
       color: var(--text-primary);
-      font-family: 'Segoe UI', system-ui, sans-serif;
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
       transition: var(--transition);
     }
 
-    /* HERO SECTION */
+    /* ========================================== */
+    /* HERO SECTION (Top Section of Homepage)     */
+    /* ========================================== */
+
     .hero {
       padding: 5rem 1.5rem 4rem;
       text-align: center;
       background: var(--secondary-bg);
       border-bottom: 1px solid var(--border);
     }
+
     .hero h1 {
       font-size: 2.2rem;
       font-weight: 700;
@@ -60,12 +74,14 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
     .hero p {
       max-width: 700px;
       margin: 0.5rem auto 1.5rem;
       font-size: 1.05rem;
       color: var(--text-secondary);
     }
+
     .hero-location {
       font-size: 0.9rem;
       margin-bottom: 1rem;
@@ -73,7 +89,7 @@
       font-weight: 600;
     }
 
-    .hero .cta-btn {
+    .cta-btn {
       padding: 0.75rem 1.5rem;
       border-radius: 8px;
       background: var(--gradient);
@@ -89,25 +105,30 @@
       opacity: 0.9;
     }
 
-    /* SECTION HEADERS */
+    /* ====================================== */
+    /* SECTION TITLES (Reusable Heading Style) */
+    /* ====================================== */
+
     h2.section-title {
       font-size: 1.8rem;
-      margin: 3rem 0 1.5rem;
       text-align: center;
       font-weight: bold;
-      position: relative;
+      margin: 3rem 0 1.5rem;
     }
     h2.section-title::after {
       content: "";
       display: block;
       width: 70px;
       height: 4px;
-      margin: 0.5rem auto 0;
-      border-radius: 2px;
+      margin: 0.5rem auto;
       background: var(--gradient);
+      border-radius: 3px;
     }
 
-    /* CARDS GRID */
+    /* ====================================================== */
+    /* SERVICES GRID (6 Main Cards - Digital/Graphics/etc.)  */
+    /* ====================================================== */
+
     .cards-grid {
       max-width: 1200px;
       margin: auto;
@@ -130,121 +151,86 @@
     }
     .card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
       border-color: var(--accent-light);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     }
+
     .card-icon {
       font-size: 1.8rem;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
     .card h3 {
       margin: 0.8rem 0;
       font-size: 1.3rem;
       color: var(--accent);
       font-weight: 600;
     }
+
     .card p {
       color: var(--text-secondary);
       font-size: 0.95rem;
       line-height: 1.5;
     }
 
+    /* ================================================= */
+    /* PREMIUM XIAOMI-STYLE SERVICES OVERVIEW SECTION    */
+    /* ================================================= */
 
+    .premium-services {
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
 
-    /* === FULL SERVICE DETAIL SECTION === */
+    .premium-block {
+      margin-bottom: 3.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .premium-block:last-child {
+      border-bottom: none;
+    }
 
-.full-services {
-  max-width: 1100px;
-  margin: 2rem auto 3rem;
-  padding: 1rem 1rem 2rem;
-}
+    .premium-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
 
-.full-services h3 {
-  font-size: 1.35rem;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 700;
-}
+    .premium-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
 
-.full-services ul {
-  margin-top: 0.5rem;
-  padding-left: 1.2rem;
-  color: var(--text-secondary);
-}
+    .premium-cta {
+      display: inline-block;
+      background: var(--gradient);
+      color: white;
+      padding: 0.75rem 1.3rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    .premium-cta:hover {
+      opacity: 0.9;
+      transform: translateY(-3px);
+    }
 
-.full-services ul li {
-  margin-bottom: 0.35rem;
-  font-size: 0.95rem;
-}
+    /* =================================== */
+    /* TEAM SECTION (Two Member Cards)     */
+    /* =================================== */
 
-.service-area {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.service-area-text {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  max-width: 750px;
-  margin: 0 auto;
-}
-
-.service-block {
-  background: var(--card-bg);
-  padding: 1.5rem;
-  border-radius: 14px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  margin-bottom: 2rem;
-  transition: var(--transition);
-}
-
-.service-block:hover {
-  transform: translateY(-5px);
-  border-color: var(--accent-light);
-}
-
-.whatsapp-cta {
-  display: inline-block;
-  margin-top: 0.8rem;
-  background: var(--gradient);
-  padding: 0.6rem 1.1rem;
-  border-radius: 8px;
-  color: white;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: var(--shadow);
-  transition: var(--transition);
-}
-
-.whatsapp-cta:hover {
-  opacity: 0.9;
-  transform: translateY(-3px);
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-  .full-services {
-    padding: 0.5rem;
-  }
-  .service-block {
-    padding: 1.1rem;
-  }
-  .full-services h3 {
-    font-size: 1.2rem;
-  }
-}
-
-
-    /* TEAM */
     .team-section {
       max-width: 1200px;
       margin: 3rem auto;
@@ -257,20 +243,19 @@
 
     .team-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
       gap: 1rem;
-      margin-top: 1.2rem;
     }
 
     .team-member {
       padding: 1rem;
-      border-radius: 10px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      transition: var(--transition);
       display: flex;
       gap: 1rem;
       align-items: center;
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
     }
     .team-member:hover {
       transform: translateY(-3px);
@@ -282,156 +267,194 @@
       height: 45px;
       border-radius: 50%;
       background: var(--gradient);
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
-      font-size: 1.2rem;
-      flex-shrink: 0;
+      font-size: 1.1rem;
     }
 
     .team-info h4 {
       margin: 0;
       color: var(--accent);
       font-size: 1.05rem;
-      font-weight: 600;
-    }
-    .team-info p {
-      font-size: 0.9rem;
-      margin-top: 4px;
-      color: var(--text-secondary);
     }
 
-    /* MOBILE RESPONSIVE */
+    .team-info p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    /* MOBILE RESPONSIVE TWEAKS */
     @media (max-width: 600px) {
       .hero h1 { font-size: 1.7rem; }
-      .hero p { font-size: 0.95rem; }
-      .card h3 { font-size: 1.15rem; }
+      .premium-title { font-size: 1.55rem; }
+      .premium-desc { font-size: 0.95rem; }
     }
+
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
+  <!-- ============================= -->
+  <!-- HEADER (Loaded from JS file) -->
+  <!-- ============================= -->
   <div id="header"></div>
 
-  <!-- HERO -->
-  <!-- ============================= -->
-<!-- SERVICES FULL DETAIL SECTION -->
-<!-- ============================= -->
+  <!-- ================================ -->
+  <!-- HERO SECTION (Top Landing Area) -->
+  <!-- ================================ -->
+  <section class="hero">
+    <div class="hero-location">
+      Serving across Navi Mumbai, Pune, Nagpur, Sambhaji Nagar, Nanded, Latur, Parbhani, Hingoli & Maharashtra.
+    </div>
 
-<section class="full-services">
-
-  <!-- SERVICE AREA -->
-  <div class="service-area">
-    <h2 class="section-title">Our Services Coverage</h2>
-    <p class="service-area-text">
-      Serving across <strong>Navi Mumbai, Pune, Nagpur, Sambhaji Nagar, Nanded, Latur, Parbhani, Hingoli</strong> 
-      and the entire state of <strong>Maharashtra</strong>.
-    </p>
-  </div>
-
-  <!-- DIGITAL MARKETING -->
-  <div class="service-block">
-    <h3><i class="fas fa-chart-line"></i> Digital Marketing & SEO Services</h3>
-    <p>
-      Grow your business online with expert SEO & digital marketing. Affordable, data-driven freelance solutions
-      to rank higher on Google, attract targeted customers, and increase sales.
-    </p>
+    <h1>Freelance Digital Marketing Consultant & Smart Technical Services</h1>
 
     <p>
-      I am a <strong>Freelance SEO Specialist & Digital Marketing Consultant</strong> with over 2 years of experience
-      working with startups, local businesses, and professional brands.
+      Helping businesses grow online with SEO, social media, and technical digital solutions.
+      Affordable and ROI-focused services designed for startups and small businesses.
     </p>
 
-    <ul>
-      <li>✔ Search Engine Optimization (SEO) – Rank higher & gain organic traffic</li>
-      <li>✔ Social Media Marketing (SMM) – Build strong brand identity</li>
-      <li>✔ Google Ads / PPC – Generate fast, high-quality leads</li>
-      <li>✔ Content Creation & Marketing – Content that ranks & converts</li>
-      <li>✔ Technical SEO Audits – Fix issues & improve performance</li>
-    </ul>
+    <button class="cta-btn" onclick="window.location.href='https://wa.me/919869787575'">
+      Get Free Consultation
+    </button>
+  </section>
 
-    <a href="https://wa.me/919869787575" class="whatsapp-cta">📞 Get Free Consultation</a>
-  </div>
+  <!-- ================================= -->
+  <!-- MAIN 6 SERVICE CARDS (Homepage)  -->
+  <!-- ================================= -->
+  <h2 class="section-title">Our Services</h2>
 
-  <!-- GRAPHICS -->
-  <div class="service-block">
-    <h3><i class="fas fa-paint-brush"></i> Creative Graphics & Video Editing</h3>
-    <p>
-      High-quality custom graphics and professional video editing for business branding, events, promotions, and social media.
-    </p>
+  <div class="cards-grid">
 
-    <ul>
-      <li>✔ Banners for birthdays, anniversaries & promotions</li>
-      <li>✔ Stylish wedding & invitation cards</li>
-      <li>✔ Professional logos & branding kits</li>
-      <li>✔ Reels, intros, ads & vlog editing</li>
-    </ul>
-  </div>
+    <!-- DIGITAL MARKETING CARD -->
+    <a class="card" href="freelance_seo_consultant.html">
+      <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+      <h3>Digital Marketing & SEO</h3>
+      <p>SEO strategy, Google ranking improvement, social media marketing, PPC campaigns & content marketing.</p>
+    </a>
 
-  <!-- TECH SOLUTIONS -->
-  <div class="service-block">
-    <h3><i class="fas fa-laptop-code"></i> Website & Technical Solutions</h3>
-    <p>
-      Modern, reliable, and affordable digital solutions for students, startups, and small businesses.
-    </p>
+    <!-- GRAPHICS CARD -->
+    <a class="card" href="graphics.html">
+      <div class="card-icon"><i class="fas fa-paint-brush"></i></div>
+      <h3>Graphics & Video Editing</h3>
+      <p>Custom logos, banners, invitations, ads, branding designs & professional video editing.</p>
+    </a>
 
-    <ul>
-      <li>✔ Responsive & SEO-friendly website design</li>
-      <li>✔ Portfolio, business & e-commerce websites</li>
-      <li>✔ Custom HTML, CSS, JS scripts</li>
-      <li>✔ Google Sheets & API integrations</li>
-      <li>✔ Study tools, DIY electronics & coding utilities</li>
-      <li>✔ Custom calculators & business productivity tools</li>
-    </ul>
-  </div>
+    <!-- TECH SOLUTIONS CARD -->
+    <a class="card" href="website-tech-solutions.html">
+      <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+      <h3>Website & Tech Solutions</h3>
+      <p>Responsive websites, automation scripts, APIs, student tools & business utilities.</p>
+    </a>
 
-  <!-- PROJECTS -->
-  <div class="service-block">
-    <h3><i class="fas fa-microchip"></i> Final Year & Mini Engineering Projects</h3>
-    <p>
-      Industry-relevant final year & mini projects for Diploma & Engineering students with full documentation.
-    </p>
+    <!-- PROJECTS CARD -->
+    <a class="card" href="project.html">
+      <div class="card-icon"><i class="fas fa-microchip"></i></div>
+      <h3>Engineering Projects</h3>
+      <p>Final year & mini projects — IoT, robotics, AI, automation, PLC/SCADA & more.</p>
+    </a>
 
-    <ul>
-      <li>✔ IoT, Robotics, Embedded Systems, Wireless Tech</li>
-      <li>✔ Python, AI/ML, Web & App Development</li>
-      <li>✔ Power Systems, EV, Solar & Motor Control</li>
-      <li>✔ PLC, SCADA & Industrial Automation</li>
-      <li>✔ Includes Code, PPT, Report & Circuit Diagrams</li>
-      <li>✔ Fully tested, ready-to-implement, customizable</li>
-    </ul>
-  </div>
+    <!-- WORKSHOPS CARD -->
+    <a class="card" href="workshop.html">
+      <div class="card-icon"><i class="fas fa-wrench"></i></div>
+      <h3>Workshops & Training</h3>
+      <p>Practical sessions on Arduino, ESP32, IoT, Excel & electronics fundamentals.</p>
+    </a>
 
-  <!-- WORKSHOPS -->
-  <div class="service-block">
-    <h3><i class="fas fa-chalkboard-teacher"></i> Workshops & Training</h3>
-    <p>
-      Hands-on workshops designed for students & tech enthusiasts.
-    </p>
-
-    <ul>
-      <li>✔ Microsoft Excel for Data Analysis</li>
-      <li>✔ Arduino & ESP32 IoT Practical Projects</li>
-      <li>✔ Electronics fundamentals & project building</li>
-    </ul>
-  </div>
-
-      <a class="card" href="blog.html">
+    <!-- BLOG CARD -->
+    <a class="card" href="blog.html">
       <div class="card-icon"><i class="fas fa-blog"></i></div>
       <h3>Blog & Tutorials</h3>
-      <p>Tech news, SEO tips, coding guides, electronics tutorials & project write-ups.</p>
+      <p>SEO tips, project guides, coding lessons, electronics tutorials & tech articles.</p>
     </a>
+
   </div>
 
-</section>
+  <!-- ==================================================== -->
+  <!-- PREMIUM XIAOMI-STYLE FULL SERVICE CONTENT SECTION    -->
+  <!-- ==================================================== -->
+  <section class="premium-services">
 
+    <!-- Service Area -->
+    <div class="premium-block">
+      <h2 class="premium-title">Serving Maharashtra With Digital Excellence</h2>
+      <p class="premium-desc">
+        From Navi Mumbai to Pune, Nagpur to Sambhaji Nagar, and across Nanded, Latur, Parbhani & Hingoli — 
+        we deliver high-quality digital marketing, technical solutions, and engineering project services.
+      </p>
+    </div>
 
+    <!-- DIGITAL MARKETING -->
+    <div class="premium-block">
+      <h2 class="premium-title">Digital Marketing & SEO — Grow Your Brand With Confidence</h2>
+      <p class="premium-desc">
+        Achieve real business growth with professional SEO and digital marketing services crafted for startups and small businesses.
+        With over <strong>2 years of experience</strong>, including work at a reputed agency, we deliver measurable results —
+        more visibility, more leads, and more sales.
+      </p>
+      <p class="premium-desc">
+        Our strategy blends SEO, keyword planning, content optimization, technical fixes, and ROI-driven campaigns designed 
+        to grow your brand online.
+      </p>
+      <a href="https://wa.me/919869787575" class="premium-cta">📞 Get Free Consultation</a>
+    </div>
 
+    <!-- GRAPHICS -->
+    <div class="premium-block">
+      <h2 class="premium-title">Creative Graphics & Video Editing — Designed to Stand Out</h2>
+      <p class="premium-desc">
+        We create high-impact graphics and professional video edits for personal events, branding, promotions, and social media.
+        From posters and invitations to logos and reels — everything is designed with attention to detail.
+      </p>
+    </div>
 
-  <!-- TEAM SECTION -->
+    <!-- TECH SOLUTIONS -->
+    <div class="premium-block">
+      <h2 class="premium-title">Website & Technical Solutions — Smart Tools for Smart Growth</h2>
+      <p class="premium-desc">
+        We build modern, lightweight, and reliable digital tools including responsive websites, custom HTML/JS scripts,
+        Google Sheet integrations, utilities, and automation tools for students and businesses.
+      </p>
+    </div>
+
+    <!-- PROJECTS -->
+    <div class="premium-block">
+      <h2 class="premium-title">Engineering Projects — Innovation Made Simple</h2>
+      <p class="premium-desc">
+        Professionally built, industry-relevant final year and mini projects for Diploma & Engineering students, 
+        delivered with complete documentation — reports, PPT, code, and circuit diagrams.
+      </p>
+      <p class="premium-desc">
+        We cover IoT, robotics, embedded systems, AI/ML, automation, EV systems, PLC/SCADA, and more.
+      </p>
+    </div>
+
+    <!-- WORKSHOPS -->
+    <div class="premium-block">
+      <h2 class="premium-title">Workshops & Hands-On Training</h2>
+      <p class="premium-desc">
+        Practical workshops on Microsoft Excel, Arduino, ESP32 IoT programming, electronics basics, and beginner-friendly projects.
+        Learn through real implementation and hands-on experience.
+      </p>
+    </div>
+
+    <!-- BLOG -->
+    <div class="premium-block">
+      <h2 class="premium-title">Blog & Tutorials — Learn Something New Every Day</h2>
+      <p class="premium-desc">
+        Explore SEO tips, project walkthroughs, coding tutorials, electronics guides, and simplified tech articles designed to help you grow and learn.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ======================== -->
+  <!-- TEAM SECTION (2 Members) -->
+  <!-- ======================== -->
   <section class="team-section">
     <h2 class="section-title">Our Team</h2>
 
@@ -441,7 +464,7 @@
         <div class="team-avatar"><i class="fas fa-user"></i></div>
         <div class="team-info">
           <h4>Er. Aarti Khandare</h4>
-          <p>DEE, B.E (Electrical), Digital Marketing Executive with 2+ yrs of experience.</p>
+          <p>DEE, B.E (Electrical), Digital Marketing Executive with 2+ years experience.</p>
         </div>
       </div>
 
@@ -449,25 +472,16 @@
         <div class="team-avatar"><i class="fas fa-user"></i></div>
         <div class="team-info">
           <h4>Er. M!l!nd</h4>
-          <p>DEE, B.E (Instrumentation), 7+ yrs in Defence Industry & Founder.</p>
+          <p>DEE, B.E (Instrumentation), 7+ years in Defence Industry & Founder.</p>
         </div>
       </div>
 
     </div>
   </section>
 
-
-
-    <!-- SERVICE AREA -->
-  <div class="service-area">
-    <h2 class="section-title">Our Services Coverage</h2>
-    <p class="service-area-text">
-      Serving across <strong>Navi Mumbai, Pune, Nagpur, Sambhaji Nagar, Nanded, Latur, Parbhani, Hingoli</strong> 
-      and the entire state of <strong>Maharashtra</strong>.
-    </p>
-  </div>
-  
-  <!-- CONTACT FORM -->
+  <!-- ============================ -->
+  <!-- CONTACT FORM (Auto Loaded)  -->
+  <!-- ============================ -->
   <div id="form-container"></div>
   <script>
     fetch("contactform.html")
@@ -480,19 +494,33 @@
       });
   </script>
 
-  <!-- FOOTER -->
+  <!-- ============================ -->
+  <!-- FOOTER (Loaded from JS file) -->
+  <!-- ============================ -->
   <div id="footer"></div>
 
-  <!-- Header + Footer JS -->
+  <!-- ============================ -->
+  <!-- HEADER + FOOTER JS LOADER   -->
+  <!-- ============================ -->
   <script src="js/headerfooter.js" defer></script>
 
-  <!-- THEME TOGGLE -->
+  <!-- ============================ -->
+  <!-- THEME TOGGLE (Dark/Light)   -->
+  <!-- ============================ -->
   <button id="themeToggle" style="
-    position: fixed; bottom: 20px; right: 20px;
-    width: 50px; height: 50px; border-radius: 50%;
-    background: var(--gradient); color: white;
-    border: none; font-size: 1.2rem; cursor: pointer;
-    box-shadow: var(--shadow);">
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+  ">
     <i class="fas fa-moon"></i>
   </button>
 
