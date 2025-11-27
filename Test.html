@@ -151,6 +151,99 @@
       line-height: 1.5;
     }
 
+
+
+    /* === FULL SERVICE DETAIL SECTION === */
+
+.full-services {
+  max-width: 1100px;
+  margin: 2rem auto 3rem;
+  padding: 1rem 1rem 2rem;
+}
+
+.full-services h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.full-services ul {
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.full-services ul li {
+  margin-bottom: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.service-area {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.service-area-text {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.service-block {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+  transition: var(--transition);
+}
+
+.service-block:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-light);
+}
+
+.whatsapp-cta {
+  display: inline-block;
+  margin-top: 0.8rem;
+  background: var(--gradient);
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.whatsapp-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-3px);
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .full-services {
+    padding: 0.5rem;
+  }
+  .service-block {
+    padding: 1.1rem;
+  }
+  .full-services h3 {
+    font-size: 1.2rem;
+  }
+}
+
+
     /* TEAM */
     .team-section {
       max-width: 1200px;
@@ -224,60 +317,119 @@
   <div id="header"></div>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-location">
-      Serving across Navi Mumbai, Pune, Nagpur, Sambhaji Nagar, Nanded, Latur, Parbhani, Hingoli & Maharashtra.
-    </div>
+  <!-- ============================= -->
+<!-- SERVICES FULL DETAIL SECTION -->
+<!-- ============================= -->
 
-    <h1>Freelance Digital Marketing Consultant & Smart Technical Services</h1>
-    <p>Helping businesses grow online with SEO, social media, and technical digital solutions. Affordable and ROI-focused services for startups and small businesses.</p>
+<section class="full-services">
 
-    <button class="cta-btn" onclick="window.location.href='https://wa.me/919869787575'">
-      Get Free Consultation
-    </button>
-  </section>
+  <!-- SERVICE AREA -->
+  <div class="service-area">
+    <h2 class="section-title">Our Services Coverage</h2>
+    <p class="service-area-text">
+      Serving across <strong>Navi Mumbai, Pune, Nagpur, Sambhaji Nagar, Nanded, Latur, Parbhani, Hingoli</strong> 
+      and the entire state of <strong>Maharashtra</strong>.
+    </p>
+  </div>
 
-  <!-- SERVICES GRID -->
-  <h2 class="section-title">Our Services</h2>
+  <!-- DIGITAL MARKETING -->
+  <div class="service-block">
+    <h3><i class="fas fa-chart-line"></i> Digital Marketing & SEO Services</h3>
+    <p>
+      Grow your business online with expert SEO & digital marketing. Affordable, data-driven freelance solutions
+      to rank higher on Google, attract targeted customers, and increase sales.
+    </p>
 
-  <div class="cards-grid">
+    <p>
+      I am a <strong>Freelance SEO Specialist & Digital Marketing Consultant</strong> with over 2 years of experience
+      working with startups, local businesses, and professional brands.
+    </p>
 
-    <a class="card" href="freelance_seo_consultant.html">
-      <div class="card-icon"><i class="fas fa-chart-line"></i></div>
-      <h3>Digital Marketing & SEO</h3>
-      <p>SEO strategy, Google ranking, keyword research, audits, social media marketing, PPC campaigns & content marketing to grow your business.</p>
-    </a>
+    <ul>
+      <li>✔ Search Engine Optimization (SEO) – Rank higher & gain organic traffic</li>
+      <li>✔ Social Media Marketing (SMM) – Build strong brand identity</li>
+      <li>✔ Google Ads / PPC – Generate fast, high-quality leads</li>
+      <li>✔ Content Creation & Marketing – Content that ranks & converts</li>
+      <li>✔ Technical SEO Audits – Fix issues & improve performance</li>
+    </ul>
 
-    <a class="card" href="graphics.html">
-      <div class="card-icon"><i class="fas fa-paint-brush"></i></div>
-      <h3>Graphic Design & Video Editing</h3>
-      <p>Custom logos, banners, ads, event cards, branding kits, thumbnails, reels, intros & promotional videos.</p>
-    </a>
+    <a href="https://wa.me/919869787575" class="whatsapp-cta">📞 Get Free Consultation</a>
+  </div>
 
-    <a class="card" href="website-tech-solutions.html">
-      <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
-      <h3>Website & Tech Solutions</h3>
-      <p>Responsive websites, scripts, digital tools, automation, Google Sheet APIs, calculators, utilities & student tools.</p>
-    </a>
+  <!-- GRAPHICS -->
+  <div class="service-block">
+    <h3><i class="fas fa-paint-brush"></i> Creative Graphics & Video Editing</h3>
+    <p>
+      High-quality custom graphics and professional video editing for business branding, events, promotions, and social media.
+    </p>
 
-    <a class="card" href="project.html">
-      <div class="card-icon"><i class="fas fa-microchip"></i></div>
-      <h3>Engineering Projects</h3>
-      <p>Final year & mini projects – IoT, robotics, embedded, Python, automation, PLC, power systems & more with full documentation.</p>
-    </a>
+    <ul>
+      <li>✔ Banners for birthdays, anniversaries & promotions</li>
+      <li>✔ Stylish wedding & invitation cards</li>
+      <li>✔ Professional logos & branding kits</li>
+      <li>✔ Reels, intros, ads & vlog editing</li>
+    </ul>
+  </div>
 
-    <a class="card" href="workshop.html">
-      <div class="card-icon"><i class="fas fa-wrench"></i></div>
-      <h3>Workshops & Training</h3>
-      <p>Hands-on workshops on Arduino, ESP32, IoT projects, Microsoft Excel, coding basics & electronics training kits.</p>
-    </a>
+  <!-- TECH SOLUTIONS -->
+  <div class="service-block">
+    <h3><i class="fas fa-laptop-code"></i> Website & Technical Solutions</h3>
+    <p>
+      Modern, reliable, and affordable digital solutions for students, startups, and small businesses.
+    </p>
 
-    <a class="card" href="blog.html">
+    <ul>
+      <li>✔ Responsive & SEO-friendly website design</li>
+      <li>✔ Portfolio, business & e-commerce websites</li>
+      <li>✔ Custom HTML, CSS, JS scripts</li>
+      <li>✔ Google Sheets & API integrations</li>
+      <li>✔ Study tools, DIY electronics & coding utilities</li>
+      <li>✔ Custom calculators & business productivity tools</li>
+    </ul>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="service-block">
+    <h3><i class="fas fa-microchip"></i> Final Year & Mini Engineering Projects</h3>
+    <p>
+      Industry-relevant final year & mini projects for Diploma & Engineering students with full documentation.
+    </p>
+
+    <ul>
+      <li>✔ IoT, Robotics, Embedded Systems, Wireless Tech</li>
+      <li>✔ Python, AI/ML, Web & App Development</li>
+      <li>✔ Power Systems, EV, Solar & Motor Control</li>
+      <li>✔ PLC, SCADA & Industrial Automation</li>
+      <li>✔ Includes Code, PPT, Report & Circuit Diagrams</li>
+      <li>✔ Fully tested, ready-to-implement, customizable</li>
+    </ul>
+  </div>
+
+  <!-- WORKSHOPS -->
+  <div class="service-block">
+    <h3><i class="fas fa-chalkboard-teacher"></i> Workshops & Training</h3>
+    <p>
+      Hands-on workshops designed for students & tech enthusiasts.
+    </p>
+
+    <ul>
+      <li>✔ Microsoft Excel for Data Analysis</li>
+      <li>✔ Arduino & ESP32 IoT Practical Projects</li>
+      <li>✔ Electronics fundamentals & project building</li>
+    </ul>
+  </div>
+
+      <a class="card" href="blog.html">
       <div class="card-icon"><i class="fas fa-blog"></i></div>
       <h3>Blog & Tutorials</h3>
       <p>Tech news, SEO tips, coding guides, electronics tutorials & project write-ups.</p>
     </a>
   </div>
+
+</section>
+
+
+
 
   <!-- TEAM SECTION -->
   <section class="team-section">
@@ -304,6 +456,17 @@
     </div>
   </section>
 
+
+
+    <!-- SERVICE AREA -->
+  <div class="service-area">
+    <h2 class="section-title">Our Services Coverage</h2>
+    <p class="service-area-text">
+      Serving across <strong>Navi Mumbai, Pune, Nagpur, Sambhaji Nagar, Nanded, Latur, Parbhani, Hingoli</strong> 
+      and the entire state of <strong>Maharashtra</strong>.
+    </p>
+  </div>
+  
   <!-- CONTACT FORM -->
   <div id="form-container"></div>
   <script>
