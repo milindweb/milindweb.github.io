@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Akanksha Clinic - OPD Registration</title>
+
+<!-- Header + Footer CSS -->
+<link rel="stylesheet" href="css/headerfooter.css">
+
+<!-- Font Awesome (for footer icons) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- JS to load header/footer -->
+<script src="js/headerfooter.js" defer></script>
+
+<style>
+/* ==================== FORM PAGE LIGHT THEME ==================== */
+/* Scoped under .opd-page so it does NOT affect header/footer */
+.opd-page {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  margin: 0;
+  padding: 20px;
+  flex: 1;
+}
+
+.opd-page h2 {
+  text-align: center;
+  color: #2563eb;
+  margin: 25px 0 15px;
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: 0.3px;
+}
+
+/* ---------- Form Container ---------- */
+.opd-page form {
+  max-width: 950px;
+  margin: 25px auto 40px;
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.opd-page form:hover {
+  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.08);
+  transform: translateY(-1px);
+}
+
+/* ---------- Layout ---------- */
+.opd-page .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.opd-page .field {
+  flex: 1;
+  min-width: 160px;
+}
+
+/* ---------- Labels ---------- */
+.opd-page label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #1d4ed8;
+}
+
+.opd-page small {
+  font-weight: 400;
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* ---------- Inputs, Selects & Textareas ---------- */
+.opd-page input,
+.opd-page select,
+.opd-page textarea {
+  width: 100%;
+  padding: 8px 10px;
+  background: #f9fafb;
+  color: #1e293b;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13.5px;
+  transition: all 0.25s ease;
+}
+
+.opd-page input:focus,
+.opd-page select:focus,
+.opd-page textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.opd-page textarea {
+  resize: vertical;
+  min-height: 40px;
+}
+
+/* ---------- Submit Button ---------- */
+.opd-page button {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 25px auto 5px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.opd-page button:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ---------- Alerts ---------- */
+.opd-page .alert {
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.opd-page .success {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+  border: 1px solid #10b981;
+}
+
+.opd-page .error {
+  background: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
+  border: 1px solid #ef4444;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .opd-page form {
+    padding: 18px;
+    margin: 15px 10px 30px;
+  }
+  .opd-page h2 {
+    font-size: 20px;
+  }
+  .opd-page button {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+  <!-- Header Placeholder -->
+  <div id="header"></div>
+
+  <!-- OPD Form Content (scoped safely inside opd-page) -->
+  <main class="opd-page">
+    <h2>OPD Patient Registration Form</h2>
+
+    <form id="patientForm">
+      <!-- Row 1 -->
+      <div class="row">
+        <div class="field">
+          <label>OPD No</label>
+          <input name="opdNo" id="opdNo" readonly placeholder="Auto-generated">
+        </div>
+        <div class="field"><label>Mobile No</label><input name="mobileNo" type="number" title="Enter valid 10-digit number"></div>
+        <div class="field"><label>Patient Name</label><input name="patientName" required></div>
+        <div class="field"><label>Gender</label>
+          <select name="gender" required>
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Age</label><input name="age" type="number" required></div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="row">
+        <div class="field">
+          <label>Doctor Name</label>
+          <select name="doctorName" required>
+            <option value="">Select Doctor</option>
+            <option>Dr. ABCD</option>
+            <option>Dr. ABC</option>
+            <option>Dr. BCD</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Department</label>
+          <select name="department" required>
+            <option value="">Select Department</option>
+            <option>General Medicine / Physician</option>
+            <option>General Surgery</option>
+            <option>Cardiology (Heart Specialist)</option>
+            <option>Dental / Oral Surgery</option>
+            <option>Dermatology (Skin & Hair)</option>
+            <option>Endocrinology (Diabetes / Thyroid)</option>
+            <option>ENT (Ear, Nose, Throat)</option>
+            <option>Gastroenterology (Digestive System)</option>
+            <option>Nephrology (Kidney)</option>
+            <option>Neurology (Brain & Nerves)</option>
+            <option>Obstetrics & Gynecology (Gynac)</option>
+            <option>Oncology (Cancer)</option>
+            <option>Ophthalmology (Eye)</option>
+            <option>Orthopedics</option>
+            <option>Pediatrics (Child Specialist)</option>
+            <option>Physiotherapy / Rehabilitation</option>
+            <option>Plastic & Reconstructive Surgery</option>
+            <option>Psychiatry (Mental Health)</option>
+            <option>Pulmonology / Chest Medicine</option>
+            <option>Radiology & Imaging</option>
+            <option>Urology (Urinary / Male Reproductive)</option>
+            <option>Others / Not Listed</option>
+          </select>
+        </div>
+        <div class="field"><label>Symptoms</label><textarea name="symptoms" title="i.e. Fever, Headache from 2 days"></textarea></div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="row">
+        <div class="field"><label>Weight <small>50–80 kg</small></label><input name="weight" type="number"></div>
+        <div class="field"><label>BP <small>120/80 mmHg</small></label><input name="bp" type="number"></div>
+        <div class="field"><label>Pulse <small>60–100 bpm</small></label><input name="pulse" type="number"></div>
+        <div class="field"><label>RR <small>12–20/min</small></label><input name="respiratoryRate" type="number"></div>
+        <div class="field"><label>spO₂ <small>≥95%</small></label><input name="spO2" type="number"></div>
+        <div class="field"><label>Temp <small>98.6°F / 37°C</small></label><input name="temp" type="number"></div>
+        <div class="field"><label>Sugar <small>70–110 mg/dL</small></label><input name="sugar" type="number"></div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="row">
+        <div class="field"><label>Test Details</label><textarea name="testDetails" title="i.e. CBC, ECG"></textarea></div>
+        <div class="field"><label>Test Reports</label><textarea name="testReports" title="i.e. Normal"></textarea></div>
+        <div class="field"><label>Diagnosis</label><textarea name="diagnosis" title="i.e. Normal / Corona -ve"></textarea></div>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="row">
+        <div class="field"><label>Prescription (Generic / Brand)</label><textarea name="prescription" title="Tab Ibuprofen 500mg for 3 days"></textarea></div>
+        <div class="field"><label>Treatment Note</label><textarea name="treatmentNote" title="Daily twice after meals"></textarea></div>
+      </div>
+
+      <!-- Row 6 -->
+      <div class="row">
+        <div class="field"><label>Advice</label><textarea name="advice" title="i.e. Take rest for 2 days"></textarea></div>
+        <div class="field">
+          <label>Effect After Treatment</label>
+          <select name="effectAfterTreatment">
+            <option value="">NA</option>
+            <option>Recovered</option>
+            <option>No Change</option>
+            <option>Worsened</option>
+            <option>Follow-up Required</option>
+          </select>
+        </div>
+        <div class="field"><label>Dr. Fees</label><input name="drFees" type="number"></div>
+      </div>
+
+      <!-- Row 7 -->
+      <div class="field"><label>Dr. Remarks</label><textarea name="drRemarks"></textarea></div>
+
+      <button type="submit">Submit</button>
+      <div id="response"></div>
+    </form>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer"></div>
+
+  <!-- JS Form Submission -->
+  <script src="js/patientform.js"></script>
+</body>
+</html>
