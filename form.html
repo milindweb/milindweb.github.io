@@ -53,79 +53,75 @@
 
 /* ===========================================================
    ROW SYSTEM – RESPONSIVE, NO SCROLL, NO OVERFLOW
-   -----------------------------------------------------------
-   – Desktop: exact layout per row using width rules
-   – Tablet: auto-adjust to 2 per line
-   – Mobile: stack fields cleanly
    =========================================================== */
 
 .opd-page .row {
   display: flex;
-  flex-wrap: wrap;      /* allow wrapping instead of overflow */
+  flex-wrap: wrap;
   gap: 14px;
   margin-bottom: 14px;
 }
 
-/* Base field behavior */
 .opd-page .field {
-  flex: 1 1 160px;      /* flexible width, min 160px */
+  flex: 1 1 160px;
 }
 
-/* ===== DESKTOP (≥ 992px): fixed number of columns per row ===== */
+/* ===== DESKTOP LAYOUT (≥ 992px) ===== */
 @media (min-width: 992px) {
 
-  /* Row 1 → 2 fields */
-  .row.row-1 .field {
-    flex: 0 0 calc(50% - 14px);
-  }
-
-  /* Row 2 → 3 fields */
-  .row.row-2 .field {
-    flex: 0 0 calc(33.33% - 14px);
-  }
-
-  /* Row 3 → 3 fields */
-  .row.row-3 .field {
-    flex: 0 0 calc(33.33% - 14px);
-  }
-
-  /* Row 4 → 4 fields */
-  .row.row-4 .field {
-    flex: 0 0 calc(25% - 14px);
-  }
-
-  /* Row 5 → 3 fields */
-  .row.row-5 .field {
-    flex: 0 0 calc(33.33% - 14px);
-  }
-
-  /* Row 6 → 3 fields */
-  .row.row-6 .field {
-    flex: 0 0 calc(33.33% - 14px);
-  }
-
-  /* Row 7 → 3 fields */
-  .row.row-7 .field {
-    flex: 0 0 calc(33.33% - 14px);
-  }
-
-  /* Row 8 → 3 fields */
-  .row.row-8 .field {
-    flex: 0 0 calc(33.33% - 14px);
-  }
+  .row.row-1 .field { flex: 0 0 calc(50% - 14px); }
+  .row.row-2 .field { flex: 0 0 calc(33.33% - 14px); }
+  .row.row-3 .field { flex: 0 0 calc(33.33% - 14px); }
+  .row.row-4 .field { flex: 0 0 calc(25% - 14px); }
+  .row.row-5 .field { flex: 0 0 calc(33.33% - 14px); }
+  .row.row-6 .field { flex: 0 0 calc(33.33% - 14px); }
+  .row.row-7 .field { flex: 0 0 calc(33.33% - 14px); }
+  .row.row-8 .field { flex: 0 0 calc(33.33% - 14px); }
 }
 
-/* ===== TABLET (600px – 991px): 2 items per line ===== */
+/* ===== TABLET LAYOUT (600px – 991px) ===== */
 @media (max-width: 991px) and (min-width: 600px) {
   .opd-page .field {
     flex: 1 1 calc(50% - 14px);
   }
 }
 
-/* ===== MOBILE (≤ 599px): full width stacking ===== */
+/* ===== MOBILE OPTIMIZED (≤ 599px) ===== */
 @media (max-width: 599px) {
+
+  .opd-page form {
+    padding: 12px !important;
+    margin: 10px !important;
+    width: 100% !important;
+  }
+
+  .opd-page h2 {
+    font-size: 18px;
+    margin: 10px 0 15px;
+  }
+
   .opd-page .field {
-    flex: 1 1 100%;
+    flex: 1 1 100% !important;
+    min-width: 100% !important;
+  }
+
+  .opd-page .row {
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .opd-page input,
+  .opd-page select,
+  .opd-page textarea {
+    padding: 6px 8px !important;
+    font-size: 13px !important;
+  }
+
+  .opd-page button {
+    padding: 10px !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    margin-top: 15px !important;
   }
 }
 
@@ -172,7 +168,7 @@
   min-height: 40px;
 }
 
-/* ---------- Submit Button ---------- */
+/* ---------- Button ---------- */
 .opd-page button {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
@@ -195,42 +191,6 @@
   transform: translateY(-1px);
 }
 
-/* ---------- Alerts ---------- */
-.opd-page .alert {
-  padding: 10px 12px;
-  border-radius: 6px;
-  text-align: center;
-  margin-top: 12px;
-  font-size: 13.5px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.opd-page .success {
-  background: rgba(16, 185, 129, 0.12);
-  color: #047857;
-  border: 1px solid #10b981;
-}
-
-.opd-page .error {
-  background: rgba(239, 68, 68, 0.12);
-  color: #b91c1c;
-  border: 1px solid #ef4444;
-}
-
-/* ---------- Responsive general ---------- */
-@media (max-width: 768px) {
-  .opd-page form {
-    padding: 18px;
-    margin: 15px 10px 30px;
-  }
-  .opd-page h2 {
-    font-size: 20px;
-  }
-  .opd-page button {
-    width: 100%;
-  }
-}
 </style>
 </head>
 
@@ -365,4 +325,5 @@
 
 </body>
 </html>
+
 
