@@ -34,16 +34,6 @@
   letter-spacing: 0.3px;
 }
 
-/* ---------- NEW SECTION TITLE STYLE ---------- */
-.section-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1d4ed8;
-  margin: 25px 0 10px;
-  border-left: 4px solid #2563eb;
-  padding-left: 10px;
-}
-
 /* ---------- Form Container ---------- */
 .opd-page form {
   max-width: 950px;
@@ -60,18 +50,48 @@
   transform: translateY(-1px);
 }
 
-/* ---------- Layout ---------- */
+/* ===========================================================
+   FIX ROW SPACING (NO SCROLL, NO BREAK)
+   Each row keeps exact number of fields using width rules.
+   =========================================================== */
+
 .opd-page .row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 14px;
+  flex-wrap: nowrap;      /* Do not wrap to next line */
+  gap: 14px;              /* Space between fields */
+  margin-bottom: 14px;    /* Space between rows */
 }
 
 .opd-page .field {
   flex: 1;
   min-width: 160px;
 }
+
+/* ========== ROW WIDTH CONTROL (EDIT ANYTIME) ========== */
+
+/* Row 1 → 2 fields */
+.row.row-1 .field { flex: 0 0 calc(50% - 14px); }
+
+/* Row 2 → 3 fields */
+.row.row-2 .field { flex: 0 0 calc(33.33% - 14px); }
+
+/* Row 3 → 3 fields */
+.row.row-3 .field { flex: 0 0 calc(33.33% - 14px); }
+
+/* Row 4 → 4 fields */
+.row.row-4 .field { flex: 0 0 calc(25% - 14px); }
+
+/* Row 5 → 3 fields */
+.row.row-5 .field { flex: 0 0 calc(33.33% - 14px); }
+
+/* Row 6 → 3 fields */
+.row.row-6 .field { flex: 0 0 calc(33.33% - 14px); }
+
+/* Row 7 → 3 fields */
+.row.row-7 .field { flex: 0 0 calc(33.33% - 14px); }
+
+/* Row 8 → 3 fields */
+.row.row-8 .field { flex: 0 0 calc(33.33% - 14px); }
 
 /* ---------- Labels ---------- */
 .opd-page label {
@@ -88,7 +108,7 @@
   color: #64748b;
 }
 
-/* ---------- Inputs, Selects & Textareas ---------- */
+/* ---------- Inputs ---------- */
 .opd-page input,
 .opd-page select,
 .opd-page textarea {
@@ -163,16 +183,9 @@
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 768px) {
-  .opd-page form {
-    padding: 18px;
-    margin: 15px 10px 30px;
-  }
-  .opd-page h2 {
-    font-size: 20px;
-  }
-  .opd-page button {
-    width: 100%;
+@media (max-width: 480px) {
+  .row .field {
+    flex: 0 0 100%; /* stack fields for tiny screens */
   }
 }
 </style>
@@ -190,49 +203,39 @@
 
   <form id="patientForm">
 
-    <!-- SECTION TITLE -->
-    <div class="section-title">Basic Information</div>
-
     <!-- Row 1 -->
-    <div class="row">
-      <div class="field">
-        <label>OPD No</label>
-        <input name="opdNo" id="opdNo" readonly placeholder="Auto-generated">
-      </div>
+    <div class="row row-1">
+      <div class="field"><label>OPD No</label><input name="opdNo" id="opdNo" readonly placeholder="Auto-generated"></div>
       <div class="field"><label>Mobile No</label><input name="mobileNo" type="number"></div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row row-2">
       <div class="field"><label>Patient Name</label><input name="patientName" required></div>
       <div class="field"><label>Gender</label>
         <select name="gender" required>
           <option value="">Select</option>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
+          <option>Male</option><option>Female</option><option>Other</option>
         </select>
       </div>
       <div class="field"><label>Age</label><input name="age" type="number" required></div>
     </div>
 
-    <!-- SECTION TITLE -->
-    <div class="section-title">Doctor & Symptoms</div>
-
-    <!-- Row 2 -->
-    <div class="row">
-      <div class="field">
-        <label>Doctor Name</label>
+    <!-- Row 3 -->
+    <div class="row row-3">
+      <div class="field"><label>Doctor Name</label>
         <select name="doctorName" required>
           <option value="">Select Doctor</option>
           <option>Dr. Girkar</option>
           <option>Dr. Nerekar</option>
           <option>Dr. INHS Sandhani - Gyne</option>
           <option>Dr. INHS Sandhani - General</option>
-          <option>Dr. Terna </option>
+          <option>Dr. Terna</option>
         </select>
       </div>
-      <div class="field">
-        <label>Department</label>
+      <div class="field"><label>Department</label>
         <select name="department" required>
           <option value="">Select Department</option>
-          <!-- full list kept exactly -->
           <option>General Medicine / Physician</option>
           <option>General Surgery</option>
           <option>Cardiology (Heart Specialist)</option>
@@ -260,45 +263,37 @@
       <div class="field"><label>Symptoms</label><textarea name="symptoms"></textarea></div>
     </div>
 
-    <!-- SECTION TITLE -->
-    <div class="section-title">Vitals</div>
-
-    <!-- Row 3 -->
-    <div class="row">
+    <!-- Row 4 -->
+    <div class="row row-4">
       <div class="field"><label>Weight <small>50–80 kg</small></label><input name="weight" type="number"></div>
       <div class="field"><label>BP <small>120/80 mmHg</small></label><input name="bp" type="number"></div>
       <div class="field"><label>Pulse <small>60–100 bpm</small></label><input name="pulse" type="number"></div>
       <div class="field"><label>RR <small>12–20/min</small></label><input name="respiratoryRate" type="number"></div>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="row row-5">
       <div class="field"><label>spO₂ <small>≥95%</small></label><input name="spO2" type="number"></div>
       <div class="field"><label>Temp <small>98.6°F / 37°C</small></label><input name="temp" type="number"></div>
       <div class="field"><label>Sugar <small>70–110 mg/dL</small></label><input name="sugar" type="number"></div>
     </div>
 
-    <!-- SECTION TITLE -->
-    <div class="section-title">Test Information</div>
-
-    <!-- Row 4 -->
-    <div class="row">
+    <!-- Row 6 -->
+    <div class="row row-6">
       <div class="field"><label>Test Details</label><textarea name="testDetails"></textarea></div>
       <div class="field"><label>Test Reports</label><textarea name="testReports"></textarea></div>
       <div class="field"><label>Diagnosis</label><textarea name="diagnosis"></textarea></div>
     </div>
 
-    <!-- SECTION TITLE -->
-    <div class="section-title">Prescription</div>
-
-    <!-- Row 5 -->
-    <div class="row">
+    <!-- Row 7 -->
+    <div class="row row-7">
       <div class="field"><label>Prescription (Generic / Brand)</label><textarea name="prescription"></textarea></div>
       <div class="field"><label>Treatment Note</label><textarea name="treatmentNote"></textarea></div>
+      <div class="field"><label>Advice</label><textarea name="advice"></textarea></div>
     </div>
 
-    <!-- SECTION TITLE -->
-    <div class="section-title">Treatment Summary</div>
-
-    <!-- Row 6 -->
-    <div class="row">
-      <div class="field"><label>Advice</label><textarea name="advice"></textarea></div>
+    <!-- Row 8 -->
+    <div class="row row-8">
       <div class="field">
         <label>Effect After Treatment</label>
         <select name="effectAfterTreatment">
@@ -310,13 +305,6 @@
         </select>
       </div>
       <div class="field"><label>Dr. Fees</label><input name="drFees" type="number"></div>
-    </div>
-
-    <!-- SECTION TITLE -->
-    <div class="section-title">Doctor Remarks</div>
-
-    <!-- Row 7 -->
-    <div class="row">
       <div class="field"><label>Dr. Remarks</label><textarea name="drRemarks"></textarea></div>
     </div>
 
@@ -329,6 +317,7 @@
 <!-- Footer Placeholder -->
 <div id="footer"></div>
 
+<!-- JS Form Submission -->
 <script src="js/patientform.js"></script>
 
 </body>
