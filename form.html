@@ -16,6 +16,7 @@
 
 <style>
 /* ==================== FORM PAGE LIGHT THEME ==================== */
+/* Scoped under .opd-page so it does NOT affect header/footer */
 .opd-page {
   font-family: 'Segoe UI', sans-serif;
   background: #f8fafc;
@@ -51,47 +52,82 @@
 }
 
 /* ===========================================================
-   FIX ROW SPACING (NO SCROLL, NO BREAK)
-   Each row keeps exact number of fields using width rules.
+   ROW SYSTEM – RESPONSIVE, NO SCROLL, NO OVERFLOW
+   -----------------------------------------------------------
+   – Desktop: exact layout per row using width rules
+   – Tablet: auto-adjust to 2 per line
+   – Mobile: stack fields cleanly
    =========================================================== */
 
 .opd-page .row {
   display: flex;
-  flex-wrap: nowrap;      /* Do not wrap to next line */
-  gap: 14px;              /* Space between fields */
-  margin-bottom: 14px;    /* Space between rows */
+  flex-wrap: wrap;      /* allow wrapping instead of overflow */
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
+/* Base field behavior */
 .opd-page .field {
-  flex: 1;
-  min-width: 160px;
+  flex: 1 1 160px;      /* flexible width, min 160px */
 }
 
-/* ========== ROW WIDTH CONTROL (EDIT ANYTIME) ========== */
+/* ===== DESKTOP (≥ 992px): fixed number of columns per row ===== */
+@media (min-width: 992px) {
 
-/* Row 1 → 2 fields */
-.row.row-1 .field { flex: 0 0 calc(50% - 14px); }
+  /* Row 1 → 2 fields */
+  .row.row-1 .field {
+    flex: 0 0 calc(50% - 14px);
+  }
 
-/* Row 2 → 3 fields */
-.row.row-2 .field { flex: 0 0 calc(33.33% - 14px); }
+  /* Row 2 → 3 fields */
+  .row.row-2 .field {
+    flex: 0 0 calc(33.33% - 14px);
+  }
 
-/* Row 3 → 3 fields */
-.row.row-3 .field { flex: 0 0 calc(33.33% - 14px); }
+  /* Row 3 → 3 fields */
+  .row.row-3 .field {
+    flex: 0 0 calc(33.33% - 14px);
+  }
 
-/* Row 4 → 4 fields */
-.row.row-4 .field { flex: 0 0 calc(25% - 14px); }
+  /* Row 4 → 4 fields */
+  .row.row-4 .field {
+    flex: 0 0 calc(25% - 14px);
+  }
 
-/* Row 5 → 3 fields */
-.row.row-5 .field { flex: 0 0 calc(33.33% - 14px); }
+  /* Row 5 → 3 fields */
+  .row.row-5 .field {
+    flex: 0 0 calc(33.33% - 14px);
+  }
 
-/* Row 6 → 3 fields */
-.row.row-6 .field { flex: 0 0 calc(33.33% - 14px); }
+  /* Row 6 → 3 fields */
+  .row.row-6 .field {
+    flex: 0 0 calc(33.33% - 14px);
+  }
 
-/* Row 7 → 3 fields */
-.row.row-7 .field { flex: 0 0 calc(33.33% - 14px); }
+  /* Row 7 → 3 fields */
+  .row.row-7 .field {
+    flex: 0 0 calc(33.33% - 14px);
+  }
 
-/* Row 8 → 3 fields */
-.row.row-8 .field { flex: 0 0 calc(33.33% - 14px); }
+  /* Row 8 → 3 fields */
+  .row.row-8 .field {
+    flex: 0 0 calc(33.33% - 14px);
+  }
+}
+
+/* ===== TABLET (600px – 991px): 2 items per line ===== */
+@media (max-width: 991px) and (min-width: 600px) {
+  .opd-page .field {
+    flex: 1 1 calc(50% - 14px);
+  }
+}
+
+/* ===== MOBILE (≤ 599px): full width stacking ===== */
+@media (max-width: 599px) {
+  .opd-page .field {
+    flex: 1 1 100%;
+  }
+}
 
 /* ---------- Labels ---------- */
 .opd-page label {
@@ -108,7 +144,7 @@
   color: #64748b;
 }
 
-/* ---------- Inputs ---------- */
+/* ---------- Inputs, Selects & Textareas ---------- */
 .opd-page input,
 .opd-page select,
 .opd-page textarea {
@@ -182,10 +218,17 @@
   border: 1px solid #ef4444;
 }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 480px) {
-  .row .field {
-    flex: 0 0 100%; /* stack fields for tiny screens */
+/* ---------- Responsive general ---------- */
+@media (max-width: 768px) {
+  .opd-page form {
+    padding: 18px;
+    margin: 15px 10px 30px;
+  }
+  .opd-page h2 {
+    font-size: 20px;
+  }
+  .opd-page button {
+    width: 100%;
   }
 }
 </style>
@@ -322,3 +365,4 @@
 
 </body>
 </html>
+
