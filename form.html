@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milindweb - OPD Registration Form</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>MilindWeb – OPD Registration Form</title>
 
 <!-- Header + Footer CSS -->
 <link rel="stylesheet" href="css/headerfooter.css" />
@@ -18,66 +19,42 @@
   color: #1e293b;
   margin: 0;
   padding: 20px;
-  flex: 1;
 }
 
-.opd-page h2 {
-  text-align: center;
-  color: #2563eb;
-  margin: 25px 0 15px;
-  font-size: 24px;
-  font-weight: 650;
-  letter-spacing: 0.3px;
-}
-
-/* ---------- Form Container ---------- */
-.opd-page form {
-  max-width: 950px;
-  margin: 25px auto 40px;
+/* ---------- Section Boxes ---------- */
+.opd-section {
   background: #ffffff;
-  padding: 28px;
-  border-radius: 14px;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  padding: 18px 22px;
+  margin: 18px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+  max-width: 950px;
 }
 
-.opd-page form:hover {
-  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.08);
-  transform: translateY(-1px);
+.opd-section h3 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1d4ed8;
+  border-left: 4px solid #2563eb;
+  padding-left: 10px;
 }
 
-/* ========================================================= */
-/* === FIXED ROW LAYOUT – ALWAYS SINGLE ROW WITH SCROLL ==== */
-/* ========================================================= */
-.opd-page .row {
+/* ---------- Rows ---------- */
+.row {
   display: flex;
-  flex-wrap: nowrap;      /* force single row */
-  overflow-x: auto;       /* enable horizontal scroll */
+  flex-wrap: wrap;   /* Soft wrap instead of breaking outside */
   gap: 14px;
-  margin-bottom: 14px;
-  padding-bottom: 6px;    /* space for scrollbar */
+  margin-bottom: 12px;
 }
 
-.opd-page .field {
-  flex: 0 0 auto;         /* prevent shrinking too small */
-  min-width: 180px;       /* good readable minimum width */
+/* ---------- Fields ---------- */
+.field {
+  flex: 1;
+  min-width: 180px;
 }
 
-/* Scrollbar styling */
-.opd-page .row::-webkit-scrollbar {
-  height: 6px;
-}
-.opd-page .row::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 10px;
-}
-.opd-page .row::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-/* ========================================================= */
-
-/* ---------- Labels ---------- */
-.opd-page label {
+label {
   display: block;
   font-size: 13.5px;
   font-weight: 600;
@@ -85,42 +62,40 @@
   color: #1d4ed8;
 }
 
-.opd-page small {
+small {
   font-weight: 400;
   font-size: 11px;
   color: #64748b;
 }
 
-/* ---------- Inputs & Textareas ---------- */
-.opd-page input,
-.opd-page select,
-.opd-page textarea {
+input,
+select,
+textarea {
   width: 100%;
   padding: 8px 10px;
   background: #f9fafb;
-  color: #1e293b;
   border: 1px solid #d1d5db;
   border-radius: 6px;
   font-size: 13.5px;
   transition: all 0.25s ease;
 }
 
-.opd-page input:focus,
-.opd-page select:focus,
-.opd-page textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border-color: #3b82f6;
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
 
-.opd-page textarea {
+textarea {
   resize: vertical;
   min-height: 40px;
 }
 
 /* ---------- Submit Button ---------- */
-.opd-page button {
+button {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   border: none;
@@ -128,185 +103,155 @@
   border-radius: 8px;
   cursor: pointer;
   display: block;
-  margin: 25px auto 5px;
+  margin: 25px auto;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.3px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px rgba(37,99,235,0.2);
 }
 
-.opd-page button:hover {
+button:hover {
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 6px 16px rgba(37,99,235,0.25);
   transform: translateY(-1px);
-}
-
-/* ---------- Alerts ---------- */
-.opd-page .alert {
-  padding: 10px 12px;
-  border-radius: 6px;
-  text-align: center;
-  margin-top: 12px;
-  font-size: 13.5px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.opd-page .success {
-  background: rgba(16, 185, 129, 0.12);
-  color: #047857;
-  border: 1px solid #10b981;
-}
-
-.opd-page .error {
-  background: rgba(239, 68, 68, 0.12);
-  color: #b91c1c;
-  border: 1px solid #ef4444;
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
-  .opd-page form {
-    padding: 18px;
-    margin: 15px 10px 30px;
-  }
-  .opd-page h2 {
-    font-size: 20px;
-  }
-  .opd-page button {
-    width: 100%;
+  .opd-section {
+    margin: 12px 10px;
+    padding: 16px;
   }
 }
 </style>
 </head>
 
 <body>
-  <!-- Header Placeholder -->
-  <div id="header"></div>
 
-  <!-- OPD Form Content (scoped safely inside opd-page) -->
-  <main class="opd-page">
-    <h2>OPD Patient Registration Form</h2>
+<!-- HEADER -->
+<div id="header"></div>
 
-    <form id="patientForm">
-      <!-- Row 1 -->
-      <div class="row">
-        <div class="field">
-          <label>OPD No</label>
-          <input name="opdNo" id="opdNo" readonly placeholder="Auto-generated">
-        </div>
-        <div class="field"><label>Mobile No</label><input name="mobileNo" type="number" title="Enter valid 10-digit number"></div>
-        <div class="field"><label>Patient Name</label><input name="patientName" required></div>
-        <div class="field"><label>Gender</label>
-          <select name="gender" required>
-            <option value="">Select</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field"><label>Age</label><input name="age" type="number" required></div>
+<main class="opd-page">
+  <h2 style="text-align:center;color:#2563eb;margin-bottom:20px;font-size:24px;">OPD Patient Registration Form</h2>
+
+  <!-- ================= SECTION 1 : BASIC INFO ================= -->
+  <div class="opd-section">
+    <h3>Basic Information</h3>
+    <div class="row">
+      <div class="field"><label>OPD No</label><input name="opdNo" id="opdNo" readonly placeholder="Auto-generated"></div>
+      <div class="field"><label>Mobile No</label><input name="mobileNo" type="number"></div>
+      <div class="field"><label>Patient Name</label><input name="patientName" required></div>
+      <div class="field"><label>Gender</label>
+        <select name="gender" required>
+          <option value="">Select</option>
+          <option>Male</option><option>Female</option><option>Other</option>
+        </select>
       </div>
+      <div class="field"><label>Age</label><input name="age" type="number" required></div>
+    </div>
+  </div>
 
-      <!-- Row 2 -->
-      <div class="row">
-        <div class="field">
-          <label>Doctor Name</label>
-          <select name="doctorName" required>
-            <option value="">Select Doctor</option>
-            <option>Dr. Girkar</option>
-            <option>Dr. Nerekar</option>
-            <option>Dr. INHS Sandhani - Gyne</option>
-            <option>Dr. INHS Sandhani - General</option>
-            <option>Dr. Terna </option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Department</label>
-          <select name="department" required>
-            <option value="">Select Department</option>
-            <option>General Medicine / Physician</option>
-            <option>General Surgery</option>
-            <option>Cardiology (Heart Specialist)</option>
-            <option>Dental / Oral Surgery</option>
-            <option>Dermatology (Skin & Hair)</option>
-            <option>Endocrinology (Diabetes / Thyroid)</option>
-            <option>ENT (Ear, Nose, Throat)</option>
-            <option>Gastroenterology (Digestive System)</option>
-            <option>Nephrology (Kidney)</option>
-            <option>Neurology (Brain & Nerves)</option>
-            <option>Obstetrics & Gynecology (Gynac)</option>
-            <option>Oncology (Cancer)</option>
-            <option>Ophthalmology (Eye)</option>
-            <option>Orthopedics</option>
-            <option>Pediatrics (Child Specialist)</option>
-            <option>Physiotherapy / Rehabilitation</option>
-            <option>Plastic & Reconstructive Surgery</option>
-            <option>Psychiatry (Mental Health)</option>
-            <option>Pulmonology / Chest Medicine</option>
-            <option>Radiology & Imaging</option>
-            <option>Urology (Urinary / Male Reproductive)</option>
-            <option>Others / Not Listed</option>
-          </select>
-        </div>
-        <div class="field"><label>Symptoms</label><textarea name="symptoms" title="i.e. Fever, Headache from 2 days"></textarea></div>
+  <!-- =============== SECTION 2 : DOCTOR DETAILS ================= -->
+  <div class="opd-section">
+    <h3>Doctor & Department</h3>
+    <div class="row">
+      <div class="field">
+        <label>Doctor Name</label>
+        <select name="doctorName" required>
+          <option value="">Select Doctor</option>
+          <option>Dr. Girkar</option>
+          <option>Dr. Nerekar</option>
+          <option>Dr. INHS Sandhani - Gyne</option>
+          <option>Dr. INHS Sandhani - General</option>
+          <option>Dr. Terna</option>
+        </select>
       </div>
-
-      <!-- Row 3 -->
-      <div class="row">
-        <div class="field"><label>Weight <small>50–80 kg</small></label><input name="weight" type="number"></div>
-        <div class="field"><label>BP <small>120/80 mmHg</small></label><input name="bp" type="number"></div>
-        <div class="field"><label>Pulse <small>60–100 bpm</small></label><input name="pulse" type="number"></div>
-        <div class="field"><label>RR <small>12–20/min</small></label><input name="respiratoryRate" type="number"></div>
-        <div class="field"><label>spO₂ <small>≥95%</small></label><input name="spO2" type="number"></div>
-        <div class="field"><label>Temp <small>98.6°F / 37°C</small></label><input name="temp" type="number"></div>
-        <div class="field"><label>Sugar <small>70–110 mg/dL</small></label><input name="sugar" type="number"></div>
+      <div class="field">
+        <label>Department</label>
+        <select name="department" required>
+          <option value="">Select Department</option>
+          <option>General Medicine</option>
+          <option>General Surgery</option>
+          <option>Cardiology</option>
+          <option>Dental</option>
+          <option>Dermatology</option>
+        </select>
       </div>
-
-      <!-- Row 4 -->
-      <div class="row">
-        <div class="field"><label>Test Details</label><textarea name="testDetails" title="i.e. CBC, ECG"></textarea></div>
-        <div class="field"><label>Test Reports</label><textarea name="testReports" title="i.e. Normal"></textarea></div>
-        <div class="field"><label>Diagnosis</label><textarea name="diagnosis" title="i.e. Normal / Corona -ve"></textarea></div>
+      <div class="field">
+        <label>Symptoms</label>
+        <textarea name="symptoms"></textarea>
       </div>
+    </div>
+  </div>
 
-      <!-- Row 5 -->
-      <div class="row">
-        <div class="field"><label>Prescription (Generic / Brand)</label><textarea name="prescription" title="Tab Ibuprofen 500mg for 3 days"></textarea></div>
-        <div class="field"><label>Treatment Note</label><textarea name="treatmentNote" title="Daily twice after meals"></textarea></div>
+  <!-- =============== SECTION 3 : VITALS ================= -->
+  <div class="opd-section">
+    <h3>Vitals</h3>
+    <div class="row">
+      <div class="field"><label>Weight <small>50–80 kg</small></label><input name="weight" type="number"></div>
+      <div class="field"><label>BP <small>120/80</small></label><input name="bp" type="number"></div>
+      <div class="field"><label>Pulse <small>60–100 bpm</small></label><input name="pulse" type="number"></div>
+      <div class="field"><label>RR <small>12–20</small></label><input name="respiratoryRate" type="number"></div>
+      <div class="field"><label>spO₂ <small>≥95%</small></label><input name="spO2" type="number"></div>
+      <div class="field"><label>Temp <small>98.6°F</small></label><input name="temp" type="number"></div>
+      <div class="field"><label>Sugar <small>70–110 mg/dL</small></label><input name="sugar" type="number"></div>
+    </div>
+  </div>
+
+  <!-- =============== SECTION 4 : TESTS ================= -->
+  <div class="opd-section">
+    <h3>Tests & Diagnosis</h3>
+    <div class="row">
+      <div class="field"><label>Test Details</label><textarea name="testDetails"></textarea></div>
+      <div class="field"><label>Test Reports</label><textarea name="testReports"></textarea></div>
+      <div class="field"><label>Diagnosis</label><textarea name="diagnosis"></textarea></div>
+    </div>
+  </div>
+
+  <!-- =============== SECTION 5 : PRESCRIPTION ================= -->
+  <div class="opd-section">
+    <h3>Prescription / Treatment</h3>
+    <div class="row">
+      <div class="field"><label>Prescription</label><textarea name="prescription"></textarea></div>
+      <div class="field"><label>Treatment Note</label><textarea name="treatmentNote"></textarea></div>
+    </div>
+  </div>
+
+  <!-- =============== SECTION 6 : SUMMARY ================= -->
+  <div class="opd-section">
+    <h3>Follow-up & Fees</h3>
+    <div class="row">
+      <div class="field"><label>Advice</label><textarea name="advice"></textarea></div>
+      <div class="field">
+        <label>Effect After Treatment</label>
+        <select name="effectAfterTreatment">
+          <option value="">NA</option>
+          <option>Recovered</option>
+          <option>No Change</option>
+          <option>Worsened</option>
+          <option>Follow-up Required</option>
+        </select>
       </div>
+      <div class="field"><label>Dr. Fees</label><input name="drFees" type="number"></div>
+    </div>
+  </div>
 
-      <!-- Row 6 -->
-      <div class="row">
-        <div class="field"><label>Advice</label><textarea name="advice" title="i.e. Take rest for 2 days"></textarea></div>
-        <div class="field">
-          <label>Effect After Treatment</label>
-          <select name="effectAfterTreatment">
-            <option value="">NA</option>
-            <option>Recovered</option>
-            <option>No Change</option>
-            <option>Worsened</option>
-            <option>Follow-up Required</option>
-          </select>
-        </div>
-        <div class="field"><label>Dr. Fees</label><input name="drFees" type="number"></div>
-      </div>
+  <!-- =============== SECTION 7 : REMARKS ================= -->
+  <div class="opd-section">
+    <h3>Doctor Remarks</h3>
+    <div class="row">
+      <div class="field"><textarea name="drRemarks"></textarea></div>
+    </div>
+  </div>
 
-      <!-- Row 7 -->
-      <div class="field"><label>Dr. Remarks</label><textarea name="drRemarks"></textarea></div>
+  <button type="submit">Submit</button>
+</main>
 
-      <button type="submit">Submit</button>
-      <div id="response"></div>
-    </form>
-  </main>
+<!-- FOOTER -->
+<div id="footer"></div>
 
-  <!-- Footer Placeholder -->
-  <div id="footer"></div>
+<script src="js/patientform.js"></script>
 
-  <!-- JS Form Submission -->
-  <script src="js/patientform.js"></script>
 </body>
 </html>
-
-
