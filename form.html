@@ -15,60 +15,94 @@
 <script src="js/headerfooter.js" defer></script>
 
 <style>
-/* ==================== FORM PAGE LIGHT THEME ==================== */
-/* Scoped under .opd-page so it does NOT affect header/footer */
+/* ============================================================
+   THEME VARIABLES (LIGHT + OPTION FOR ALTERNATE PALETTE)
+   ============================================================ */
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #1e293b;
+  --label: #1d4ed8;
+  --heading: #2563eb;
+  --input-bg: #f9fafb;
+  --input-border: #d1d5db;
+  --input-focus: #3b82f6;
+  --button-start: #3b82f6;
+  --button-end: #2563eb;
+  --highlight: #0ea5a4; /* Your alternate selected color */
+}
+
+/* Optional alternate palette: add class="alt" on <body> */
+body.alt {
+  --bg: #0f172a;
+  --surface: #0b1220;
+  --text: #e2e8f0;
+  --label: #93c5fd;
+  --heading: #60a5fa;
+  --input-bg: #1e293b;
+  --input-border: #334155;
+  --input-focus: #60a5fa;
+  --button-start: #60a5fa;
+  --button-end: #3b82f6;
+  --highlight: #ff7a59;
+}
+
+/* ============================================================
+   PAGE BASE
+   ============================================================ */
 .opd-page {
   font-family: 'Segoe UI', sans-serif;
-  background: #f8fafc;
-  color: #1e293b;
-  margin: 0;
+  background: var(--bg);
+  color: var(--text);
   padding: 20px;
+  margin: 0;
   flex: 1;
 }
 
 .opd-page h2 {
   text-align: center;
-  color: #2563eb;
+  color: var(--heading);
   margin: 25px 0 15px;
   font-size: 24px;
   font-weight: 650;
-  letter-spacing: 0.3px;
 }
 
-/* ---------- Form Container ---------- */
+/* ============================================================
+   FORM CONTAINER
+   ============================================================ */
 .opd-page form {
   max-width: 950px;
   margin: 25px auto 40px;
-  background: #ffffff;
+  background: var(--surface);
   padding: 28px;
   border-radius: 14px;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.06);
+  transition: 0.3s ease;
 }
 
 .opd-page form:hover {
-  box-shadow: 0 8px 28px rgba(37, 99, 235, 0.08);
+  box-shadow: 0 8px 28px rgba(37,99,235,0.10);
   transform: translateY(-1px);
 }
 
-/* ===========================================================
-   ROW SYSTEM – RESPONSIVE, NO SCROLL, NO OVERFLOW
-   =========================================================== */
-
+/* ============================================================
+   ROW SYSTEM – FLEXIBLE, NO OVERFLOW, FULL SCREEN FIT
+   ============================================================ */
 .opd-page .row {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
   margin-bottom: 14px;
+  width: 100%;
 }
 
 .opd-page .field {
-  flex: 1 1 160px;
+  flex: 1 1 260px;
+  min-width: 0; /* MOST IMPORTANT: prevents overflow */
 }
 
-/* ===== DESKTOP LAYOUT (≥ 992px) ===== */
+/* DESKTOP ROW WIDTHS */
 @media (min-width: 992px) {
-
   .row.row-1 .field { flex: 0 0 calc(50% - 14px); }
   .row.row-2 .field { flex: 0 0 calc(33.33% - 14px); }
   .row.row-3 .field { flex: 0 0 calc(33.33% - 14px); }
@@ -79,18 +113,18 @@
   .row.row-8 .field { flex: 0 0 calc(33.33% - 14px); }
 }
 
-/* ===== TABLET LAYOUT (600px – 991px) ===== */
+/* TABLET */
 @media (max-width: 991px) and (min-width: 600px) {
   .opd-page .field {
     flex: 1 1 calc(50% - 14px);
   }
 }
 
-/* ===== MOBILE OPTIMIZED (≤ 599px) ===== */
+/* MOBILE — FULL WIDTH ALWAYS */
 @media (max-width: 599px) {
 
   .opd-page form {
-    padding: 12px !important;
+    padding: 14px !important;
     margin: 10px !important;
     width: 100% !important;
   }
@@ -118,49 +152,53 @@
   }
 
   .opd-page button {
-    padding: 10px !important;
-    font-size: 14px !important;
     width: 100% !important;
+    padding: 11px !important;
+    font-size: 14px !important;
     margin-top: 15px !important;
   }
 }
 
-/* ---------- Labels ---------- */
+/* ============================================================
+   LABELS & HELP TEXT
+   ============================================================ */
 .opd-page label {
   display: block;
   font-size: 13.5px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: #1d4ed8;
+  color: var(--label);
 }
 
 .opd-page small {
-  font-weight: 400;
   font-size: 11px;
   color: #64748b;
 }
 
-/* ---------- Inputs, Selects & Textareas ---------- */
+/* ============================================================
+   INPUT, SELECT, TEXTAREA
+   ============================================================ */
 .opd-page input,
 .opd-page select,
 .opd-page textarea {
   width: 100%;
   padding: 8px 10px;
-  background: #f9fafb;
-  color: #1e293b;
-  border: 1px solid #d1d5db;
+  background: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--input-border);
   border-radius: 6px;
   font-size: 13.5px;
-  transition: all 0.25s ease;
+  transition: 0.25s ease;
+  min-width: 0; /* FIX overflow */
 }
 
 .opd-page input:focus,
 .opd-page select:focus,
 .opd-page textarea:focus {
+  border-color: var(--input-focus);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
   outline: none;
-  border-color: #3b82f6;
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 .opd-page textarea {
@@ -168,10 +206,12 @@
   min-height: 40px;
 }
 
-/* ---------- Button ---------- */
+/* ============================================================
+   SUBMIT BUTTON
+   ============================================================ */
 .opd-page button {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  color: white;
+  background: linear-gradient(135deg, var(--button-start), var(--button-end));
+  color: #fff;
   border: none;
   padding: 12px 28px;
   border-radius: 8px;
@@ -181,15 +221,16 @@
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.3px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(37,99,235,0.2);
 }
 
 .opd-page button:hover {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+  background: linear-gradient(135deg, var(--button-end), var(--button-start));
+  box-shadow: 0 6px 16px rgba(37,99,235,0.28);
   transform: translateY(-1px);
 }
+
 
 </style>
 </head>
@@ -325,5 +366,6 @@
 
 </body>
 </html>
+
 
 
