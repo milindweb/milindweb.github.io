@@ -106,7 +106,7 @@ fetch("data/dept.json")
 departmentSelect.addEventListener("change", () => {
   symptomsInput.value = "";
   symptomReference.textContent = "";
-
+  symptomSuggestions.innerHTML = "";  // Optional Polished
   const selectedDept = departmentSelect.value;
   const deptObj = window.deptData?.find(d => d.dept === selectedDept);
 
@@ -131,6 +131,7 @@ symptomsInput.addEventListener("input", () => {
   symptomSuggestions.innerHTML = "";
 
   if (query.length < 2) return;
+  if (!departmentSelect.value) return;   // optiona polished
 
   // get selected department
   const selectedDept = departmentSelect.value;
@@ -223,4 +224,5 @@ document.addEventListener("click", e => {
     medicineSuggestions.innerHTML = "";
   }
 });
+
 
