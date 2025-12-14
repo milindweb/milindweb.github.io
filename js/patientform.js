@@ -108,6 +108,8 @@ const departmentSelect = document.getElementById("departmentSelect");
 
 // Symptoms textarea (will be enhanced later)
 const symptomsInput = document.getElementById("symptomsInput");
+const symptomReference = document.getElementById("symptomReference");
+
 
 // Load departments and symptoms from JSON file
 fetch("data/dept.json")
@@ -139,19 +141,24 @@ fetch("data/dept.json")
 
 // Listen for department selection change
 departmentSelect.addEventListener("change", () => {
+
+  // clear textarea
   symptomsInput.value = "";
 
-  // Get selected department
+  // clear old reference text
+  symptomReference.textContent = "";
+
+  // get selected department
   const selectedDept = departmentSelect.value;
 
-  // Find department object from JSON data
+  // find department object
   const deptObj = window.deptData?.find(d => d.dept === selectedDept);
 
-  // Temporarily load symptoms as comma-separated text
-  if (deptObj) {
-    symptomsInput.value = "";
-  } else {
-    symptomsInput.value = "";
+  // show reference symptoms (text only)
+  if (deptObj && Array.isArray(deptObj.symptoms)) {
+    symptomReference.textContent =
+      "Common symptoms: " + deptObj.symptoms.join(", ");
   }
 });
+
 
