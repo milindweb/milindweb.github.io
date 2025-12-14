@@ -127,7 +127,7 @@ fetch("data/dept.json")
       departmentSelect.appendChild(option);
 
       // Auto-select first department (MED)
-      if (index === 0) departmentSelect.value = deptObj.dept;
+      // if (index === 0) departmentSelect.value = deptObj.dept;
     });
 
     // Store department data globally for later use
@@ -160,5 +160,6 @@ departmentSelect.addEventListener("change", () => {
       "Common symptoms: " + deptObj.symptoms.join(", ");
   }
 });
+
 
 
