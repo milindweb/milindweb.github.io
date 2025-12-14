@@ -1,43 +1,70 @@
-// ✅ Your Google Apps Script web app link
+// ============================================================
+// ✅ GOOGLE APPS SCRIPT BACKEND URL
+// ============================================================
+
+// Backend endpoint where OPD form data is submitted
 const scriptURL = "https://script.google.com/macros/s/AKfycbzlI-y3orZji_GQALezywPOQaZ3RNQR79jxJYQ9T4Gpk1U5ot7rUcOgrtQRKFOTBuGwxw/exec";
 
-// ✅ Get form and response container elements
+
+// ============================================================
+// ✅ FORM & RESPONSE ELEMENTS
+// ============================================================
+
+// Main OPD form element
 const form = document.getElementById("patientForm");
+
+// Response message container
 const responseDiv = document.getElementById("response");
 
-// ✅ Function to auto-generate OPD No. (YYMMDDHHMMS)
+
+// ============================================================
+// ✅ OPD NUMBER GENERATION LOGIC
+// ============================================================
+
+// Generates OPD No in YYMMDDHHMMSS format
 function generateOPDNo() {
   const now = new Date();
-  const yy = String(now.getFullYear()).slice(-2);       // last two digits of year
-  const mm = String(now.getMonth() + 1).padStart(2, "0"); // month 01–12
-  const dd = String(now.getDate()).padStart(2, "0");      // day 01–31
-  const hh = String(now.getHours()).padStart(2, "0");     // hours 00–23
-  const min = String(now.getMinutes()).padStart(2, "0");  // minutes 00–59
-  const ss = String(now.getSeconds()).padStart(2, "0");   // seconds 00–59
-  return `${yy}${mm}${dd}${hh}${min}${ss}`;               // combine into YYMMDDHHMMS
+  const yy = String(now.getFullYear()).slice(-2);         // year (2 digits)
+  const mm = String(now.getMonth() + 1).padStart(2, "0"); // month
+  const dd = String(now.getDate()).padStart(2, "0");      // day
+  const hh = String(now.getHours()).padStart(2, "0");     // hour
+  const min = String(now.getMinutes()).padStart(2, "0");  // minute
+  const ss = String(now.getSeconds()).padStart(2, "0");   // second
+  return `${yy}${mm}${dd}${hh}${min}${ss}`;               // final OPD No
 }
 
-// ✅ Generate and show OPD No. immediately when page loads
+
+// ============================================================
+// ✅ INITIAL OPD NUMBER ON PAGE LOAD
+// ============================================================
+
+// OPD No input field
 const opdNoField = document.getElementById("opdNo");
-const initialOPD = generateOPDNo();
-opdNoField.value = initialOPD;
 
-// ✅ Listen for form submission
+// Generate OPD No when page loads
+opdNoField.value = generateOPDNo();
+
+
+// ============================================================
+// ✅ FORM SUBMISSION HANDLER
+// ============================================================
+
+// Handle OPD form submission
 form.addEventListener("submit", e => {
-  e.preventDefault(); // prevent page reload
+  e.preventDefault(); // stop default form reload
 
-  // Collect all form data
+  // Collect all form inputs
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
-  // --- 🔹 Generate fresh OPD No on each submission ---
+  // Generate fresh OPD No at submission time
   const opdNo = generateOPDNo();
-  opdNoField.value = opdNo; // show the new OPD No in the input field
+  opdNoField.value = opdNo;
 
-  // Add the generated OPD number to the data being sent
+  // Attach OPD No to submitted data
   data.opdNo = opdNo;
 
-  // --- 🔹 Send the data to Google Apps Script endpoint ---
+  // Send data to Google Apps Script
   fetch(scriptURL, {
     method: "POST",
     mode: "no-cors",
@@ -45,21 +72,84 @@ form.addEventListener("submit", e => {
     body: JSON.stringify(data)
   })
   .then(() => {
+
     // Show success message
     responseDiv.innerHTML = `
       <div class='alert success'>
         ✅ Patient record saved successfully.<br>
         <strong>OPD No:</strong> ${opdNo}
-      </div>`;
-    // Clear message after 15 seconds
+      </div>
+    `;
+
+    // Auto-hide message after 15 seconds
     setTimeout(() => responseDiv.innerHTML = "", 15000);
+
+    // Reset form after successful submission
     form.reset();
 
-    // Generate a new OPD No for the next entry
+    // Generate new OPD No for next patient
     opdNoField.value = generateOPDNo();
   })
   .catch(() => {
-    // Show error if submission fails
-    responseDiv.innerHTML = "<div class='alert error'>❌ Error saving data. Try again.</div>";
+
+    // Show error message on failure
+    responseDiv.innerHTML =
+      "<div class='alert error'>❌ Error saving data. Try again.</div>";
   });
+});
+
+
+// ============================================================
+// ✅ DEPARTMENT & SYMPTOMS (JSON-BASED, NON-INTRUSIVE)
+// ============================================================
+
+// Department dropdown element
+const departmentSelect = document.getElementById("departmentSelect");
+
+// Symptoms textarea (will be enhanced later)
+const symptomsInput = document.getElementById("symptomsInput");
+
+// Load departments and symptoms from JSON file
+fetch("data/dept.json")
+  .then(res => res.json())
+  .then(json => {
+
+    // Extract department array from JSON
+    const departments = json.department;
+
+    // Populate department dropdown dynamically
+    departments.forEach((deptObj, index) => {
+      const option = document.createElement("option");
+      option.value = deptObj.dept;
+      option.textContent = deptObj.dept;
+      departmentSelect.appendChild(option);
+
+      // Auto-select first department (MED)
+      if (index === 0) departmentSelect.value = deptObj.dept;
+    });
+
+    // Store department data globally for later use
+    window.deptData = departments;
+  });
+
+
+// ============================================================
+// ✅ LOAD SYMPTOMS BASED ON SELECTED DEPARTMENT
+// ============================================================
+
+// Listen for department selection change
+departmentSelect.addEventListener("change", () => {
+
+  // Get selected department
+  const selectedDept = departmentSelect.value;
+
+  // Find department object from JSON data
+  const deptObj = window.deptData?.find(d => d.dept === selectedDept);
+
+  // Temporarily load symptoms as comma-separated text
+  if (deptObj) {
+    symptomsInput.value = deptObj.symptoms.join(", ");
+  } else {
+    symptomsInput.value = "";
+  }
 });
