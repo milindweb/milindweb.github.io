@@ -1,83 +1,83 @@
 {
-  "departments": [
+  "department": [
     {
-      "department": "MED – General Medicine",
+      "dept": "MED – General Medicine",
       "symptoms": ["Fever","Cold","Cough","Headache","Bodyache","Weakness","Fatigue","Dizziness","Giddiness","Hypertension","Hypotension","Diabetes","Thyroid","Chestpain","Breathlessness","Nausea","Vomiting","Diarrhea","Constipation","Abdominalpain","Acidity","Indigestion","Gastritis","Appetite","Swelling","Urination","Anemia","Jaundice","Weightloss","Weightgain","Insomnia","Followup","Checkup","Other"]
     },
     {
-      "department": "CARD – Cardiology",
+      "dept": "CARD – Cardiology",
       "symptoms": ["Chestpain","Palpitations","Breathlessness","Hypertension","Hypotension","Irregularpulse","Fastheartbeat","Slowheartbeat","Dizziness","Giddiness","Fainting","Legswelling","Fatigue","Exertionpain","Orthopnea","PND","Cyanosis","PostMI","Heartfailure","Arrhythmia","Followup","Checkup","Other"]
     },
     {
-      "department": "CASUALTY / EMR – Emergency",
+      "dept": "CASUALTY / EMR – Emergency",
       "symptoms": ["Trauma","Accident","Unconsciousness","Bleeding","Chestpain","Breathlessness","Poisoning","Burn","Seizure","Shock","Other"]
     },
     {
-      "department": "CHEST / TB – Pulmonology",
+      "dept": "CHEST / TB – Pulmonology",
       "symptoms": ["Cough","Breathlessness","Wheezing","Chestpain","Fever","Hemoptysis","Asthma","COPD","Tuberculosis","Smoking","Followup","Checkup","Other"]
     },
     {
-      "department": "DENT – Dental",
+      "dept": "DENT – Dental",
       "symptoms": ["Toothache","Swelling","Bleedinggums","Sensitivity","Cavity","LooseTooth","Badbreath","Ulcer","Jawpain","Extraction","Followup","Checkup","Other"]
     },
     {
-      "department": "ENDO – Endocrinology",
+      "dept": "ENDO – Endocrinology",
       "symptoms": ["Diabetes","Thyroid","Obesity","Weightgain","Weightloss","Hormonalimbalance","PCOD","Osteoporosis","Followup","Checkup","Other"]
     },
     {
-      "department": "ENT – ENT",
+      "dept": "ENT – ENT",
       "symptoms": ["Earache","EarDischarge","Hearingloss","Vertigo","Tinnitus","Sorethroat","Hoarseness","Nosebleed","Cold","Sinusitis","Tonsillitis","Followup","Checkup","Other"]
     },
     {
-      "department": "EYE – Ophthalmology",
+      "dept": "EYE – Ophthalmology",
       "symptoms": ["Redeye","Pain","Blurredvision","Watering","Itching","Discharge","Headache","Doublevision","Injury","Cataract","Glaucoma","Followup","Checkup","Other"]
     },
     {
-      "department": "GASTRO – Gastroenterology",
+      "dept": "GASTRO – Gastroenterology",
       "symptoms": ["Abdominalpain","Acidity","Indigestion","Bloating","Diarrhea","Constipation","Vomiting","Bleeding","Jaundice","Liverdisease","Followup","Checkup","Other"]
     },
     {
-      "department": "NEPH – Nephrology",
+      "dept": "NEPH – Nephrology",
       "symptoms": ["Swelling","Decreasedurine","Bloodurine","Proteinuria","Hypertension","Kidneystones","Renalfailure","Dialysis","Followup","Checkup","Other"]
     },
     {
-      "department": "NEURO – Neurology",
+      "dept": "NEURO – Neurology",
       "symptoms": ["Headache","Seizure","Stroke","Weakness","Paralysis","Numbness","Tremor","Memoryloss","Vertigo","Unconsciousness","Followup","Checkup","Other"]
     },
     {
-      "department": "OBG / GYNAE – Obstetrics & Gynecology",
+      "dept": "OBG / GYNAE – Obstetrics & Gynecology",
       "symptoms": ["Pregnancy","Missedperiod","Irregularperiod","Bleeding","Painabdomen","WhiteDischarge","Infertility","Menopause","PCOD","Antenatal","Postnatal","Abortion","Followup","Checkup","Other"]
     },
     {
-      "department": "ONCO – Oncology",
+      "dept": "ONCO – Oncology",
       "symptoms": ["Lump","Weightloss","Bleeding","Pain","Ulcer","Dysphagia","Anemia","Fatigue","Chemotherapy","Radiotherapy","Followup","Checkup","Other"]
     },
     {
-      "department": "ORTHO – Orthopedics",
+      "dept": "ORTHO – Orthopedics",
       "symptoms": ["Jointpain","Backpain","Neckpain","Kneepain","Shoulderpain","Fracture","Injury","Trauma","Swelling","Stiffness","Arthritis","Osteoporosis","Followup","Checkup","Other"]
     },
     {
-      "department": "PAEDS – Pediatrics",
+      "dept": "PAEDS – Pediatrics",
       "symptoms": ["Fever","Cold","Cough","Diarrhea","Vomiting","Poorfeeding","Crying","Breathingdifficulty","Rash","Weightloss","Growthdelay","Vaccination","Followup","Checkup","Other"]
     },
     {
-      "department": "PMR – Physical Medicine & Rehabilitation",
+      "dept": "PMR – Physical Medicine & Rehabilitation",
       "symptoms": ["Pain","Stiffness","Weakness","Paralysis","Spasticity","Poststroke","Postinjury","Disability","Physiotherapy","Followup","Checkup","Other"]
     },
     {
-      "department": "PSY – Psychiatry",
+      "dept": "PSY – Psychiatry",
       "symptoms": ["Anxiety","Depression","Insomnia","Stress","Fear","Hallucination","Delusion","Memoryloss","Addiction","Moodchange","Behaviorproblem","Followup","Checkup","Other"]
     },
     {
-      "department": "SKIN – Dermatology",
+      "dept": "SKIN – Dermatology",
       "symptoms": ["Itching","Rash","Allergy","Acne","Hairfall","Pigmentation","Fungal","Bacterial","Viral","Psoriasis","Eczema","Urticaria","Followup","Checkup","Other"]
     },
     {
-      "department": "SURG – General Surgery",
+      "dept": "SURG – General Surgery",
       "symptoms": ["Abdominalpain","Hernia","Swelling","Abscess","Wound","Injury","Trauma","Burn","Boil","Ulcer","Appendicitis","Gallstone","Piles","Fissure","Fistula","Followup","Checkup","Other"]
     },
     {
-      "department": "URO – Urology",
+      "dept": "URO – Urology",
       "symptoms": ["Burningurine","Frequenturination","Retention","Bloodurine","Stones","Prostate","Incontinence","Erectileissue","Followup","Checkup","Other"]
     }
   ]
