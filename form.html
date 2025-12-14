@@ -13,7 +13,6 @@
 
 <!-- JS to load header/footer -->
 <script src="js/headerfooter.js" defer></script>
-
 <style>
 /* ============================================================
    THEME VARIABLES (LIGHT + OPTION FOR ALTERNATE PALETTE)
@@ -29,10 +28,10 @@
   --input-focus: #3b82f6;
   --button-start: #3b82f6;
   --button-end: #2563eb;
-  --highlight: #0ea5a4; /* Your alternate selected color */
+  --highlight: #0ea5a4;
 }
 
-/* Optional alternate palette: add class="alt" on <body> */
+/* Optional alternate palette */
 body.alt {
   --bg: #0f172a;
   --surface: #0b1220;
@@ -86,7 +85,7 @@ body.alt {
 }
 
 /* ============================================================
-   ROW SYSTEM – FLEXIBLE, NO OVERFLOW, FULL SCREEN FIT
+   ROW SYSTEM – FLEXIBLE, NO OVERFLOW
    ============================================================ */
 .opd-page .row {
   display: flex;
@@ -98,10 +97,10 @@ body.alt {
 
 .opd-page .field {
   flex: 1 1 260px;
-  min-width: 0; /* MOST IMPORTANT: prevents overflow */
+  min-width: 0;
 }
 
-/* DESKTOP ROW WIDTHS */
+/* DESKTOP */
 @media (min-width: 992px) {
   .row.row-1 .field { flex: 0 0 calc(50% - 14px); }
   .row.row-2 .field { flex: 0 0 calc(33.33% - 14px); }
@@ -120,7 +119,7 @@ body.alt {
   }
 }
 
-/* MOBILE — FULL WIDTH ALWAYS */
+/* MOBILE */
 @media (max-width: 599px) {
 
   .opd-page form {
@@ -160,7 +159,7 @@ body.alt {
 }
 
 /* ============================================================
-   LABELS & HELP TEXT
+   LABELS
    ============================================================ */
 .opd-page label {
   display: block;
@@ -176,7 +175,7 @@ body.alt {
 }
 
 /* ============================================================
-   INPUT, SELECT, TEXTAREA
+   INPUTS
    ============================================================ */
 .opd-page input,
 .opd-page select,
@@ -189,7 +188,6 @@ body.alt {
   border-radius: 6px;
   font-size: 13.5px;
   transition: 0.25s ease;
-  min-width: 0; /* FIX overflow */
 }
 
 .opd-page input:focus,
@@ -207,7 +205,7 @@ body.alt {
 }
 
 /* ============================================================
-   SUBMIT BUTTON
+   BUTTON
    ============================================================ */
 .opd-page button {
   background: linear-gradient(135deg, var(--button-start), var(--button-end));
@@ -220,7 +218,6 @@ body.alt {
   margin: 25px auto 5px;
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.3px;
   transition: 0.3s ease;
   box-shadow: 0 4px 12px rgba(37,99,235,0.2);
 }
@@ -231,8 +228,93 @@ body.alt {
   transform: translateY(-1px);
 }
 
+/* ============================================================
+   NEW: DEPARTMENT & SYMPTOMS (JSON / TAG / AUTOCOMPLETE READY)
+   ============================================================ */
 
+/* Department select */
+#departmentSelect {
+  cursor: pointer;
+}
+
+/* Tag container (JS will inject) */
+.symptom-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  min-height: 42px;
+}
+
+.symptom-tags:focus-within {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+  background: #fff;
+}
+
+/* Individual tag */
+.symptom-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(14,165,164,0.15);
+  color: #0f766e;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12.5px;
+}
+
+/* Remove tag */
+.symptom-tag .remove {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.symptom-tag .remove:hover {
+  color: #dc2626;
+}
+
+/* Input inside tag box */
+.symptom-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13.5px;
+  min-width: 120px;
+  flex: 1;
+}
+
+/* Autocomplete dropdown */
+.symptom-suggestions {
+  position: absolute;
+  z-index: 1000;
+  background: var(--surface);
+  border: 1px solid var(--input-border);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  max-height: 180px;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.symptom-suggestions div {
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.symptom-suggestions div:hover {
+  background: rgba(37,99,235,0.08);
+}
 </style>
+
+
+
+   
 </head>
 
 <body>
@@ -277,39 +359,20 @@ body.alt {
           <option>Dr. Terna</option>
         </select>
       </div>
+     
       <div class="field">
-  <label>Department</label>
-  <select name="department" required>
-    <option value="">Select Department</option>
+        <label>Department</label>
+        <select name="department" id="departmentSelect" required>
+          <option value="">Select Department</option>
+          <!-- Departments will be loaded from data/dept.json via JS -->
+        </select>
+      </div>
 
-    <!-- Default Catch-All (Auto Selected) -->
-    <option value="MED" selected>MED – General Medicine</option>
-
-    <!-- Alphabetical Order -->
-    <option value="CARD">CARD – Cardiology</option>
-    <option value="CASUALTY">CASUALTY / EMR – Emergency</option>
-    <option value="CHEST">CHEST / TB – Pulmonology</option>
-    <option value="DENT">DENT – Dental</option>
-    <option value="ENDO">ENDO – Endocrinology</option>
-    <option value="ENT">ENT – Ear, Nose & Throat</option>
-    <option value="EYE">EYE – Ophthalmology</option>
-    <option value="GASTRO">GASTRO – Gastroenterology</option>
-    <option value="NEPH">NEPH – Nephrology</option>
-    <option value="NEURO">NEURO – Neurology</option>
-    <option value="OBG">OBG / GYNAE – Obstetrics & Gynecology</option>
-    <option value="ONCO">ONCO – Oncology</option>
-    <option value="ORTHO">ORTHO – Orthopedics</option>
-    <option value="PAEDS">PAEDS – Pediatrics</option>
-    <option value="PMR">PMR – Physical Medicine & Rehabilitation</option>
-    <option value="PSY">PSY – Psychiatry</option>
-    <option value="SKIN">SKIN – Dermatology</option>
-    <option value="SURG">SURG – General Surgery</option>
-    <option value="URO">URO – Urology</option>
-  </select>
+<div class="field">
+  <label>Symptoms</label>
+  <textarea name="symptoms" id="symptomsInput"></textarea>
+  <!-- Symptoms will be handled via JSON + JS (multi-select, autocomplete, manual entry) -->
 </div>
-
-      <div class="field"><label>Symptoms</label><textarea name="symptoms"></textarea></div>
-    </div>
 
     <!-- Row 4 -->
     <div class="row row-4">
@@ -370,6 +433,7 @@ body.alt {
 
 </body>
 </html>
+
 
 
 
