@@ -277,33 +277,37 @@ body.alt {
           <option>Dr. Terna</option>
         </select>
       </div>
-      <div class="field"><label>Department</label>
-        <select name="department" required>
-          <option value="">Select Department</option>
-          <option>General Medicine / Physician</option>
-          <option>General Surgery</option>
-          <option>Cardiology (Heart Specialist)</option>
-          <option>Dental / Oral Surgery</option>
-          <option>Dermatology (Skin & Hair)</option>
-          <option>Endocrinology (Diabetes / Thyroid)</option>
-          <option>ENT (Ear, Nose, Throat)</option>
-          <option>Gastroenterology (Digestive System)</option>
-          <option>Nephrology (Kidney)</option>
-          <option>Neurology (Brain & Nerves)</option>
-          <option>Obstetrics & Gynecology (Gynac)</option>
-          <option>Oncology (Cancer)</option>
-          <option>Ophthalmology (Eye)</option>
-          <option>Orthopedics</option>
-          <option>Pediatrics (Child Specialist)</option>
-          <option>Physiotherapy / Rehabilitation</option>
-          <option>Plastic & Reconstructive Surgery</option>
-          <option>Psychiatry (Mental Health)</option>
-          <option>Pulmonology / Chest Medicine</option>
-          <option>Radiology & Imaging</option>
-          <option>Urology (Urinary / Male Reproductive)</option>
-          <option>Others / Not Listed</option>
-        </select>
-      </div>
+      <div class="field">
+  <label>Department</label>
+  <select name="department" required>
+    <option value="">Select Department</option>
+
+    <!-- Default Catch-All (Auto Selected) -->
+    <option value="MED" selected>MED – General Medicine</option>
+
+    <!-- Alphabetical Order -->
+    <option value="CARD">CARD – Cardiology</option>
+    <option value="CASUALTY">CASUALTY / EMR – Emergency</option>
+    <option value="CHEST">CHEST / TB – Pulmonology</option>
+    <option value="DENT">DENT – Dental</option>
+    <option value="ENDO">ENDO – Endocrinology</option>
+    <option value="ENT">ENT – Ear, Nose & Throat</option>
+    <option value="EYE">EYE – Ophthalmology</option>
+    <option value="GASTRO">GASTRO – Gastroenterology</option>
+    <option value="NEPH">NEPH – Nephrology</option>
+    <option value="NEURO">NEURO – Neurology</option>
+    <option value="OBG">OBG / GYNAE – Obstetrics & Gynecology</option>
+    <option value="ONCO">ONCO – Oncology</option>
+    <option value="ORTHO">ORTHO – Orthopedics</option>
+    <option value="PAEDS">PAEDS – Pediatrics</option>
+    <option value="PMR">PMR – Physical Medicine & Rehabilitation</option>
+    <option value="PSY">PSY – Psychiatry</option>
+    <option value="SKIN">SKIN – Dermatology</option>
+    <option value="SURG">SURG – General Surgery</option>
+    <option value="URO">URO – Urology</option>
+  </select>
+</div>
+
       <div class="field"><label>Symptoms</label><textarea name="symptoms"></textarea></div>
     </div>
 
@@ -366,6 +370,7 @@ body.alt {
 
 </body>
 </html>
+
 
 
 
