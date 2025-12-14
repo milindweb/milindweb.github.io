@@ -24,13 +24,13 @@ const responseDiv = document.getElementById("response");
 // Generates OPD No in YYMMDDHHMMSS format
 function generateOPDNo() {
   const now = new Date();
-  const yy = String(now.getFullYear()).slice(-2);         // year (2 digits)
-  const mm = String(now.getMonth() + 1).padStart(2, "0"); // month
-  const dd = String(now.getDate()).padStart(2, "0");      // day
-  const hh = String(now.getHours()).padStart(2, "0");     // hour
-  const min = String(now.getMinutes()).padStart(2, "0");  // minute
-  const ss = String(now.getSeconds()).padStart(2, "0");   // second
-  return `${yy}${mm}${dd}${hh}${min}${ss}`;               // final OPD No
+  const yy = String(now.getFullYear()).slice(-2);
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const hh = String(now.getHours()).padStart(2, "0");
+  const min = String(now.getMinutes()).padStart(2, "0");
+  const ss = String(now.getSeconds()).padStart(2, "0");
+  return `${yy}${mm}${dd}${hh}${min}${ss}`;
 }
 
 
@@ -38,10 +38,7 @@ function generateOPDNo() {
 // ✅ INITIAL OPD NUMBER ON PAGE LOAD
 // ============================================================
 
-// OPD No input field
 const opdNoField = document.getElementById("opdNo");
-
-// Generate OPD No when page loads
 opdNoField.value = generateOPDNo();
 
 
@@ -49,22 +46,16 @@ opdNoField.value = generateOPDNo();
 // ✅ FORM SUBMISSION HANDLER
 // ============================================================
 
-// Handle OPD form submission
 form.addEventListener("submit", e => {
-  e.preventDefault(); // stop default form reload
+  e.preventDefault();
 
-  // Collect all form inputs
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
-  // Generate fresh OPD No at submission time
   const opdNo = generateOPDNo();
   opdNoField.value = opdNo;
-
-  // Attach OPD No to submitted data
   data.opdNo = opdNo;
 
-  // Send data to Google Apps Script
   fetch(scriptURL, {
     method: "POST",
     mode: "no-cors",
@@ -72,27 +63,17 @@ form.addEventListener("submit", e => {
     body: JSON.stringify(data)
   })
   .then(() => {
-
-    // Show success message
     responseDiv.innerHTML = `
       <div class='alert success'>
         ✅ Patient record saved successfully.<br>
         <strong>OPD No:</strong> ${opdNo}
       </div>
     `;
-
-    // Auto-hide message after 15 seconds
     setTimeout(() => responseDiv.innerHTML = "", 15000);
-
-    // Reset form after successful submission
     form.reset();
-
-    // Generate new OPD No for next patient
     opdNoField.value = generateOPDNo();
   })
   .catch(() => {
-
-    // Show error message on failure
     responseDiv.innerHTML =
       "<div class='alert error'>❌ Error saving data. Try again.</div>";
   });
@@ -103,106 +84,69 @@ form.addEventListener("submit", e => {
 // ✅ DEPARTMENT & SYMPTOMS (JSON-BASED, NON-INTRUSIVE)
 // ============================================================
 
-// Department dropdown element
 const departmentSelect = document.getElementById("departmentSelect");
-
-// Symptoms textarea (will be enhanced later)
 const symptomsInput = document.getElementById("symptomsInput");
 const symptomReference = document.getElementById("symptomReference");
 
-
-// Load departments and symptoms from JSON file
 fetch("data/dept.json")
   .then(res => res.json())
   .then(json => {
-
-    // Extract department array from JSON
     const departments = json.department;
 
-    // Populate department dropdown dynamically
-    departments.forEach((deptObj, index) => {
+    departments.forEach(deptObj => {
       const option = document.createElement("option");
       option.value = deptObj.dept;
       option.textContent = deptObj.dept;
       departmentSelect.appendChild(option);
-
-      // Auto-select first department (MED)
-      // if (index === 0) departmentSelect.value = deptObj.dept;
     });
 
-    // Store department data globally for later use
     window.deptData = departments;
   });
 
-
-// ============================================================
-// ✅ LOAD SYMPTOMS BASED ON SELECTED DEPARTMENT
-// ============================================================
-
-// Listen for department selection change
 departmentSelect.addEventListener("change", () => {
-
-  // clear textarea
   symptomsInput.value = "";
-
-  // clear old reference text
   symptomReference.textContent = "";
 
-  // get selected department
   const selectedDept = departmentSelect.value;
-
-  // find department object
   const deptObj = window.deptData?.find(d => d.dept === selectedDept);
 
-  // show reference symptoms (text only)
   if (deptObj && Array.isArray(deptObj.symptoms)) {
     symptomReference.textContent =
       "Common symptoms: " + deptObj.symptoms.join(", ");
   }
 });
 
+
 // ============================================================
 // ✅ PRESCRIPTION AUTO-SUGGEST (GENERIC / BRAND / CATEGORY)
 // ============================================================
 
-// Prescription textarea
 const prescriptionInput = document.getElementById("prescriptionInput");
-
-// Suggestion container
 const medicineSuggestions = document.getElementById("medicineSuggestions");
 
-// Store medicine list globally
 let medicineData = [];
 
-// Load medicine list JSON
 fetch("data/medlist.json")
   .then(res => res.json())
   .then(json => {
     medicineData = json;
   });
 
-// Listen while typing in prescription textarea
 prescriptionInput.addEventListener("input", () => {
 
+  // ✅ ONLY current line is searched (important)
   const lines = prescriptionInput.value.split("\n");
   const query = lines[lines.length - 1].trim().toLowerCase();
 
-  
-  const query = prescriptionInput.value.split(/\s+/).pop().toLowerCase();
-
   medicineSuggestions.innerHTML = "";
-
-  // Do nothing if input is too small
   if (query.length < 2) return;
 
-  // Loop through medicine list
   medicineData.forEach(item => {
 
     const category = (item["Main Category"] || "").toLowerCase();
     const generic = (item["Generic "]?.[" API (Single or Combination)"] || "").toLowerCase();
     const brands = (item["Common Brand Names (India)"] || "").toLowerCase();
 
-    // Match query with category OR generic OR brand
     if (
       category.includes(query) ||
       generic.includes(query) ||
@@ -210,34 +154,24 @@ prescriptionInput.addEventListener("input", () => {
     ) {
       const suggestion = document.createElement("div");
 
-      // Display clean suggestion text
       suggestion.textContent =
         generic +
         (brands ? " (" + item["Common Brand Names (India)"] + ")" : "");
 
-      // duplicates text and breaks next search
-suggestion.addEventListener("click", () => {
-  const lines = prescriptionInput.value.split("\n");
-  lines[lines.length - 1] = generic;
-  prescriptionInput.value = lines.join("\n") + "\n";
-  medicineSuggestions.innerHTML = "";
-});
-
+      suggestion.addEventListener("click", () => {
+        const lines = prescriptionInput.value.split("\n");
+        lines[lines.length - 1] = generic;
+        prescriptionInput.value = lines.join("\n") + "\n";
+        medicineSuggestions.innerHTML = "";
+      });
 
       medicineSuggestions.appendChild(suggestion);
     }
   });
 });
 
-// Hide suggestions when clicking outside
 document.addEventListener("click", e => {
   if (!medicineSuggestions.contains(e.target) && e.target !== prescriptionInput) {
     medicineSuggestions.innerHTML = "";
   }
 });
-
-
-
-
-
-
