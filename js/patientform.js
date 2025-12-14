@@ -184,7 +184,9 @@ fetch("data/medlist.json")
 // Listen while typing in prescription textarea
 prescriptionInput.addEventListener("input", () => {
 
-  const query = prescriptionInput.value.trim().toLowerCase();
+  // const query = prescriptionInput.value.trim().toLowerCase();
+  const query = prescriptionInput.value.split(/\s+/).pop().toLowerCase();
+
   medicineSuggestions.innerHTML = "";
 
   // Do nothing if input is too small
@@ -230,6 +232,7 @@ document.addEventListener("click", e => {
     medicineSuggestions.innerHTML = "";
   }
 });
+
 
 
 
