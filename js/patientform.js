@@ -184,7 +184,10 @@ fetch("data/medlist.json")
 // Listen while typing in prescription textarea
 prescriptionInput.addEventListener("input", () => {
 
-  // const query = prescriptionInput.value.trim().toLowerCase();
+  const lines = prescriptionInput.value.split("\n");
+  const query = lines[lines.length - 1].trim().toLowerCase();
+
+  
   const query = prescriptionInput.value.split(/\s+/).pop().toLowerCase();
 
   medicineSuggestions.innerHTML = "";
@@ -212,14 +215,14 @@ prescriptionInput.addEventListener("input", () => {
         generic +
         (brands ? " (" + item["Common Brand Names (India)"] + ")" : "");
 
-      // On click, add medicine to textarea
-      suggestion.addEventListener("click", () => {
-        const current = prescriptionInput.value.trim();
-        prescriptionInput.value = current
-          ? current + "\n" + generic
-          : generic;
-        medicineSuggestions.innerHTML = "";
-      });
+      // duplicates text and breaks next search
+suggestion.addEventListener("click", () => {
+  const lines = prescriptionInput.value.split("\n");
+  lines[lines.length - 1] = generic;
+  prescriptionInput.value = lines.join("\n") + "\n";
+  medicineSuggestions.innerHTML = "";
+});
+
 
       medicineSuggestions.appendChild(suggestion);
     }
@@ -232,6 +235,7 @@ document.addEventListener("click", e => {
     medicineSuggestions.innerHTML = "";
   }
 });
+
 
 
 
