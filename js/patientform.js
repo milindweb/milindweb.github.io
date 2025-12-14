@@ -161,5 +161,76 @@ departmentSelect.addEventListener("change", () => {
   }
 });
 
+// ============================================================
+// ✅ PRESCRIPTION AUTO-SUGGEST (GENERIC / BRAND / CATEGORY)
+// ============================================================
+
+// Prescription textarea
+const prescriptionInput = document.getElementById("prescriptionInput");
+
+// Suggestion container
+const medicineSuggestions = document.getElementById("medicineSuggestions");
+
+// Store medicine list globally
+let medicineData = [];
+
+// Load medicine list JSON
+fetch("data/medlist.json")
+  .then(res => res.json())
+  .then(json => {
+    medicineData = json;
+  });
+
+// Listen while typing in prescription textarea
+prescriptionInput.addEventListener("input", () => {
+
+  const query = prescriptionInput.value.trim().toLowerCase();
+  medicineSuggestions.innerHTML = "";
+
+  // Do nothing if input is too small
+  if (query.length < 2) return;
+
+  // Loop through medicine list
+  medicineData.forEach(item => {
+
+    const category = (item["Main Category"] || "").toLowerCase();
+    const generic = (item["Generic "]?.[" API (Single or Combination)"] || "").toLowerCase();
+    const brands = (item["Common Brand Names (India)"] || "").toLowerCase();
+
+    // Match query with category OR generic OR brand
+    if (
+      category.includes(query) ||
+      generic.includes(query) ||
+      brands.includes(query)
+    ) {
+      const suggestion = document.createElement("div");
+
+      // Display clean suggestion text
+      suggestion.textContent =
+        generic +
+        (brands ? " (" + item["Common Brand Names (India)"] + ")" : "");
+
+      // On click, add medicine to textarea
+      suggestion.addEventListener("click", () => {
+        const current = prescriptionInput.value.trim();
+        prescriptionInput.value = current
+          ? current + "\n" + generic
+          : generic;
+        medicineSuggestions.innerHTML = "";
+      });
+
+      medicineSuggestions.appendChild(suggestion);
+    }
+  });
+});
+
+// Hide suggestions when clicking outside
+document.addEventListener("click", e => {
+  if (!medicineSuggestions.contains(e.target) && e.target !== prescriptionInput) {
+    medicineSuggestions.innerHTML = "";
+  }
+});
+
+
 
 
