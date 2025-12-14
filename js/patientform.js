@@ -139,6 +139,7 @@ fetch("data/dept.json")
 
 // Listen for department selection change
 departmentSelect.addEventListener("change", () => {
+  symptomsInput.value = "";
 
   // Get selected department
   const selectedDept = departmentSelect.value;
@@ -148,8 +149,9 @@ departmentSelect.addEventListener("change", () => {
 
   // Temporarily load symptoms as comma-separated text
   if (deptObj) {
-    symptomsInput.value = deptObj.symptoms.join(", ");
+    symptomsInput.value = "";
   } else {
     symptomsInput.value = "";
   }
 });
+
