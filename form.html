@@ -21,6 +21,7 @@
 :root {
   --bg: #f8fafc;
   --surface: #ffffff;
+  --surface-alt: #f1f5f9;          /* 🔹 Alternate row color */
   --text: #1e293b;
   --label: #1d4ed8;
   --heading: #2563eb;
@@ -32,10 +33,11 @@
   --highlight: #0ea5a4;
 }
 
-/* Optional alternate palette */
+/* Optional alternate palette (dark mode) */
 body.alt {
   --bg: #0f172a;
   --surface: #0b1220;
+  --surface-alt: #111827;          /* 🔹 Alternate row color (dark) */
   --text: #e2e8f0;
   --label: #93c5fd;
   --heading: #60a5fa;
@@ -94,12 +96,23 @@ body.alt {
   gap: 14px;
   margin-bottom: 14px;
   width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+/* 🔹 Alternate row colors */
+.opd-page .row:nth-child(odd) {
+  background: var(--surface);
+}
+
+.opd-page .row:nth-child(even) {
+  background: var(--surface-alt);
 }
 
 .opd-page .field {
   flex: 1 1 260px;
   min-width: 0;
-  position: relative; /* IMPORTANT for dropdowns */
+  position: relative;
 }
 
 /* DESKTOP */
@@ -143,6 +156,7 @@ body.alt {
   .opd-page .row {
     gap: 8px !important;
     margin-bottom: 10px !important;
+    padding: 10px !important;
   }
 
   .opd-page input,
@@ -245,31 +259,9 @@ body.alt {
 }
 
 /* ============================================================
-   MEDICINE AUTOCOMPLETE DROPDOWN
+   MEDICINE & SYMPTOM AUTOCOMPLETE DROPDOWNS
    ============================================================ */
-#medicineSuggestions {
-  position: absolute;
-  z-index: 1000;
-  background: var(--surface);
-  border: 1px solid var(--input-border);
-  border-radius: 6px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  max-height: 180px;
-  overflow-y: auto;
-  width: 100%;
-  margin-top: 4px;
-}
-
-#medicineSuggestions div {
-  padding: 8px 10px;
-  font-size: 13px;
-  cursor: pointer;
-}
-
-#medicineSuggestions div:hover {
-  background: rgba(37,99,235,0.08);
-}
-
+#medicineSuggestions,
 #symptomSuggestions {
   position: absolute;
   z-index: 1000;
@@ -283,18 +275,18 @@ body.alt {
   margin-top: 4px;
 }
 
+#medicineSuggestions div,
 #symptomSuggestions div {
   padding: 8px 10px;
   font-size: 13px;
   cursor: pointer;
 }
 
+#medicineSuggestions div:hover,
 #symptomSuggestions div:hover {
   background: rgba(37,99,235,0.08);
 }
-
 </style>
-
 
 
    
@@ -421,6 +413,7 @@ body.alt {
 
 </body>
 </html>
+
 
 
 
