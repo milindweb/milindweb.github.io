@@ -13,6 +13,7 @@
 
 <!-- JS to load header/footer -->
 <script src="js/headerfooter.js" defer></script>
+
 <style>
 /* ============================================================
    THEME VARIABLES (LIGHT + OPTION FOR ALTERNATE PALETTE)
@@ -98,6 +99,7 @@ body.alt {
 .opd-page .field {
   flex: 1 1 260px;
   min-width: 0;
+  position: relative; /* IMPORTANT for dropdowns */
 }
 
 /* DESKTOP */
@@ -229,66 +231,23 @@ body.alt {
 }
 
 /* ============================================================
-   NEW: DEPARTMENT & SYMPTOMS (JSON / TAG / AUTOCOMPLETE READY)
+   DEPARTMENT & SYMPTOMS REFERENCE
    ============================================================ */
-
-/* Department select */
 #departmentSelect {
   cursor: pointer;
 }
 
-/* Tag container (JS will inject) */
-.symptom-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  padding: 6px;
-  background: var(--input-bg);
-  border: 1px solid var(--input-border);
-  border-radius: 6px;
-  min-height: 42px;
+#symptomReference {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+  line-height: 1.4;
 }
 
-.symptom-tags:focus-within {
-  border-color: var(--input-focus);
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
-  background: #fff;
-}
-
-/* Individual tag */
-.symptom-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(14,165,164,0.15);
-  color: #0f766e;
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 12.5px;
-}
-
-/* Remove tag */
-.symptom-tag .remove {
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.symptom-tag .remove:hover {
-  color: #dc2626;
-}
-
-/* Input inside tag box */
-.symptom-input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 13.5px;
-  min-width: 120px;
-  flex: 1;
-}
-
-/* Autocomplete dropdown */
-.symptom-suggestions {
+/* ============================================================
+   MEDICINE AUTOCOMPLETE DROPDOWN
+   ============================================================ */
+#medicineSuggestions {
   position: absolute;
   z-index: 1000;
   background: var(--surface);
@@ -301,13 +260,13 @@ body.alt {
   margin-top: 4px;
 }
 
-.symptom-suggestions div {
+#medicineSuggestions div {
   padding: 8px 10px;
   font-size: 13px;
   cursor: pointer;
 }
 
-.symptom-suggestions div:hover {
+#medicineSuggestions div:hover {
   background: rgba(37,99,235,0.08);
 }
 </style>
@@ -437,6 +396,7 @@ body.alt {
 
 </body>
 </html>
+
 
 
 
