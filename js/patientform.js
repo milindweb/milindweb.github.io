@@ -116,6 +116,54 @@ departmentSelect.addEventListener("change", () => {
   }
 });
 
+// ============================================================
+// ✅ SYMPTOMS AUTOCOMPLETE (LIKE PRESCRIPTION)
+// ============================================================
+
+const symptomSuggestions = document.getElementById("symptomSuggestions");
+
+symptomsInput.addEventListener("input", () => {
+
+  // get current line only
+  const lines = symptomsInput.value.split("\n");
+  const query = lines[lines.length - 1].trim().toLowerCase();
+
+  symptomSuggestions.innerHTML = "";
+
+  if (query.length < 2) return;
+
+  // get selected department
+  const selectedDept = departmentSelect.value;
+  const deptObj = window.deptData?.find(d => d.dept === selectedDept);
+
+  if (!deptObj || !Array.isArray(deptObj.symptoms)) return;
+
+  deptObj.symptoms.forEach(symptom => {
+    if (symptom.toLowerCase().includes(query)) {
+
+      const div = document.createElement("div");
+      div.textContent = symptom;
+
+      div.addEventListener("click", () => {
+        const lines = symptomsInput.value.split("\n");
+        lines[lines.length - 1] = symptom;
+        symptomsInput.value = lines.join("\n") + "\n";
+        symptomSuggestions.innerHTML = "";
+      });
+
+      symptomSuggestions.appendChild(div);
+    }
+  });
+});
+
+// hide suggestions on outside click
+document.addEventListener("click", e => {
+  if (!symptomSuggestions.contains(e.target) && e.target !== symptomsInput) {
+    symptomSuggestions.innerHTML = "";
+  }
+});
+
+
 
 // ============================================================
 // ✅ PRESCRIPTION AUTO-SUGGEST (GENERIC / BRAND / CATEGORY)
@@ -175,3 +223,4 @@ document.addEventListener("click", e => {
     medicineSuggestions.innerHTML = "";
   }
 });
+
