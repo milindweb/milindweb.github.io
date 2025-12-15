@@ -4145,5 +4145,268 @@
       "Typical Use": ""
    },
    "Remark": ""
-}
+},
+
+ 
+  {
+    "Category No": "CAT28",
+    "Main Category": "Pain, Fever & Anti-Inflammatory",
+    "Generic": {
+      "API (Single or Combination)": "Aceclofenac + Paracetamol + Serratiopeptidase"
+    },
+    "Common Brand Names (India)": "ACE One-SP",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Pain and swelling"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Pain, Fever & Anti-Inflammatory",
+    "Generic": {
+      "API (Single or Combination)": "Paracetamol"
+    },
+    "Common Brand Names (India)": "Calpol 500, Zemol 650, Paracetamol IP 500 mg",
+    "Forms Available": "Tablet, Syrup",
+    "Notes": {
+      "Typical Use": "Fever and mild to moderate pain"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Pain, Fever & Anti-Inflammatory",
+    "Generic": {
+      "API (Single or Combination)": "Ibuprofen + Paracetamol"
+    },
+    "Common Brand Names (India)": "Ibuprofen + Paracetamol",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Pain and fever"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Pain, Fever & Anti-Inflammatory",
+    "Generic": {
+      "API (Single or Combination)": "Ibuprofen"
+    },
+    "Common Brand Names (India)": "Ibuwa",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Pain and inflammation"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Pain, Fever & Anti-Inflammatory",
+    "Generic": {
+      "API (Single or Combination)": "Mefenamic Acid + Dicycloverine"
+    },
+    "Common Brand Names (India)": "Meftal Spas",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Menstrual pain and abdominal cramps"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Pain, Fever & Anti-Inflammatory",
+    "Generic": {
+      "API (Single or Combination)": "Nimesulide + Paracetamol"
+    },
+    "Common Brand Names (India)": "Nimoks-P, Nimupain Plus, Nimsquare-P",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Pain and fever"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Pain, Fever & Anti-Inflammatory",
+    "Generic": {
+      "API (Single or Combination)": "Ketorolac"
+    },
+    "Common Brand Names (India)": "Nizer-10",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Severe pain"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Cold & Flu",
+    "Generic": {
+      "API (Single or Combination)": "Paracetamol + Phenylephrine + Chlorpheniramine"
+    },
+    "Common Brand Names (India)": "Sinarest New",
+    "Forms Available": "Tablet, Syrup",
+    "Notes": {
+      "Typical Use": "Cold, flu, nasal congestion"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Stomach / Acidity / GERD",
+    "Generic": {
+      "API (Single or Combination)": "Esomeprazole + Domperidone"
+    },
+    "Common Brand Names (India)": "Nexpro RD 40",
+    "Forms Available": "Capsule",
+    "Notes": {
+      "Typical Use": "Acidity and reflux"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Stomach / Acidity / GERD",
+    "Generic": {
+      "API (Single or Combination)": "Omeprazole"
+    },
+    "Common Brand Names (India)": "Omee, Omijack, Omeprazole GR",
+    "Forms Available": "Capsule",
+    "Notes": {
+      "Typical Use": "Acidity and GERD"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Stomach / Acidity / GERD",
+    "Generic": {
+      "API (Single or Combination)": "Pantoprazole"
+    },
+    "Common Brand Names (India)": "P-Panta 40, Pantoprazole GR",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Acidity and GERD"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Stomach / Acidity / GERD",
+    "Generic": {
+      "API (Single or Combination)": "Rabeprazole + Domperidone"
+    },
+    "Common Brand Names (India)": "Rabeks DSR",
+    "Forms Available": "Capsule",
+    "Notes": {
+      "Typical Use": "Acidity with nausea"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Diarrhoea / GI Infection",
+    "Generic": {
+      "API (Single or Combination)": "Diphenoxylate + Atropine"
+    },
+    "Common Brand Names (India)": "Andial",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Diarrhoea control"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Diarrhoea / GI Infection",
+    "Generic": {
+      "API (Single or Combination)": "Metronidazole"
+    },
+    "Common Brand Names (India)": "Metrogyl 400",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "GI infections and diarrhoea"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Diarrhoea / GI Infection",
+    "Generic": {
+      "API (Single or Combination)": "Tinidazole"
+    },
+    "Common Brand Names (India)": "Tinidazole IP 500 mg",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Amoebiasis and diarrhoea"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Antibiotics",
+    "Generic": {
+      "API (Single or Combination)": "Amoxicillin + Clavulanic Acid"
+    },
+    "Common Brand Names (India)": "Bloxy-CV, Zemoxy-CV, Moxigem-CV",
+    "Forms Available": "Tablet, Syrup",
+    "Notes": {
+      "Typical Use": "Bacterial infections"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Antibiotics",
+    "Generic": {
+      "API (Single or Combination)": "Azithromycin"
+    },
+    "Common Brand Names (India)": "Azab 500",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Bacterial respiratory and ENT infections"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Antibiotics",
+    "Generic": {
+      "API (Single or Combination)": "Ciprofloxacin"
+    },
+    "Common Brand Names (India)": "Ciprofloxacin 500 mg",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Bacterial infections"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Antifungal / Gynaecological",
+    "Generic": {
+      "API (Single or Combination)": "Fluconazole"
+    },
+    "Common Brand Names (India)": "Forcan 150",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Fungal infections"
+    },
+    "Remark": ""
+  },
+  {
+    "Category No": "CAT28",
+    "Main Category": "Supplements",
+    "Generic": {
+      "API (Single or Combination)": "Folic Acid"
+    },
+    "Common Brand Names (India)": "Folse, Folvite, Navkar Folic Acid",
+    "Forms Available": "Tablet",
+    "Notes": {
+      "Typical Use": "Anemia and pregnancy supplementation"
+    },
+    "Remark": ""
+  }
 ]
+
