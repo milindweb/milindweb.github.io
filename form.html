@@ -349,7 +349,7 @@ body.alt {
       </div>
 
 <div class="field">
-  <label>Chief Complaints</label>
+  <label>Chief Complaints<small>write symptom + duration</small></label>
   <textarea name="symptoms" id="symptomsInput"></textarea>
    <div id="symptomSuggestions"></div>
    <div id="symptomReference"></div>
@@ -370,6 +370,8 @@ body.alt {
       <div class="field"><label>Temp <small>98.6°F</small></label><input name="temp" type="number"></div>
       <div class="field"><label>Sugar <small>70–110 mg/dL</small></label><input name="sugar" type="number"></div>
     </div>
+<div class="field"><label>Provisional Diagnosis<small>Based on symptoms + vitals only</small></label><textarea name="treatmentNote"></textarea></div>
+
 
     <!-- Row 6 -->
     <div class="row row-6">
@@ -381,10 +383,10 @@ body.alt {
     <!-- Row 7 -->
     <div class="row row-7">
       <div class="field">
-        <label>Prescription (Generic API/ Brand)</label><textarea name="prescription" id="prescriptionInput"></textarea>
+        <label>Prescription (Generic API/ Brand)<small>i.e. Tab Paracetamol 500 mg BD × 3 days 2T</small></label><textarea name="prescription" id="prescriptionInput"></textarea>
         <div id="medicineSuggestions"></div>
       </div>
-      <div class="field"><label>Provisional Diagnosis</label><textarea name="treatmentNote"></textarea></div>
+      
       <div class="field"><label>Advice</label><textarea name="advice"></textarea></div>
     </div>
 
