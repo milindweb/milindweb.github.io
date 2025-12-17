@@ -15,92 +15,83 @@
 <script src="js/headerfooter.js" defer></script>
 
 <style>
+
+
 /* ============================================================
-   THEME VARIABLES (LIGHT + OPTION FOR ALTERNATE PALETTE)
+   THEME VARIABLES (LIGHT + DARK)
    ============================================================ */
 :root {
   --bg: #f8fafc;
   --surface: #ffffff;
-  --surface-alt: #f1f5f9;          /* 🔹 Alternate row color */
+  --surface-alt: #f6f8fb;
   --text: #1e293b;
-  --label: #1d4ed8;
+  --label: #1f2937;
   --heading: #2563eb;
-  --input-bg: #f9fafb;
   --input-border: #d1d5db;
-  --input-focus: #3b82f6;
-  --button-start: #3b82f6;
-  --button-end: #2563eb;
-  --highlight: #0ea5a4;
+  --input-focus: #2563eb;
+  --btn: #2563eb;
+  --radius: 4px;
+  --transition: 0.25s ease;
 }
 
-/* Optional alternate palette (dark mode) */
+/* Dark mode */
 body.alt {
   --bg: #0f172a;
   --surface: #0b1220;
-  --surface-alt: #111827;          /* 🔹 Alternate row color (dark) */
-  --text: #e2e8f0;
-  --label: #93c5fd;
+  --surface-alt: #111827;
+  --text: #e5e7eb;
+  --label: #cbd5f5;
   --heading: #60a5fa;
-  --input-bg: #1e293b;
   --input-border: #334155;
   --input-focus: #60a5fa;
-  --button-start: #60a5fa;
-  --button-end: #3b82f6;
-  --highlight: #ff7a59;
+  --btn: #3b82f6;
 }
 
 /* ============================================================
    PAGE BASE
    ============================================================ */
 .opd-page {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
-  padding: 20px;
-  margin: 0;
-  flex: 1;
+  padding: 18px;
+  animation: fadeIn 0.4s ease;
 }
 
 .opd-page h2 {
   text-align: center;
+  font-size: 20px;
   color: var(--heading);
-  margin: 25px 0 15px;
-  font-size: 24px;
-  font-weight: 650;
+  margin-bottom: 14px;
+  font-weight: 600;
 }
 
 /* ============================================================
-   FORM CONTAINER
+   FORM CONTAINER (FLAT – GOVT STYLE)
    ============================================================ */
 .opd-page form {
   max-width: 950px;
-  margin: 25px auto 40px;
+  margin: auto;
   background: var(--surface);
-  padding: 28px;
-  border-radius: 14px;
-  box-shadow: 0 6px 22px rgba(0,0,0,0.06);
-  transition: 0.3s ease;
-}
-
-.opd-page form:hover {
-  box-shadow: 0 8px 28px rgba(37,99,235,0.10);
-  transform: translateY(-1px);
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
+  animation: slideUp 0.35s ease;
 }
 
 /* ============================================================
-   ROW SYSTEM – FLEXIBLE, NO OVERFLOW
+   ROW SYSTEM (REGISTER STYLE)
    ============================================================ */
 .opd-page .row {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 14px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  gap: 12px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 3px;
+  transition: background var(--transition);
 }
 
-/* 🔹 Alternate row colors */
 .opd-page .row:nth-child(odd) {
   background: var(--surface);
 }
@@ -109,68 +100,55 @@ body.alt {
   background: var(--surface-alt);
 }
 
+.opd-page .row:hover {
+  background: rgba(37,99,235,0.04);
+}
+
+/* ============================================================
+   FIELD
+   ============================================================ */
 .opd-page .field {
   flex: 1 1 260px;
   min-width: 0;
-  position: relative;
+  animation: fadeIn 0.4s ease;
 }
 
-/* DESKTOP */
+/* Desktop layout */
 @media (min-width: 992px) {
-  .row.row-1 .field { flex: 0 0 calc(50% - 14px); }
-  .row.row-2 .field { flex: 0 0 calc(33.33% - 14px); }
-  .row.row-3 .field { flex: 0 0 calc(33.33% - 14px); }
-  .row.row-4 .field { flex: 0 0 calc(25% - 14px); }
-  .row.row-5 .field { flex: 0 0 calc(33.33% - 14px); }
-  .row.row-6 .field { flex: 0 0 calc(33.33% - 14px); }
-  .row.row-7 .field { flex: 0 0 calc(33.33% - 14px); }
-  .row.row-8 .field { flex: 0 0 calc(33.33% - 14px); }
+  .row-1 .field { flex: 0 0 48%; }
+  .row-2 .field,
+  .row-3 .field,
+  .row-5 .field,
+  .row-6 .field,
+  .row-7 .field,
+  .row-8 .field { flex: 0 0 32%; }
+  .row-4 .field { flex: 0 0 24%; }
 }
 
-/* TABLET */
-@media (max-width: 991px) and (min-width: 600px) {
+/* Tablet */
+@media (max-width: 991px) {
   .opd-page .field {
-    flex: 1 1 calc(50% - 14px);
+    flex: 1 1 48%;
   }
 }
 
-/* MOBILE */
+/* Mobile */
 @media (max-width: 599px) {
-
   .opd-page form {
-    padding: 14px !important;
-    margin: 10px !important;
-    width: 100% !important;
-  }
-
-  .opd-page h2 {
-    font-size: 18px;
-    margin: 10px 0 15px;
-  }
-
-  .opd-page .field {
-    flex: 1 1 100% !important;
-    min-width: 100% !important;
+    padding: 12px;
   }
 
   .opd-page .row {
-    gap: 8px !important;
-    margin-bottom: 10px !important;
-    padding: 10px !important;
+    padding: 8px;
+    gap: 8px;
   }
 
-  .opd-page input,
-  .opd-page select,
-  .opd-page textarea {
-    padding: 6px 8px !important;
-    font-size: 13px !important;
+  .opd-page .field {
+    flex: 1 1 100%;
   }
 
-  .opd-page button {
-    width: 100% !important;
-    padding: 11px !important;
-    font-size: 14px !important;
-    margin-top: 15px !important;
+  .opd-page h2 {
+    font-size: 17px;
   }
 }
 
@@ -179,9 +157,9 @@ body.alt {
    ============================================================ */
 .opd-page label {
   display: block;
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   color: var(--label);
 }
 
@@ -191,93 +169,53 @@ body.alt {
 }
 
 /* ============================================================
-   INPUTS
+   INPUTS – TEXT-LIKE (REGISTER FEEL)
    ============================================================ */
 .opd-page input,
 .opd-page select,
 .opd-page textarea {
   width: 100%;
-  padding: 8px 10px;
-  background: var(--input-bg);
-  color: var(--text);
+  padding: 6px 8px;
+  font-size: 13px;
+  border-radius: 3px;
   border: 1px solid var(--input-border);
-  border-radius: 6px;
-  font-size: 13.5px;
-  transition: 0.25s ease;
+  background: transparent;
+  color: var(--text);
+  transition: border var(--transition), box-shadow var(--transition);
+}
+
+.opd-page textarea {
+  resize: vertical;
+  min-height: 38px;
 }
 
 .opd-page input:focus,
 .opd-page select:focus,
 .opd-page textarea:focus {
   border-color: var(--input-focus);
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+  box-shadow: inset 0 0 0 1px var(--input-focus);
   outline: none;
 }
 
-.opd-page textarea {
-  resize: vertical;
-  min-height: 40px;
-}
-
 /* ============================================================
-   BUTTON
-   ============================================================ */
-.opd-page button {
-  background: linear-gradient(135deg, var(--button-start), var(--button-end));
-  color: #fff;
-  border: none;
-  padding: 12px 28px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: block;
-  margin: 25px auto 5px;
-  font-size: 15px;
-  font-weight: 600;
-  transition: 0.3s ease;
-  box-shadow: 0 4px 12px rgba(37,99,235,0.2);
-}
-
-.opd-page button:hover {
-  background: linear-gradient(135deg, var(--button-end), var(--button-start));
-  box-shadow: 0 6px 16px rgba(37,99,235,0.28);
-  transform: translateY(-1px);
-}
-
-/* ============================================================
-   DEPARTMENT & SYMPTOMS REFERENCE
-   ============================================================ */
-#departmentSelect {
-  cursor: pointer;
-}
-
-#symptomReference {
-  font-size: 12px;
-  color: #64748b;
-  margin-top: 4px;
-  line-height: 1.4;
-}
-
-/* ============================================================
-   MEDICINE & SYMPTOM AUTOCOMPLETE DROPDOWNS
+   AUTOCOMPLETE DROPDOWNS
    ============================================================ */
 #medicineSuggestions,
 #symptomSuggestions {
   position: absolute;
-  z-index: 1000;
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--input-border);
-  border-radius: 6px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  border-radius: 4px;
   max-height: 180px;
   overflow-y: auto;
-  width: 100%;
-  margin-top: 4px;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
 }
 
 #medicineSuggestions div,
 #symptomSuggestions div {
-  padding: 8px 10px;
+  padding: 7px 9px;
   font-size: 13px;
   cursor: pointer;
 }
@@ -286,6 +224,52 @@ body.alt {
 #symptomSuggestions div:hover {
   background: rgba(37,99,235,0.08);
 }
+
+/* ============================================================
+   BUTTON
+   ============================================================ */
+.opd-page button {
+  display: block;
+  margin: 18px auto 6px;
+  padding: 10px 26px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+  border: none;
+  background: var(--btn);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.opd-page button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.opd-page button:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 </style>
 
 
