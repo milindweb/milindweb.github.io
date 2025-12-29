@@ -1,22 +1,22 @@
 
 {
   "2026": [
+    { "date": "01-14", "name": "Makar Sankranti" },
     { "date": "01-26", "name": "Republic Day" },
+    { "date": "02-19", "name": "Ch. Shivaji M. J" },
     { "date": "03-03", "name": "Holi" },
     { "date": "03-19", "name": "Gudi Padava" },
     { "date": "03-21", "name": "Ramzan Id" },
-    { "date": "03-31", "name": "Mahavir Jayanti" },
     { "date": "04-03", "name": "Good Friday" },
-    { "date": "05-01", "name": "Buddha Purnima" },
-    { "date": "05-27", "name": "Bakri Id" },
-    { "date": "06-26", "name": "Muharram" },
+    { "date": "04-14", "name": "Dr BR Ambedkar J." },
+    { "date": "05-01", "name": "MH Day/Labour Day" },
+    { "date": "05-28", "name": "Bakri Id" },
     { "date": "08-15", "name": "Independence Day" },
-    { "date": "08-26", "name": "Id-e-Milad" },
+    { "date": "09-05", "name": "Dahihandi" },
     { "date": "09-14", "name": "Ganesh Chaturthi" },
     { "date": "10-02", "name": "Gandhi jayanti" },
     { "date": "10-20", "name": "Dussehra" },
-    { "date": "11-08", "name": "Diwali" },
-    { "date": "11-24", "name": "Guru Nanak jayanti" },
+    { "date": "11-11", "name": "Diwali Bhau Duj" },
     { "date": "12-25", "name": "Christmas Day" }
   ],
 "2025": [
