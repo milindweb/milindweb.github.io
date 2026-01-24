@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Single Screen Theatre Booking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- =========================
+       GLOBAL STYLES
+  ========================== -->
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #111827;
+      --primary: #e50914;
+      --success: #22c55e;
+      --warning: #facc15;
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      --border: #1f2933;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg-dark);
+      color: var(--text-main);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .container {
+      max-width: 420px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #020617;
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .seat {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .seat.available { background: #064e3b; }
+    .seat.selected  { background: #facc15; color: #000; }
+    .seat.booked    { background: #7f1d1d; cursor: not-allowed; }
+
+    .seat-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .footer-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- =========================
+       SECTION 1: HEADER
+  ========================== -->
+  <div class="card">
+    <h2>🎬 Chhatrapati Shivaji Maharaj Auditorium</h2>
+    <p class="footer-note">Naval Station Karanja · Single Screen</p>
+  </div>
+
+  <!-- =========================
+       SECTION 2: LOGIN / REGISTER
+  ========================== -->
+  <div class="card" id="loginSection">
+    <h2>Login</h2>
+
+    <!-- Mobile number -->
+    <input type="tel" placeholder="Mobile Number" id="mobileInput" />
+
+    <!-- OTP -->
+    <input type="text" placeholder="OTP (if required)" id="otpInput" class="hidden" />
+
+    <!-- Password -->
+    <input type="password" placeholder="Password" id="passwordInput" />
+
+    <button class="btn" onclick="handleLogin()">Continue</button>
+
+    <p class="footer-note">
+      OTP required only for first login or new device
+    </p>
+  </div>
+
+  <!-- =========================
+       SECTION 3: MOVIE / DATE / TIME
+  ========================== -->
+  <div class="card hidden" id="showSelectionSection">
+    <h2>Select Show</h2>
+
+    <!-- Movie -->
+    <select id="movieSelect">
+      <!-- populated from backend later -->
+    </select>
+
+    <!-- Date -->
+    <select id="dateSelect">
+    </select>
+
+    <!-- Time -->
+    <select id="timeSelect">
+    </select>
+  </div>
+
+  <!-- =========================
+       SECTION 4: SEAT COUNT & TYPE
+  ========================== -->
+  <div class="card hidden" id="seatCountSection">
+    <h2>How many seats?</h2>
+
+    <input type="number" min="1" max="10" id="seatCountInput" />
+
+    <select id="seatTypeSelect">
+      <!-- Normal / Executive / Premium / VIP -->
+    </select>
+
+    <button class="btn" onclick="proceedToSeatSelection()">Select Seats</button>
+  </div>
+
+  <!-- =========================
+       SECTION 5: SEAT SELECTION
+  ========================== -->
+  <div class="card hidden" id="seatSelectionSection">
+    <h2>Select Seats</h2>
+
+    <p class="footer-note">Screen This Side</p>
+
+    <div id="seatGrid">
+      <!-- seat layout injected here -->
+    </div>
+
+    <button class="btn" onclick="confirmSeats()">Confirm Seats</button>
+  </div>
+
+  <!-- =========================
+       SECTION 6: PAYMENT
+  ========================== -->
+  <div class="card hidden" id="paymentSection">
+    <h2>Payment</h2>
+
+    <p id="amountText">Total Amount: ₹ --</p>
+
+    <button class="btn" onclick="initiatePayment()">Proceed to Pay</button>
+
+    <p class="footer-note">
+      Secure payment · QR generated after backend validation
+    </p>
+  </div>
+
+  <!-- =========================
+       SECTION 7: TICKET VIEW
+  ========================== -->
+  <div class="card hidden" id="ticketSection">
+    <h2>Your Ticket</h2>
+
+    <div id="ticketDetails">
+      <!-- populated from backend -->
+    </div>
+
+    <button class="btn secondary" onclick="downloadTicket()">Download Ticket</button>
+    <button class="btn secondary" onclick="logout()">Logout</button>
+  </div>
+
+</div>
+
+<!-- =========================
+     JAVASCRIPT LOGIC
+========================== -->
+<script>
+  /*
+    Global state (replace with backend responses later)
+  */
+  const state = {
+    isLoggedIn: false,
+    selectedSeats: []
+  };
+
+  // -------------------------
+  // LOGIN HANDLER
+  // -------------------------
+  function handleLogin() {
+    // TODO: Call backend API
+    // On success:
+    state.isLoggedIn = true;
+
+    document.getElementById("loginSection").classList.add("hidden");
+    document.getElementById("showSelectionSection").classList.remove("hidden");
+  }
+
+  // -------------------------
+  // SEAT COUNT → SEAT MAP
+  // -------------------------
+  function proceedToSeatSelection() {
+    document.getElementById("seatCountSection").classList.add("hidden");
+    document.getElementById("seatSelectionSection").classList.remove("hidden");
+
+    renderSeatLayout();
+  }
+
+  // -------------------------
+  // RENDER SEAT GRID
+  // -------------------------
+  function renderSeatLayout() {
+    const grid = document.getElementById("seatGrid");
+    grid.innerHTML = "";
+
+    // layout will come from backend later
+    for (let r = 0; r < 5; r++) {
+      const row = document.createElement("div");
+      row.className = "seat-row";
+
+      for (let c = 0; c < 10; c++) {
+        const seat = document.createElement("div");
+        seat.className = "seat available";
+        seat.textContent = `${String.fromCharCode(65 + r)}${c + 1}`;
+        seat.onclick = () => toggleSeat(seat);
+        row.appendChild(seat);
+      }
+
+      grid.appendChild(row);
+    }
+  }
+
+  function toggleSeat(seat) {
+    if (seat.classList.contains("booked")) return;
+
+    seat.classList.toggle("selected");
+  }
+
+  // -------------------------
+  // CONFIRM SEATS
+  // -------------------------
+  function confirmSeats() {
+    document.getElementById("seatSelectionSection").classList.add("hidden");
+    document.getElementById("paymentSection").classList.remove("hidden");
+  }
+
+  // -------------------------
+  // PAYMENT INIT
+  // -------------------------
+  function initiatePayment() {
+    // TODO: Backend payment init (Razorpay etc.)
+    document.getElementById("paymentSection").classList.add("hidden");
+    document.getElementById("ticketSection").classList.remove("hidden");
+  }
+
+  // -------------------------
+  // LOGOUT
+  // -------------------------
+  function logout() {
+    state.isLoggedIn = false;
+    location.reload();
+  }
+
+  function downloadTicket() {
+    // backend will generate PDF
+    alert("Ticket download via backend");
+  }
+</script>
+
+</body>
+</html>
