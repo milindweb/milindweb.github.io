@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="css/headerfooter.css">
     <!-- Font Awesome (for icons in footer) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS for the map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <!-- JS to load header/footer -->
     <script src="js/headerfooter.js" defer></script>
 </head>
@@ -39,7 +42,6 @@
     <!-- Load footer from page footer.html - Footer Placeholder -->
     <div id="footer"></div>
 
-    <!-- JS to load header/footer -->
     <script>
         // API Key
         const apiKey = 'pub_3b990e7259074b468f98db7edec68e8f'; // Your NewsData.io API Key
@@ -124,14 +126,12 @@
             });
         }
 
-        // Initialize map on page load
+        // Initialize map and load header/footer on page load
         window.onload = function() {
             initMap();
             showTab(1); // Default tab
-        };
 
-        // Load the header and footer HTML dynamically
-        window.onload = function () {
+            // Load the header and footer HTML dynamically
             fetch('header.html')
                 .then(response => response.text())
                 .then(data => {
@@ -148,5 +148,4 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </body>
-
 </html>
