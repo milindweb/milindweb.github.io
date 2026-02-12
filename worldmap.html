@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive World Map</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <!-- Header + Footer CSS -->
+    <link rel="stylesheet" href="css/headerfooter.css">
+    <!-- Font Awesome (for icons in footer) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- JS to load header/footer -->
+    <script src="js/headerfooter.js" defer></script>
+</head>
+<body>
+    <!-- Load header from page header.html - Header Placeholder -->
+    <div id="header"></div>
+
+    <!-- Main Content: World Map -->
+    <div id="world-map-container">
+        <div id="map"></div>
+        <div id="country-details" class="details-panel">
+            <div class="tabs">
+                <button class="tab-button active" onclick="showTab(1)">Country Details</button>
+                <button class="tab-button" onclick="showTab(2)">Geopolitical News</button>
+            </div>
+            <div id="tab-1" class="tab-content active">
+                <h3>Country Details</h3>
+                <div id="country-info"></div>
+            </div>
+            <div id="tab-2" class="tab-content">
+                <h3>Geopolitical News</h3>
+                <div id="geopolitical-news"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load footer from page footer.html - Footer Placeholder -->
+    <div id="footer"></div>
+
+    <!-- JS to load header/footer -->
+    <script>
+        // API Key
+        const apiKey = 'pub_3b990e7259074b468f98db7edec68e8f'; // Your NewsData.io API Key
+
+        // Country Data (to be fetched dynamically on hover)
+        let currentCountry = "";
+
+        // Initialize the Map (using Leaflet.js or your preferred map library)
+        function initMap() {
+            const map = L.map('map').setView([20, 0], 2); // Center map on the world, zoom level 2
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            // Sample: Hover event to fetch country data
+            map.on('click', function(e) {
+                const countryName = getCountryByCoords(e.latlng.lat, e.latlng.lng); // You need to map coordinates to country names
+
+                // Fetch country details and geopolitical news
+                fetchCountryDetails(countryName);
+                fetchGeopoliticalNews(countryName);
+            });
+        }
+
+        // Function to show country details
+        function fetchCountryDetails(countryName) {
+            fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+                .then(response => response.json())
+                .then(data => {
+                    const country = data[0];
+                    const countryInfo = `
+                        <strong>Name:</strong> ${country.name.common} <br>
+                        <strong>Capital:</strong> ${country.capital} <br>
+                        <strong>Population:</strong> ${country.population} <br>
+                        <strong>Currency:</strong> ${country.currencies ? Object.values(country.currencies)[0].name : 'N/A'} <br>
+                        <strong>Languages:</strong> ${Object.values(country.languages).join(', ')} <br>
+                        <strong>Flag:</strong> <img src="${country.flags.svg}" alt="Flag" width="50px">
+                    `;
+                    document.getElementById('country-info').innerHTML = countryInfo;
+                })
+                .catch(error => console.log(error));
+        }
+
+        // Function to fetch geopolitical news
+        function fetchGeopoliticalNews(countryName) {
+            fetch(`https://newsdata.io/api/1/news?country=${countryName}&apikey=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    const news = data.results.slice(0, 1); // Fetch the latest news
+                    const newsContent = news.map(item => `
+                        <p><strong>${item.title}</strong>: ${item.description}</p>
+                    `).join('');
+                    document.getElementById('geopolitical-news').innerHTML = newsContent;
+                })
+                .catch(error => console.log(error));
+        }
+
+        // Toggle between Country Details and Geopolitical News
+        function showTab(tabIndex) {
+            const tab1 = document.getElementById('tab-1');
+            const tab2 = document.getElementById('tab-2');
+            const buttons = document.querySelectorAll('.tab-button');
+
+            // Hide both tabs
+            tab1.classList.remove('active');
+            tab2.classList.remove('active');
+
+            // Show the selected tab
+            if (tabIndex === 1) {
+                tab1.classList.add('active');
+            } else {
+                tab2.classList.add('active');
+            }
+
+            // Highlight active tab
+            buttons.forEach((button, index) => {
+                if (index === tabIndex - 1) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize map on page load
+        window.onload = function() {
+            initMap();
+            showTab(1); // Default tab
+        };
+
+        // Load the header and footer HTML dynamically
+        window.onload = function () {
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                });
+
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer').innerHTML = data;
+                });
+        };
+    </script>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+
+</html>
