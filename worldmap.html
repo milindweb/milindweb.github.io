@@ -6,24 +6,106 @@
     <title>Interactive World Map</title>
     <link rel="icon" type="image/png" href="img/favicon.png">
 
-    <!-- Header + Footer CSS -->
-    <link rel="stylesheet" href="css/headerfooter.css">
-    <!-- Font Awesome (for icons in footer) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Leaflet CSS for the map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-    <!-- JS to load header/footer -->
-    <script src="js/headerfooter.js" defer></script>
-</head>
-<body>
-    <!-- Load header from page header.html - Header Placeholder -->
-    <div id="header"></div>
+    <!-- Custom CSS (Header + Footer) -->
+    <style>
+        /* Reset for Layout */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Main Content: World Map -->
-    <div id="world-map-container">
-        <div id="map"></div>
-        <div id="country-details" class="details-panel">
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Header and Footer Styling */
+        #header, #footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        /* Map Styling */
+        #map {
+            height: 500px; /* Ensure the map container has a height */
+            width: 70%;
+            background-color: #ddd;
+            margin: 20px auto;
+        }
+
+        /* Details Panel (Country Info and Geopolitical News) */
+        .details-panel {
+            width: 28%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            float: right;
+            margin-top: 20px;
+        }
+
+        /* Tabs for content switching */
+        .tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            flex-grow: 1;
+        }
+
+        .tab-button.active {
+            background-color: #2980b9;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            #map {
+                width: 100%;
+                height: 300px;
+            }
+
+            .details-panel {
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <div id="header">
+        <h1>Interactive World Map</h1>
+        <p>Click on any country to get its details and geopolitical news</p>
+    </div>
+
+    <!-- Main Content (World Map + Details Panel) -->
+    <div id="world-map-container" style="display: flex; justify-content: space-between; padding: 20px;">
+        <div id="map"></div> <!-- The World Map will be here -->
+        <div class="details-panel">
             <div class="tabs">
                 <button class="tab-button active" onclick="showTab(1)">Country Details</button>
                 <button class="tab-button" onclick="showTab(2)">Geopolitical News</button>
@@ -39,34 +121,42 @@
         </div>
     </div>
 
-    <!-- Load footer from page footer.html - Footer Placeholder -->
-    <div id="footer"></div>
+    <!-- Footer Section -->
+    <div id="footer">
+        <p>&copy; 2026 Your Company. All Rights Reserved.</p>
+    </div>
 
+    <!-- JavaScript Section -->
     <script>
-        // API Key
-        const apiKey = 'pub_3b990e7259074b468f98db7edec68e8f'; // Your NewsData.io API Key
+        // API Key for NewsData.io (Geopolitical News)
+        const apiKey = 'pub_3b990e7259074b468f98db7edec68e8f'; // Replace with your actual API key
 
-        // Country Data (to be fetched dynamically on hover)
-        let currentCountry = "";
-
-        // Initialize the Map (using Leaflet.js or your preferred map library)
+        // Function to Initialize Leaflet.js Map
         function initMap() {
-            const map = L.map('map').setView([20, 0], 2); // Center map on the world, zoom level 2
+            // Initialize the map centered at [20, 0] (near the center of the world map)
+            const map = L.map('map').setView([20, 0], 2); // Zoom level 2
 
-            // Add OpenStreetMap tiles
+            // Add OpenStreetMap tiles to the map
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-            // Sample: Hover event to fetch country data
+            // Event: When the user clicks on a country, fetch its details and geopolitical news
             map.on('click', function(e) {
-                const countryName = getCountryByCoords(e.latlng.lat, e.latlng.lng); // You need to map coordinates to country names
+                // Get the latitude and longitude of the clicked point
+                const countryName = getCountryByCoords(e.latlng.lat, e.latlng.lng); // Implement this to map coords to country name
 
-                // Fetch country details and geopolitical news
+                // Fetch country details and geopolitical news for the clicked country
                 fetchCountryDetails(countryName);
                 fetchGeopoliticalNews(countryName);
             });
         }
 
-        // Function to show country details
+        // Dummy function for converting coordinates to country name
+        // In a real implementation, you'd use a reverse geocoding service to map coordinates to a country
+        function getCountryByCoords(lat, lng) {
+            return "India"; // For demo purposes, always return India (replace this logic for actual mapping)
+        }
+
+        // Function to Fetch Country Details using Restcountries API
         function fetchCountryDetails(countryName) {
             fetch(`https://restcountries.com/v3.1/name/${countryName}`)
                 .then(response => response.json())
@@ -82,24 +172,24 @@
                     `;
                     document.getElementById('country-info').innerHTML = countryInfo;
                 })
-                .catch(error => console.log(error));
+                .catch(error => console.log('Error fetching country details:', error));
         }
 
-        // Function to fetch geopolitical news
+        // Function to Fetch Geopolitical News using NewsData.io API
         function fetchGeopoliticalNews(countryName) {
             fetch(`https://newsdata.io/api/1/news?country=${countryName}&apikey=${apiKey}`)
                 .then(response => response.json())
                 .then(data => {
-                    const news = data.results.slice(0, 1); // Fetch the latest news
+                    const news = data.results.slice(0, 1); // Fetch the latest geopolitical news
                     const newsContent = news.map(item => `
                         <p><strong>${item.title}</strong>: ${item.description}</p>
                     `).join('');
                     document.getElementById('geopolitical-news').innerHTML = newsContent;
                 })
-                .catch(error => console.log(error));
+                .catch(error => console.log('Error fetching news:', error));
         }
 
-        // Toggle between Country Details and Geopolitical News
+        // Function to Toggle Between Country Details and Geopolitical News Tabs
         function showTab(tabIndex) {
             const tab1 = document.getElementById('tab-1');
             const tab2 = document.getElementById('tab-2');
@@ -116,7 +206,7 @@
                 tab2.classList.add('active');
             }
 
-            // Highlight active tab
+            // Highlight active tab button
             buttons.forEach((button, index) => {
                 if (index === tabIndex - 1) {
                     button.classList.add('active');
@@ -126,26 +216,15 @@
             });
         }
 
-        // Initialize map and load header/footer on page load
+        // Initialize Map and Load Content on Page Load
         window.onload = function() {
-            initMap();
-            showTab(1); // Default tab
-
-            // Load the header and footer HTML dynamically
-            fetch('header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header').innerHTML = data;
-                });
-
-            fetch('footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('footer').innerHTML = data;
-                });
+            initMap(); // Initialize the map
+            showTab(1); // Default tab is "Country Details"
         };
     </script>
 
+    <!-- Leaflet JS for Map Functionality -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 </body>
 </html>
