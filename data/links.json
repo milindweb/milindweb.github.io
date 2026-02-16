@@ -1,0 +1,413 @@
+[
+  {
+    "category": "🏠 My Tools",
+    "items": [
+      {
+        "title": "All-in-One Calculator",
+        "desc": "Smart and quick calculation tool.",
+        "icon": "fas fa-calculator",
+        "link": "calculator.html",
+        "status": ["free"]
+      },
+      {
+        "title": "Dr Clinic / Hospital Mgmt",
+        "desc": "Clinic website for patient management.",
+        "icon": "fas fa-hospital-user",
+        "link": "https://drakanksha.pages.dev",
+        "status": ["free"]
+      },
+      {
+        "title": "Employee Details",
+        "desc": "Employee ranking and data viewer.",
+        "icon": "fas fa-users",
+        "link": "Seniarity_Management.html",
+        "status": ["free"]
+      },
+      {
+        "title": "Google Sheet Data Handling",
+        "desc": "Excel and Google Sheet management.",
+        "icon": "fas fa-table",
+        "link": "mp.html",
+        "status": ["free"]
+      },
+      {
+        "title": "My Photo Album",
+        "desc": "Personal gallery collection.",
+        "icon": "fas fa-camera-retro",
+        "link": "myphoto.html",
+        "status": ["free"]
+      },
+      {
+        "title": "NAD Holiday Calendar",
+        "desc": "View NAD holidays and dates.",
+        "icon": "fas fa-calendar-alt",
+        "link": "calendar.html",
+        "status": ["free"]
+      },
+      {
+        "title": "Patient Form",
+        "desc": "Clinic patient form entry.",
+        "icon": "fas fa-notes-medical",
+        "link": "https://milindweb.pages.dev/form.html",
+        "status": ["free"]
+      },
+      {
+        "title": "Seniority List",
+        "desc": "Complete seniority list data.",
+        "icon": "fas fa-list",
+        "link": "Seniariity_List.html",
+        "status": ["free"]
+      },
+      {
+        "title": "Snake Game",
+        "desc": "Classic snake game online.",
+        "icon": "fas fa-gamepad",
+        "link": "snake-game.html",
+        "status": ["free"]
+      },
+      {
+        "title": "Testing Page (Admin)",
+        "desc": "Experimental code preview page.",
+        "icon": "fas fa-flask",
+        "link": "Test.html",
+        "status": ["free"]
+      },
+      {
+        "title": "Tic Tac Toe",
+        "desc": "Quick classic game match.",
+        "icon": "fas fa-times-circle",
+        "link": "tictactoe.html",
+        "status": ["free"]
+      }
+    ]
+  },
+
+  {
+    "category": "🤖 AI Chat & LLM",
+    "items": [
+      {
+        "title": "ChatGPT",
+        "desc": "Advanced AI chatbot for writing and coding.",
+        "icon": "fas fa-robot",
+        "link": "https://chat.openai.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Claude",
+        "desc": "Long-context reasoning AI assistant.",
+        "icon": "fas fa-brain",
+        "link": "https://claude.ai",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Gemini",
+        "desc": "Google multimodal AI assistant.",
+        "icon": "fas fa-comment-dots",
+        "link": "https://gemini.google.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Perplexity",
+        "desc": "AI-powered real-time search engine.",
+        "icon": "fas fa-search",
+        "link": "https://perplexity.ai",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Hugging Face Chat",
+        "desc": "Open-source AI model playground.",
+        "icon": "fas fa-code",
+        "link": "https://huggingface.co/chat",
+        "status": ["free", "open"]
+      },
+      {
+        "title": "Baidu ERNIE",
+        "desc": "Chinese large language AI platform.",
+        "icon": "fas fa-globe-asia",
+        "link": "https://yiyan.baidu.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Alibaba Tongyi",
+        "desc": "Enterprise AI by Alibaba.",
+        "icon": "fas fa-cloud",
+        "link": "https://tongyi.aliyun.com",
+        "status": ["freemium"]
+      }
+    ]
+  },
+
+  {
+    "category": "🎨 AI Image & Design",
+    "items": [
+      {
+        "title": "Midjourney",
+        "desc": "High-quality artistic AI images.",
+        "icon": "fas fa-image",
+        "link": "https://midjourney.com",
+        "status": ["paid"]
+      },
+      {
+        "title": "Leonardo AI",
+        "desc": "Creative AI image generator.",
+        "icon": "fas fa-paint-brush",
+        "link": "https://leonardo.ai",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Canva AI",
+        "desc": "AI-powered graphic design suite.",
+        "icon": "fas fa-pen-nib",
+        "link": "https://canva.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Recraft AI",
+        "desc": "Vector and branding AI design.",
+        "icon": "fas fa-vector-square",
+        "link": "https://www.recraft.ai",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Adobe Firefly",
+        "desc": "AI creative image generation.",
+        "icon": "fas fa-fire",
+        "link": "https://firefly.adobe.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Playground AI",
+        "desc": "Text-to-image with editing tools.",
+        "icon": "fas fa-palette",
+        "link": "https://playgroundai.com",
+        "status": ["freemium"]
+      }
+    ]
+  },
+
+  {
+    "category": "🎬 AI Video",
+    "items": [
+      {
+        "title": "Runway",
+        "desc": "AI video editing and generation.",
+        "icon": "fas fa-video",
+        "link": "https://runwayml.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Pika Labs",
+        "desc": "AI animated video creator.",
+        "icon": "fas fa-film",
+        "link": "https://pika.art",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Luma AI",
+        "desc": "Cinematic AI video tool.",
+        "icon": "fas fa-helicopter",
+        "link": "https://lumalabs.ai",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Synthesia",
+        "desc": "AI avatar-based video platform.",
+        "icon": "fas fa-user-circle",
+        "link": "https://synthesia.io",
+        "status": ["paid"]
+      }
+    ]
+  },
+
+  {
+    "category": "🎵 AI Music & Voice",
+    "items": [
+      {
+        "title": "ElevenLabs",
+        "desc": "Realistic AI voice cloning platform.",
+        "icon": "fas fa-microphone",
+        "link": "https://elevenlabs.io",
+        "status": ["freemium", "trial"]
+      },
+      {
+        "title": "Murf AI",
+        "desc": "Professional AI voiceover tool.",
+        "icon": "fas fa-volume-up",
+        "link": "https://murf.ai",
+        "status": ["trial"]
+      },
+      {
+        "title": "Suno",
+        "desc": "AI song generation with vocals.",
+        "icon": "fas fa-music",
+        "link": "https://suno.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Udio",
+        "desc": "High-quality AI music composer.",
+        "icon": "fas fa-headphones",
+        "link": "https://udio.com",
+        "status": ["trial"]
+      }
+    ]
+  },
+
+  {
+    "category": "💻 AI Coding",
+    "items": [
+      {
+        "title": "GitHub Copilot",
+        "desc": "AI pair programmer for developers.",
+        "icon": "fas fa-code",
+        "link": "https://github.com/features/copilot",
+        "status": ["paid"]
+      },
+      {
+        "title": "Cursor",
+        "desc": "AI-powered coding editor.",
+        "icon": "fas fa-terminal",
+        "link": "https://cursor.sh",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Replit AI",
+        "desc": "Online IDE with built-in AI coding.",
+        "icon": "fas fa-laptop-code",
+        "link": "https://replit.com",
+        "status": ["freemium"]
+      },
+      {
+        "title": "Tabnine",
+        "desc": "AI autocomplete coding assistant.",
+        "icon": "fas fa-keyboard",
+        "link": "https://tabnine.com",
+        "status": ["freemium"]
+      }
+    ]
+  }
+{
+  "category": "📈 Digital Marketing AI",
+  "items": [
+    {
+      "title": "Jasper AI",
+      "desc": "AI-powered marketing and content generation platform.",
+      "icon": "fas fa-bullhorn",
+      "link": "https://jasper.ai",
+      "status": ["paid"]
+    },
+    {
+      "title": "Copy.ai",
+      "desc": "AI marketing copy and social media content generator.",
+      "icon": "fas fa-pen",
+      "link": "https://copy.ai",
+      "status": ["freemium"]
+    },
+    {
+      "title": "Surfer SEO",
+      "desc": "AI-driven SEO content optimization tool.",
+      "icon": "fas fa-chart-line",
+      "link": "https://surferseo.com",
+      "status": ["paid"]
+    },
+    {
+      "title": "Semrush",
+      "desc": "Advanced SEO and digital marketing analytics suite.",
+      "icon": "fas fa-search-dollar",
+      "link": "https://semrush.com",
+      "status": ["paid"]
+    },
+    {
+      "title": "Writesonic",
+      "desc": "AI content writing and landing page generator.",
+      "icon": "fas fa-keyboard",
+      "link": "https://writesonic.com",
+      "status": ["freemium"]
+    }
+  ]
+},
+
+{
+  "category": "🛠 Productivity",
+  "items": [
+    {
+      "title": "Notion AI",
+      "desc": "AI writing and productivity assistant for documents.",
+      "icon": "fas fa-file-alt",
+      "link": "https://notion.so",
+      "status": ["freemium"]
+    },
+    {
+      "title": "Grammarly",
+      "desc": "AI grammar correction and writing enhancement tool.",
+      "icon": "fas fa-spell-check",
+      "link": "https://grammarly.com",
+      "status": ["freemium"]
+    },
+    {
+      "title": "Gamma",
+      "desc": "AI-powered presentation and slide generator.",
+      "icon": "fas fa-chart-pie",
+      "link": "https://gamma.app",
+      "status": ["freemium"]
+    },
+    {
+      "title": "Tome",
+      "desc": "AI storytelling and presentation builder.",
+      "icon": "fas fa-book-open",
+      "link": "https://tome.app",
+      "status": ["freemium"]
+    },
+    {
+      "title": "ClickUp AI",
+      "desc": "AI-powered project and task management assistant.",
+      "icon": "fas fa-tasks",
+      "link": "https://clickup.com",
+      "status": ["freemium"]
+    }
+  ]
+},
+
+{
+  "category": "📚 Learning Platforms",
+  "items": [
+    {
+      "title": "Coursera",
+      "desc": "University-level online courses and certifications.",
+      "icon": "fas fa-graduation-cap",
+      "link": "https://coursera.org",
+      "status": ["trial", "paid"]
+    },
+    {
+      "title": "Udemy",
+      "desc": "Online skill development and AI courses.",
+      "icon": "fas fa-book",
+      "link": "https://udemy.com",
+      "status": ["paid"]
+    },
+    {
+      "title": "FreeCodeCamp",
+      "desc": "Completely free programming learning platform.",
+      "icon": "fas fa-code",
+      "link": "https://freecodecamp.org",
+      "status": ["free"]
+    },
+    {
+      "title": "edX",
+      "desc": "Professional online courses from global universities.",
+      "icon": "fas fa-university",
+      "link": "https://edx.org",
+      "status": ["trial", "paid"]
+    },
+    {
+      "title": "Khan Academy",
+      "desc": "Free educational platform for school and college students.",
+      "icon": "fas fa-chalkboard-teacher",
+      "link": "https://khanacademy.org",
+      "status": ["free"]
+    }
+  ]
+}
+
+
+]
