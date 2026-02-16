@@ -43,16 +43,45 @@
     }
 
     h2 {
-      margin-bottom: 1.5rem;
+      margin: 1.5rem 0 1rem;
       color: var(--primary-color);
-      text-align: center;
+      text-align: left;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* 🔍 SEARCH BOX */
+    .search-box {
+      width: 100%;
+      max-width: 1100px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-light);
+      padding: 0.6rem 1rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .search-box i {
+      color: var(--primary-color);
+      margin-right: 0.5rem;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 0.95rem;
+      font-family: "Poppins", sans-serif;
     }
 
     .container {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1100px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 1.2rem;
     }
 
@@ -65,7 +94,6 @@
       transition: var(--transition);
       display: flex;
       flex-direction: column;
-      justify-content: center;
     }
 
     .card:hover {
@@ -77,15 +105,14 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--primary-color);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .card-header i {
-      font-size: 1.3rem;
-      color: var(--primary-color);
+      font-size: 1.2rem;
       min-width: 24px;
       text-align: center;
     }
@@ -102,131 +129,152 @@
     }
 
     .card p {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-secondary);
       margin: 0;
       line-height: 1.4;
     }
+
+    .hidden {
+      display: none !important;
+    }
+
   </style>
 </head>
+
 <body>
-  <!-- Header Placeholder -->
+
   <div id="header"></div>
 
-  <!-- MAIN CONTENT -->
   <main class="main-content">
     <h2>📁 Useful Links</h2>
+
+    <!-- 🔍 SEARCH -->
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search tools, AI, games, utilities...">
+    </div>
+
     <div id="links-container" class="container"></div>
   </main>
 
-  <!-- Footer Placeholder -->
   <div id="footer"></div>
 
-  <!-- Dynamic Script -->
   <script>
-    // 💡 Add or remove links here — no need to touch HTML
-const linksData = [
-    {
-    title: "Dr Clinic/Hospital Mgmt",
-    desc: "Sample - Dr Clinic/Hospital website for patient management.",
-    icon: "fas fa-hospital-user",
-    link: "https://drakanksha.pages.dev"
-  },
-  {
-    title: "Testing Page ( Admin only)",
-    desc: "Page for testing and previewing experimental code.",
-    icon: "fas fa-flask",
-    link: "Test.html"
-  },
-  {
-    title: "All-in-One Calculator",
-    desc: "Perform quick and smart calculations with ease.",
-    icon: "fas fa-calculator",
-    link: "calculator.html"
-  },
-  {
-    title: "NAD Holiday Calendar",
-    desc: "View upcoming holidays and important NAD dates.",
-    icon: "fas fa-calendar-alt",
-    link: "calendar.html"
-  },
-  {
-    title: "My Photo Album",
-    desc: "Personal gallery and memories collection.",
-    icon: "fas fa-camera-retro",
-    link: "myphoto.html"
-  },
-  {
-    title: "Snake Game",
-    desc: "Play the classic Snake game directly on this site.",
-    icon: "fas fa-gamepad",
-    link: "snake-game.html"
-  },
-  {
-    title: "Tic Tac Toe",
-    desc: "Enjoy a quick match of the timeless Tic Tac Toe game.",
-    icon: "fas fa-times-circle",
-    link: "tictactoe.html"
-  },
-  {
-    title: "Employee Details",
-    desc: "Check employee details and verify ranking.",
-    icon: "fas fa-users",
-    link: "Seniarity_Management.html"
-  },
-  {
-    title: "Seniority List",
-    desc: "View complete seniority list and post-wise data.",
-    icon: "fas fa-list",
-    link: "Seniariity_List.html"
-  },
-    {
-    title: "Patient Form",
-    desc: "My clinic - Patient form.",
-    icon: "fas fa-bullhorn",
-    link: "https://milindweb.pages.dev/form.html"
-  },
-  {
-    title: "Google Sheet Data Handling",
-    desc: "Access and manage Excel/Google Sheet data.",
-    icon: "fas fa-table",
-    link: "mp.html"
-  }
-{
-    title: "Recraft AI",
-    desc: "AI-powered platform for generating and editing vector art and branded visuals.",
-    icon: "fas fa-paint-brush",
-    link: "https://www.recraft.ai/"
-},
-{
-    title: "Hugging Face",
-    desc: "Open-source AI platform offering machine learning models, datasets, and developer tools.",
-    icon: "fas fa-robot",
-    link: "https://huggingface.co/"
-},
-{
-    title: "Feedough",
-    desc: "Startup-focused online magazine covering entrepreneurship and business insights.",
-    icon: "fas fa-lightbulb",
-    link: "https://www.feedough.com/"
-}
-];
 
+    const linksData = [
+
+      {
+        category: "🏠 My Tools",
+        items: [
+          { title: "Dr Clinic/Hospital Mgmt", desc: "Sample clinic website for patient management.", icon: "fas fa-hospital-user", link: "https://drakanksha.pages.dev" },
+          { title: "Testing Page (Admin)", desc: "Experimental code preview and testing page.", icon: "fas fa-flask", link: "Test.html" },
+          { title: "All-in-One Calculator", desc: "Perform quick and smart calculations easily.", icon: "fas fa-calculator", link: "calculator.html" },
+          { title: "NAD Holiday Calendar", desc: "View upcoming holidays and NAD dates.", icon: "fas fa-calendar-alt", link: "calendar.html" },
+          { title: "My Photo Album", desc: "Personal gallery and memories collection.", icon: "fas fa-camera-retro", link: "myphoto.html" },
+          { title: "Snake Game", desc: "Play the classic Snake game online.", icon: "fas fa-gamepad", link: "snake-game.html" },
+          { title: "Tic Tac Toe", desc: "Quick match of the timeless game.", icon: "fas fa-times-circle", link: "tictactoe.html" },
+          { title: "Employee Details", desc: "Check employee data and ranking.", icon: "fas fa-users", link: "Seniarity_Management.html" },
+          { title: "Seniority List", desc: "View complete seniority list data.", icon: "fas fa-list", link: "Seniariity_List.html" },
+          { title: "Patient Form", desc: "Clinic patient form entry page.", icon: "fas fa-notes-medical", link: "https://milindweb.pages.dev/form.html" },
+          { title: "Google Sheet Data Handling", desc: "Access and manage Excel/Google Sheet data.", icon: "fas fa-table", link: "mp.html" }
+        ]
+      },
+
+      {
+        category: "🤖 AI Chat & LLM",
+        items: [
+          { title: "Gemini", desc: "Google AI chatbot with free access.", icon: "fas fa-comment-dots", link: "https://gemini.google.com/" },
+          { title: "Hugging Face Chat", desc: "Free open-source AI model chat.", icon: "fas fa-robot", link: "https://huggingface.co/chat/" }
+        ]
+      },
+
+      {
+        category: "🎨 AI Image & Art",
+        items: [
+          { title: "Leonardo AI", desc: "Generate AI images with free credits.", icon: "fas fa-paint-brush", link: "https://leonardo.ai/" },
+          { title: "Playground AI", desc: "Create text-to-image artwork free.", icon: "fas fa-image", link: "https://playgroundai.com/" },
+          { title: "Recraft AI", desc: "AI-powered vector and branding design.", icon: "fas fa-pen-nib", link: "https://www.recraft.ai/" }
+        ]
+      },
+
+      {
+        category: "🎬 AI Video Tools",
+        items: [
+          { title: "CapCut AI", desc: "Free AI short video creator.", icon: "fas fa-video", link: "https://www.capcut.com/" },
+          { title: "Luma AI", desc: "Create cinematic AI videos easily.", icon: "fas fa-helicopter", link: "https://lumalabs.ai/" }
+        ]
+      },
+
+      {
+        category: "🎵 AI Music",
+        items: [
+          { title: "Suno", desc: "Generate AI songs with free credits.", icon: "fas fa-music", link: "https://suno.com/" },
+          { title: "Udio", desc: "High-quality AI music generator.", icon: "fas fa-headphones", link: "https://www.udio.com/" }
+        ]
+      },
+
+      {
+        category: "🛠 Utilities & Learning",
+        items: [
+          { title: "Photopea", desc: "Free online Photoshop alternative.", icon: "fas fa-photo-film", link: "https://www.photopea.com/" },
+          { title: "FreeCodeCamp", desc: "Free programming courses platform.", icon: "fas fa-code", link: "https://www.freecodecamp.org/" }
+        ]
+      }
+
+    ];
 
     const container = document.getElementById("links-container");
 
-    linksData.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="card-header">
-          <i class="${item.icon}"></i>
-          <a href="${item.link}">${item.title}</a>
-        </div>
-        <p>${item.desc}</p>
-      `;
-      container.appendChild(card);
+    function renderLinks(filterText = "") {
+      container.innerHTML = "";
+      const search = filterText.toLowerCase();
+
+      linksData.forEach(section => {
+
+        let categoryHasVisibleItems = false;
+        const sectionElements = [];
+
+        section.items.forEach(item => {
+
+          if (
+            item.title.toLowerCase().includes(search) ||
+            item.desc.toLowerCase().includes(search)
+          ) {
+            categoryHasVisibleItems = true;
+
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+              <div class="card-header">
+                <i class="${item.icon}"></i>
+                <a href="${item.link}" target="_blank">${item.title}</a>
+              </div>
+              <p>${item.desc}</p>
+            `;
+            sectionElements.push(card);
+          }
+        });
+
+        if (categoryHasVisibleItems) {
+          const heading = document.createElement("h2");
+          heading.textContent = section.category;
+          heading.style.gridColumn = "1/-1";
+          container.appendChild(heading);
+
+          sectionElements.forEach(el => container.appendChild(el));
+        }
+
+      });
+    }
+
+    renderLinks();
+
+    document.getElementById("searchInput").addEventListener("input", function () {
+      renderLinks(this.value);
     });
+
   </script>
+
 </body>
 </html>
