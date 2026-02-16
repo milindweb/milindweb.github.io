@@ -1,280 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MilindWeb - Useful Links</title>
-  
-  <!-- Fonts & Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MilindWeb - Useful Links</title>
 
-  <!-- Header + Footer -->
-  <link rel="stylesheet" href="css/headerfooter.css">
-  <script src="js/headerfooter.js" defer></script>
+<!-- Fonts & Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --white: #ffffff;
-      --text-primary: #222;
-      --text-secondary: #555;
-      --primary-color: #3498db;
-      --border-light: #e5e7eb;
-      --border-radius: 12px;
-      --shadow-md: 0 2px 6px rgba(0,0,0,0.08);
-      --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
-      --transition: 0.3s ease;
-    }
+<!-- Header + Footer -->
+<link rel="stylesheet" href="css/headerfooter.css">
+<script src="js/headerfooter.js" defer></script>
 
-    body {
-      font-family: "Poppins", sans-serif;
-      background: #f5f7fa;
-      margin: 0;
-      padding: 0;
-      color: var(--text-primary);
-    }
+<style>
+:root {
+  --white:#ffffff;
+  --text-primary:#222;
+  --text-secondary:#555;
+  --primary-color:#3498db;
+  --border-light:#e5e7eb;
+  --border-radius:12px;
+  --shadow-md:0 2px 6px rgba(0,0,0,0.08);
+  --shadow-lg:0 4px 12px rgba(0,0,0,0.15);
+  --transition:0.3s ease;
+}
 
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem;
-    }
+body {
+  font-family:"Poppins",sans-serif;
+  background:#f5f7fa;
+  margin:0;
+  padding:0;
+  color:var(--text-primary);
+}
 
-    h2 {
-      margin: 1.5rem 0 1rem;
-      color: var(--primary-color);
-      text-align: left;
-      width: 100%;
-      max-width: 1100px;
-    }
+.main-content {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:2rem 1rem;
+}
 
-    /* 🔍 SEARCH BOX */
-    .search-box {
-      width: 100%;
-      max-width: 1100px;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      background: var(--white);
-      border-radius: var(--border-radius);
-      border: 1px solid var(--border-light);
-      padding: 0.6rem 1rem;
-      box-shadow: var(--shadow-md);
-    }
+h2 {
+  margin:1.5rem 0 1rem;
+  color:var(--primary-color);
+  text-align:left;
+  width:100%;
+  max-width:1100px;
+}
 
-    .search-box i {
-      color: var(--primary-color);
-      margin-right: 0.5rem;
-    }
+/* SEARCH */
+.search-box {
+  width:100%;
+  max-width:1100px;
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  background:var(--white);
+  border-radius:var(--border-radius);
+  border:1px solid var(--border-light);
+  padding:0.6rem 1rem;
+  box-shadow:var(--shadow-md);
+}
 
-    .search-box input {
-      border: none;
-      outline: none;
-      width: 100%;
-      font-size: 0.95rem;
-      font-family: "Poppins", sans-serif;
-    }
+.search-box i {
+  color:var(--primary-color);
+  margin-right:0.5rem;
+}
 
-    .container {
-      width: 100%;
-      max-width: 1100px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.2rem;
-    }
+.search-box input {
+  border:none;
+  outline:none;
+  width:100%;
+  font-size:0.95rem;
+  font-family:"Poppins",sans-serif;
+}
 
-    .card {
-      background: var(--white);
-      border-radius: var(--border-radius);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-md);
-      padding: 1rem 1.2rem;
-      transition: var(--transition);
-      display: flex;
-      flex-direction: column;
-    }
+.container {
+  width:100%;
+  max-width:1100px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.2rem;
+}
 
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
+.card {
+  background:var(--white);
+  border-radius:var(--border-radius);
+  border:1px solid var(--border-light);
+  box-shadow:var(--shadow-md);
+  padding:1rem 1.2rem;
+  transition:var(--transition);
+  display:flex;
+  flex-direction:column;
+}
 
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--primary-color);
-      margin-bottom: 0.4rem;
-    }
+.card:hover {
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-lg);
+}
 
-    .card-header i {
-      font-size: 1.2rem;
-      min-width: 24px;
-      text-align: center;
-    }
+.card-header {
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  font-size:1rem;
+  font-weight:600;
+  color:var(--primary-color);
+  margin-bottom:0.4rem;
+}
 
-    .card-header a {
-      text-decoration: none;
-      color: var(--primary-color);
-      transition: color var(--transition);
-    }
+.card-header i {
+  font-size:1.2rem;
+  min-width:24px;
+  text-align:center;
+}
 
-    .card-header a:hover {
-      color: #2a7fc7;
-      text-decoration: underline;
-    }
+.card-header a {
+  text-decoration:none;
+  color:var(--primary-color);
+  transition:color var(--transition);
+}
 
-    .card p {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      margin: 0;
-      line-height: 1.4;
-    }
+.card-header a:hover {
+  color:#2a7fc7;
+  text-decoration:underline;
+}
 
-    .hidden {
-      display: none !important;
-    }
+.card p {
+  font-size:0.88rem;
+  color:var(--text-secondary);
+  margin:0;
+  line-height:1.4;
+}
 
-  </style>
+.loading,
+.error {
+  margin-top:2rem;
+  font-size:1rem;
+  color:var(--text-secondary);
+}
+</style>
 </head>
 
 <body>
 
-  <div id="header"></div>
+<div id="header"></div>
 
-  <main class="main-content">
-    <h2>📁 Useful Links</h2>
+<main class="main-content">
 
-    <!-- 🔍 SEARCH -->
-    <div class="search-box">
-      <i class="fas fa-search"></i>
-      <input type="text" id="searchInput" placeholder="Search tools, AI, games, utilities...">
-    </div>
+<h2>📁 Useful Links</h2>
 
-    <div id="links-container" class="container"></div>
-  </main>
+<div class="search-box">
+  <i class="fas fa-search"></i>
+  <input type="text" id="searchInput" placeholder="Search tools, AI, games, utilities...">
+</div>
 
-  <div id="footer"></div>
+<div id="links-container" class="container"></div>
 
-  <script>
+<div id="statusMessage" class="loading">Loading data...</div>
 
-    const linksData = [
+</main>
 
-      {
-        category: "🏠 My Tools",
-        items: [
-          { title: "Dr Clinic/Hospital Mgmt", desc: "Sample clinic website for patient management.", icon: "fas fa-hospital-user", link: "https://drakanksha.pages.dev" },
-          { title: "Testing Page (Admin)", desc: "Experimental code preview and testing page.", icon: "fas fa-flask", link: "Test.html" },
-          { title: "All-in-One Calculator", desc: "Perform quick and smart calculations easily.", icon: "fas fa-calculator", link: "calculator.html" },
-          { title: "NAD Holiday Calendar", desc: "View upcoming holidays and NAD dates.", icon: "fas fa-calendar-alt", link: "calendar.html" },
-          { title: "My Photo Album", desc: "Personal gallery and memories collection.", icon: "fas fa-camera-retro", link: "myphoto.html" },
-          { title: "Snake Game", desc: "Play the classic Snake game online.", icon: "fas fa-gamepad", link: "snake-game.html" },
-          { title: "Tic Tac Toe", desc: "Quick match of the timeless game.", icon: "fas fa-times-circle", link: "tictactoe.html" },
-          { title: "Employee Details", desc: "Check employee data and ranking.", icon: "fas fa-users", link: "Seniarity_Management.html" },
-          { title: "Seniority List", desc: "View complete seniority list data.", icon: "fas fa-list", link: "Seniariity_List.html" },
-          { title: "Patient Form", desc: "Clinic patient form entry page.", icon: "fas fa-notes-medical", link: "https://milindweb.pages.dev/form.html" },
-          { title: "Google Sheet Data Handling", desc: "Access and manage Excel/Google Sheet data.", icon: "fas fa-table", link: "mp.html" }
-        ]
-      },
+<div id="footer"></div>
 
-      {
-        category: "🤖 AI Chat & LLM",
-        items: [
-          { title: "Gemini", desc: "Google AI chatbot with free access.", icon: "fas fa-comment-dots", link: "https://gemini.google.com/" },
-          { title: "Hugging Face Chat", desc: "Free open-source AI model chat.", icon: "fas fa-robot", link: "https://huggingface.co/chat/" }
-        ]
-      },
+<script>
+let linksData = [];
+const container = document.getElementById("links-container");
+const statusMessage = document.getElementById("statusMessage");
 
-      {
-        category: "🎨 AI Image & Art",
-        items: [
-          { title: "Leonardo AI", desc: "Generate AI images with free credits.", icon: "fas fa-paint-brush", link: "https://leonardo.ai/" },
-          { title: "Playground AI", desc: "Create text-to-image artwork free.", icon: "fas fa-image", link: "https://playgroundai.com/" },
-          { title: "Recraft AI", desc: "AI-powered vector and branding design.", icon: "fas fa-pen-nib", link: "https://www.recraft.ai/" }
-        ]
-      },
+/* =============================
+   FETCH JSON DATA
+============================= */
+async function loadData() {
+  try {
+    const response = await fetch("data/links.json");
 
-      {
-        category: "🎬 AI Video Tools",
-        items: [
-          { title: "CapCut AI", desc: "Free AI short video creator.", icon: "fas fa-video", link: "https://www.capcut.com/" },
-          { title: "Luma AI", desc: "Create cinematic AI videos easily.", icon: "fas fa-helicopter", link: "https://lumalabs.ai/" }
-        ]
-      },
-
-      {
-        category: "🎵 AI Music",
-        items: [
-          { title: "Suno", desc: "Generate AI songs with free credits.", icon: "fas fa-music", link: "https://suno.com/" },
-          { title: "Udio", desc: "High-quality AI music generator.", icon: "fas fa-headphones", link: "https://www.udio.com/" }
-        ]
-      },
-
-      {
-        category: "🛠 Utilities & Learning",
-        items: [
-          { title: "Photopea", desc: "Free online Photoshop alternative.", icon: "fas fa-photo-film", link: "https://www.photopea.com/" },
-          { title: "FreeCodeCamp", desc: "Free programming courses platform.", icon: "fas fa-code", link: "https://www.freecodecamp.org/" }
-        ]
-      }
-
-    ];
-
-    const container = document.getElementById("links-container");
-
-    function renderLinks(filterText = "") {
-      container.innerHTML = "";
-      const search = filterText.toLowerCase();
-
-      linksData.forEach(section => {
-
-        let categoryHasVisibleItems = false;
-        const sectionElements = [];
-
-        section.items.forEach(item => {
-
-          if (
-            item.title.toLowerCase().includes(search) ||
-            item.desc.toLowerCase().includes(search)
-          ) {
-            categoryHasVisibleItems = true;
-
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-              <div class="card-header">
-                <i class="${item.icon}"></i>
-                <a href="${item.link}" target="_blank">${item.title}</a>
-              </div>
-              <p>${item.desc}</p>
-            `;
-            sectionElements.push(card);
-          }
-        });
-
-        if (categoryHasVisibleItems) {
-          const heading = document.createElement("h2");
-          heading.textContent = section.category;
-          heading.style.gridColumn = "1/-1";
-          container.appendChild(heading);
-
-          sectionElements.forEach(el => container.appendChild(el));
-        }
-
-      });
+    if (!response.ok) {
+      throw new Error("Failed to load JSON");
     }
 
+    linksData = await response.json();
+    statusMessage.style.display = "none";
     renderLinks();
 
-    document.getElementById("searchInput").addEventListener("input", function () {
-      renderLinks(this.value);
+  } catch (error) {
+    statusMessage.className = "error";
+    statusMessage.textContent = "❌ Error loading data. Check JSON path.";
+    console.error(error);
+  }
+}
+
+/* =============================
+   RENDER FUNCTION
+============================= */
+function renderLinks(filterText = "") {
+  container.innerHTML = "";
+  const search = filterText.toLowerCase();
+
+  linksData.forEach(section => {
+
+    let categoryHasVisibleItems = false;
+    const sectionElements = [];
+
+    section.items.forEach(item => {
+
+      if (
+        item.title.toLowerCase().includes(search) ||
+        item.desc.toLowerCase().includes(search)
+      ) {
+        categoryHasVisibleItems = true;
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <div class="card-header">
+            <i class="${item.icon}"></i>
+            <a href="${item.link}" target="_blank">${item.title}</a>
+          </div>
+          <p>${item.desc}</p>
+        `;
+
+        sectionElements.push(card);
+      }
+
     });
 
-  </script>
+    if (categoryHasVisibleItems) {
+      const heading = document.createElement("h2");
+      heading.textContent = section.category;
+      heading.style.gridColumn = "1/-1";
+      container.appendChild(heading);
+
+      sectionElements.forEach(el => container.appendChild(el));
+    }
+
+  });
+}
+
+/* =============================
+   SEARCH EVENT
+============================= */
+document.getElementById("searchInput").addEventListener("input", function () {
+  renderLinks(this.value);
+});
+
+/* =============================
+   INIT
+============================= */
+loadData();
+</script>
 
 </body>
 </html>
