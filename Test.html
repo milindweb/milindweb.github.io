@@ -2,295 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Budget Calculator – 50:30:20 & 30:30:30:10</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
 
 <style>
-body{
+/* ====== FORM CONTAINER ====== */
+body {
   font-family: Arial, sans-serif;
-  background:#f7f9fc;
-  margin:0;
-  padding:20px;
-}
-.container{
-  max-width:900px;
-  margin:auto;
-}
-h1{
-  text-align:center;
-  margin-bottom:20px;
+  background: #f5f7fb;
 }
 
-.rule-selector{
-  text-align:center;
-  margin-bottom:20px;
-}
-.rule-selector button{
-  padding:10px 20px;
-  margin:5px;
-  border:none;
-  cursor:pointer;
-  border-radius:8px;
-  font-weight:bold;
-  background:#e2e8f0;
-}
-.rule-selector button.active{
-  background:#2563eb;
-  color:white;
+.contact-form {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 25px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-.card{
-  background:white;
-  padding:18px;
-  border-radius:12px;
-  margin-bottom:18px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+/* ====== INPUTS ====== */
+.form-group {
+  margin-bottom: 15px;
 }
 
-.section-title{
-  font-weight:bold;
-  margin-bottom:8px;
-  background:#f1f5f9;
-  padding:8px;
-  border-radius:6px;
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  transition: 0.3s;
+  font-size: 14px;
 }
 
-.item-row{
-  display:flex;
-  justify-content:space-between;
-  padding:6px 0;
-  border-bottom:1px solid #f1f1f1;
-}
-.item-row input{
-  width:120px;
-  padding:6px;
-  border:1px solid #ddd;
-  border-radius:6px;
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
-.total-box{
-  background:#f8fafc;
-  padding:12px;
-  border-radius:8px;
-  margin-top:12px;
-  font-weight:bold;
+/* ====== BUTTON ====== */
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #007bff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.summary{
-  font-size:15px;
-  margin-top:10px;
-  padding:12px;
-  border-radius:8px;
+button:hover {
+  background: #0056b3;
 }
-.good{ background:#dcfce7; color:#166534; }
-.bad{ background:#fee2e2; color:#991b1b; }
 
-.hidden{ display:none; }
+/* ====== STATUS ====== */
+#formStatus {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+}
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<h1>Simple Budget Calculator</h1>
+<form id="contactForm" class="contact-form">
 
-<!-- Rule Selection -->
-<div class="rule-selector">
-  <button id="btn502020" class="active">50 : 30 : 20 Rule</button>
-  <button id="btn30303010">30 : 30 : 30 : 10 Rule</button>
-</div>
+  <h2 style="text-align:center;margin-bottom:20px;">Contact Us</h2>
 
-<!-- Income Input -->
-<div class="card">
-  <div class="section-title">Monthly Income</div>
-  <div class="item-row">
-    <span>Total Income (₹)</span>
-    <input type="number" id="income" value="40000">
+  <div class="form-group">
+    <input type="text" name="name" placeholder="Your Name" required>
   </div>
-</div>
 
-<!-- 50:30:20 SECTION -->
-<div id="rule502020" class="card">
-  <h2>⭐ 1️⃣ — 50 : 30 : 20 Rule</h2>
+  <div class="form-group">
+    <input type="email" name="email" placeholder="Your Email" required>
+  </div>
 
-  <!-- NEEDS -->
-  <div class="section-title">50% → NEEDS</div>
-  <div id="needs50"></div>
+  <div class="form-group">
+    <input type="text" name="subject" placeholder="Subject" required>
+  </div>
 
-  <!-- WANTS -->
-  <div class="section-title">30% → WANTS</div>
-  <div id="wants50"></div>
+  <div class="form-group">
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+  </div>
 
-  <!-- SAVINGS -->
-  <div class="section-title">20% → SAVINGS</div>
-  <div id="savings50"></div>
+  <!-- Web3Forms Hidden Fields -->
+  <input type="hidden" name="access_key" value="b85bd332-4aec-4a7f-9852-c092d282d461">
+  <input type="hidden" name="from_name" value="Your Website">
+  <input type="checkbox" name="botcheck" style="display:none;">
 
-  <div class="total-box" id="total50"></div>
-  <div id="summary50" class="summary"></div>
-</div>
+  <button type="submit" id="submitBtn">Send Message</button>
 
-<!-- 30:30:30:10 SECTION -->
-<div id="rule30303010" class="card hidden">
-  <h2>⭐ 2️⃣ — 30 : 30 : 30 : 10 Rule</h2>
+  <p id="formStatus"></p>
 
-  <!-- NEEDS -->
-  <div class="section-title">30% → NEEDS</div>
-  <div id="needs30"></div>
-
-  <!-- EMIs -->
-  <div class="section-title">30% → EMIs / Fixed Commitments</div>
-  <div id="emis30"></div>
-
-  <!-- SAVINGS -->
-  <div class="section-title">30% → SAVINGS</div>
-  <div id="savings30"></div>
-
-  <!-- WANTS -->
-  <div class="section-title">10% → WANTS</div>
-  <div id="wants30"></div>
-
-  <div class="total-box" id="total30"></div>
-  <div id="summary30" class="summary"></div>
-</div>
-
-</div>
+</form>
 
 <script>
-// Data for each rule
-const data502020 = {
-  needs: [
-    "House rent / EMI", "Groceries & food", "Electricity, water, gas",
-    "Transportation / fuel", "Mobile & internet", "School fees",
-    "Basic healthcare", "Essential clothing", "Home maintenance"
-  ],
-  wants: [
-    "Restaurants / Swiggy / Zomato", "Travel & holidays", "Movies & outings",
-    "Shopping & fashion", "OTT / Gym", "Celebrations / festivals",
-    "Gadgets & accessories"
-  ],
-  savings: [
-    "SIP / Mutual Funds", "PF / PPF", "RD / FD", "Emergency fund",
-    "Insurance", "Retirement planning", "Child education fund"
-  ]
-};
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const status = document.getElementById('formStatus');
 
-const data30303010 = {
-  needs: [
-    "Groceries", "Transport", "Utility bills", "Medicine",
-    "School fees", "Basic clothing", "Home maintenance"
-  ],
-  emis: [
-    "Home Loan EMI", "Car/Bike EMI", "Personal loan EMI",
-    "Credit card EMI", "Compulsory PF/PPF", "Any monthly repayment"
-  ],
-  savings: [
-    "Mutual Funds / SIP", "PF / PPF", "FD / RD",
-    "Emergency fund", "Insurance", "Retirement planning", "Kids' education"
-  ],
-  wants: [
-    "Eating out", "Small travel", "Entertainment",
-    "Shopping", "Gifts", "Festivals"
-  ]
-};
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-// Utility: Create input rows
-function loadRows(container, list, prefix){
-  container.innerHTML = "";
-  list.forEach((name, i)=>{
-    container.innerHTML += `
-      <div class="item-row">
-        <span>${name}</span>
-        <input type="number" id="${prefix}${i}" value="0">
-      </div>
-    `;
-  });
-}
+    const formData = new FormData(form);
 
-// Load all rows initially
-loadRows(document.getElementById("needs50"), data502020.needs, "n50_");
-loadRows(document.getElementById("wants50"), data502020.wants, "w50_");
-loadRows(document.getElementById("savings50"), data502020.savings, "s50_");
+    submitBtn.innerText = "Sending...";
+    submitBtn.disabled = true;
+    status.innerText = "";
 
-loadRows(document.getElementById("needs30"), data30303010.needs, "n30_");
-loadRows(document.getElementById("emis30"), data30303010.emis, "e30_");
-loadRows(document.getElementById("savings30"), data30303010.savings, "s30_");
-loadRows(document.getElementById("wants30"), data30303010.wants, "w30_");
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
 
-// COMPARE TOTALS
-function calc502020(){
-  let income = Number(document.getElementById("income").value);
+        const data = await response.json();
 
-  let totalNeeds = sumInputs("n50_", data502020.needs.length);
-  let totalWants = sumInputs("w50_", data502020.wants.length);
-  let totalSavings = sumInputs("s50_", data502020.savings.length);
+        if (response.ok) {
+            status.style.color = "green";
+            status.innerText = "✅ Message sent successfully!";
+            form.reset();
+        } else {
+            status.style.color = "red";
+            status.innerText = "❌ " + data.message;
+        }
 
-  let total = totalNeeds + totalWants + totalSavings;
+    } catch (error) {
+        status.style.color = "red";
+        status.innerText = "❌ Network error. Try again.";
+    }
 
-  document.getElementById("total50").innerHTML =
-    `Needs: ₹${totalNeeds} | Wants: ₹${totalWants} | Savings: ₹${totalSavings} <br>Total Spending: ₹${total}`;
-
-  let summary = document.getElementById("summary50");
-  if(total > income){
-    summary.className = "summary bad";
-    summary.innerHTML = "⚠ You are overspending. Reduce Wants first.";
-  } else {
-    summary.className = "summary good";
-    summary.innerHTML = "✔ Your spending is within your income.";
-  }
-}
-
-function calc30303010(){
-  let income = Number(document.getElementById("income").value);
-
-  let needs = sumInputs("n30_", data30303010.needs.length);
-  let emis  = sumInputs("e30_", data30303010.emis.length);
-  let savings = sumInputs("s30_", data30303010.savings.length);
-  let wants = sumInputs("w30_", data30303010.wants.length);
-
-  let total = needs + emis + savings + wants;
-
-  document.getElementById("total30").innerHTML =
-    `Needs: ₹${needs} | EMIs: ₹${emis} | Savings: ₹${savings} | Wants: ₹${wants}<br>Total Spending: ₹${total}`;
-
-  let summary = document.getElementById("summary30");
-  if(total > income){
-    summary.className = "summary bad";
-    summary.innerHTML = "⚠ You are overspending. Control Wants or reduce EMIs.";
-  } else {
-    summary.className = "summary good";
-    summary.innerHTML = "✔ Your spending is within your income.";
-  }
-}
-
-// Utility to sum input values
-function sumInputs(prefix, length){
-  let sum = 0;
-  for(let i=0;i<length;i++){
-    sum += Number(document.getElementById(prefix+i).value);
-  }
-  return sum;
-}
-
-// RUN calculation whenever user types
-document.addEventListener("input", ()=>{
-  calc502020();
-  calc30303010();
+    submitBtn.innerText = "Send Message";
+    submitBtn.disabled = false;
 });
-
-// Switch rules
-document.getElementById("btn502020").onclick = ()=>{
-  document.getElementById("rule502020").classList.remove("hidden");
-  document.getElementById("rule30303010").classList.add("hidden");
-  btn502020.classList.add("active");
-  btn30303010.classList.remove("active");
-};
-document.getElementById("btn30303010").onclick = ()=>{
-  document.getElementById("rule50303010");
-  document.getElementById("rule502020").classList.add("hidden");
-  document.getElementById("rule30303010").classList.remove("hidden");
-  btn30303010.classList.add("active");
-  btn502020.classList.remove("active");
-};
 </script>
 
 </body>
