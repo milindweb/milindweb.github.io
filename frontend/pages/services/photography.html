@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Photography & Drone Services', description: 'Professional photography, videography, and drone services for events, real estate, commercial projects, and promotional content. High-quality visuals.', canonical: '/photography' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    .main-content {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      flex: 1 1 280px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .card__header i {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .card.full {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .card ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .card h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 600px) {
+      .section-title { font-size: 1.15rem; }
+      .card { flex: 1 1 100%; max-width: 100%; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Photography & Drone Services",
+    "description": "Professional photography, videography, and drone services for events, real estate, commercial projects, and promotional content. High-quality visuals.",
+    "provider": { "@type": "Organization", "name": "MilindWeb" },
+    "areaServed": "Navi Mumbai, Maharashtra"
+  }
+  </script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <!-- INTRO -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-camera"></i> <span>Photography, Videography & Drone Services</span></div>
+      <h1>Capture Your Story</h1>
+      <p>Professional photography, videography, and drone services for events, real estate, promotions, and commercial projects. High-quality visuals that make your brand stand out.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="main-content">
+    <h2 class="section-title">Our Services</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-camera-fill"></i> <span>Event Photography</span></div>
+        <p>Professional coverage for weddings, parties, corporate events, and special occasions with high-quality results.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-camera-reels"></i> <span>Videography</span></div>
+        <p>Cinematic video coverage, short films, promotional videos, and event highlights tailored to your needs.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-airplane-engines"></i> <span>Drone Services</span></div>
+        <p>Aerial photography and videography for real estate, construction sites, event coverage, and landscape shots.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-building"></i> <span>Real Estate Media</span></div>
+        <p>Property photography, virtual tours, and drone aerial views to showcase listings effectively.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-megaphone"></i> <span>Product & Commercial</span></div>
+        <p>High-quality product photography and commercial video content for marketing and advertising use.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-scissors"></i> <span>Photo & Video Editing</span></div>
+        <p>Professional post-production including color grading, retouching, editing, and custom enhancements.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="main-content">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-check-circle"></i> <span>Quality Equipment</span></div>
+        <p>Professional cameras, lenses, lighting, and drone technology for the best results.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-clock"></i> <span>Timely Delivery</span></div>
+        <p>Reliable scheduling and fast turnaround without compromising quality.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-piggy-bank"></i> <span>Affordable Pricing</span></div>
+        <p>Competitive rates for high-quality photography and videography services.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-headset"></i> <span>Customer Support</span></div>
+        <p>Dedicated support from planning to final delivery of your project.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-envelope"></i> <span>Book a Session</span></div>
+      <p>Ready to capture your story? Reach out to book a session or inquire about our services. Use the enquiry form in the footer below to get started.</p>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+</body>
+</html>

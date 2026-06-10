@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/shared/js/config.js"></script>
+    <script>const PAGE_CONFIG = { title: 'NAD Seniority Management', description: 'NAD Seniority Management system. View, search, and manage employee seniority records, generate reports, and export data.', canonical: '/seniority' };</script>
+    <script src="/shared/js/seo-injector.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+      <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <!-- JS to load header/footer -->
+  <script src="/shared/js/headerfooter.js" defer></script>
+    <style>
+        :root {
+            --primary: #1a3a5f;
+            --secondary: #2a5a8c;
+            --accent: #3498db;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border: #dee2e6;
+            --filter-active: #e3f2fd;
+        }
+
+        .dark-mode {
+            --primary: #2a5a8c;
+            --secondary: #4a7ab4;
+            --accent: #60a5fa;
+            --light: #1e293b;
+            --dark: #f1f5f9;
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
+            --gray: #94a3b8;
+            --light-gray: #334155;
+            --border: #475569;
+            --filter-active: #1e3a5f;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Main Content */
+        .seniority-container {
+            max-width: 1800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
+        }
+        
+        .seniority-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .seniority-header h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .seniority-header p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Table Section */
+        .table-section {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+        }
+        
+        .table-header {
+            padding: 20px;
+            border-bottom: 2px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .table-header h3 {
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+        }
+        
+        .info-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+        
+        .export-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .export-excel {
+            background-color: #1d6f42;
+            color: white;
+        }
+        
+        .export-excel:hover {
+            background-color: #165834;
+        }
+        
+        .export-pdf {
+            background-color: #d32f2f;
+            color: white;
+        }
+        
+        .export-pdf:hover {
+            background-color: #b71c1c;
+        }
+        
+        .apply-filter-btn {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .apply-filter-btn:hover {
+            background-color: #2a5a8c;
+        }
+        
+        .clear-filter-btn {
+            background-color: var(--gray);
+            color: white;
+        }
+        
+        .clear-filter-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .table-container {
+            overflow: auto;
+            max-height: 60vh;
+            flex: 1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 1200px;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            white-space: nowrap;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        th.filter-active {
+            background-color: #0d3b66;
+        }
+        
+        th:last-child {
+            border-right: none;
+        }
+        
+        th:hover {
+            background-color: #152a41;
+        }
+        
+        th.sort-asc::after {
+            content: " ↑";
+            font-size: 0.9em;
+        }
+        
+        th.sort-desc::after {
+            content: " ↓";
+            font-size: 0.9em;
+        }
+        
+        th .filter-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        th:hover .filter-icon {
+            opacity: 1;
+        }
+        
+        th .filter-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            font-size: 0.85rem;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        tr:hover {
+            background-color: var(--filter-active);
+        }
+        
+        /* Filter dropdown */
+        .filter-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 15px;
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            color: var(--text-primary);
+        }
+        
+        .filter-dropdown.active {
+            display: block;
+        }
+        
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .filter-header h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin: 0;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-option input {
+            cursor: pointer;
+        }
+        
+        .filter-option label {
+            cursor: pointer;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-primary);
+        }
+        
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background-color: var(--filter-active);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .filter-tag {
+            background-color: var(--accent);
+            color: white;
+            border-radius: 20px;
+            padding: 5px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .filter-tag .remove {
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        /* No Data Message */
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+        
+        .no-data i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--light-gray);
+        }
+        
+        /* Loading Indicator */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        .loading-spinner {
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .seniority-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .export-buttons {
+                margin-left: 0;
+                margin-top: 15px;
+                justify-content: center;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .seniority-header {
+                padding: 15px;
+            }
+            
+            .seniority-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .seniority-header p {
+                font-size: 1rem;
+            }
+            
+            .table-header h3 {
+                font-size: 1.1rem;
+            }
+            
+            .export-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .export-buttons {
+                flex-direction: column;
+            }
+            
+            .export-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray, #f1f1f1);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray, #b8c2cc);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Content -->
+    <!-- load header from page header.html - Header Placeholder -->
+    <div id="header"></div>
+    <div class="seniority-container">
+        <div class="seniority-header">
+            <h1><i class="fas fa-users"></i> NAD Seniority Management System</h1>
+            <p>Track and manage employee seniority data with real-time updates. Filter and sort by multiple criteria to find the information you need.</p>
+        </div>
+
+        <div class="table-section">
+            <div class="table-header">
+                <h3><i class="fas fa-table"></i> Employee Seniority List</h3>
+                <div class="info-box">
+                    <i class="fas fa-database"></i> 
+                    <span id="employee-count">Loading...</span> employees found
+                </div>
+                <div class="export-buttons">
+                    <button class="export-btn apply-filter-btn" onclick="applyAllFilters()">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                    <button class="export-btn clear-filter-btn" onclick="clearAllFilters()">
+                        <i class="fas fa-times"></i> Clear All
+                    </button>
+                    <button class="export-btn export-excel" onclick="exportToExcel()">
+                        <i class="fas fa-file-excel"></i> Excel
+                    </button>
+                    <button class="export-btn export-pdf" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </button>
+                </div>
+            </div>
+            
+            <div class="active-filters" id="active-filters">
+                <div class="filter-tag" style="background-color: var(--gray);">No active filters</div>
+            </div>
+            
+            <div class="table-container">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    Loading employee data...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv";
+        
+        // Data structure
+        let allEmployees = [];
+        let filteredEmployees = [];
+        let columnFilters = {};
+        let currentSort = { column: null, direction: null };
+        let filterDropdowns = {};
+        
+        // DOM Elements
+        const tableContainer = document.querySelector('.table-container');
+        const employeeCount = document.getElementById('employee-count');
+        const activeFiltersContainer = document.getElementById('active-filters');
+        
+        // Initialize the application
+        function init() {
+            // Load data
+            loadData();
+        }
+        
+        // Load data from Google Sheets
+        function loadData() {
+            Papa.parse(GOOGLE_SHEET_CSV_URL, {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    allEmployees = results.data;
+                    filteredEmployees = [...allEmployees];
+                    
+                    // Initialize column filters
+                    initColumnFilters();
+                    
+                    // Update employee count
+                    employeeCount.textContent = filteredEmployees.length;
+                    
+                    // Render UI components
+                    renderTable();
+                },
+                error: function(error) {
+                    console.error("Error loading data:", error);
+                    tableContainer.innerHTML = '<div class="no-data"><i class="fas fa-exclamation-triangle"></i><p>Error loading data. Please try again later.</p></div>';
+                }
+            });
+        }
+        
+        // Initialize column filters
+        function initColumnFilters() {
+            // Reset column filters
+            columnFilters = {};
+            
+            // Extract unique values for each column
+            if (allEmployees.length > 0) {
+                const columns = Object.keys(allEmployees[0]);
+                
+                columns.forEach(col => {
+                    const uniqueValues = new Set();
+                    
+                    allEmployees.forEach(emp => {
+                        if (emp[col]) {
+                            uniqueValues.add(emp[col]);
+                        }
+                    });
+                    
+                    columnFilters[col] = {
+                        values: Array.from(uniqueValues).sort(),
+                        selected: []
+                    };
+                });
+            }
+        }
+        
+        // Apply filters
+        function applyFilters() {
+            filteredEmployees = allEmployees.filter(employee => {
+                for (const column in columnFilters) {
+                    const filter = columnFilters[column];
+                    
+                    // If any selection exists for this column
+                    if (filter.selected.length > 0) {
+                        const value = employee[column] || '';
+                        
+                        // If this value is not in the selected filters, exclude the row
+                        if (!filter.selected.includes(value)) {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            });
+            
+            // Update employee count
+            employeeCount.textContent = filteredEmployees.length;
+            
+            // Render active filters
+            renderActiveFilters();
+        }
+        
+        // Render active filters
+        function renderActiveFilters() {
+            let activeFiltersHTML = '';
+            let filterCount = 0;
+            
+            for (const column in columnFilters) {
+                const filter = columnFilters[column];
+                
+                if (filter.selected.length > 0) {
+                    filter.selected.forEach(value => {
+                        activeFiltersHTML += `
+                            <div class="filter-tag">
+                                <span>${column}: ${value}</span>
+                                <span class="remove" onclick="removeFilter('${column}', '${value}')">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                            </div>
+                        `;
+                        filterCount++;
+                    });
+                }
+            }
+            
+            if (filterCount > 0) {
+                activeFiltersHTML = `
+                    <div class="filter-tag" style="background-color: var(--success);">
+                        <i class="fas fa-filter"></i>
+                        Active Filters: ${filterCount}
+                    </div>
+                    ${activeFiltersHTML}
+                `;
+            } else {
+                activeFiltersHTML = '<div class="filter-tag" style="background-color: var(--gray);">No active filters</div>';
+            }
+            
+            activeFiltersContainer.innerHTML = activeFiltersHTML;
+        }
+        
+        // Remove a specific filter
+        function removeFilter(column, value) {
+            const filterIndex = columnFilters[column].selected.indexOf(value);
+            if (filterIndex !== -1) {
+                columnFilters[column].selected.splice(filterIndex, 1);
+                applyFilters();
+                renderTable();
+            }
+        }
+        
+        // Clear all filters
+        function clearAllFilters() {
+            for (const column in columnFilters) {
+                columnFilters[column].selected = [];
+                
+                // Also uncheck all checkboxes in dropdowns
+                if (filterDropdowns[column]) {
+                    const checkboxes = filterDropdowns[column].querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                }
+            }
+            applyFilters();
+            renderTable();
+        }
+        
+        // Apply all filters from dropdowns
+        function applyAllFilters() {
+            // Collect selected values from all dropdowns
+            for (const column in columnFilters) {
+                if (filterDropdowns[column]) {
+                    const checkboxes = filterDropdowns[column].querySelectorAll('input[type="checkbox"]:checked');
+                    columnFilters[column].selected = Array.from(checkboxes).map(cb => cb.value);
+                }
+            }
+            
+            applyFilters();
+            renderTable();
+        }
+        
+        // Render employee table with all columns
+        function renderTable() {
+            if (allEmployees.length === 0) {
+                tableContainer.innerHTML = `
+                    <div class="no-data">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>No employee data available</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Get headers from the first employee
+            const headers = Object.keys(allEmployees[0]);
+            
+            let tableHTML = `
+                <table id="employee-table">
+                    <thead>
+                        <tr>
+            `;
+            
+            // Create header cells
+            headers.forEach(header => {
+                const isSorted = currentSort.column === header;
+                const sortIndicator = isSorted ? 
+                    (currentSort.direction === 'asc' ? ' ↑' : ' ↓') : '';
+                const filterActive = columnFilters[header] && columnFilters[header].selected.length > 0;
+                const filterCount = filterActive ? columnFilters[header].selected.length : 0;
+                
+                tableHTML += `
+                    <th data-column="${header}" class="${filterActive ? 'filter-active' : ''}">
+                        <div class="header-inner">
+                            ${header}${sortIndicator}
+                            <span class="filter-icon" data-column="${header}">
+                                <i class="fas fa-filter"></i>
+                            </span>
+                            ${filterActive ? `<span class="filter-badge">${filterCount}</span>` : ''}
+                        </div>
+                        <div class="filter-dropdown" id="filter-${header}">
+                            <div class="filter-header">
+                                <h4>Filter by ${header}</h4>
+                            </div>
+                            <div class="filter-options" id="options-${header}">
+                                <!-- Options will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </th>
+                `;
+            });
+            
+            tableHTML += `
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            // Create table rows
+            filteredEmployees.forEach(emp => {
+                tableHTML += '<tr>';
+                headers.forEach(header => {
+                    tableHTML += `<td>${emp[header] || ''}</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+            
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            tableContainer.innerHTML = tableHTML;
+            
+            // Store dropdown references and populate them
+            headers.forEach(header => {
+                const dropdown = document.getElementById(`filter-${header}`);
+                if (dropdown) {
+                    filterDropdowns[header] = dropdown;
+                    populateDropdown(header);
+                }
+            });
+            
+            // Add event listeners
+            setupEventListeners();
+        }
+        
+        // Populate dropdown with options
+        function populateDropdown(header) {
+            const optionsContainer = document.getElementById(`options-${header}`);
+            optionsContainer.innerHTML = '';
+            
+            const filter = columnFilters[header];
+            
+            if (filter && filter.values.length > 0) {
+                filter.values.forEach(value => {
+                    const isSelected = filter.selected.includes(value);
+                    const option = document.createElement('div');
+                    option.className = 'filter-option';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = value;
+                    checkbox.checked = isSelected;
+                    checkbox.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
+                    
+                    const label = document.createElement('label');
+                    label.textContent = value;
+                    label.setAttribute('for', `opt-${header}-${value}`);
+                    
+                    option.appendChild(checkbox);
+                    option.appendChild(label);
+                    optionsContainer.appendChild(option);
+                });
+            } else {
+                optionsContainer.innerHTML = '<div class="no-options">No filter options available</div>';
+            }
+        }
+        
+        // Setup event listeners for sorting and filtering
+        function setupEventListeners() {
+            // Header click for sorting
+            document.querySelectorAll('th').forEach(th => {
+                th.addEventListener('click', function(e) {
+                    // Don't trigger sort when clicking on filter icon
+                    if (e.target.closest('.filter-icon')) return;
+                    
+                    const column = this.getAttribute('data-column');
+                    
+                    // Toggle sort direction
+                    if (currentSort.column === column) {
+                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort.column = column;
+                        currentSort.direction = 'asc';
+                    }
+                    
+                    // Sort data
+                    sortData();
+                    renderTable();
+                });
+            });
+            
+            // Filter icon click
+            document.querySelectorAll('.filter-icon').forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const column = this.getAttribute('data-column');
+                    const dropdown = document.getElementById(`filter-${column}`);
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.filter-dropdown').forEach(dd => {
+                        if (dd !== dropdown) {
+                            dd.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.filter-dropdown') && !e.target.closest('.filter-icon')) {
+                    document.querySelectorAll('.filter-dropdown').forEach(dd => {
+                        dd.classList.remove('active');
+                    });
+                }
+            });
+        }
+        
+        // Sort data based on current sort settings
+        function sortData() {
+            if (!currentSort.column) return;
+            
+            filteredEmployees.sort((a, b) => {
+                const aValue = a[currentSort.column] || '';
+                const bValue = b[currentSort.column] || '';
+                const direction = currentSort.direction === 'asc' ? 1 : -1;
+                
+                // Special handling for date columns
+                const dateColumns = ['Date of Appointment', 'Date of Regular', 'Date of Retirement'];
+                
+                if (dateColumns.includes(currentSort.column)) {
+                    // Convert to date objects for proper comparison
+                    const aDate = parseDate(aValue);
+                    const bDate = parseDate(bValue);
+                    
+                    if (aDate && bDate) {
+                        return (aDate - bDate) * direction;
+                    }
+                }
+                
+                // Try to compare as numbers
+                if (!isNaN(aValue) && !isNaN(bValue)) {
+                    return (parseFloat(aValue) - parseFloat(bValue)) * direction;
+                }
+                
+                // Default to string comparison
+                return aValue.localeCompare(bValue) * direction;
+            });
+        }
+        
+        // Helper function to parse dates
+        function parseDate(dateString) {
+            if (!dateString) return null;
+            
+            // Try different date formats
+            const formats = [
+                /(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/, // DD/MM/YYYY or DD-MM-YYYY
+                /(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})/  // YYYY/MM/DD or YYYY-MM-DD
+            ];
+            
+            for (const regex of formats) {
+                const match = dateString.match(regex);
+                if (match) {
+                    let year, month, day;
+                    
+                    if (match[3] && match[3].length === 4) {
+                        // DD/MM/YYYY format
+                        day = parseInt(match[1], 10);
+                        month = parseInt(match[2], 10) - 1; // Months are 0-indexed
+                        year = parseInt(match[3], 10);
+                    } else if (match[1] && match[1].length === 4) {
+                        // YYYY/MM/DD format
+                        year = parseInt(match[1], 10);
+                        month = parseInt(match[2], 10) - 1; // Months are 0-indexed
+                        day = parseInt(match[3], 10);
+                    }
+                    
+                    if (year && month !== undefined && day) {
+                        return new Date(year, month, day);
+                    }
+                }
+            }
+            
+            return null;
+        }
+        
+        // Export to Excel function
+        function exportToExcel() {
+            if (filteredEmployees.length === 0) {
+                alert('No data to export');
+                return;
+            }
+            
+            // Get headers from the first employee
+            const headers = Object.keys(filteredEmployees[0]);
+            
+            // Prepare the data for export
+            const dataForExport = filteredEmployees.map(emp => {
+                const row = {};
+                headers.forEach(header => {
+                    row[header] = emp[header] || '';
+                });
+                return row;
+            });
+            
+            // Create worksheet
+            const worksheet = XLSX.utils.json_to_sheet(dataForExport);
+            
+            // Create workbook
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Employees");
+            
+            // Generate Excel file
+            XLSX.writeFile(workbook, `NAD_Employees_${new Date().toISOString().slice(0,10)}.xlsx`);
+        }
+        
+        // Export to PDF function
+        function exportToPDF() {
+            if (filteredEmployees.length === 0) {
+                alert('No data to export');
+                return;
+            }
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape');
+            
+            // Get headers from the first employee
+            const headers = Object.keys(filteredEmployees[0]);
+            
+            // Add title
+            doc.setFontSize(18);
+            doc.text('NAD Employees Seniority List', 15, 15);
+            doc.setFontSize(12);
+            doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 15, 22);
+            doc.text(`Total Employees: ${filteredEmployees.length}`, 15, 29);
+            
+            // Prepare table data
+            const tableColumn = headers;
+            
+            const tableRows = filteredEmployees.map(emp => {
+                return headers.map(header => emp[header] || '');
+            });
+            
+            // Add table to PDF
+            doc.autoTable({
+                head: [tableColumn],
+                body: tableRows,
+                startY: 35,
+                theme: 'grid',
+                styles: { fontSize: 7, cellPadding: 1.5 },
+                headStyles: { fillColor: [26, 58, 95], textColor: 255, fontStyle: 'bold' },
+                alternateRowStyles: { fillColor: [240, 240, 240] },
+                margin: { left: 10 },
+                didDrawPage: function (data) {
+                    // Footer
+                    doc.setFontSize(10);
+                    doc.text('NAD Employees Seniority Management System', 
+                        data.settings.margin.left, 
+                        doc.internal.pageSize.height - 10
+                    );
+                }
+            });
+            
+            // Save the PDF
+            doc.save(`NAD_Employees_${new Date().toISOString().slice(0,10)}.pdf`);
+        }
+        
+        // Initialize the application when the page loads
+        window.addEventListener('DOMContentLoaded', init);
+        
+        // Expose functions for HTML onclick
+        window.exportToExcel = exportToExcel;
+        window.exportToPDF = exportToPDF;
+        window.removeFilter = removeFilter;
+        window.clearAllFilters = clearAllFilters;
+        window.applyAllFilters = applyAllFilters;
+    </script>
+      <!-- load footer from page footer.html -Footer Placeholder -->
+      <div id="footer"></div>
+</body>
+</html>

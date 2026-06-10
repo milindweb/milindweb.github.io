@@ -1,0 +1,275 @@
+<!-- ================================ -->
+<!-- PREMIUM CONTACT FORM (NEW DESIGN) -->
+<!-- ================================ -->
+<div class="contact-form-wrapper">
+
+  <h2> Contact Us</h2>
+
+  <form id="contactForm">
+
+    <!-- Service -->
+    <div class="form-row">
+      <label for="service"><i class="fas fa-tag"></i></label>
+      <select id="service" name="service" required>
+        <option value="">Select Service</option>
+        <option>SEO & Digital Marketing</option>
+        <option>Web Designing</option>
+        <option>Software Solutions</option>
+        <option>Graphics Designing</option>
+        <option>Projects & Workshop</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <!-- Name -->
+    <div class="form-row">
+      <label for="name"><i class="fas fa-user"></i> Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <!-- Email -->
+    <div class="form-row">
+      <label for="email"><i class="fas fa-envelope"></i> Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-row">
+      <label for="phone"><i class="fas fa-phone"></i> Mobile No.</label>
+      <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" required>
+    </div>
+
+    <div id="phoneError" class="error-msg">
+    </div>
+
+    <!-- Message -->
+    <div class="form-row">
+      <label for="message"><i class="fas fa-comment"></i> Message</label>
+      <textarea id="message" name="message" maxlength="500" required></textarea>
+    </div>
+
+    <!-- SUBMIT BUTTON -->
+    <button type="submit" class="form-submit-btn">Submit <i class="fas fa-arrow-right"></i></button>
+
+  </form>
+
+  <!-- Response Message -->
+  <div id="response"></div>
+
+</div>
+
+
+ 
+
+<!-- ================================ 
+/* PREMIUM CONTACT FORM UI (LATEST) */
+<!-- ================================ -->
+
+ <style>
+
+/* Synced with style.css variables — only form-specific overrides here */
+.contact-form-wrapper {
+  --input-bg: #f8faff;
+  --radius: 12px;
+}
+
+.contact-form-wrapper {
+  background: var(--card-bg);
+  padding: 2rem 2.25rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 640px;
+  margin: 2rem auto;
+  border: 1px solid var(--border);
+}
+
+.contact-form-wrapper h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.contact-form-wrapper h2::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--gradient);
+  border-radius: 2px;
+  margin: 0.6rem auto 0;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.1rem;
+}
+
+.contact-form-wrapper label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.contact-form-wrapper label i {
+  color: var(--accent);
+  font-size: 0.8rem;
+}
+
+.contact-form-wrapper input,
+.contact-form-wrapper select,
+.contact-form-wrapper textarea {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 0.925rem;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.contact-form-wrapper input:hover,
+.contact-form-wrapper select:hover,
+.contact-form-wrapper textarea:hover {
+  border-color: var(--accent-light);
+}
+
+.contact-form-wrapper input:focus,
+.contact-form-wrapper select:focus,
+.contact-form-wrapper textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: var(--card-bg);
+  outline: none;
+}
+
+.contact-form-wrapper input::placeholder,
+.contact-form-wrapper textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.contact-form-wrapper textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.contact-form-wrapper select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.form-submit-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 0.25rem;
+}
+
+.form-submit-btn:hover {
+  background: var(--accent-light);
+}
+
+.form-submit-btn:active {
+  transform: scale(0.98);
+}
+
+.form-submit-btn i {
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.form-submit-btn:hover i {
+  transform: translateX(3px);
+}
+
+.error-msg {
+  color: #dc2626;
+  font-size: 0.78rem;
+  margin-top: 4px;
+  display: none;
+}
+
+.contact-form-wrapper .alert {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius);
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.9rem;
+  animation: alertSlide 0.3s ease;
+}
+
+@keyframes alertSlide {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.contact-form-wrapper .success {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.contact-form-wrapper .error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.dark-mode .contact-form-wrapper .success {
+  background: #052e16;
+  color: #4ade80;
+  border: 1px solid #166534;
+}
+
+.dark-mode .contact-form-wrapper .error {
+  background: #450a0a;
+  color: #fca5a5;
+  border: 1px solid #991b1b;
+}
+
+.contact-form-wrapper .form-row:focus-within label {
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .contact-form-wrapper {
+    padding: 1.25rem 1rem;
+    margin: 1rem 0.5rem;
+    border-radius: 16px;
+  }
+  .contact-form-wrapper h2 {
+    font-size: 1.3rem;
+  }
+  .contact-form-wrapper input,
+  .contact-form-wrapper select,
+  .contact-form-wrapper textarea {
+    font-size: 16px;
+  }
+}
+
+</style>

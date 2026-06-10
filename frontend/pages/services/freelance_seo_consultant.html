@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Digital Marketing & SEO Services', description: 'Improve online visibility, attract qualified leads, and grow your business through SEO, Google Ads, social media marketing, content marketing, and performance-driven digital strategies.', canonical: '/seo-digital-marketing' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    .main-content {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      flex: 1 1 280px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .card__header i {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .card.full {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .card ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .card h1, .card h3 {
+      font-size: 1rem;
+      margin: 0;
+      color: var(--text-primary);
+    }
+    .card h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    details {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    details[open] summary {
+      margin-bottom: 0.5rem;
+    }
+
+    details p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .section-title { font-size: 1.15rem; }
+      .card { flex: 1 1 100%; max-width: 100%; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long does it take to see results from SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SEO is a long-term process. Most businesses start seeing noticeable improvements in 2-3 months, with significant growth in 6-9 months depending on competition and niche."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you offer both SEO and paid advertising services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. I provide full-service digital marketing, including SEO, Google Ads (PPC), and Social Media Marketing to ensure a balanced growth strategy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you manage my business's social media accounts?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. I create, optimize, and manage social media profiles on Facebook, Instagram, LinkedIn, and Twitter to boost engagement and brand awareness."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What kind of businesses do you work with?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "I work with startups, small businesses, and growing companies across industries like retail, healthcare, education, real estate, and professional services."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you provide monthly performance reports?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. I deliver detailed monthly reports showing improvements in rankings, website traffic, leads, and conversions so you can measure ROI."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do Google Ads differ from SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SEO brings long-term organic traffic, while Google Ads (PPC) generates instant visibility and leads. I often recommend combining both for maximum impact."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is freelance digital marketing affordable compared to agencies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! As a freelancer, I offer affordable pricing without overhead agency costs, while still delivering professional-grade strategies tailored to your business."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will you optimize my website for mobile and speed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Definitely. As part of technical SEO, I ensure your website is fast, mobile-friendly, and user-optimized, which helps rankings and user experience."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can you help with local SEO for my small business?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. I specialize in Local SEO strategies, including Google Business Profile optimization, map listings, and local keyword targeting to attract nearby customers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get started with your services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simple! Contact me today for a free consultation. I'll review your business goals and create a custom digital marketing plan suited to your needs."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Digital Marketing & SEO",
+    "description": "Improve online visibility, attract qualified leads, and grow your business through SEO, Google Ads, social media marketing, content marketing, and performance-driven digital strategies.",
+    "provider": { "@type": "Organization", "name": "MilindWeb" },
+    "areaServed": "Navi Mumbai, Maharashtra"
+  }
+  </script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <!-- INTRO -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-graph-up-arrow"></i> <span>Digital Marketing & SEO</span></div>
+      <h1>Grow Your Business Online</h1>
+      <p>Improve online visibility, attract qualified leads, and grow your business through Search Engine Optimization (SEO), Google Ads, social media marketing, content marketing, local SEO, and performance-driven strategies designed to deliver measurable results.</p>
+      <p>Serving at Navi Mumbai, Pune, Nagpur, Sambhaji Nagar, Nanded, Latur, Parbhani, Hingoli.</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="main-content">
+    <h2 class="section-title">About Our Services</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-info-circle"></i> <span>Overview</span></div>
+        <p>We provide professional digital marketing services designed to improve online visibility, attract qualified leads, and grow your business. Our strategies combine Search Engine Optimization (SEO), Google Ads, social media marketing, content marketing, and local SEO to deliver measurable results.</p>
+        <p>Whether you're a startup, small business, or growing brand, we create performance-driven campaigns tailored to your goals and budget.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-star"></i> <span>Core Expertise</span></div>
+        <ul>
+          <li>Search Engine Optimization (SEO) - Get top rankings and organic traffic</li>
+          <li>Social Media Marketing (SMM) - Build strong brand engagement</li>
+          <li>Google Ads and PPC Campaigns - Generate instant leads and conversions</li>
+          <li>Content Marketing - Publish content that ranks and converts</li>
+          <li>Local SEO - Dominate local search and Google Business Profile</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="main-content">
+    <h2 class="section-title">How We Drive Digital Marketing Success</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-search"></i> <span>Research & Analysis</span></div>
+        <p>Study your industry, competitors, and target audience to build a solid foundation for your strategy.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-pencil"></i> <span>Strategy Design</span></div>
+        <p>Create tailored SEO, PPC, or social campaigns specifically for your business goals.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-rocket-takeoff"></i> <span>Precision Execution</span></div>
+        <p>Launch data-driven campaigns that deliver measurable results from day one.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-arrow-repeat"></i> <span>Continuous Optimization</span></div>
+        <p>Track KPIs, refine strategies, and scale what works for long-term success.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="main-content">
+    <h2 class="section-title">Our Digital Marketing Services</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-search"></i> <span>SEO - Rank Higher, Grow Organically</span></div>
+        <ul>
+          <li>On-Page SEO: Optimized meta tags, content structuring, and keyword targeting</li>
+          <li>Off-Page SEO: Quality backlinks, guest posts, and local citations</li>
+          <li>Technical SEO: Site speed, schema markup, and mobile optimization</li>
+          <li>Local SEO: Google Business Profile setup and maps ranking</li>
+          <li>Keyword Research and Competitor Analysis for maximum ROI</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-share"></i> <span>Social Media Marketing</span></div>
+        <ul>
+          <li>Social profile setup and optimization (Facebook, Instagram, LinkedIn)</li>
+          <li>Creative content calendars and post designs</li>
+          <li>Paid ad campaigns for brand awareness and lead generation</li>
+          <li>Engagement strategies for audience growth</li>
+          <li>Detailed analytics and monthly reports</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-bullseye"></i> <span>Google Ads & PPC</span></div>
+        <ul>
+          <li>Targeted Google Search and Display Ads</li>
+          <li>Remarketing campaigns to re-engage potential customers</li>
+          <li>Smart budget allocation for best ROI</li>
+          <li>Conversion tracking and transparent performance reports</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-pencil-square"></i> <span>Content Marketing</span></div>
+        <ul>
+          <li>SEO-optimized blogs, articles and landing pages</li>
+          <li>Social media content (captions, infographics and creatives)</li>
+          <li>Brand storytelling to build trust and credibility</li>
+          <li>Strategic publishing calendars</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-tools"></i> <span>SEO Audits & Consulting</span></div>
+        <ul>
+          <li>Full website SEO health audit</li>
+          <li>Competitor benchmarking and growth analysis</li>
+          <li>Clear, actionable strategies for better ranking</li>
+          <li>One-to-one consulting for business owners</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="main-content">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="flex-wrap">
+      <div class="card full">
+        <div class="card__header"><i class="bi bi-check-circle"></i> <span>Our Advantage</span></div>
+        <ul>
+          <li>Proven SEO and digital marketing experience (2+ years)</li>
+          <li>Affordable freelance services tailored to small businesses and startups</li>
+          <li>Custom strategies aligned with your industry and goals</li>
+          <li>Transparent monthly reporting with measurable results</li>
+          <li>Certified expertise in SEO, Google Ads and social media campaigns</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="main-content">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <div class="card full">
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">How long does it take to see results from SEO?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">SEO is a long-term process. Most businesses start seeing noticeable improvements in 2-3 months, with significant growth in 6-9 months depending on competition and niche.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Do you offer both SEO and paid advertising services?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">Yes. I provide full-service digital marketing, including SEO, Google Ads (PPC), and Social Media Marketing to ensure a balanced growth strategy.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Can you manage my business's social media accounts?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">Absolutely. I create, optimize, and manage social media profiles on Facebook, Instagram, LinkedIn, and Twitter to boost engagement and brand awareness.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">What kind of businesses do you work with?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">I work with startups, small businesses, and growing companies across industries like retail, healthcare, education, real estate, and professional services.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Do you provide monthly performance reports?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">Yes. I deliver detailed monthly reports showing improvements in rankings, website traffic, leads, and conversions so you can measure ROI.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">How do Google Ads differ from SEO?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">SEO brings long-term organic traffic, while Google Ads (PPC) generates instant visibility and leads. I often recommend combining both for maximum impact.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Is freelance digital marketing affordable compared to agencies?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">Yes. As a freelancer, I offer affordable pricing without overhead agency costs, while still delivering professional-grade strategies tailored to your business.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Will you optimize my website for mobile and speed?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">Definitely. As part of technical SEO, I ensure your website is fast, mobile-friendly, and user-optimized, which helps rankings and user experience.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">Can you help with local SEO for my small business?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">Yes. I specialize in Local SEO strategies, including Google Business Profile optimization, map listings, and local keyword targeting to attract nearby customers.</p>
+        </div>
+      </details>
+      <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+        <summary itemprop="name">How do I get started with your services?</summary>
+        <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+          <p itemprop="text">Simple. Contact me today for a free consultation. I'll review your business goals and create a custom digital marketing plan suited to your needs.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Graphics & Branding Services', description: 'Professional graphic design and branding services including logo design, banners, wedding invitations, video editing, and marketing creatives.', canonical: '/graphics-branding' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    .main-content {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      flex: 1 1 280px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .card__header i {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .card.full {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .card h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 14px;
+      object-fit: cover;
+      height: 180px;
+      transition: transform 0.3s ease;
+    }
+
+    .card img:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .section-title { font-size: 1.15rem; }
+      .card { flex: 1 1 100%; max-width: 100%; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Graphics & Branding",
+    "description": "Professional graphic design and branding services including logo design, banners, wedding invitations, video editing, and marketing creatives.",
+    "provider": { "@type": "Organization", "name": "MilindWeb" },
+    "areaServed": "Navi Mumbai, Maharashtra"
+  }
+  </script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <!-- INTRO -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-stars"></i> <span>Intro</span></div>
+      <h1>Graphics & Branding</h1>
+      <p>Create a strong visual identity through professional logo design, business branding, marketing materials, social media creatives, promotional graphics, advertisements, presentations, and professional video editing services.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="main-content">
+    <h2 class="section-title">Our Services</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-brush"></i> <span>Banners</span></div>
+        <p>Custom banners for birthdays, anniversaries, and promotions.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-heart-fill"></i> <span>Invites</span></div>
+        <p>Elegant wedding & invitation cards designed to your style.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-palette-fill"></i> <span>Logos</span></div>
+        <p>Professional logos & branding kits for a unique identity.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-camera-video"></i> <span>Videos</span></div>
+        <p>Reels, intros, ads & vlogs — edited for engagement and growth.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="main-content">
+    <h2 class="section-title">Showcase</h2>
+    <div class="flex-wrap">
+      <div class="card"><img src="/shared/assets/img/graphics/birthday.svg" alt="Birthday Banner"></div>
+      <div class="card"><img src="/shared/assets/img/graphics/wedding.svg" alt="Wedding Card"></div>
+      <div class="card"><img src="/shared/assets/img/graphics/logo.svg" alt="Logo Design"></div>
+      <div class="card"><img src="/shared/assets/img/graphics/video.svg" alt="Video Editing"></div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!-- footer.html -->
+<link rel="stylesheet" href="/shared/css/headerfooter.css">
+
+<footer class="hf-footer">
+  <div class="hf-footer-grid">
+    <!-- Services Column -->
+    <div class="hf-footer-col">
+      <h3>SERVICES</h3>
+      <ul class="hf-footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/pages/services/freelance_seo_consultant.html">Digital Marketing & SEO</a></li>
+        <li><a href="/pages/services/website-tech-solutions.html">Website Development</a></li>
+        <li><a href="/pages/services/business-automation.html">Business Automation</a></li>
+        <li><a href="/pages/services/project-training.html">Projects, Workshops & Training</a></li>
+        <li><a href="/pages/services/photography.html">Photography & Drone Services</a></li>
+        <li><a href="/pages/services/graphics.html">Graphics & Branding</a></li>
+        <li><a href="/pages/services/electrical.html">Electrical Services</a></li>
+        <li><a href="/pages/services/automotive.html">Automotive Services</a></li>
+      </ul>
+    </div>
+
+    <!-- Explore Column -->
+    <div class="hf-footer-col">
+      <h3>EXPLORE</h3>
+      <ul class="hf-footer-links">
+        <li><a href="/pages/services/project-training.html">Projects, Workshops & Training</a></li>
+        <li><a href="/pages/blog.html">Tech Blog</a></li>
+        <li><a href="/modules/seniority/pages/seniority-list.html">Seniority Manager</a></li>
+        <li><a href="/modules/seniority/pages/seniority-management.html">Seniority Management</a></li>
+        <li><a href="/pages/links.html">Other Links</a></li>
+        <li><a href="/pages/contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Column -->
+    <div class="hf-footer-col">
+      <h3>CONTACT INFO</h3>
+      <ul class="hf-contact-info">
+        <li><i class="fas fa-phone"></i><span>{{PHONE}}</span></li>
+        <li><i class="fas fa-envelope"></i><span>{{EMAIL}}</span></li>
+        <li><i class="fas fa-map-marker-alt"></i><span>{{LOCATION}}</span></li>
+        <li><i class="fas fa-clock"></i><span>{{HOURS}}</span></li>
+      </ul>
+    </div>
+
+    <!-- Quick Enquiry Column -->
+    <div class="hf-footer-col hf-footer-form-col">
+      <h3>QUICK ENQUIRY</h3>
+      <div class="contact-form-wrapper">
+        <form id="contactForm">
+          <div class="form-row">
+            <select id="service" name="service" required>
+              <option value="">Select Service</option>
+              <option>SEO & Digital Marketing</option>
+              <option>Web Designing</option>
+              <option>Software Solutions</option>
+              <option>Graphics Designing</option>
+              <option>Projects & Workshop</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input type="text" id="name" name="name" placeholder="Name" required>
+          </div>
+          <div class="form-row">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+          </div>
+          <div class="form-row">
+            <input type="tel" id="phone" name="phone" placeholder="Mobile No." pattern="^[6-9][0-9]{9}$" required>
+          </div>
+          <div id="phoneError" class="error-msg">
+            Please enter a valid 10-digit Indian mobile number starting with 6-9.
+          </div>
+          <div class="form-row">
+            <textarea id="message" name="message" placeholder="Message" maxlength="500" required></textarea>
+          </div>
+          <button type="submit" class="form-submit-btn">Submit <i class="fas fa-arrow-right"></i></button>
+        </form>
+        <div id="response"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Media -->
+  <div class="hf-social-icons">
+    <a href="{{SOCIAL_WA}}" class="hf-social-icon" target="_blank" title="WhatsApp">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="{{SOCIAL_TELEGRAM}}" class="hf-social-icon" target="_blank" title="Telegram">
+      <i class="fab fa-telegram"></i>
+    </a>
+    <a href="{{SOCIAL_INSTA}}" class="hf-social-icon" target="_blank" title="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="{{SOCIAL_FB}}" class="hf-social-icon" title="Facebook" target="_blank">
+    <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="{{SOCIAL_TWITTER}}" class="hf-social-icon" title="Twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="{{SOCIAL_LINKEDIN}}" class="hf-social-icon" title="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="hf-footer-bottom">
+    <p class="hf-copyright">{{COPYRIGHT}}</p>
+  </div>
+</footer>
+<script src="/shared/js/form-handler.js"></script>
+

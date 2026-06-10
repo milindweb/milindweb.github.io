@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Contact Us', description: 'Contact MilindWeb for digital marketing, web development, business automation, projects training, and all technical services. Reach out via phone, email, or our enquiry form.', canonical: '/contact' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <!-- Scoped CSS -->
+  <style>
+    :root {
+      --white: #ffffff;
+      --primary-color: #3498db;
+      --warning-color: #ffc107;
+      --success-color: #2ecc71;
+      --info-color: #17a2b8;
+      --border-radius: 12px;
+      --shadow-md: 0 2px 6px rgba(0,0,0,0.08);
+      --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+      --transition: 0.3s ease;
+    }
+
+    .dark-mode {
+      --primary-color: #60a5fa;
+      --warning-color: #fbbf24;
+      --success-color: #34d399;
+      --info-color: #22d3ee;
+    }
+
+    .main-content {
+      flex: 1;
+      background: var(--secondary-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .main-content .container {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--secondary-bg);
+    }
+
+    .card__header span {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card__header i { font-size: 1.2rem; }
+    .card__header--primary i { color: var(--primary-color); }
+    .card__header--warning i { color: var(--warning-color); }
+    .card__header--success i { color: var(--success-color); }
+    .card__header--info i { color: var(--info-color); }
+
+    .card__content {
+      padding: 1.5rem;
+      display: none;
+      color: var(--text-secondary);
+    }
+
+    .card.active .card__content {
+      display: block;
+    }
+
+    .card__toggle {
+      transition: transform var(--transition);
+    }
+    .card.active .card__toggle {
+      transform: rotate(180deg);
+    }
+
+    /* Always visible cards */
+    .card.always-visible .card__header {
+      cursor: default;
+      background: var(--card-bg);
+    }
+    .card.always-visible .card__content {
+      display: block !important;
+    }
+
+  </style>
+
+  <!-- Contact Form Styles -->
+  <style>
+    .contact-form-wrapper { --input-bg: #f8faff; --radius: 12px; }
+    .contact-form-wrapper {
+      background: var(--card-bg); padding: 2rem 2.25rem; border-radius: 20px;
+      box-shadow: var(--shadow); width: 100%; max-width: 640px;
+      margin: 0 auto; border: 1px solid var(--border);
+    }
+    .contact-form-wrapper h2 {
+      text-align: center; margin-bottom: 1.5rem; font-size: 1.5rem;
+      font-weight: 700; color: var(--text-primary);
+    }
+    .contact-form-wrapper h2::after {
+      content: ''; display: block; width: 48px; height: 3px;
+      background: var(--gradient); border-radius: 2px; margin: 0.6rem auto 0;
+    }
+    .form-row { display: flex; flex-direction: column; margin-bottom: 1.1rem; }
+    .contact-form-wrapper label {
+      font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;
+      color: var(--text-primary); display: flex; align-items: center; gap: 5px;
+    }
+    .contact-form-wrapper label i { color: var(--accent); font-size: 0.8rem; }
+    .contact-form-wrapper input,
+    .contact-form-wrapper select,
+    .contact-form-wrapper textarea {
+      padding: 10px 14px; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--input-bg);
+      color: var(--text-primary); font-size: 0.925rem;
+      transition: var(--transition); font-family: inherit;
+    }
+    .contact-form-wrapper input:hover,
+    .contact-form-wrapper select:hover,
+    .contact-form-wrapper textarea:hover { border-color: var(--accent-light); }
+    .contact-form-wrapper input:focus,
+    .contact-form-wrapper select:focus,
+    .contact-form-wrapper textarea:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      background: var(--card-bg); outline: none;
+    }
+    .contact-form-wrapper input::placeholder,
+    .contact-form-wrapper textarea::placeholder { color: var(--text-secondary); }
+    .contact-form-wrapper textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
+    .contact-form-wrapper select {
+      cursor: pointer; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px;
+    }
+    .form-submit-btn {
+      width: 100%; padding: 12px; font-size: 1rem; background: var(--accent);
+      color: #ffffff; border: none; border-radius: var(--radius); font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0.25rem;
+    }
+    .form-submit-btn:hover { background: var(--accent-light); }
+    .form-submit-btn:active { transform: scale(0.98); }
+    .form-submit-btn i { font-size: 0.9rem; transition: var(--transition); }
+    .form-submit-btn:hover i { transform: translateX(3px); }
+    .error-msg { color: #dc2626; font-size: 0.78rem; margin-top: 4px; display: none; }
+    .contact-form-wrapper .alert {
+      margin-top: 1rem; padding: 0.85rem 1rem; border-radius: var(--radius);
+      text-align: center; font-weight: 500; font-size: 0.9rem; animation: alertSlide 0.3s ease;
+    }
+    @keyframes alertSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .contact-form-wrapper .success {
+      background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0;
+    }
+    .contact-form-wrapper .error {
+      background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;
+    }
+    .dark-mode .contact-form-wrapper .success {
+      background: #052e16; color: #4ade80; border: 1px solid #166534;
+    }
+    .dark-mode .contact-form-wrapper .error {
+      background: #450a0a; color: #fca5a5; border: 1px solid #991b1b;
+    }
+    .contact-form-wrapper .form-row:focus-within label { color: var(--accent); }
+    @media (max-width: 640px) {
+      .contact-form-wrapper { padding: 1.25rem 1rem; margin: 1rem 0.5rem; border-radius: 16px; }
+      .contact-form-wrapper h2 { font-size: 1.3rem; }
+      .contact-form-wrapper input,
+      .contact-form-wrapper select,
+      .contact-form-wrapper textarea { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Placeholder -->
+  <div id="header"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- About & Services (Always Visible at Top) -->
+      <div class="card always-visible">
+        <div class="card__header card__header--primary">
+          <span><i class="fas fa-briefcase"></i> About & Services</span>
+        </div>
+        <div class="card__content">
+          <p>Hi, I’m Milind 👋 — creator of MilindWeb, a platform dedicated to creativity, learning, and small business services. I support businesses in expanding their online presence through SEO & Digital Marketing, design clean and responsive websites, develop custom software tools for automation, craft logos, posters, and visual branding, and conduct projects and workshops that deliver practical, hands-on learning experiences.</p>
+        </div>
+      </div>
+
+      <!-- Privacy Policy -->
+      <div class="card">
+        <div class="card__header card__header--primary">
+          <span><i class="fas fa-user-shield"></i> Privacy Policy</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>At MilindWeb, your privacy matters. We only collect basic details you choose to share (such as name, email, or phone) when you contact us. These are used solely for communication and service purposes. We do not sell, rent, or misuse your personal data.</p>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="card">
+        <div class="card__header card__header--warning">
+          <span><i class="fas fa-exclamation-circle"></i> Disclaimer</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>Content on MilindWeb is created for educational, creative, and small business purposes. While we aim for accuracy, we cannot guarantee completeness of all information. Some material may be AI-generated, publicly sourced, or referenced from third parties. All trademarks and copyrights remain with their respective owners.</p>
+        </div>
+      </div>
+
+      <!-- Terms & Conditions -->
+      <div class="card">
+        <div class="card__header card__header--success">
+          <span><i class="fas fa-file-contract"></i> Terms & Conditions</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>By using this website, you agree to access content responsibly and respect intellectual property rights. Services offered through MilindWeb are subject to availability and mutual agreement. Any misuse, plagiarism, or unauthorized use of content is strictly prohibited.</p>
+        </div>
+      </div>
+
+      <!-- Terms of Use -->
+      <div class="card">
+        <div class="card__header card__header--info">
+          <span><i class="fas fa-gavel"></i> Terms of Use</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>MilindWeb is designed for learning, creativity, and light business engagement. Visitors are free to explore resources, provide feedback, and reach out for services. By continuing to use this site, you acknowledge acceptance of these terms.</p>
+        </div>
+      </div>
+
+      <!-- Feedback & Suggestions -->
+      <div class="card">
+        <div class="card__header card__header--success">
+          <span><i class="fas fa-comment-dots"></i> Feedback & Suggestions</span>
+          <i class="fas fa-chevron-down card__toggle"></i>
+        </div>
+        <div class="card__content">
+          <p>Your ideas matter! If you have suggestions for improvement, new service requests, or feedback about MilindWeb, feel free to share. Every input helps shape this platform better.</p>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form-wrapper">
+        <h1>Contact Us</h1>
+        <form id="contactForm">
+          <div class="form-row">
+            <label for="service"><i class="fas fa-tag"></i> Service</label>
+            <select id="service" name="service" required>
+              <option value="">Select Service</option>
+              <option>SEO & Digital Marketing</option>
+              <option>Web Designing</option>
+              <option>Software Solutions</option>
+              <option>Graphics Designing</option>
+              <option>Projects & Workshop</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="name"><i class="fas fa-user"></i> Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-row">
+            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-row">
+            <label for="phone"><i class="fas fa-phone"></i> Mobile No.</label>
+            <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" required>
+          </div>
+          <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6-9.</div>
+          <div class="form-row">
+            <label for="message"><i class="fas fa-comment"></i> Message</label>
+            <textarea id="message" name="message" maxlength="500" required></textarea>
+          </div>
+          <button type="submit" class="form-submit-btn">Submit <i class="fas fa-arrow-right"></i></button>
+        </form>
+        <div id="response"></div>
+      </div>
+      <script src="/shared/js/form-handler.js"></script>
+    </div>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer"></div>
+
+  <!-- Accordion Script -->
+  <script>
+    document.querySelectorAll('.card__header').forEach(header => {
+      if (!header.parentElement.classList.contains('always-visible')) {
+        header.addEventListener('click', () => {
+          const card = header.parentElement;
+          card.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

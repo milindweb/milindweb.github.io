@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Website Development Services', description: 'Professional website development services including business websites, web applications, e-commerce, and custom portals. Modern, responsive, SEO-friendly designs.', canonical: '/website-development' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    .main-content {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      flex: 1 1 280px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .card__header i {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .card.full {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .card ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .card h1, .card h3 {
+      font-size: 1rem;
+      margin: 0;
+      color: var(--text-primary);
+    }
+    .card h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 600px) {
+      .section-title { font-size: 1.15rem; }
+      .card { flex: 1 1 100%; max-width: 100%; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Website Development",
+    "description": "Professional website development services including business websites, web applications, e-commerce, and custom portals. Modern, responsive, SEO-friendly designs.",
+    "provider": { "@type": "Organization", "name": "MilindWeb" },
+    "areaServed": "Navi Mumbai, Maharashtra"
+  }
+  </script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <!-- INTRO -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-code-slash"></i> <span>Website Development</span></div>
+      <h1>Modern, Responsive and SEO-Friendly Websites</h1>
+      <p>Design and develop modern, responsive, SEO-friendly websites, landing pages, business portals, and custom web applications that prioritize performance, security, scalability, and user experience.</p>
+    </div>
+  </section>
+
+  <!-- WHAT WE BUILD -->
+  <section class="main-content">
+    <h2 class="section-title">What We Build</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-globe"></i> <span>Business Websites</span></div>
+        <ul>
+          <li>Responsive, SEO-friendly business websites</li>
+          <li>Portfolio, landing pages and corporate sites</li>
+          <li>E-commerce and online store solutions</li>
+          <li>Fast, secure, and mobile-optimized</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-grid-3x3-gap"></i> <span>Web Applications</span></div>
+        <ul>
+          <li>Custom web applications and business portals</li>
+          <li>Client dashboards and admin panels</li>
+          <li>Database-driven dynamic websites</li>
+          <li>API integrations and third-party services</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-lightning-charge"></i> <span>Performance & SEO</span></div>
+        <ul>
+          <li>Optimized for speed and Core Web Vitals</li>
+          <li>SEO-friendly structure and markup</li>
+          <li>Accessibility compliance (WCAG)</li>
+          <li>SSL, security headers and best practices</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-wrench"></i> <span>Maintenance & Support</span></div>
+        <ul>
+          <li>Ongoing website maintenance and updates</li>
+          <li>Content updates and feature additions</li>
+          <li>Performance monitoring and optimization</li>
+          <li>Technical support and troubleshooting</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="main-content">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="flex-wrap">
+      <div class="card full">
+        <div class="card__header"><i class="bi bi-check-circle"></i> <span>Our Advantage</span></div>
+        <p>Modern, Responsive Design - SEO-Optimized from Day One - Performance-Focused and Fast - Scalable and Secure Architecture</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-chat-dots"></i> <span>Let's Build Your Website</span></div>
+      <p>Whether you need a simple landing page, a business portal, or a custom web application — we deliver modern, high-quality solutions tailored to your needs.</p>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+</body>
+</html>

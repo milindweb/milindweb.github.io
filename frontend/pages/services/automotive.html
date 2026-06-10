@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Automotive Services', description: 'Professional two-wheeler service and repair. Regular maintenance, engine repairs, electrical work, tire service, and custom modifications. Affordable and reliable.', canonical: '/automotive' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    .main-content {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      flex: 1 1 280px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .card__header i {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .card.full {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .card ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .card h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 600px) {
+      .section-title { font-size: 1.15rem; }
+      .card { flex: 1 1 100%; max-width: 100%; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Automotive Services",
+    "description": "Professional two-wheeler service and repair. Regular maintenance, engine repairs, electrical work, tire service, and custom modifications. Affordable and reliable.",
+    "provider": { "@type": "Organization", "name": "MilindWeb" },
+    "areaServed": "Navi Mumbai, Maharashtra"
+  }
+  </script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <!-- INTRO -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-bicycle"></i> <span>Automotive Services</span></div>
+      <h1>Quality Two-Wheeler Service and Repair</h1>
+      <p>Professional two-wheeler service and repair solutions including regular maintenance, engine work, electrical repairs, tire service, and custom modifications. Quality service at affordable prices.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="main-content">
+    <h2 class="section-title">Our Services</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-tools"></i> <span>Regular Maintenance</span></div>
+        <p>Comprehensive servicing including oil change, filter replacement, chain adjustment, brake inspection, and general tune-ups.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-gear"></i> <span>Engine Repairs</span></div>
+        <p>Expert diagnostics and repair for engine issues, carburetor cleaning, valve adjustment, and performance optimization.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-lightning-fill"></i> <span>Electrical Work</span></div>
+        <p>Battery replacement, wiring repair, lighting upgrades, horn installation, and electrical system diagnostics.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-circle"></i> <span>Tire Service</span></div>
+        <p>Tire replacement, puncture repair, wheel balancing, and pressure checks for safe and smooth rides.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-palette"></i> <span>Custom Modifications</span></div>
+        <p>Custom paint jobs, accessory fitting, exhaust modifications, and performance upgrades for your bike.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-truck"></i> <span>Breakdown Assistance</span></div>
+        <p>Emergency roadside assistance and pickup service for two-wheelers stranded on the road.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="main-content">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-person-check"></i> <span>Experienced Mechanics</span></div>
+        <p>Skilled technicians with years of experience servicing all major two-wheeler brands.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-wrench"></i> <span>Quality Parts</span></div>
+        <p>We use genuine and high-quality spare parts for all repairs and replacements.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-clock"></i> <span>Quick Turnaround</span></div>
+        <p>Fast and efficient service to get you back on the road as soon as possible.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-currency-rupee"></i> <span>Affordable Pricing</span></div>
+        <p>Transparent pricing with competitive rates and no hidden charges.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-envelope"></i> <span>Book a Service</span></div>
+      <p>Schedule your two-wheeler service appointment today. Use the enquiry form in the footer below to get started.</p>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+</body>
+</html>

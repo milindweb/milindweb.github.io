@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'College Projects & Training Programs', description: 'Engineering college projects, workshops, and training programs. Get final year projects, hands-on workshops, and skill development across multiple domains.', canonical: '/project-training' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    :root {
+      --primary: #1a2634;
+      --secondary: #2563eb;
+      --accent: #dc2626;
+      --light: #f1f5f9;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: #334155; background: #ffffff; overflow-x: hidden; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+
+    .section-title {
+      font-size: 2rem; margin-bottom: 16px; color: var(--primary);
+      text-align: center; font-weight: 700; letter-spacing: -0.02em;
+    }
+    .section-subtitle {
+      text-align: center; color: #64748b; font-size: 1.1rem;
+      max-width: 640px; margin: 0 auto 48px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%);
+      color: white; text-align: center; padding: 100px 24px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+    .hero * { position: relative; z-index: 1; }
+    .hero h1 { font-size: 2.75rem; margin-bottom: 20px; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; }
+    .hero p { font-size: 1.15rem; max-width: 800px; margin: 0 auto; opacity: 0.9; line-height: 1.8; }
+
+    .domains-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .domain-card {
+      background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      padding: 32px 24px; transition: var(--transition); text-align: center;
+      border: 1px solid #e2e8f0;
+    }
+    .domain-card:hover { transform: translateY(-6px); box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-color: var(--secondary); }
+    .domain-icon { font-size: 2.25rem; color: var(--secondary); margin-bottom: 16px; }
+    .domain-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--primary); font-weight: 600; }
+    .domain-card p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+
+    .benefits-container { max-width: 900px; margin: 0 auto; }
+    .benefits-list {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px;
+    }
+    .benefit-item { text-align: center; }
+    .benefit-icon { font-size: 2rem; color: var(--secondary); margin-bottom: 16px; }
+    .benefit-item h3 { font-size: 1.15rem; margin-bottom: 8px; color: var(--primary); font-weight: 600; }
+    .benefit-item p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+
+    .training-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
+    }
+    .training-card {
+      background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      padding: 32px 24px; transition: var(--transition); text-align: center;
+      border: 1px solid #e2e8f0;
+    }
+    .training-card:hover { transform: translateY(-6px); box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-color: var(--secondary); }
+    .training-icon { font-size: 2.25rem; color: var(--secondary); margin-bottom: 16px; }
+    .training-card h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; font-weight: 600; }
+    .training-card p { color: #64748b; font-size: 0.95rem; margin-bottom: 16px; line-height: 1.6; }
+    .training-badge {
+      display: inline-block; background: #059669; color: white; padding: 4px 14px;
+      border-radius: 20px; font-size: 0.8rem; font-weight: 500;
+    }
+
+    .cta-section {
+      text-align: center; padding: 48px 32px;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      color: white; border-radius: 12px; margin-top: 48px;
+    }
+    .cta-section h2 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
+    .cta-section p { opacity: 0.9; font-size: 1.05rem; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+    @media (max-width: 992px) { .hero h1 { font-size: 2.25rem; } }
+    @media (max-width: 768px) {
+      .section { padding: 60px 0; }
+      .hero { padding: 72px 20px; } .hero h1 { font-size: 1.9rem; }
+      .section-title { font-size: 1.65rem; }
+    }
+    @media (max-width: 576px) {
+      .hero h1 { font-size: 1.6rem; }
+      .hero p { font-size: 1rem; }
+      .section-title { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <section class="hero">
+    <div class="container">
+      <h1>College Projects &amp; Training Programs</h1>
+      <p>Industry-oriented engineering and technology solutions including IoT, embedded systems, robotics, industrial automation, PLC/SCADA, AI/ML projects, website development, software solutions, automation tools, technical documentation, apprentice training, industrial training, and skill development programs for students, professionals, and organizations.</p>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: #f8fafc;">
+    <div class="container">
+      <h2 class="section-title">Student Training Programs</h2>
+      <p class="section-subtitle">Practical industry exposure and hands-on learning for college students with completion certificates</p>
+      <div class="training-grid">
+        <div class="training-card">
+          <div class="training-icon"><i class="fas fa-hard-hat"></i></div>
+          <h3>Industrial Training</h3>
+          <p>Practical industry exposure in engineering domains — IoT, automation, electrical, software, and more. Gain real-world experience under expert guidance.</p>
+          <span class="training-badge">Certificate Issued</span>
+        </div>
+        <div class="training-card">
+          <div class="training-icon"><i class="fas fa-laptop"></i></div>
+          <h3>Internship Programs</h3>
+          <p>Hands-on learning opportunities to work on live projects, build skills, and earn academic credits through structured internship programs.</p>
+          <span class="training-badge">Certificate Issued</span>
+        </div>
+        <div class="training-card">
+          <div class="training-icon"><i class="fas fa-users"></i></div>
+          <h3>Skill Development</h3>
+          <p>Workshops and training on in-demand skills — Python, Excel, IoT, embedded systems, web development, and industrial automation.</p>
+          <span class="training-badge">Certificate Issued</span>
+        </div>
+        <div class="training-card">
+          <div class="training-icon"><i class="fas fa-file-contract"></i></div>
+          <h3>Academic Compliance</h3>
+          <p>Programs designed to fulfill university and college academic requirements with proper documentation, assessment, and certification.</p>
+          <span class="training-badge">University Approved</span>
+        </div>
+      </div>
+      <div class="cta-section">
+        <h2>Enroll in Our Training Programs</h2>
+        <p>Contact us to know more about upcoming batches, syllabus, and enrollment process. Limited seats per batch for personalized attention.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Project Domains</h2>
+      <p class="section-subtitle">We deliver across a wide range of engineering and technology domains</p>
+      <div class="domains-grid">
+        <div class="domain-card"><div class="domain-icon"><i class="fas fa-microchip"></i></div><h3>Electronics &amp; Communication</h3><p>IoT, Embedded Systems, Robotics, Wireless Technologies, and VLSI projects for ECE students.</p></div>
+        <div class="domain-card"><div class="domain-icon"><i class="fas fa-bolt"></i></div><h3>Electrical Engineering</h3><p>Power Systems, Solar Projects, Motor Control, EV Systems, and Smart Grid solutions.</p></div>
+        <div class="domain-card"><div class="domain-icon"><i class="fas fa-laptop-code"></i></div><h3>Computer Science &amp; IT</h3><p>Python, AI/ML, Web &amp; App Development, Cybersecurity, Data Science, and Cloud Computing.</p></div>
+        <div class="domain-card"><div class="domain-icon"><i class="fas fa-cogs"></i></div><h3>Instrumentation &amp; Automation</h3><p>PLC, SCADA, Industrial Automation, Control Panels, and Process Control Instrumentation.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: #f8fafc;">
+    <div class="container">
+      <h2 class="section-title">Why Choose Us?</h2>
+      <p class="section-subtitle">Everything you need to complete your project successfully</p>
+      <div class="benefits-container">
+        <div class="benefits-list">
+          <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-check-circle"></i></div><h3>Ready-to-Implement</h3><p>Fully tested and functional projects with complete documentation.</p></div>
+          <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-file-alt"></i></div><h3>Complete Package</h3><p>Code, PPT, Report, Circuit Diagrams, and all supporting materials included.</p></div>
+          <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-rupee-sign"></i></div><h3>Affordable &amp; Customizable</h3><p>Designed to fit every student's budget with custom modifications available on request.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+</body>
+</html>

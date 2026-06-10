@@ -1,0 +1,148 @@
+/*
+ * style.css - Shared base styles across all MK9 pages
+ * Usage: <link rel="stylesheet" href="/shared/css/style.css" />
+ * Load this BEFORE headerfooter.css and any page-specific CSS
+ */
+
+/* ===== BASE VARIABLES ===== */
+:root {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --accent: #2563eb;
+  --accent-light: #3b82f6;
+  --border: #e2e8f0;
+  --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
+  --shadow: 0 4px 14px rgba(0,0,0,0.08);
+  --transition: all .3s ease;
+}
+
+.dark-mode {
+  --primary-bg: #0f172a;
+  --secondary-bg: #1e293b;
+  --card-bg: #1e293b;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --accent: #60a5fa;
+  --accent-light: #93c5fd;
+  --border: #334155;
+  --shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+/* ===== BODY DEFAULTS ===== */
+body {
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  transition: var(--transition);
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+  font-size: 1.8rem;
+  text-align: center;
+  font-weight: bold;
+  margin: 3rem 0 1.5rem;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  margin: 0.5rem auto;
+  background: var(--gradient);
+  border-radius: 3px;
+}
+
+/* ===== FADE UP ANIMATION ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.7s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== HOVER LIFT ===== */
+.hover-lift {
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+}
+
+/* ===== CTA BUTTON ===== */
+.cta-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  background: var(--gradient);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-block;
+  text-decoration: none;
+}
+.cta-btn:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+/* ===== CARD GRID ===== */
+.cards-grid {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 1.8rem;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent-light);
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card h3 {
+  margin: 0.8rem 0;
+  font-size: 1.3rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}

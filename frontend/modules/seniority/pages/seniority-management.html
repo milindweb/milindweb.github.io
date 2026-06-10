@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'NAD Seniority & Promotion Management', description: 'NAD Seniority and Promotion Management system. Track employee seniority, promotions, service records, and generate reports.', canonical: '/seniority/manage', brandTitle: false };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <!-- Header + Footer CSS -->
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css">
+  <!-- Font Awesome (for icons in footer) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- JS to load header/footer -->
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    body {
+      background: var(--primary-bg);
+      color: var(--text-primary);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+    h1, h3 {
+      color: var(--text-primary);
+    }
+    input, button {
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    input {
+      background: var(--card-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    button {
+      background: var(--accent, #3498db);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    #suggestions {
+      background: var(--card-bg);
+      border-color: var(--border);
+      color: var(--text-primary);
+    }
+    #employeeDetails {
+      margin-top: 20px;
+    }
+    #employeeDetails table {
+      border-collapse: collapse;
+      width: 100%;
+      background: var(--card-bg);
+      color: var(--text-primary);
+    }
+    #employeeDetails table th {
+      background: var(--secondary-bg);
+      text-align: left;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+    }
+    #employeeDetails table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+    <!-- load header from page header.html - Header Placeholder -->
+  <div id="header"></div>
+  
+  <h1>NAD Seniority & Promotion Management</h1>
+  <h3>Search Employee</h3>
+  <input type="text" id="tokenInput" placeholder="Enter Token Number" oninput="showSuggestions()">
+  <div id="suggestions" style="display:none;"></div>
+  <button onclick="searchEmployee()">Search</button>
+
+  <div id="employeeDetails"></div>
+
+<script>
+// Links to published CSV exports
+const sheet1URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=0";
+const sheet2URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv&gid=378290522";
+
+let employees = [];
+let sanctionedPosts = [];
+let headers1 = [];
+let headers2 = [];
+
+// Robust CSV parser
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let insideQuote = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (char === '"') {
+      if (insideQuote && text[i + 1] === '"') {
+        cell += '"';
+        i++;
+      } else {
+        insideQuote = !insideQuote;
+      }
+    } else if (char === ',' && !insideQuote) {
+      row.push(cell);
+      cell = "";
+    } else if ((char === '\n' || char === '\r') && !insideQuote) {
+      if (cell || row.length) {
+        row.push(cell);
+        rows.push(row);
+        row = [];
+        cell = "";
+      }
+    } else {
+      cell += char;
+    }
+  }
+  if (cell || row.length) row.push(cell), rows.push(row);
+  return rows;
+}
+
+// Load both sheets
+async function loadData() {
+  try {
+    // Sheet1
+    const res1 = await fetch(sheet1URL);
+    const text1 = await res1.text();
+    const rows1 = parseCSV(text1);
+    headers1 = rows1[0];
+    employees = rows1.slice(1).map(r => {
+      let obj = {};
+      headers1.forEach((h, i) => obj[h] = r[i] || "");
+      return obj;
+    });
+
+    // Sheet2
+    const res2 = await fetch(sheet2URL);
+    const text2 = await res2.text();
+    const rows2 = parseCSV(text2);
+    headers2 = rows2[0];
+    sanctionedPosts = rows2.slice(1).map(r => {
+      let obj = {};
+      headers2.forEach((h, i) => obj[h] = r[i] || "");
+      return obj;
+    });
+  } catch (err) {
+    console.error("Error loading sheets", err);
+  }
+}
+
+// Autocomplete Suggestions
+function showSuggestions() {
+  const input = document.getElementById("tokenInput").value.trim().toLowerCase();
+  const suggestionsDiv = document.getElementById("suggestions");
+  suggestionsDiv.innerHTML = "";
+  if (input.length < 2) {
+    suggestionsDiv.style.display = "none";
+    return;
+  }
+  const matches = employees.filter(e => (e["Tokan No."] || "").toLowerCase().includes(input)).slice(0, 5);
+  matches.forEach(emp => {
+    const div = document.createElement("div");
+    div.textContent = `${emp["Tokan No."]} - ${emp["Name"]}`;
+    div.style.cursor = "pointer";
+    div.onclick = () => {
+      document.getElementById("tokenInput").value = emp["Tokan No."];
+      suggestionsDiv.style.display = "none";
+      searchEmployee();
+    };
+    suggestionsDiv.appendChild(div);
+  });
+  suggestionsDiv.style.display = matches.length > 0 ? "block" : "none";
+}
+
+// Search Employee
+function searchEmployee() {
+  const token = document.getElementById("tokenInput").value.trim();
+  const div = document.getElementById("employeeDetails");
+  div.innerHTML = "";
+  const emp = employees.find(e => e["Tokan No."] === token);
+  if (!emp) {
+    div.innerHTML = `<p>No employee found with token: ${token}</p>`;
+    return;
+  }
+  div.innerHTML = `
+    <h4>Employee Details</h4>
+    <table border="1" cellpadding="5">
+      ${headers1.map(h => `<tr><th>${h}</th><td>${emp[h]}</td></tr>`).join("")}
+    </table>
+    <h4>Promotion Timeline</h4>
+    ${promotionTimeline(emp)}
+    <h4>Seniority List</h4>
+    ${showSeniority(emp)}
+  `;
+}
+
+// Promotion Timeline (improved)
+function promotionTimeline(emp) {
+  const rankOrder = ["USL","SSK","Tradesman Mate","SK","HSK II","HSK I","MCM"];
+  const idx = rankOrder.indexOf(emp["Rank"]);
+  if (idx === -1) return "<p>Rank not in promotion ladder</p>";
+
+  const retirementYear = new Date(emp["Date of Retirement"]).getFullYear();
+  let html = "<ul>";
+
+  for (let i = idx + 1; i < rankOrder.length; i++) {
+    const nextRank = rankOrder[i];
+    const vacancyInfo = sanctionedPosts.find(p => p["Rank"] === nextRank && p["Post"] === emp["Post"]);
+    const sanctioned = vacancyInfo ? parseInt(vacancyInfo["Sactioned vacancy"]) || 0 : 0;
+
+    let peers = employees.filter(e => e["Post"] === emp["Post"] && e["Rank"] === nextRank);
+    peers.sort((a, b) => new Date(a[`Date of ${nextRank}`]) - new Date(b[`Date of ${nextRank}`]));
+
+    const position = peers.findIndex(p => p["Tokan No."] === emp["Tokan No."]) + 1;
+    const estimateYear = new Date().getFullYear() + Math.ceil(position / (sanctioned || 1));
+
+    if (estimateYear <= retirementYear) {
+      html += `<li>${nextRank} → Expected: ${estimateYear}</li>`;
+    } else {
+      html += `<li>${nextRank} → Not achievable before retirement (${retirementYear})</li>`;
+      break;
+    }
+  }
+  html += `<li>Retirement → ${retirementYear}</li>`;
+  html += "</ul>";
+  return html;
+}
+
+// Seniority List
+function showSeniority(emp) {
+  const peers = employees.filter(e => e["Post"] === emp["Post"] && e["Rank"] === emp["Rank"]);
+  peers.sort((a, b) => new Date(a[`Date of ${emp["Rank"]}`]) - new Date(b[`Date of ${emp["Rank"]}`]));
+
+  let html = "<ol>";
+  peers.forEach(p => {
+    const highlight = p["Tokan No."] === emp["Tokan No."] ? "style='background:yellow;'" : "";
+    html += `<li ${highlight}>${p["Tokan No."]} - ${p["Name"]}</li>`;
+  });
+  html += "</ol>";
+  return html;
+}
+
+window.onload = loadData;
+</script>
+
+    <!-- load footer from page footer.html -Footer Placeholder -->
+    <div id="footer"></div>
+</body>
+</html>

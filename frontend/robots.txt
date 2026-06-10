@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /modules/admin/
+Disallow: /pages/contactform.html
+
+# Update domain in shared/js/config.js when changing domain
+Sitemap: https://mk9.in/sitemap.xml

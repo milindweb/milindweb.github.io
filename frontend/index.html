@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/shared/js/config.js"></script>
+  <script src="/shared/js/seo-injector.js"></script>
+
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <link rel="stylesheet" href="/shared/css/headerfooter.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary-bg: #ffffff;
+      --secondary-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent: #2563eb;
+      --accent-light: #3b82f6;
+      --border: #e2e8f0;
+      --gradient: linear-gradient(135deg, #2563eb, #7c3aed);
+      --shadow: 0 4px 14px rgba(0,0,0,0.08);
+      --transition: all .3s ease;
+    }
+
+    .dark-mode {
+      --primary-bg: #0f172a;
+      --secondary-bg: #1e293b;
+      --card-bg: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --accent: #60a5fa;
+      --accent-light: #93c5fd;
+      --border: #334155;
+      --shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+
+    body {
+      background: var(--primary-bg);
+      color: var(--text-primary);
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      transition: var(--transition);
+    }
+
+    .hero {
+      padding: 6rem 1.5rem 5rem;
+      text-align: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+    .hero * { position: relative; z-index: 1; }
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      font-size: 1.1rem;
+      opacity: 0.9;
+      line-height: 1.7;
+    }
+    .hero-location {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      color: #93c5fd;
+      font-weight: 500;
+    }
+    .hero-location i { margin-right: 6px; }
+    .cta-btn {
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      background: white;
+      border: none;
+      color: #0f172a;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 4rem 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0.5rem auto 2.5rem;
+    }
+
+    .cards-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(5) { animation-delay: 0.5s; }
+    .card:nth-child(6) { animation-delay: 0.6s; }
+    .card:nth-child(7) { animation-delay: 0.7s; }
+    .card:nth-child(8) { animation-delay: 0.8s; }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-light);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-flex;
+      transition: transform 0.3s ease;
+    }
+    .card:hover .card-icon { transform: scale(1.2); }
+
+    .card h3 {
+      margin: 1rem 0 0.75rem;
+      font-size: 1.25rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stats {
+      background: var(--secondary-bg);
+      padding: 3rem 1.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-item h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 0.25rem;
+    }
+    .stat-item p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .team-section {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .team-member {
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .team-member:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-light);
+      box-shadow: var(--shadow);
+    }
+    .team-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--gradient);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .team-info h4 {
+      margin: 0;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+    .team-info .role {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 2px 0 6px;
+    }
+    .team-info p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .hero h1 { font-size: 1.8rem; }
+      .section-title { font-size: 1.5rem; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.5rem; }
+      .stat-item h3 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <section class="hero">
+    <h1>Freelance Digital Marketing Consultant &amp; Smart Technical Services</h1>
+    <p>Helping businesses grow online with SEO, social media, and technical digital solutions. Affordable and ROI-focused services designed for startups and small businesses.</p>
+    <div class="hero-location"><i class="fas fa-map-marker-alt"></i> Uran, Navi Mumbai — Serving Maharashtra</div>
+    <button class="cta-btn" onclick="window.location.href=SITE_CONFIG.social.whatsapp">
+      Get Free Consultation <i class="fas fa-arrow-right"></i>
+    </button>
+  </section>
+
+  <h2 class="section-title">Our Services</h2>
+  <p class="section-subtitle">End-to-end digital and technical solutions for your business growth</p>
+
+  <div class="cards-grid">
+
+    <a class="card" href="/pages/services/freelance_seo_consultant.html">
+      <span class="card-icon"><i class="fas fa-chart-line"></i></span>
+      <h3>Digital Marketing &amp; SEO</h3>
+      <p>Improve online visibility, attract qualified leads, and grow your business through Search Engine Optimization (SEO), Google Ads, social media marketing, content marketing, local SEO, and performance-driven digital strategies designed to deliver measurable results.</p>
+    </a>
+
+    <a class="card" href="/pages/services/website-tech-solutions.html">
+      <span class="card-icon"><i class="fas fa-laptop-code"></i></span>
+      <h3>Website Development</h3>
+      <p>Design and develop modern, responsive, SEO-friendly websites, landing pages, business portals, and custom web applications that prioritize performance, security, scalability, and user experience.</p>
+    </a>
+
+    <a class="card" href="/pages/services/business-automation.html">
+      <span class="card-icon"><i class="fas fa-cogs"></i></span>
+      <h3>Business Automation</h3>
+      <p>Digitize and streamline business operations through custom software solutions including Hospital Management Systems, Clinic Management Systems, Society Management Software, Seniority Management Platforms, Member Portals, workflow automation, reporting systems, and business process digitization.</p>
+    </a>
+
+    <a class="card" href="/pages/services/project-training.html">
+      <span class="card-icon"><i class="fas fa-microchip"></i></span>
+      <h3>College Projects &amp; Training</h3>
+      <p>Industry-oriented engineering and technology solutions including IoT, embedded systems, robotics, industrial automation, PLC/SCADA, AI/ML projects, website development, software solutions, automation tools, technical documentation, workshops, apprentice training, industrial training, and skill development programs for students, professionals, and organizations.</p>
+    </a>
+
+    <a class="card" href="/pages/services/photography.html">
+      <span class="card-icon"><i class="fas fa-camera"></i></span>
+      <h3>Photography, Videography &amp; Drone Services</h3>
+      <p>Professional photography and videography services for events, businesses, products, and promotional campaigns. Services include event coverage, drone photography, drone videography, aerial inspections, cinematic shoots, camera rental, and drone equipment rental.</p>
+    </a>
+
+    <a class="card" href="/pages/services/graphics.html">
+      <span class="card-icon"><i class="fas fa-paint-brush"></i></span>
+      <h3>Graphics &amp; Branding</h3>
+      <p>Create a strong visual identity through professional logo design, business branding, marketing materials, social media creatives, promotional graphics, advertisements, presentations, and professional video editing services.</p>
+    </a>
+
+    <a class="card" href="/pages/services/electrical.html">
+      <span class="card-icon"><i class="fas fa-bolt"></i></span>
+      <h3>Electrical Services</h3>
+      <p>Professional electrical installation, maintenance, troubleshooting, and repair services for residential, commercial, and industrial applications. Services include wiring, panel installation, preventive maintenance, industrial electrical work, energy-efficient solutions, and solar power system installation and support.</p>
+    </a>
+
+    <a class="card" href="/pages/services/automotive.html">
+      <span class="card-icon"><i class="fas fa-motorcycle"></i></span>
+      <h3>Automotive Services</h3>
+      <p>Comprehensive two-wheeler maintenance and repair services including routine servicing, diagnostics, engine repairs, electrical troubleshooting, preventive maintenance, and electric two-wheeler repair and servicing.</p>
+    </a>
+
+  </div>
+
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>100+</h3>
+        <p>Projects Delivered</p>
+      </div>
+      <div class="stat-item">
+        <h3>50+</h3>
+        <p>Happy Clients</p>
+      </div>
+      <div class="stat-item">
+        <h3>7+</h3>
+        <p>Years Experience</p>
+      </div>
+      <div class="stat-item">
+        <h3>8</h3>
+        <p>Service Domains</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <h2 class="section-title">About Us</h2>
+    <p class="section-subtitle">Meet the team behind MilindWeb</p>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="team-avatar"><i class="fas fa-user"></i></div>
+        <div class="team-info">
+          <h4>Er. Aarti</h4>
+          <div class="role">CEO &amp; Founder</div>
+          <p>DEE, B.E (Electrical), Digital Marketing Executive with 2+ years of experience helping businesses grow online.</p>
+        </div>
+      </div>
+      <div class="team-member">
+        <div class="team-avatar"><i class="fas fa-user"></i></div>
+        <div class="team-info">
+          <h4>Er. M!l!nd</h4>
+          <div class="role">Co-Founder</div>
+          <p>DEE, B.E (Instrumentation), 7+ years in the Defence Industry with expertise in industrial automation and technical solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+
+  <script src="/shared/js/headerfooter.js" defer></script>
+</body>
+</html>

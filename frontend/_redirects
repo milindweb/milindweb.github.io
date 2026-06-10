@@ -1,0 +1,36 @@
+# Cloudflare Pages redirects
+# Format: source destination status
+
+# Root → home
+/                  /pages/index.html                                   200
+
+# Top-level pages
+/about             /pages/about.html                                   200
+/contact           /pages/contact.html                                 200
+/blog              /pages/blog.html                                    200
+/login             /pages/login.html                                   200
+/register          /pages/register.html                                200
+/forgot-password   /pages/forgot-password.html                         200
+
+# Services
+/seo-digital-marketing  /pages/services/freelance_seo_consultant.html  200
+/website-development    /pages/services/website-tech-solutions.html    200
+/business-automation    /pages/services/business-automation.html       200
+/project-training       /pages/services/project-training.html          200
+/photography            /pages/services/photography.html               200
+/graphics-branding      /pages/services/graphics.html                 200
+/electrical             /pages/services/electrical.html                200
+/automotive             /pages/services/automotive.html                200
+/links                  /pages/links.html                              200
+
+# Modules
+/seniority              /modules/seniority/pages/seniority-list.html   200
+/seniority/manage       /modules/seniority/pages/seniority-management.html  200
+
+# Old workshop redirect (no longer exists)
+/workshop.html          /pages/services/project-training.html          301
+
+# Catch single-file HTML requests to pages/
+/pages/*               /pages/:splat                                   200
+/modules/*             /modules/:splat                                 200
+/shared/*              /shared/:splat                                  200

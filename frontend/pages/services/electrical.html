@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/shared/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Electrical Services', description: 'Reliable electrical services for residential and commercial needs. Installations, repairs, safety inspections, home automation, and solar solutions.', canonical: '/electrical' };</script>
+  <script src="/shared/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/shared/css/style.css" />
+  <script src="/shared/js/headerfooter.js" defer></script>
+
+  <style>
+    .main-content {
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .flex-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      flex: 1 1 280px;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .card__header i {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .card.full {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+
+    .card ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .card h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 600px) {
+      .section-title { font-size: 1.15rem; }
+      .card { flex: 1 1 100%; max-width: 100%; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Electrical Services",
+    "description": "Reliable electrical services for residential and commercial needs. Installations, repairs, safety inspections, home automation, and solar solutions.",
+    "provider": { "@type": "Organization", "name": "MilindWeb" },
+    "areaServed": "Navi Mumbai, Maharashtra"
+  }
+  </script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <!-- INTRO -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-lightning-fill"></i> <span>Electrical Services</span></div>
+      <h1>Reliable and Professional Electrical Solutions</h1>
+      <p>Expert electrical services for residential, commercial, and industrial needs. From installations and repairs to maintenance and safety inspections, we deliver quality workmanship at affordable prices.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="main-content">
+    <h2 class="section-title">Our Services</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-tools"></i> <span>Installations</span></div>
+        <p>Professional installation of wiring, switches, outlets, fans, lights, and electrical panels for new and existing buildings.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-wrench"></i> <span>Repairs & Maintenance</span></div>
+        <p>Quick and reliable repair services for electrical faults, short circuits, fuse issues, and appliance connections.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-shield-check"></i> <span>Safety Inspections</span></div>
+        <p>Thorough electrical safety audits, earthing checks, and compliance inspections for homes and businesses.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-house-gear"></i> <span>Home Automation</span></div>
+        <p>Smart switch installation, automation wiring, and integration of smart home devices for modern living.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-building"></i> <span>Commercial Projects</span></div>
+        <p>Complete electrical solutions for offices, shops, and commercial establishments including three-phase work.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-sun"></i> <span>Solar & Backup</span></div>
+        <p>Solar panel installation, inverter wiring, and battery backup setup for uninterrupted power supply.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="main-content">
+    <h2 class="section-title">Why Choose Us</h2>
+    <div class="flex-wrap">
+      <div class="card">
+        <div class="card__header"><i class="bi bi-check-circle"></i> <span>Experienced Team</span></div>
+        <p>Skilled electricians with years of hands-on experience in residential and commercial projects.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-shield-fill-check"></i> <span>Safety First</span></div>
+        <p>All work follows strict safety standards and electrical codes for your protection.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-clock"></i> <span>On-Time Service</span></div>
+        <p>Prompt and reliable service with timely completion of all projects.</p>
+      </div>
+      <div class="card">
+        <div class="card__header"><i class="bi bi-currency-rupee"></i> <span>Affordable Rates</span></div>
+        <p>Competitive pricing with no hidden charges and transparent quotations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="main-content">
+    <div class="card full">
+      <div class="card__header"><i class="bi bi-envelope"></i> <span>Need an Electrician?</span></div>
+      <p>Contact us for reliable and professional electrical services. Use the enquiry form in the footer below to get started.</p>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+</body>
+</html>
