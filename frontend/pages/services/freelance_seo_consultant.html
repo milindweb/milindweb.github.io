@@ -424,6 +424,23 @@
     </div>
   </section>
 
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>Boost Your Online Presence</h2>
+    <p>Ready to grow your business? Let's create a custom digital strategy tailored to your goals.</p>
+  </section>
+  <div id="form-container"></div>
+  <script>
+    fetch("/pages/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/shared/js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
   <div id="footer"></div>
 </body>
 </html>

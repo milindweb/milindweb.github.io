@@ -117,7 +117,6 @@ mk9/
 │   │       ├── website-tech-solutions.html
 │   │       ├── project-training.html
 │   │       ├── graphics.html
-│   │       ├── photography.html
 │   │       ├── electrical.html
 │   │       ├── automotive.html
 │   │       └── future-services.html
@@ -350,9 +349,7 @@ mk9/
   /login      /pages/login.html   200
   /seo-digital-marketing  /pages/services/freelance_seo_consultant.html  200
   /website-development    /pages/services/website-tech-solutions.html    200
-  /business-automation    /pages/services/business-automation.html       200
   /project-training       /pages/services/project-training.html          200
-  /photography            /pages/services/photography.html               200
   /graphics-branding      /pages/services/graphics.html                 200
   /electrical             /pages/services/electrical.html                200
   /automotive             /pages/services/automotive.html                200
@@ -394,8 +391,7 @@ Login
 Digital Marketing & SEO
 Website & Software Development
 College Projects & Training
-Graphics & Branding
-Photography, Videography & Drone Services
+Graphics, Photography & Branding
 Electrical Services
 Automotive Services
 

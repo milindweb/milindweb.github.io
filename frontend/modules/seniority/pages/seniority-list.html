@@ -1049,6 +1049,23 @@
         window.clearAllFilters = clearAllFilters;
         window.applyAllFilters = applyAllFilters;
     </script>
+      <!-- Contact Form -->
+      <section class="contact-intro">
+        <h2>Get in Touch</h2>
+        <p>Have questions or feedback about Seniority Manager? We'd love to hear from you.</p>
+      </section>
+      <div id="form-container"></div>
+      <script>
+        fetch("/pages/contactform.html")
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById("form-container").innerHTML = html;
+            const script = document.createElement("script");
+            script.src = "/shared/js/form-handler.js";
+            document.body.appendChild(script);
+          });
+      </script>
+
       <!-- load footer from page footer.html -Footer Placeholder -->
       <div id="footer"></div>
 </body>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/shared/js/config.js"></script>
-  <script>const PAGE_CONFIG = { title: 'Graphics & Branding Services', description: 'Professional graphic design and branding services including logo design, banners, wedding invitations, video editing, and marketing creatives.', canonical: '/graphics-branding' };</script>
+  <script>const PAGE_CONFIG = { title: 'Graphics, Photography & Branding Services', description: 'Professional graphic design, branding, photography, videography, and drone services — logos, banners, invites, video editing, event coverage, aerial shots, and more.', canonical: '/graphics-branding' };</script>
   <script src="/shared/js/seo-injector.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,102 +12,20 @@
   <script src="/shared/js/headerfooter.js" defer></script>
 
   <style>
-    .main-content {
-      padding: 2rem 1rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 1.35rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1.5rem;
-    }
-
-    .flex-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 1.5rem;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: var(--transition);
-      flex: 1 1 280px;
-      max-width: 320px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    }
-
-    .card__header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .card__header i {
-      font-size: 1.4rem;
-      color: var(--accent);
-    }
-
-    .card p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    .card.full {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
-
-    .card h1 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin: 0;
-      color: var(--text-primary);
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 14px;
-      object-fit: cover;
-      height: 180px;
-      transition: transform 0.3s ease;
-    }
-
-    .card img:hover {
-      transform: scale(1.05);
-    }
-
-    @media (max-width: 600px) {
-      .section-title { font-size: 1.15rem; }
-      .card { flex: 1 1 100%; max-width: 100%; }
-    }
+    .p-hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .p-gallery { grid-template-columns: repeat(4, 1fr); }
+    .p-gallery .p-card { padding: 0; overflow: hidden; }
+    .p-gallery .p-card img { width: 100%; display: block; }
+    @media (max-width: 900px) { .p-gallery { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .p-gallery { grid-template-columns: 1fr; } }
   </style>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "Graphics & Branding",
-    "description": "Professional graphic design and branding services including logo design, banners, wedding invitations, video editing, and marketing creatives.",
+    "name": "Graphics, Photography & Branding",
+    "description": "Professional graphic design, branding, photography, videography, and drone services — logos, banners, invites, video editing, event coverage, aerial shots, and more.",
     "provider": { "@type": "Organization", "name": "MilindWeb" },
     "areaServed": "Navi Mumbai, Maharashtra"
   }
@@ -116,46 +34,166 @@
 <body>
   <div id="header"></div>
 
-  <!-- INTRO -->
-  <section class="main-content">
-    <div class="card full">
-      <div class="card__header"><i class="bi bi-stars"></i> <span>Intro</span></div>
-      <h1>Graphics & Branding</h1>
-      <p>Create a strong visual identity through professional logo design, business branding, marketing materials, social media creatives, promotional graphics, advertisements, presentations, and professional video editing services.</p>
+  <!-- HERO -->
+  <div class="p-hero">
+    <h1><span>GRAPHICS, PHOTOGRAPHY</span> &amp; BRANDING</h1>
+    <p>From logo design, banners, and brand identity to professional photography, videography, and drone services — we deliver high-quality creative solutions that make your brand stand out.</p>
+  </div>
+
+  <!-- STATS -->
+  <section class="p-section">
+    <div class="p-container">
+      <div class="p-grid-4" style="margin:0">
+        <div style="text-align:center"><div class="p-stat-num">50+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Projects Delivered</div></div>
+        <div style="text-align:center"><div class="p-stat-num">30+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Happy Clients</div></div>
+        <div style="text-align:center"><div class="p-stat-num">4+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Years Experience</div></div>
+        <div style="text-align:center"><div class="p-stat-num">100%</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Client Satisfaction</div></div>
+      </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="main-content">
-    <h2 class="section-title">Our Services</h2>
-    <div class="flex-wrap">
-      <div class="card">
-        <div class="card__header"><i class="bi bi-brush"></i> <span>Banners</span></div>
-        <p>Custom banners for birthdays, anniversaries, and promotions.</p>
+  <!-- GRAPHICS SERVICES -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">DESIGN &amp; BRANDING</h2>
+      <p class="p-subtitle">Professional graphic design services to build a strong visual identity for your brand, events, and marketing campaigns.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-brush"></i></div>
+          <h3>Banners &amp; Posters</h3>
+          <p>Custom banners for birthdays, anniversaries, promotions, and events — designed to grab attention and convey your message.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-heart-fill"></i></div>
+          <h3>Invitations &amp; Cards</h3>
+          <p>Elegant wedding invitations, event cards, and personalized stationery crafted to match your style and theme.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-palette-fill"></i></div>
+          <h3>Logo &amp; Brand Identity</h3>
+          <p>Professional logos, brand kits, and visual identity systems that communicate your brand values and leave a lasting impression.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-camera-video"></i></div>
+          <h3>Video Editing</h3>
+          <p>Reels, intros, advertisements, and vlogs — edited for maximum engagement, storytelling impact, and brand consistency.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-file-earmark-image"></i></div>
+          <h3>Social Media Creatives</h3>
+          <p>Eye-catching graphics for social media posts, stories, ads, and campaigns that drive engagement and brand awareness.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-megaphone"></i></div>
+          <h3>Marketing Materials</h3>
+          <p>Brochures, flyers, business cards, and promotional materials designed to present your business professionally.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card__header"><i class="bi bi-heart-fill"></i> <span>Invites</span></div>
-        <p>Elegant wedding & invitation cards designed to your style.</p>
+    </div>
+  </section>
+
+  <!-- PHOTOGRAPHY SERVICES -->
+  <section class="p-section">
+    <div class="p-container">
+      <h2 class="p-title">PHOTOGRAPHY &amp; DRONE SERVICES</h2>
+      <p class="p-subtitle">Professional visual media services for events, real estate, commercial projects, and promotional content.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-camera-fill"></i></div>
+          <h3>Event Photography</h3>
+          <p>Professional coverage for weddings, parties, corporate events, and special occasions with high-quality results and quick turnaround.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-camera-reels"></i></div>
+          <h3>Videography</h3>
+          <p>Cinematic video coverage, short films, promotional videos, and event highlights tailored to your specific requirements.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-airplane-engines"></i></div>
+          <h3>Drone Services</h3>
+          <p>Aerial photography and videography for real estate, construction, event coverage, and stunning landscape shots.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-building"></i></div>
+          <h3>Real Estate Media</h3>
+          <p>Property photography, virtual tours, and drone aerial views to showcase listings effectively and attract buyers.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-box-seam"></i></div>
+          <h3>Product Photography</h3>
+          <p>High-quality product shots and commercial video content for e-commerce, catalogs, and marketing campaigns.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-scissors"></i></div>
+          <h3>Photo &amp; Video Editing</h3>
+          <p>Professional post-production including color grading, retouching, editing, and custom enhancements for stunning results.</p>
+        </div>
       </div>
-      <div class="card">
-        <div class="card__header"><i class="bi bi-palette-fill"></i> <span>Logos</span></div>
-        <p>Professional logos & branding kits for a unique identity.</p>
-      </div>
-      <div class="card">
-        <div class="card__header"><i class="bi bi-camera-video"></i> <span>Videos</span></div>
-        <p>Reels, intros, ads & vlogs — edited for engagement and growth.</p>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">WHY CHOOSE US</h2>
+      <p class="p-subtitle">We combine creative talent with professional equipment and reliable service to deliver exceptional results.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-check-circle"></i></div>
+          <h3>Quality Equipment</h3>
+          <p>Professional cameras, lenses, lighting, and drone technology for the best results in every project.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-clock"></i></div>
+          <h3>Timely Delivery</h3>
+          <p>Reliable scheduling and fast turnaround without compromising on quality or attention to detail.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-piggy-bank"></i></div>
+          <h3>Affordable Pricing</h3>
+          <p>Competitive rates for high-quality creative and media services — great value for your investment.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-headset"></i></div>
+          <h3>End-to-End Support</h3>
+          <p>Dedicated support from concept and planning through to final delivery and revisions.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- GALLERY -->
-  <section class="main-content">
-    <h2 class="section-title">Showcase</h2>
-    <div class="flex-wrap">
-      <div class="card"><img src="/shared/assets/img/graphics/birthday.svg" alt="Birthday Banner"></div>
-      <div class="card"><img src="/shared/assets/img/graphics/wedding.svg" alt="Wedding Card"></div>
-      <div class="card"><img src="/shared/assets/img/graphics/logo.svg" alt="Logo Design"></div>
-      <div class="card"><img src="/shared/assets/img/graphics/video.svg" alt="Video Editing"></div>
+  <section class="p-section">
+    <div class="p-container">
+      <h2 class="p-title">OUR SHOWCASE</h2>
+      <p class="p-subtitle">A glimpse of our recent work — from brand identities and event coverage to creative campaigns.</p>
+      <div class="p-grid-3 p-gallery">
+        <div class="p-card"><img src="/shared/assets/img/graphics/birthday.svg" alt="Birthday Banner"></div>
+        <div class="p-card"><img src="/shared/assets/img/graphics/wedding.svg" alt="Wedding Card"></div>
+        <div class="p-card"><img src="/shared/assets/img/graphics/logo.svg" alt="Logo Design"></div>
+        <div class="p-card"><img src="/shared/assets/img/graphics/video.svg" alt="Video Editing"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>LET'S CREATE TOGETHER</h2>
+    <p>Ready to bring your vision to life? Reach out and let's discuss your creative project.</p>
+  </section>
+  <section class="p-section" style="padding-top:0">
+    <div class="p-container">
+      <div id="form-container"></div>
+    <script>
+      fetch("/pages/contactform.html")
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("form-container").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "/shared/js/form-handler.js";
+          document.body.appendChild(script);
+        });
+    </script>
     </div>
   </section>
 

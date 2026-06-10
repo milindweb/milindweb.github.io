@@ -22,7 +22,7 @@ Storage  → Supabase Storage
 | File | Purpose |
 |------|---------|
 | `frontend/_headers` | Security headers & cache rules |
-| `frontend/_redirects` | Clean URL rewrites (e.g. `/seo-digital-marketing` → `/pages/services/...`) |
+| `frontend/_redirects` | Clean URL rewrites & page consolidation redirects (e.g. `/seo-digital-marketing` → `/pages/services/...`; `/photography` → `/pages/services/graphics`) |
 
 ### Site Configuration
 All branding, domain, contact, and SEO values are centralized in:

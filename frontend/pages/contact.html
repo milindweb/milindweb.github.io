@@ -15,195 +15,96 @@
   <link rel="stylesheet" href="/shared/css/headerfooter.css">
   <script src="/shared/js/headerfooter.js" defer></script>
 
-  <!-- Scoped CSS -->
   <style>
-    :root {
-      --white: #ffffff;
-      --primary-color: #3498db;
-      --warning-color: #ffc107;
-      --success-color: #2ecc71;
-      --info-color: #17a2b8;
-      --border-radius: 12px;
-      --shadow-md: 0 2px 6px rgba(0,0,0,0.08);
-      --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
-      --transition: 0.3s ease;
+    .ct-section {
+      padding: 3rem 1rem;
+      max-width: 800px;
+      margin: auto;
     }
+    .ct-section:first-of-type { padding-top: 2rem; }
 
-    .dark-mode {
-      --primary-color: #60a5fa;
-      --warning-color: #fbbf24;
-      --success-color: #34d399;
-      --info-color: #22d3ee;
+    .ct-hero {
+      max-width: 800px;
+      margin: 2rem auto 0;
+      padding: 0 1rem;
+      text-align: center;
     }
+    .ct-hero h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-primary); }
+    .ct-hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .ct-hero p { font-size: 1.05rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; line-height: 1.6; }
 
-    .main-content {
-      flex: 1;
-      background: var(--secondary-bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem;
+    .ct-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
-
-    .main-content .container {
-      width: 100%;
-      max-width: 1100px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .card {
+    .ct-info-item {
       background: var(--card-bg);
-      border-radius: var(--border-radius);
       border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .ct-info-item i { font-size: 1.5rem; color: var(--accent); margin-bottom: 0.5rem; display: block; }
+    .ct-info-item strong { display: block; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.25rem; }
+    .ct-info-item span { font-size: 0.85rem; color: var(--text-secondary); }
+
+    .ct-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
       transition: var(--transition);
       overflow: hidden;
+      margin-bottom: 1rem;
     }
+    .ct-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .card__header {
+    .ct-card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
       padding: 1rem 1.5rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text-primary);
       background: var(--secondary-bg);
+      user-select: none;
     }
+    .ct-card-header span { display: flex; align-items: center; gap: 0.75rem; }
+    .ct-card-header i:first-child { font-size: 1.2rem; color: var(--accent); }
+    .ct-card-header .toggle { transition: transform 0.3s ease; }
+    .ct-card.active .ct-card-header .toggle { transform: rotate(180deg); }
+    .ct-card.always-visible .ct-card-header { cursor: default; background: var(--card-bg); }
+    .ct-card.always-visible .ct-card-body { display: block !important; }
+    .ct-card.active .ct-card-body { display: block !important; }
 
-    .card__header span {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .card__header i { font-size: 1.2rem; }
-    .card__header--primary i { color: var(--primary-color); }
-    .card__header--warning i { color: var(--warning-color); }
-    .card__header--success i { color: var(--success-color); }
-    .card__header--info i { color: var(--info-color); }
-
-    .card__content {
+    .ct-card-body {
       padding: 1.5rem;
       display: none;
       color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .ct-card-body h3 { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin: 1.2rem 0 0.4rem; }
+    .ct-card-body h3:first-child { margin-top: 0; }
+    .ct-card-body ul { margin: 0.5rem 0; padding-left: 1.2rem; }
+    .ct-card-body ul li { margin-bottom: 0.3rem; }
+    .ct-card-body p { margin: 0 0 0.5rem; }
+    .ct-card-body strong { color: var(--text-primary); }
+
+    .ct-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
     }
 
-    .card.active .card__content {
-      display: block;
-    }
-
-    .card__toggle {
-      transition: transform var(--transition);
-    }
-    .card.active .card__toggle {
-      transform: rotate(180deg);
-    }
-
-    /* Always visible cards */
-    .card.always-visible .card__header {
-      cursor: default;
-      background: var(--card-bg);
-    }
-    .card.always-visible .card__content {
-      display: block !important;
-    }
-
-  </style>
-
-  <!-- Contact Form Styles -->
-  <style>
-    .contact-form-wrapper { --input-bg: #f8faff; --radius: 12px; }
-    .contact-form-wrapper {
-      background: var(--card-bg); padding: 2rem 2.25rem; border-radius: 20px;
-      box-shadow: var(--shadow); width: 100%; max-width: 640px;
-      margin: 0 auto; border: 1px solid var(--border);
-    }
-    .contact-form-wrapper h2 {
-      text-align: center; margin-bottom: 1.5rem; font-size: 1.5rem;
-      font-weight: 700; color: var(--text-primary);
-    }
-    .contact-form-wrapper h2::after {
-      content: ''; display: block; width: 48px; height: 3px;
-      background: var(--gradient); border-radius: 2px; margin: 0.6rem auto 0;
-    }
-    .form-row { display: flex; flex-direction: column; margin-bottom: 1.1rem; }
-    .contact-form-wrapper label {
-      font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;
-      color: var(--text-primary); display: flex; align-items: center; gap: 5px;
-    }
-    .contact-form-wrapper label i { color: var(--accent); font-size: 0.8rem; }
-    .contact-form-wrapper input,
-    .contact-form-wrapper select,
-    .contact-form-wrapper textarea {
-      padding: 10px 14px; border-radius: var(--radius);
-      border: 1px solid var(--border); background: var(--input-bg);
-      color: var(--text-primary); font-size: 0.925rem;
-      transition: var(--transition); font-family: inherit;
-    }
-    .contact-form-wrapper input:hover,
-    .contact-form-wrapper select:hover,
-    .contact-form-wrapper textarea:hover { border-color: var(--accent-light); }
-    .contact-form-wrapper input:focus,
-    .contact-form-wrapper select:focus,
-    .contact-form-wrapper textarea:focus {
-      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-      background: var(--card-bg); outline: none;
-    }
-    .contact-form-wrapper input::placeholder,
-    .contact-form-wrapper textarea::placeholder { color: var(--text-secondary); }
-    .contact-form-wrapper textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
-    .contact-form-wrapper select {
-      cursor: pointer; appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px;
-    }
-    .form-submit-btn {
-      width: 100%; padding: 12px; font-size: 1rem; background: var(--accent);
-      color: #ffffff; border: none; border-radius: var(--radius); font-weight: 600;
-      cursor: pointer; transition: var(--transition);
-      display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 0.25rem;
-    }
-    .form-submit-btn:hover { background: var(--accent-light); }
-    .form-submit-btn:active { transform: scale(0.98); }
-    .form-submit-btn i { font-size: 0.9rem; transition: var(--transition); }
-    .form-submit-btn:hover i { transform: translateX(3px); }
-    .error-msg { color: #dc2626; font-size: 0.78rem; margin-top: 4px; display: none; }
-    .contact-form-wrapper .alert {
-      margin-top: 1rem; padding: 0.85rem 1rem; border-radius: var(--radius);
-      text-align: center; font-weight: 500; font-size: 0.9rem; animation: alertSlide 0.3s ease;
-    }
-    @keyframes alertSlide {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .contact-form-wrapper .success {
-      background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0;
-    }
-    .contact-form-wrapper .error {
-      background: #fef2f2; color: #dc2626; border: 1px solid #fecaca;
-    }
-    .dark-mode .contact-form-wrapper .success {
-      background: #052e16; color: #4ade80; border: 1px solid #166534;
-    }
-    .dark-mode .contact-form-wrapper .error {
-      background: #450a0a; color: #fca5a5; border: 1px solid #991b1b;
-    }
-    .contact-form-wrapper .form-row:focus-within label { color: var(--accent); }
-    @media (max-width: 640px) {
-      .contact-form-wrapper { padding: 1.25rem 1rem; margin: 1rem 0.5rem; border-radius: 16px; }
-      .contact-form-wrapper h2 { font-size: 1.3rem; }
-      .contact-form-wrapper input,
-      .contact-form-wrapper select,
-      .contact-form-wrapper textarea { font-size: 16px; }
+    @media (max-width: 600px) {
+      .ct-info-grid { grid-template-columns: 1fr; }
+      .ct-hero h1 { font-size: 1.6rem; }
     }
   </style>
 </head>
@@ -211,122 +112,210 @@
   <!-- Header Placeholder -->
   <div id="header"></div>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-    <div class="container">
+  <!-- HERO -->
+  <div class="ct-hero">
+    <h1><span>CONTACT</span> US</h1>
+    <p>Have a question, project idea, or need assistance? We're here to help. Reach out through any of the channels below.</p>
+  </div>
 
-      <!-- About & Services (Always Visible at Top) -->
-      <div class="card always-visible">
-        <div class="card__header card__header--primary">
-          <span><i class="fas fa-briefcase"></i> About & Services</span>
-        </div>
-        <div class="card__content">
-          <p>Hi, I’m Milind 👋 — creator of MilindWeb, a platform dedicated to creativity, learning, and small business services. I support businesses in expanding their online presence through SEO & Digital Marketing, design clean and responsive websites, develop custom software tools for automation, craft logos, posters, and visual branding, and conduct projects and workshops that deliver practical, hands-on learning experiences.</p>
-        </div>
+  <!-- CONTACT INFO -->
+  <section class="ct-section">
+    <div class="ct-info-grid">
+      <div class="ct-info-item">
+        <i class="fas fa-phone"></i>
+        <strong>Phone</strong>
+        <span id="ct-phone"></span>
       </div>
-
-      <!-- Privacy Policy -->
-      <div class="card">
-        <div class="card__header card__header--primary">
-          <span><i class="fas fa-user-shield"></i> Privacy Policy</span>
-          <i class="fas fa-chevron-down card__toggle"></i>
-        </div>
-        <div class="card__content">
-          <p>At MilindWeb, your privacy matters. We only collect basic details you choose to share (such as name, email, or phone) when you contact us. These are used solely for communication and service purposes. We do not sell, rent, or misuse your personal data.</p>
-        </div>
+      <div class="ct-info-item">
+        <i class="fas fa-envelope"></i>
+        <strong>Email</strong>
+        <span id="ct-email"></span>
       </div>
-
-      <!-- Disclaimer -->
-      <div class="card">
-        <div class="card__header card__header--warning">
-          <span><i class="fas fa-exclamation-circle"></i> Disclaimer</span>
-          <i class="fas fa-chevron-down card__toggle"></i>
-        </div>
-        <div class="card__content">
-          <p>Content on MilindWeb is created for educational, creative, and small business purposes. While we aim for accuracy, we cannot guarantee completeness of all information. Some material may be AI-generated, publicly sourced, or referenced from third parties. All trademarks and copyrights remain with their respective owners.</p>
-        </div>
+      <div class="ct-info-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <strong>Location</strong>
+        <span id="ct-location"></span>
       </div>
-
-      <!-- Terms & Conditions -->
-      <div class="card">
-        <div class="card__header card__header--success">
-          <span><i class="fas fa-file-contract"></i> Terms & Conditions</span>
-          <i class="fas fa-chevron-down card__toggle"></i>
-        </div>
-        <div class="card__content">
-          <p>By using this website, you agree to access content responsibly and respect intellectual property rights. Services offered through MilindWeb are subject to availability and mutual agreement. Any misuse, plagiarism, or unauthorized use of content is strictly prohibited.</p>
-        </div>
-      </div>
-
-      <!-- Terms of Use -->
-      <div class="card">
-        <div class="card__header card__header--info">
-          <span><i class="fas fa-gavel"></i> Terms of Use</span>
-          <i class="fas fa-chevron-down card__toggle"></i>
-        </div>
-        <div class="card__content">
-          <p>MilindWeb is designed for learning, creativity, and light business engagement. Visitors are free to explore resources, provide feedback, and reach out for services. By continuing to use this site, you acknowledge acceptance of these terms.</p>
-        </div>
-      </div>
-
-      <!-- Feedback & Suggestions -->
-      <div class="card">
-        <div class="card__header card__header--success">
-          <span><i class="fas fa-comment-dots"></i> Feedback & Suggestions</span>
-          <i class="fas fa-chevron-down card__toggle"></i>
-        </div>
-        <div class="card__content">
-          <p>Your ideas matter! If you have suggestions for improvement, new service requests, or feedback about MilindWeb, feel free to share. Every input helps shape this platform better.</p>
-        </div>
-      </div>
-
-      <!-- Contact Form -->
-      <div class="contact-form-wrapper">
-        <h1>Contact Us</h1>
-        <form id="contactForm">
-          <div class="form-row">
-            <label for="service"><i class="fas fa-tag"></i> Service</label>
-            <select id="service" name="service" required>
-              <option value="">Select Service</option>
-              <option>SEO & Digital Marketing</option>
-              <option>Web Designing</option>
-              <option>Software Solutions</option>
-              <option>Graphics Designing</option>
-              <option>Projects & Workshop</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <label for="name"><i class="fas fa-user"></i> Name</label>
-            <input type="text" id="name" name="name" required>
-          </div>
-          <div class="form-row">
-            <label for="email"><i class="fas fa-envelope"></i> Email</label>
-            <input type="email" id="email" name="email" required>
-          </div>
-          <div class="form-row">
-            <label for="phone"><i class="fas fa-phone"></i> Mobile No.</label>
-            <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" required>
-          </div>
-          <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6-9.</div>
-          <div class="form-row">
-            <label for="message"><i class="fas fa-comment"></i> Message</label>
-            <textarea id="message" name="message" maxlength="500" required></textarea>
-          </div>
-          <button type="submit" class="form-submit-btn">Submit <i class="fas fa-arrow-right"></i></button>
-        </form>
-        <div id="response"></div>
-      </div>
-      <script src="/shared/js/form-handler.js"></script>
     </div>
-  </main>
+  </section>
+
+  <script>
+    (function() {
+      var c = SITE_CONFIG.contact;
+      if (c) {
+        var el = function(id) { return document.getElementById(id); };
+        if (el('ct-phone')) el('ct-phone').textContent = c.phoneDisplay || c.phone;
+        if (el('ct-email')) el('ct-email').textContent = c.email;
+        if (el('ct-location')) el('ct-location').textContent = c.location;
+        if (el('ct-email-pp')) el('ct-email-pp').textContent = c.email;
+        if (el('ct-email-fb')) el('ct-email-fb').textContent = c.email;
+      }
+    })();
+  </script>
+
+  <!-- ABOUT -->
+  <section class="ct-section" style="padding-top:0">
+    <div class="ct-card always-visible">
+      <div class="ct-card-header">
+        <span><i class="fas fa-briefcase"></i> About MilindWeb</span>
+      </div>
+      <div class="ct-card-body">
+        <p>Hi, I'm Milind — creator of MilindWeb, a platform dedicated to creativity, learning, and small business services. We help businesses expand their online presence through SEO &amp; Digital Marketing, design clean and responsive websites, develop custom software for automation, craft logos and visual branding, and conduct hands-on projects and workshops.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGAL SECTION -->
+  <section class="ct-section" style="padding-top:0">
+
+    <!-- Privacy Policy -->
+    <div class="ct-card">
+      <div class="ct-card-header">
+        <span><i class="fas fa-user-shield"></i> Privacy Policy</span>
+        <i class="fas fa-chevron-down toggle"></i>
+      </div>
+      <div class="ct-card-body">
+        <p><strong>Last updated:</strong> June 2026</p>
+        <p>At MilindWeb, your privacy is a priority. This policy outlines how we collect, use, and protect your personal information when you use our website or services. We are committed to ensuring that your privacy is protected and that any information you provide is handled with the utmost care and responsibility.</p>
+
+        <h3>Information We Collect</h3>
+        <p>We only collect information you voluntarily provide when you contact us or use our services. This includes data submitted through our contact form such as your name, email address, and phone number. We collect this information solely to understand your requirements and respond to your inquiries. We do not automatically collect any browsing data, cookies, or tracking information unless explicitly stated and consented to.</p>
+
+        <h3>How We Use Your Information</h3>
+        <p>We use your data exclusively for communication regarding your project, providing you with quotes, sharing service updates, and improving our offerings based on the feedback we receive. Your information is never used for marketing or promotional purposes without your explicit consent, and we do not sell or rent your data to third parties under any circumstances.</p>
+
+        <h3>Data Storage &amp; Protection</h3>
+        <p>Your data is stored securely and access is limited to authorized personnel only. We implement reasonable physical, electronic, and managerial safeguards to protect your information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
+
+        <h3>Third-Party Services</h3>
+        <p>Our contact form uses Google Apps Script for processing form submissions. When you submit a form, your data is transmitted to Google's servers for processing and storage. Google's privacy policy governs how your data is handled by their services. We do not use analytics cookies, tracking pixels, or third-party advertising scripts on this website. Any future changes to third-party data handling will be reflected in this policy.</p>
+
+        <h3>Data Retention</h3>
+        <p>We retain your personal information only as long as necessary to fulfill the purposes described in this policy or as required by applicable law. If you request service from us, your information may be retained for the duration of the service engagement and for a reasonable period thereafter for record-keeping and legal compliance. After this period, your data is securely deleted or anonymized.</p>
+
+        <h3>Your Rights</h3>
+        <p>You have the right to request access to the personal data we hold about you, request correction of any inaccurate information, ask for deletion of your data where applicable, and withdraw consent for data processing at any time. To exercise any of these rights, please contact us at <span id="ct-email-pp">Aartitechservices@gmail.com</span>. We will respond to your request within a reasonable timeframe as per applicable data protection laws.</p>
+      </div>
+    </div>
+
+    <!-- Terms of Use -->
+    <div class="ct-card">
+      <div class="ct-card-header">
+        <span><i class="fas fa-gavel"></i> Terms of Use</span>
+        <i class="fas fa-chevron-down toggle"></i>
+      </div>
+      <div class="ct-card-body">
+        <p><strong>Last updated:</strong> June 2026</p>
+        <p>By accessing or using the MilindWeb website and its associated services, you agree to comply with and be bound by these Terms of Use. If you do not agree with any part of these terms, you must discontinue use of the site and its services immediately. These terms may be updated from time to time, and continued use constitutes acceptance of any changes.</p>
+
+        <h3>Use of Content</h3>
+        <p>All content published on MilindWeb — including text, graphics, images, code samples, project documentation, and design assets — is provided for informational, educational, and creative purposes. You may view, download, and print content for personal, non-commercial use only. You may not reproduce, distribute, modify, transmit, republish, or create derivative works from any content without prior written permission from MilindWeb. Any unauthorized use of content may violate copyright, trademark, and other applicable laws.</p>
+
+        <h3>Intellectual Property</h3>
+        <p>All trademarks, logos, brand names, service marks, and content displayed on MilindWeb are the property of their respective owners. The MilindWeb name, logo, and brand identity are protected intellectual property. Unauthorized use of any material may violate copyright, trademark, and other applicable laws. Nothing on this website shall be construed as granting any license or right to use any intellectual property without the express written consent of the owner.</p>
+
+        <h3>Service Terms &amp; Availability</h3>
+        <p>Services offered through MilindWeb, including digital marketing, web development, software solutions, graphic design, projects, and training, are subject to availability, mutual agreement, and fair scheduling. All service agreements will be confirmed in writing via email or formal proposal before commencement. We reserve the right to refuse service to any person or organization for any reason, including but not limited to ethical conflicts, scheduling constraints, or scope misalignment. Pricing, timelines, and deliverables are agreed upon mutually before work begins.</p>
+
+        <h3>User Conduct</h3>
+        <p>By using this website, you agree not to engage in any activity that disrupts, damages, or impairs the functionality of the site, its servers, or its networks. You agree not to attempt unauthorized access to any part of the website, its systems, or user data. You also agree not to submit false, misleading, or malicious information through the contact form or any other communication channel.</p>
+
+        <h3>Limitation of Liability</h3>
+        <p>MilindWeb (including MK9 Solutions and its creator) shall not be held liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of or inability to use this website, its content, or its services. This includes, without limitation, damages for loss of profits, data, goodwill, or other intangible losses. We do not guarantee uninterrupted, error-free, or secure access to the website, and we are not responsible for any damages resulting from viruses, malware, or other harmful components that may be transmitted through the site.</p>
+
+        <h3>Governing Law</h3>
+        <p>These terms shall be governed by and construed in accordance with the laws of India. Any disputes arising under these terms shall be subject to the exclusive jurisdiction of the courts in Navi Mumbai, Maharashtra, India.</p>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="ct-card">
+      <div class="ct-card-header">
+        <span><i class="fas fa-exclamation-circle"></i> Disclaimer</span>
+        <i class="fas fa-chevron-down toggle"></i>
+      </div>
+      <div class="ct-card-body">
+        <p><strong>Last updated:</strong> June 2026</p>
+        <p>The information, content, and materials provided on MilindWeb are for general informational, educational, and creative purposes only. While we strive to ensure accuracy and relevance, the content should not be construed as professional advice or a binding commitment. Users are encouraged to verify critical information independently before making decisions based on the content found on this site.</p>
+
+        <h3>No Warranty</h3>
+        <p>MilindWeb makes no representations or warranties of any kind, express or implied, regarding the completeness, accuracy, reliability, suitability, or availability of the information, products, services, or related graphics on this website. Any reliance you place on such information is strictly at your own risk. We expressly disclaim all warranties, including but not limited to warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+
+        <h3>External Links</h3>
+        <p>This website may contain links to external websites and third-party resources. These links are provided for your convenience and do not imply endorsement or approval of the linked content. MilindWeb has no control over the content, privacy practices, terms of use, or availability of these external sites and assumes no responsibility or liability for them. You access linked websites at your own risk and should review their respective policies.</p>
+
+        <h3>AI-Generated &amp; Assisted Content</h3>
+        <p>Some content on this website may be generated or assisted by artificial intelligence tools for efficiency and ideation purposes. While we review, edit, and fact-check all content before publication, it should not be considered professional advice without independent verification. We recommend that users verify critical technical, legal, financial, or health-related information through qualified professionals before acting on it.</p>
+
+        <h3>Professional Advice</h3>
+        <p>Content on MilindWeb, including blog posts, tutorials, project descriptions, and service overviews, is not a substitute for professional legal, financial, medical, engineering, or technical advice. You should consult qualified and licensed professionals for advice specific to your situation. MilindWeb does not provide licensed professional services unless explicitly stated in a signed service agreement.</p>
+
+        <h3>Testimonials &amp; Results</h3>
+        <p>Any testimonials, case studies, or results displayed on this website represent individual experiences and outcomes. Past performance or results do not guarantee future outcomes. Results vary depending on numerous factors including market conditions, competition, execution quality, and individual circumstances. Service-specific results, if any, will be discussed during consultation and documented in the service agreement.</p>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="ct-card">
+      <div class="ct-card-header">
+        <span><i class="fas fa-comment-dots"></i> Feedback &amp; Suggestions</span>
+        <i class="fas fa-chevron-down toggle"></i>
+      </div>
+      <div class="ct-card-body">
+        <p>Your ideas and opinions are invaluable to us. Whether you have a suggestion for improving our services, an idea for a new offering, feedback on your experience with MilindWeb, or just want to share your thoughts — we are always eager to listen. Every piece of feedback helps us refine our platform, enhance user experience, and serve you better.</p>
+        <p>We especially welcome feedback on our website usability, service quality, communication responsiveness, and content relevance. If you encountered any issues, have feature requests, or want to report a problem, please don't hesitate to reach out. Your input directly influences how we grow and improve.</p>
+        <p>You can share your feedback using the contact form below, or send us an email directly at <strong id="ct-email-fb">Aartitechservices@gmail.com</strong>. We read every message and strive to respond within 24&ndash;48 business hours. Thank you for helping us make MilindWeb better, every day.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="ct-divider" style="max-width:800px;margin:0 auto"></div>
+
+  <!-- CONTACT FORM -->
+  <section class="ct-section" style="padding-top:0">
+    <h2 style="text-align:center;font-size:1.6rem;font-weight:700;color:var(--text-primary);margin-bottom:0.5rem">SEND US A MESSAGE</h2>
+    <p style="text-align:center;color:var(--text-secondary);max-width:500px;margin:0 auto 2rem;line-height:1.6">Fill out the form below and we'll get back to you as soon as possible. For urgent inquiries, please contact us directly via phone or WhatsApp.</p>
+    <div class="contact-form-wrapper">
+      <form id="contactForm">
+        <div class="form-row">
+          <select id="service" name="service" required>
+            <option value="">Select Service</option>
+            <option>SEO & Digital Marketing</option>
+            <option>Web Designing</option>
+            <option>Software Solutions</option>
+            <option>Graphics Designing</option>
+            <option>Projects & Workshop</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <input type="text" id="name" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-row">
+          <input type="email" id="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-row">
+          <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" placeholder="Mobile No." required>
+        </div>
+        <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6-9.</div>
+        <div class="form-row">
+          <textarea id="message" name="message" maxlength="500" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="form-submit-btn">Submit <i class="fas fa-arrow-right"></i></button>
+      </form>
+      <div id="response"></div>
+    </div>
+    <script src="/shared/js/form-handler.js"></script>
+  </section>
 
   <!-- Footer Placeholder -->
   <div id="footer"></div>
 
   <!-- Accordion Script -->
   <script>
-    document.querySelectorAll('.card__header').forEach(header => {
+    document.querySelectorAll('.ct-card-header').forEach(header => {
       if (!header.parentElement.classList.contains('always-visible')) {
         header.addEventListener('click', () => {
           const card = header.parentElement;

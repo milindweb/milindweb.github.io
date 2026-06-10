@@ -186,6 +186,23 @@
     </div>
   </section>
 
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>Request Electrical Service</h2>
+    <p>Need reliable electrical work? Get in touch for a free consultation and professional service.</p>
+  </section>
+  <div id="form-container"></div>
+  <script>
+    fetch("/pages/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/shared/js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
   <div id="footer"></div>
 </body>
 </html>

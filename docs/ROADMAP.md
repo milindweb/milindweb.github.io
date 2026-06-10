@@ -10,12 +10,13 @@
 - [x] Centralized site configuration (`config.js`) — brand, domain, contact, social
 - [x] Dynamic SEO injection (`seo-injector.js`) — titles, meta, OG/Twitter tags, JSON-LD
 - [x] Header/footer driven by config placeholders
+- [x] Shared component CSS classes (`p-*`) for consistent service page design
 
 ### Pages Launched
 - [x] Homepage
 - [x] Blog listing page
-- [x] Contact page + enquiry form
-- [x] 8 service pages (SEO, Web Dev, Automation, Training, Graphics, Photography, Electrical, Automotive)
+- [x] Contact page + enquiry form (with privacy/terms/disclaimer/feedback accordions)
+- [x] 6 service pages (SEO, Web & Software Dev, Projects & Training, Graphics/Photography & Branding, Electrical, Automotive)
 
 ## 🚧 In Progress
 

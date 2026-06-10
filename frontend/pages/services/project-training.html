@@ -12,176 +12,286 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="/shared/js/headerfooter.js" defer></script>
 
-  <style>
-    :root {
-      --primary: #1a2634;
-      --secondary: #2563eb;
-      --accent: #dc2626;
-      --light: #f1f5f9;
-      --transition: all 0.3s ease;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: #334155; background: #ffffff; overflow-x: hidden; }
-
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    .section { padding: 80px 0; }
-
-    .section-title {
-      font-size: 2rem; margin-bottom: 16px; color: var(--primary);
-      text-align: center; font-weight: 700; letter-spacing: -0.02em;
-    }
-    .section-subtitle {
-      text-align: center; color: #64748b; font-size: 1.1rem;
-      max-width: 640px; margin: 0 auto 48px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%);
-      color: white; text-align: center; padding: 100px 24px;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      opacity: 0.4;
-    }
-    .hero * { position: relative; z-index: 1; }
-    .hero h1 { font-size: 2.75rem; margin-bottom: 20px; font-weight: 800; line-height: 1.25; letter-spacing: -0.02em; }
-    .hero p { font-size: 1.15rem; max-width: 800px; margin: 0 auto; opacity: 0.9; line-height: 1.8; }
-
-    .domains-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-    .domain-card {
-      background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      padding: 32px 24px; transition: var(--transition); text-align: center;
-      border: 1px solid #e2e8f0;
-    }
-    .domain-card:hover { transform: translateY(-6px); box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-color: var(--secondary); }
-    .domain-icon { font-size: 2.25rem; color: var(--secondary); margin-bottom: 16px; }
-    .domain-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: var(--primary); font-weight: 600; }
-    .domain-card p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
-
-    .benefits-container { max-width: 900px; margin: 0 auto; }
-    .benefits-list {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px;
-    }
-    .benefit-item { text-align: center; }
-    .benefit-icon { font-size: 2rem; color: var(--secondary); margin-bottom: 16px; }
-    .benefit-item h3 { font-size: 1.15rem; margin-bottom: 8px; color: var(--primary); font-weight: 600; }
-    .benefit-item p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
-
-    .training-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px;
-    }
-    .training-card {
-      background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      padding: 32px 24px; transition: var(--transition); text-align: center;
-      border: 1px solid #e2e8f0;
-    }
-    .training-card:hover { transform: translateY(-6px); box-shadow: 0 10px 40px rgba(0,0,0,0.08); border-color: var(--secondary); }
-    .training-icon { font-size: 2.25rem; color: var(--secondary); margin-bottom: 16px; }
-    .training-card h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; font-weight: 600; }
-    .training-card p { color: #64748b; font-size: 0.95rem; margin-bottom: 16px; line-height: 1.6; }
-    .training-badge {
-      display: inline-block; background: #059669; color: white; padding: 4px 14px;
-      border-radius: 20px; font-size: 0.8rem; font-weight: 500;
-    }
-
-    .cta-section {
-      text-align: center; padding: 48px 32px;
-      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-      color: white; border-radius: 12px; margin-top: 48px;
-    }
-    .cta-section h2 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; }
-    .cta-section p { opacity: 0.9; font-size: 1.05rem; max-width: 600px; margin: 0 auto; line-height: 1.7; }
-
-    @media (max-width: 992px) { .hero h1 { font-size: 2.25rem; } }
-    @media (max-width: 768px) {
-      .section { padding: 60px 0; }
-      .hero { padding: 72px 20px; } .hero h1 { font-size: 1.9rem; }
-      .section-title { font-size: 1.65rem; }
-    }
-    @media (max-width: 576px) {
-      .hero h1 { font-size: 1.6rem; }
-      .hero p { font-size: 1rem; }
-      .section-title { font-size: 1.4rem; }
-    }
-  </style>
+  <style></style>
 </head>
 <body>
   <div id="header"></div>
 
-  <section class="hero">
-    <div class="container">
-      <h1>College Projects &amp; Training Programs</h1>
-      <p>Industry-oriented engineering and technology solutions including IoT, embedded systems, robotics, industrial automation, PLC/SCADA, AI/ML projects, website development, software solutions, automation tools, technical documentation, apprentice training, industrial training, and skill development programs for students, professionals, and organizations.</p>
+  <!-- HERO -->
+  <section class="p-hero">
+    <div class="p-container">
+      <h1>COLLEGE PROJECTS &amp; TRAINING</h1>
+      <p>Industry-oriented engineering projects, hands-on training programs, and skill development for students, professionals, and organizations. Get ready-to-implement projects, certified training, and complete documentation.</p>
     </div>
   </section>
 
-  <section class="section" style="background-color: #f8fafc;">
-    <div class="container">
-      <h2 class="section-title">Student Training Programs</h2>
-      <p class="section-subtitle">Practical industry exposure and hands-on learning for college students with completion certificates</p>
-      <div class="training-grid">
-        <div class="training-card">
-          <div class="training-icon"><i class="fas fa-hard-hat"></i></div>
+  <!-- STATS -->
+  <section class="p-section">
+    <div class="p-container">
+      <div class="p-grid-4" style="margin:0">
+        <div style="text-align:center"><div class="p-stat-num">100+</div><div style="font-size:0.9rem;color:var(--text-secondary);margin-top:4px">Projects Delivered</div></div>
+        <div style="text-align:center"><div class="p-stat-num">200+</div><div style="font-size:0.9rem;color:var(--text-secondary);margin-top:4px">Students Trained</div></div>
+        <div style="text-align:center"><div class="p-stat-num">10+</div><div style="font-size:0.9rem;color:var(--text-secondary);margin-top:4px">Domains Covered</div></div>
+        <div style="text-align:center"><div class="p-stat-num">Govt.</div><div style="font-size:0.9rem;color:var(--text-secondary);margin-top:4px">Approved Certificates</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUY PROJECTS -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">BUY READY PROJECTS</h2>
+      <p class="p-subtitle">Fully tested, documented, and ready-to-submit projects across multiple engineering domains. Custom modifications available on request.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-microchip"></i></div>
+          <h3>Electronics &amp; Communication</h3>
+          <p>IoT, Embedded Systems, Robotics, Wireless Technologies, and VLSI projects for ECE students. Complete with circuit diagrams and code.</p>
+          <ul>
+            <li>Arduino / ESP32 / Raspberry Pi based</li>
+            <li>Sensor integration &amp; data logging</li>
+            <li>PCB design &amp; simulation files</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-bolt"></i></div>
+          <h3>Electrical Engineering</h3>
+          <p>Power Systems, Solar Projects, Motor Control, EV Systems, and Smart Grid solutions for electrical engineering students.</p>
+          <ul>
+            <li>PLC &amp; SCADA based projects</li>
+            <li>Renewable energy systems</li>
+            <li>Motor drive &amp; control circuits</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-laptop-code"></i></div>
+          <h3>Computer Science &amp; IT</h3>
+          <p>Python, AI/ML, Web &amp; App Development, Cybersecurity, Data Science, and Cloud Computing projects.</p>
+          <ul>
+            <li>Full-stack web applications</li>
+            <li>Machine learning models</li>
+            <li>Database &amp; API integrations</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-cogs"></i></div>
+          <h3>Instrumentation &amp; Automation</h3>
+          <p>PLC, SCADA, Industrial Automation, Control Panels, and Process Control Instrumentation projects.</p>
+          <ul>
+            <li>Ladder logic &amp; HMI design</li>
+            <li>Process control simulations</li>
+            <li>Industrial sensor networks</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-globe"></i></div>
+          <h3>Web &amp; Software</h3>
+          <p>Website development, custom software applications, database management systems, and API-based projects.</p>
+          <ul>
+            <li>Responsive websites &amp; portals</li>
+            <li>Database-driven applications</li>
+            <li>REST API &amp; integration projects</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-robot"></i></div>
+          <h3>AI &amp; Emerging Tech</h3>
+          <p>Artificial Intelligence, Machine Learning, Computer Vision, NLP, and emerging technology projects.</p>
+          <ul>
+            <li>Image recognition &amp; processing</li>
+            <li>Chatbots &amp; virtual assistants</li>
+            <li>Predictive analytics models</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="p-section">
+    <div class="p-container">
+      <h2 class="p-title">WHAT'S INCLUDED</h2>
+      <p class="p-subtitle">Every project comes with a complete package to help you understand, present, and submit with confidence.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-file-code"></i></div>
+          <h3>Source Code</h3>
+          <p>Well-commented, modular source code with proper documentation for easy understanding and modification.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-file-powerpoint"></i></div>
+          <h3>Presentation (PPT)</h3>
+          <p>Professional PowerPoint presentation covering introduction, methodology, results, and conclusion for viva and reviews.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-file-alt"></i></div>
+          <h3>Project Report</h3>
+          <p>Detailed project report in university-approved format with abstract, block diagrams, circuit diagrams, results, and references.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-microchip"></i></div>
+          <h3>Circuit &amp; Block Diagrams</h3>
+          <p>Complete circuit schematics, block diagrams, PCB layouts, and simulation files for hardware projects.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-video"></i></div>
+          <h3>Demo Video</h3>
+          <p>Working demonstration video showing project functionality, testing, and results for submission and presentation.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-headset"></i></div>
+          <h3>Guidance &amp; Support</h3>
+          <p>One-on-one guidance to help you understand the project, prepare for viva, and make modifications as needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINING PROGRAMS -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">TRAINING PROGRAMS</h2>
+      <p class="p-subtitle">Hands-on training with certified completion — designed for college students, freshers, and working professionals.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-hard-hat"></i></div>
           <h3>Industrial Training</h3>
-          <p>Practical industry exposure in engineering domains — IoT, automation, electrical, software, and more. Gain real-world experience under expert guidance.</p>
-          <span class="training-badge">Certificate Issued</span>
+          <p>Practical industry exposure in engineering domains — IoT, automation, electrical, software, and more. Real-world experience under expert guidance.</p>
+          <span class="p-badge">Certificate Provided</span>
         </div>
-        <div class="training-card">
-          <div class="training-icon"><i class="fas fa-laptop"></i></div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-laptop"></i></div>
           <h3>Internship Programs</h3>
-          <p>Hands-on learning opportunities to work on live projects, build skills, and earn academic credits through structured internship programs.</p>
-          <span class="training-badge">Certificate Issued</span>
+          <p>Hands-on learning on live projects. Build skills, earn academic credits, and get industry-ready through structured internship programs.</p>
+          <span class="p-badge">Certificate Provided</span>
         </div>
-        <div class="training-card">
-          <div class="training-icon"><i class="fas fa-users"></i></div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-users"></i></div>
+          <h3>Workshops &amp; Seminars</h3>
+          <p>Domain-specific workshops on Python, IoT, Embedded Systems, Web Development, AI/ML, and Industrial Automation conducted at your college.</p>
+          <span class="p-badge">Certificate Provided</span>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-chart-bar"></i></div>
           <h3>Skill Development</h3>
-          <p>Workshops and training on in-demand skills — Python, Excel, IoT, embedded systems, web development, and industrial automation.</p>
-          <span class="training-badge">Certificate Issued</span>
+          <p>Focused training on in-demand skills — Python, Excel, data analysis, embedded C, PLC programming, web technologies, and more.</p>
+          <span class="p-badge">Certificate Provided</span>
         </div>
-        <div class="training-card">
-          <div class="training-icon"><i class="fas fa-file-contract"></i></div>
-          <h3>Academic Compliance</h3>
-          <p>Programs designed to fulfill university and college academic requirements with proper documentation, assessment, and certification.</p>
-          <span class="training-badge">University Approved</span>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h3>Academic Training</h3>
+          <p>Programs designed to fulfill university and college academic requirements with proper assessment, documentation, and certification.</p>
+          <span class="p-badge">University Approved Format</span>
         </div>
-      </div>
-      <div class="cta-section">
-        <h2>Enroll in Our Training Programs</h2>
-        <p>Contact us to know more about upcoming batches, syllabus, and enrollment process. Limited seats per batch for personalized attention.</p>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-file-contract"></i></div>
+          <h3>Apprenticeship</h3>
+          <p>Structured apprenticeship programs combining theoretical knowledge with practical application in engineering and technology fields.</p>
+          <span class="p-badge">Govt. Approved Format</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">Project Domains</h2>
-      <p class="section-subtitle">We deliver across a wide range of engineering and technology domains</p>
-      <div class="domains-grid">
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-microchip"></i></div><h3>Electronics &amp; Communication</h3><p>IoT, Embedded Systems, Robotics, Wireless Technologies, and VLSI projects for ECE students.</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-bolt"></i></div><h3>Electrical Engineering</h3><p>Power Systems, Solar Projects, Motor Control, EV Systems, and Smart Grid solutions.</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-laptop-code"></i></div><h3>Computer Science &amp; IT</h3><p>Python, AI/ML, Web &amp; App Development, Cybersecurity, Data Science, and Cloud Computing.</p></div>
-        <div class="domain-card"><div class="domain-icon"><i class="fas fa-cogs"></i></div><h3>Instrumentation &amp; Automation</h3><p>PLC, SCADA, Industrial Automation, Control Panels, and Process Control Instrumentation.</p></div>
+  <!-- CERTIFICATES -->
+  <section class="p-section">
+    <div class="p-container">
+      <h2 class="p-title">CERTIFICATES YOU RECEIVE</h2>
+      <p class="p-subtitle">We provide completion certificates in government-approved, university-approved, and college-approved formats — valid for academic credits and job applications.</p>
+      <div class="p-grid-3">
+        <div class="p-card" style="border:2px solid var(--accent);position:relative">
+          <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gradient);color:#fff;padding:0.25rem 1rem;border-radius:20px;font-size:0.75rem;font-weight:600;">Most Requested</div>
+          <div class="p-card-icon"><i class="fas fa-university"></i></div>
+          <h3>Government Approved</h3>
+          <p>Certificates in government-recognized format with official seals, registration numbers, and QR codes for verification. Accepted for job applications and higher education.</p>
+          <ul>
+            <li>MSME / NSDC registered format</li>
+            <li>Unique certificate number</li>
+            <li>QR code verification</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-school"></i></div>
+          <h3>University Approved</h3>
+          <p>Certificates designed as per university guidelines with proper format, signatures, and institutional branding. Accepted for academic credits and submissions.</p>
+          <ul>
+            <li>University-standard format</li>
+            <li>Authorized signatures</li>
+            <li>Academic credit eligible</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-certificate"></i></div>
+          <h3>College Approved</h3>
+          <p>College-specific certificates customized to your institution's requirements. Can include college logo, stamp, and authorized signatures.</p>
+          <ul>
+            <li>Customizable with college logo</li>
+            <li>Department authorized</li>
+            <li>Internship &amp; training verified</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" style="background-color: #f8fafc;">
-    <div class="container">
-      <h2 class="section-title">Why Choose Us?</h2>
-      <p class="section-subtitle">Everything you need to complete your project successfully</p>
-      <div class="benefits-container">
-        <div class="benefits-list">
-          <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-check-circle"></i></div><h3>Ready-to-Implement</h3><p>Fully tested and functional projects with complete documentation.</p></div>
-          <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-file-alt"></i></div><h3>Complete Package</h3><p>Code, PPT, Report, Circuit Diagrams, and all supporting materials included.</p></div>
-          <div class="benefit-item"><div class="benefit-icon"><i class="fas fa-rupee-sign"></i></div><h3>Affordable &amp; Customizable</h3><p>Designed to fit every student's budget with custom modifications available on request.</p></div>
+  <!-- WHY CHOOSE -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">WHY CHOOSE US</h2>
+      <p class="p-subtitle">Everything you need to complete your project and training successfully.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-check-circle"></i></div>
+          <h3>Ready-to-Implement</h3>
+          <p>Fully tested and functional projects with complete documentation. Just download, understand, and submit.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-rupee-sign"></i></div>
+          <h3>Affordable &amp; Customizable</h3>
+          <p>Designed to fit every student's budget. Custom modifications, additions, and personalization available on request.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-clock"></i></div>
+          <h3>Quick Delivery</h3>
+          <p>Most projects delivered within 3-7 days. Urgent delivery options available for last-minute requirements.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-headset"></i></div>
+          <h3>Viva &amp; Review Support</h3>
+          <p>We help you prepare for project viva, reviews, and presentations with Q&amp;A sessions and mock evaluations.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-file-contract"></i></div>
+          <h3>Complete Documentation</h3>
+          <p>Code, PPT, Report, Circuit Diagrams, Demo Video — everything included in a single package for easy submission.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="fas fa-certificate"></i></div>
+          <h3>Certified Training</h3>
+          <p>All training programs include a completion certificate in government/university/college approved format as per your requirement.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>START YOUR PROJECT</h2>
+    <p>Need a ready project, training, or guidance? We're here to help you succeed.</p>
+  </section>
+  <section class="p-section" style="padding-top:0">
+    <div class="p-container">
+      <div id="form-container"></div>
+      <script>
+      fetch("/pages/contactform.html")
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("form-container").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "/shared/js/form-handler.js";
+          document.body.appendChild(script);
+        });
+    </script>
     </div>
   </section>
 

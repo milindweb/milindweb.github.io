@@ -29,15 +29,31 @@
       <li><a href="/contact">Contact Us</a></li>
       <li><a href="/blog">Blog</a></li>
       <li><a href="/seo-digital-marketing">Digital Marketing & SEO</a></li>
-      <li><a href="/website-development">Website Development</a></li>
-      <li><a href="/business-automation">Business Automation</a></li>
+      <li><a href="/website-development">Web & Software Development</a></li>
       <li><a href="/project-training">Projects, Workshops & Training</a></li>
-      <li><a href="/photography">Photography & Drone Services</a></li>
-      <li><a href="/graphics-branding">Graphics & Branding</a></li>
+      <li><a href="/graphics-branding">Graphics, Photography & Branding</a></li>
       <li><a href="/electrical">Electrical Services</a></li>
       <li><a href="/automotive">Automotive Services</a></li>
     </ul>
   </main>
+
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>Get in Touch</h2>
+    <p>Need help finding what you're looking for? Contact us and we'll point you in the right direction.</p>
+  </section>
+  <div id="form-container"></div>
+  <script>
+    fetch("/pages/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/shared/js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
   <div id="footer"></div>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="/shared/js/config.js"></script>
-  <script>const PAGE_CONFIG = { title: 'Website Development Services', description: 'Professional website development services including business websites, web applications, e-commerce, and custom portals. Modern, responsive, SEO-friendly designs.', canonical: '/website-development' };</script>
+  <script>const PAGE_CONFIG = { title: 'Web & Software Development Services', description: 'Custom web development and business software solutions — websites, web apps, e-commerce, hospital management, society management, workflow automation, and more. Modern, secure, tailored to your needs.', canonical: '/website-development' };</script>
   <script src="/shared/js/seo-injector.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -12,104 +12,15 @@
   <script src="/shared/js/headerfooter.js" defer></script>
 
   <style>
-    .main-content {
-      padding: 2rem 1rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 1.35rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1.5rem;
-    }
-
-    .flex-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 1.5rem;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: var(--transition);
-      flex: 1 1 280px;
-      max-width: 320px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    }
-
-    .card__header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .card__header i {
-      font-size: 1.4rem;
-      color: var(--accent);
-    }
-
-    .card p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      margin: 0;
-    }
-
-    .card.full {
-      flex: 1 1 100%;
-      max-width: 100%;
-    }
-
-    .card ul {
-      margin: 0;
-      padding-left: 1.2rem;
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-    }
-
-    .card ul li {
-      margin-bottom: 0.4rem;
-    }
-
-    .card h1, .card h3 {
-      font-size: 1rem;
-      margin: 0;
-      color: var(--text-primary);
-    }
-    .card h1 {
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
-    @media (max-width: 600px) {
-      .section-title { font-size: 1.15rem; }
-      .card { flex: 1 1 100%; max-width: 100%; }
-    }
+    .p-hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   </style>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": "Website Development",
-    "description": "Professional website development services including business websites, web applications, e-commerce, and custom portals. Modern, responsive, SEO-friendly designs.",
+    "name": "Web & Software Development",
+    "description": "Custom web development and business software solutions — websites, web apps, e-commerce, hospital management, society management, workflow automation, and more. Modern, secure, tailored to your needs.",
     "provider": { "@type": "Organization", "name": "MilindWeb" },
     "areaServed": "Navi Mumbai, Maharashtra"
   }
@@ -118,74 +29,172 @@
 <body>
   <div id="header"></div>
 
-  <!-- INTRO -->
-  <section class="main-content">
-    <div class="card full">
-      <div class="card__header"><i class="bi bi-code-slash"></i> <span>Website Development</span></div>
-      <h1>Modern, Responsive and SEO-Friendly Websites</h1>
-      <p>Design and develop modern, responsive, SEO-friendly websites, landing pages, business portals, and custom web applications that prioritize performance, security, scalability, and user experience.</p>
+  <!-- HERO -->
+  <div class="p-hero">
+    <h1><span>WEB &amp; SOFTWARE</span> DEVELOPMENT</h1>
+    <p>We build modern websites, web applications, e-commerce stores, and custom business software — from hospital and society management to workflow automation and reporting systems. Tailored solutions that digitize and streamline your operations.</p>
+  </div>
+
+  <!-- STATS -->
+  <section class="p-section">
+    <div class="p-container">
+      <div class="p-grid-4" style="margin:0">
+        <div style="text-align:center"><div class="p-stat-num">20+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Projects Delivered</div></div>
+        <div style="text-align:center"><div class="p-stat-num">15+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Happy Clients</div></div>
+        <div style="text-align:center"><div class="p-stat-num">4+</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Years Experience</div></div>
+        <div style="text-align:center"><div class="p-stat-num">100%</div><div style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px">Client Satisfaction</div></div>
+      </div>
     </div>
   </section>
 
-  <!-- WHAT WE BUILD -->
-  <section class="main-content">
-    <h2 class="section-title">What We Build</h2>
-    <div class="flex-wrap">
-      <div class="card">
-        <div class="card__header"><i class="bi bi-globe"></i> <span>Business Websites</span></div>
-        <ul>
-          <li>Responsive, SEO-friendly business websites</li>
-          <li>Portfolio, landing pages and corporate sites</li>
-          <li>E-commerce and online store solutions</li>
-          <li>Fast, secure, and mobile-optimized</li>
-        </ul>
+  <!-- WEB DEVELOPMENT -->
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">WEB DEVELOPMENT</h2>
+      <p class="p-subtitle">Modern, responsive, and SEO-friendly websites and web applications built for performance, security, and scalability.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-globe"></i></div>
+          <h3>Business Websites</h3>
+          <ul>
+            <li>Responsive, SEO-friendly business websites</li>
+            <li>Portfolio, landing pages and corporate sites</li>
+            <li>E-commerce and online store solutions</li>
+            <li>Fast, secure, and mobile-optimized</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-grid-3x3-gap"></i></div>
+          <h3>Web Applications</h3>
+          <ul>
+            <li>Custom web applications and business portals</li>
+            <li>Client dashboards and admin panels</li>
+            <li>Database-driven dynamic websites</li>
+            <li>API integrations and third-party services</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-lightning-charge"></i></div>
+          <h3>Performance &amp; SEO</h3>
+          <ul>
+            <li>Optimized for speed and Core Web Vitals</li>
+            <li>SEO-friendly structure and markup</li>
+            <li>Accessibility compliance (WCAG)</li>
+            <li>SSL, security headers and best practices</li>
+          </ul>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-wrench"></i></div>
+          <h3>Maintenance &amp; Support</h3>
+          <ul>
+            <li>Ongoing website maintenance and updates</li>
+            <li>Content updates and feature additions</li>
+            <li>Performance monitoring and optimization</li>
+            <li>Technical support and troubleshooting</li>
+          </ul>
+        </div>
       </div>
-      <div class="card">
-        <div class="card__header"><i class="bi bi-grid-3x3-gap"></i> <span>Web Applications</span></div>
-        <ul>
-          <li>Custom web applications and business portals</li>
-          <li>Client dashboards and admin panels</li>
-          <li>Database-driven dynamic websites</li>
-          <li>API integrations and third-party services</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="card__header"><i class="bi bi-lightning-charge"></i> <span>Performance & SEO</span></div>
-        <ul>
-          <li>Optimized for speed and Core Web Vitals</li>
-          <li>SEO-friendly structure and markup</li>
-          <li>Accessibility compliance (WCAG)</li>
-          <li>SSL, security headers and best practices</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="card__header"><i class="bi bi-wrench"></i> <span>Maintenance & Support</span></div>
-        <ul>
-          <li>Ongoing website maintenance and updates</li>
-          <li>Content updates and feature additions</li>
-          <li>Performance monitoring and optimization</li>
-          <li>Technical support and troubleshooting</li>
-        </ul>
+    </div>
+  </section>
+
+  <!-- BUSINESS SOFTWARE -->
+  <section class="p-section">
+    <div class="p-container">
+      <h2 class="p-title">BUSINESS SOFTWARE SOLUTIONS</h2>
+      <p class="p-subtitle">Custom-built software to digitize and automate your business operations — no recurring license fees, tailored to your workflow.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-hospital"></i></div>
+          <h3>Hospital &amp; Clinic Management</h3>
+          <p>Complete digital management for hospitals and clinics — patient records, appointments, billing, prescriptions, doctor schedules, and staff management.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-people"></i></div>
+          <h3>Society Management</h3>
+          <p>Manage housing societies with member directories, event notices, complaint tracking, committee management, and digital communication tools.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-graph-up-arrow"></i></div>
+          <h3>Seniority Management</h3>
+          <p>Track employee seniority, promotions, service records, and generate reports for organizational planning and compliance.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-id-card"></i></div>
+          <h3>Member Portals</h3>
+          <p>Custom portals for organizations to manage memberships, renewals, payments, and communication with members.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-arrow-repeat"></i></div>
+          <h3>Workflow Automation</h3>
+          <p>Automate repetitive business processes — approvals, notifications, data entry, report generation, and task management.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-bar-chart"></i></div>
+          <h3>Reporting &amp; Analytics</h3>
+          <p>Custom dashboards and reporting systems to track business metrics, generate insights, and make data-driven decisions.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- WHY CHOOSE -->
-  <section class="main-content">
-    <h2 class="section-title">Why Choose Us</h2>
-    <div class="flex-wrap">
-      <div class="card full">
-        <div class="card__header"><i class="bi bi-check-circle"></i> <span>Our Advantage</span></div>
-        <p>Modern, Responsive Design - SEO-Optimized from Day One - Performance-Focused and Fast - Scalable and Secure Architecture</p>
+  <section class="p-section p-alt">
+    <div class="p-container">
+      <h2 class="p-title">WHY CHOOSE US</h2>
+      <p class="p-subtitle">We deliver custom solutions that fit your business perfectly — no bloat, no lock-in, just what you need.</p>
+      <div class="p-grid-3">
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-gear"></i></div>
+          <h3>Tailored to Your Business</h3>
+          <p>Every solution is custom-built for your specific workflows and requirements — no one-size-fits-all approach.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-currency-rupee"></i></div>
+          <h3>No Recurring License Fees</h3>
+          <p>Own your software outright — no expensive monthly subscriptions or hidden costs. One-time investment, lifetime value.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-emoji-smile"></i></div>
+          <h3>Easy to Use</h3>
+          <p>Simple, intuitive interfaces designed for your team to adopt quickly without extensive training or documentation.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-shield-check"></i></div>
+          <h3>Secure &amp; Reliable</h3>
+          <p>Built with security best practices, data encryption, role-based access control, and regular backups for peace of mind.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-code-slash"></i></div>
+          <h3>Modern Tech Stack</h3>
+          <p>Built with modern frameworks and standards — responsive design, SEO optimization, fast loading, and scalable architecture.</p>
+        </div>
+        <div class="p-card">
+          <div class="p-card-icon"><i class="bi bi-headset"></i></div>
+          <h3>End-to-End Support</h3>
+          <p>From requirements gathering and planning to development, deployment, and ongoing support — we're with you at every step.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="main-content">
-    <div class="card full">
-      <div class="card__header"><i class="bi bi-chat-dots"></i> <span>Let's Build Your Website</span></div>
-      <p>Whether you need a simple landing page, a business portal, or a custom web application — we deliver modern, high-quality solutions tailored to your needs.</p>
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>GET IN TOUCH</h2>
+    <p>Have a project in mind? Let's discuss your requirements and find the right solution.</p>
+  </section>
+  <section class="p-section" style="padding-top:0">
+    <div class="p-container">
+      <div id="form-container"></div>
+    <script>
+      fetch("/pages/contactform.html")
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("form-container").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "/shared/js/form-handler.js";
+          document.body.appendChild(script);
+        });
+    </script>
     </div>
   </section>
 

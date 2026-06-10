@@ -7,6 +7,7 @@
 # Top-level pages
 /about             /pages/about.html                                   200
 /contact           /pages/contact.html                                 200
+/contactform       /pages/contactform.html                              200
 /blog              /pages/blog.html                                    200
 /login             /pages/login.html                                   200
 /register          /pages/register.html                                200
@@ -15,9 +16,9 @@
 # Services
 /seo-digital-marketing  /pages/services/freelance_seo_consultant.html  200
 /website-development    /pages/services/website-tech-solutions.html    200
-/business-automation    /pages/services/business-automation.html       200
+/business-automation    /pages/services/website-tech-solutions.html   200
 /project-training       /pages/services/project-training.html          200
-/photography            /pages/services/photography.html               200
+/photography            /pages/services/graphics.html                  200
 /graphics-branding      /pages/services/graphics.html                 200
 /electrical             /pages/services/electrical.html                200
 /automotive             /pages/services/automotive.html                200

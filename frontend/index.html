@@ -199,10 +199,7 @@
     .stat-item h3 {
       font-size: 2rem;
       font-weight: 800;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--text-primary);
       margin: 0 0 0.25rem;
     }
     .stat-item p {
@@ -242,7 +239,7 @@
       width: 52px;
       height: 52px;
       border-radius: 50%;
-      background: var(--gradient);
+      background: #3b82f6;
       color: white;
       display: flex;
       justify-content: center;
@@ -307,14 +304,8 @@
 
     <a class="card" href="/pages/services/website-tech-solutions.html">
       <span class="card-icon"><i class="fas fa-laptop-code"></i></span>
-      <h3>Website Development</h3>
-      <p>Design and develop modern, responsive, SEO-friendly websites, landing pages, business portals, and custom web applications that prioritize performance, security, scalability, and user experience.</p>
-    </a>
-
-    <a class="card" href="/pages/services/business-automation.html">
-      <span class="card-icon"><i class="fas fa-cogs"></i></span>
-      <h3>Business Automation</h3>
-      <p>Digitize and streamline business operations through custom software solutions including Hospital Management Systems, Clinic Management Systems, Society Management Software, Seniority Management Platforms, Member Portals, workflow automation, reporting systems, and business process digitization.</p>
+      <h3>Web & Software Development</h3>
+      <p>Modern websites, web apps, e-commerce, and custom business software — including Hospital Management, Society Management, workflow automation, and reporting systems. Tailored solutions that digitize and streamline your operations.</p>
     </a>
 
     <a class="card" href="/pages/services/project-training.html">
@@ -323,16 +314,10 @@
       <p>Industry-oriented engineering and technology solutions including IoT, embedded systems, robotics, industrial automation, PLC/SCADA, AI/ML projects, website development, software solutions, automation tools, technical documentation, workshops, apprentice training, industrial training, and skill development programs for students, professionals, and organizations.</p>
     </a>
 
-    <a class="card" href="/pages/services/photography.html">
-      <span class="card-icon"><i class="fas fa-camera"></i></span>
-      <h3>Photography, Videography &amp; Drone Services</h3>
-      <p>Professional photography and videography services for events, businesses, products, and promotional campaigns. Services include event coverage, drone photography, drone videography, aerial inspections, cinematic shoots, camera rental, and drone equipment rental.</p>
-    </a>
-
     <a class="card" href="/pages/services/graphics.html">
       <span class="card-icon"><i class="fas fa-paint-brush"></i></span>
-      <h3>Graphics &amp; Branding</h3>
-      <p>Create a strong visual identity through professional logo design, business branding, marketing materials, social media creatives, promotional graphics, advertisements, presentations, and professional video editing services.</p>
+      <h3>Graphics, Photography &amp; Branding</h3>
+      <p>From logo design, banners, and branding to professional photography, videography, and drone services — high-quality visuals that make your brand stand out. Event coverage, aerial shots, product shoots, and more.</p>
     </a>
 
     <a class="card" href="/pages/services/electrical.html">
@@ -392,6 +377,23 @@
       </div>
     </div>
   </section>
+
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>Let's Work Together</h2>
+    <p>Have a project, question, or idea? We'd love to hear about it. Reach out and let's create something great.</p>
+  </section>
+  <div id="form-container"></div>
+  <script>
+    fetch("/pages/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/shared/js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
 
   <div id="footer"></div>
 

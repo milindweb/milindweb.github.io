@@ -40,12 +40,13 @@ Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend
 
 ### Implemented
 - **Homepage** with hero, service cards, premium services, team section
-- **8 Service Pages:** Digital Marketing & SEO, Website Development, Business Automation, College Projects & Training, Graphics & Branding, Photography & Drone, Electrical, Automotive
+- **6 Service Pages:** Digital Marketing & SEO, Web & Software Development, College Projects & Training, Graphics/Photography & Branding, Electrical, Automotive
 - **Centralized Configuration** (`shared/js/config.js`) — brand name, domain, contact, social links in one file
 - **Dynamic SEO Injection** — titles, meta, OG/Twitter tags, JSON-LD generated from config at runtime
 - **Blog System** with Supabase-powered listing, search, categories, tags
 - **Seniority Management** module with CSV/Excel/PDF export
-- **Contact Form** integrated with Google Apps Script
+- **Contact Form** integrated with Google Apps Script, dynamically loaded per-page (no labels, placeholders only)
+- **Shared component classes** (`p-*`) in `style.css` — consistent dark gradient hero, white cards, blue gradient icons across all service pages
 - **Dark/Light Theme** toggle with localStorage persistence
 - **Responsive Design** with mobile hamburger navigation
 - **SEO:** robots.txt, sitemap.xml, dynamic Open Graph / JSON-LD

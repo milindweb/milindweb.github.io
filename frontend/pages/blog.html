@@ -13,8 +13,75 @@
   <link rel="stylesheet" href="/shared/css/headerfooter.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Blog CSS -->
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+  <style>
+    .bl-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+    .bl-header { text-align: center; margin-bottom: 3rem; }
+    .bl-header h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-primary); }
+    .bl-header h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .bl-header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+    .bl-layout { display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem; align-items: start; }
+
+    .bl-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .bl-card {
+      background: var(--card-bg); border-radius: 16px; padding: 1.5rem 2rem;
+      box-shadow: var(--shadow); border: 1px solid var(--border); transition: var(--transition);
+    }
+    .bl-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .bl-card-meta {
+      display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;
+    }
+    .bl-card-meta .badge {
+      background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+    }
+    .bl-card h2 { font-size: 1.3rem; font-weight: 700; margin: 0 0 0.5rem; color: var(--text-primary); }
+    .bl-card h2 a { color: inherit; text-decoration: none; }
+    .bl-card h2 a:hover { color: var(--accent); }
+    .bl-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 1rem; }
+    .bl-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .bl-card-tags span {
+      font-size: 0.78rem; padding: 0.2rem 0.6rem; background: var(--secondary-bg);
+      border-radius: 6px; color: var(--text-secondary); border: 1px solid var(--border);
+    }
+
+    .bl-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+    .bl-widget {
+      background: var(--card-bg); border-radius: 16px; padding: 1.5rem;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .bl-widget h3 { font-size: 1rem; font-weight: 700; margin: 0 0 1rem; color: var(--text-primary); }
+    .bl-widget ul { list-style: none; padding: 0; margin: 0; }
+    .bl-widget ul li { padding: 0.4rem 0; font-size: 0.9rem; color: var(--text-secondary); border-bottom: 1px solid var(--border); }
+    .bl-widget ul li:last-child { border-bottom: none; }
+    .bl-widget ul li::before { content: '> '; color: var(--accent); font-weight: 700; }
+    .bl-tag-cloud { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .bl-tag-cloud span {
+      font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg);
+      border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); cursor: default;
+    }
+    .bl-tag-cloud span:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .bl-pagination {
+      display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;
+    }
+    .bl-pagination span {
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; border: 1px solid var(--border); font-size: 0.9rem; color: var(--text-secondary);
+      background: var(--card-bg); cursor: default;
+    }
+    .bl-pagination .active { background: var(--gradient); color: #fff; border-color: transparent; }
+
+    @media (max-width: 900px) {
+      .bl-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .bl-header h1 { font-size: 1.6rem; }
+    }
+  </style>
 
   <!-- JS -->
   <script src="/shared/js/headerfooter.js" defer></script>
@@ -27,51 +94,154 @@
   <!-- =====================
        Blog Content
   ====================== -->
-  <main class="bg-container">
-    <h1 class="bg-title">Our Blog</h1>
-    <p class="bg-subtitle">Latest articles, tutorials, projects, and tips.</p>
+  <main class="bl-container">
+    <div class="bl-header">
+      <h1>OUR <span>BLOG</span></h1>
+      <p>Latest articles, tutorials, projects, and tips on web development, business automation, technology, and more.</p>
+    </div>
 
-    <!-- Blog Layout: Posts + Sidebar -->
-    <div class="bg-layout">
+    <div class="bl-layout">
 
-      <!-- Blog Posts Section -->
-      <section id="bg-posts" class="bg-grid fade-in">
-        <!-- blog.js will inject posts here -->
+      <!-- Posts -->
+      <section class="bl-grid">
+
+        <article class="bl-card">
+          <div class="bl-card-meta">
+            <span><i class="bi bi-calendar3"></i> June 10, 2026</span>
+            <span class="badge">Web Development</span>
+          </div>
+          <h2><a href="#">Building a Modern Portfolio Website with Cloudflare Pages &amp; Vanilla JS</a></h2>
+          <p>Learn how to build and deploy a fast, SEO-friendly portfolio website using vanilla HTML, CSS, and JavaScript on Cloudflare Pages — no build tools needed.</p>
+          <div class="bl-card-tags">
+            <span>HTML</span> <span>CSS</span> <span>JavaScript</span> <span>Cloudflare</span>
+          </div>
+        </article>
+
+        <article class="bl-card">
+          <div class="bl-card-meta">
+            <span><i class="bi bi-calendar3"></i> June 5, 2026</span>
+            <span class="badge">Business Automation</span>
+          </div>
+          <h2><a href="#">Digitizing Society Management: A Complete Guide</a></h2>
+          <p>A practical guide to moving from manual society management to a digital platform — member directories, complaint tracking, committee management, and more.</p>
+          <div class="bl-card-tags">
+            <span>Automation</span> <span>Management</span> <span>Software</span>
+          </div>
+        </article>
+
+        <article class="bl-card">
+          <div class="bl-card-meta">
+            <span><i class="bi bi-calendar3"></i> May 28, 2026</span>
+            <span class="badge">SEO</span>
+          </div>
+          <h2><a href="#">Local SEO Strategies for Small Businesses in Navi Mumbai</a></h2>
+          <p>Boost your local online presence with proven SEO strategies — Google Business Profile optimization, local keywords, map listings, and review management.</p>
+          <div class="bl-card-tags">
+            <span>SEO</span> <span>Local Business</span> <span>Google</span>
+          </div>
+        </article>
+
+        <article class="bl-card">
+          <div class="bl-card-meta">
+            <span><i class="bi bi-calendar3"></i> May 20, 2026</span>
+            <span class="badge">Projects</span>
+          </div>
+          <h2><a href="#">IoT-Based Smart Home Automation Using ESP32</a></h2>
+          <p>A step-by-step guide to building a smart home automation system with ESP32, relay modules, and a web-based control panel — perfect for engineering projects.</p>
+          <div class="bl-card-tags">
+            <span>IoT</span> <span>ESP32</span> <span>Automation</span> <span>Projects</span>
+          </div>
+        </article>
+
+        <article class="bl-card">
+          <div class="bl-card-meta">
+            <span><i class="bi bi-calendar3"></i> May 12, 2026</span>
+            <span class="badge">Photography</span>
+          </div>
+          <h2><a href="#">Drone Photography Tips for Real Estate Listings</a></h2>
+          <p>How aerial photography and videography can transform your real estate listings — tips on angles, lighting, composition, and editing for stunning property visuals.</p>
+          <div class="bl-card-tags">
+            <span>Drone</span> <span>Photography</span> <span>Real Estate</span>
+          </div>
+        </article>
+
+        <article class="bl-card">
+          <div class="bl-card-meta">
+            <span><i class="bi bi-calendar3"></i> May 5, 2026</span>
+            <span class="badge">Graphics</span>
+          </div>
+          <h2><a href="#">Brand Identity Design: From Logo to Complete Visual System</a></h2>
+          <p>Explore the process of building a cohesive brand identity — from logo design and color palettes to typography, business cards, and social media creatives.</p>
+          <div class="bl-card-tags">
+            <span>Branding</span> <span>Design</span> <span>Logo</span>
+          </div>
+        </article>
+
       </section>
 
       <!-- Sidebar -->
-      <aside class="bg-sidebar">
+      <aside class="bl-sidebar">
 
-        <!-- Search -->
-        <div class="bg-widget">
-          <h3><i class="fa fa-search"></i> Search</h3>
-          <input type="text" id="bg-search" placeholder="Search posts...">
+        <div class="bl-widget">
+          <h3><i class="bi bi-folder"></i> Categories</h3>
+          <ul>
+            <li>Web Development</li>
+            <li>Business Automation</li>
+            <li>SEO &amp; Digital Marketing</li>
+            <li>Projects &amp; Workshops</li>
+            <li>Photography &amp; Drone</li>
+            <li>Graphics &amp; Branding</li>
+          </ul>
         </div>
 
-        <!-- Categories -->
-        <div class="bg-widget">
-          <h3><i class="fa fa-folder-open"></i> Categories</h3>
-          <ul id="bg-categories"></ul>
+        <div class="bl-widget">
+          <h3><i class="bi bi-tags"></i> Tags</h3>
+          <div class="bl-tag-cloud">
+            <span>HTML</span> <span>CSS</span> <span>JavaScript</span>
+            <span>SEO</span> <span>IoT</span> <span>ESP32</span>
+            <span>Automation</span> <span>Drone</span> <span>Branding</span>
+            <span>Cloudflare</span> <span>Design</span> <span>Projects</span>
+          </div>
         </div>
 
-        <!-- Tags -->
-        <div class="bg-widget">
-          <h3><i class="fa fa-tags"></i> Tags</h3>
-          <div id="bg-tags"></div>
-        </div>
-
-        <!-- Recent Posts -->
-        <div class="bg-widget">
-          <h3><i class="fa fa-clock"></i> Recent Posts</h3>
-          <ul id="bg-recent"></ul>
+        <div class="bl-widget">
+          <h3><i class="bi bi-clock"></i> Recent Posts</h3>
+          <ul>
+            <li>Building a Modern Portfolio Website</li>
+            <li>Digitizing Society Management</li>
+            <li>Local SEO Strategies</li>
+            <li>IoT Smart Home Automation</li>
+            <li>Drone Photography Tips</li>
+          </ul>
         </div>
 
       </aside>
     </div>
 
     <!-- Pagination -->
-    <div class="bg-pagination" id="bg-pagination"></div>
+    <div class="bl-pagination">
+      <span class="active">1</span>
+      <span>2</span>
+      <span>3</span>
+    </div>
   </main>
+
+  <!-- Contact Form -->
+  <section class="contact-intro">
+    <h2>STAY CONNECTED</h2>
+    <p>Have questions or want to discuss a topic? We'd love to hear your thoughts. Reach out anytime.</p>
+  </section>
+  <div id="form-container"></div>
+  <script>
+    fetch("/pages/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/shared/js/form-handler.js";
+        document.body.appendChild(script);
+      });
+  </script>
 
   <!-- Global Footer -->
   <div id="footer"></div>

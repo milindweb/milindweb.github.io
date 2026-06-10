@@ -169,6 +169,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
+
+    // Scroll to Top Button
+    var scrollBtn = document.getElementById("scrollTopBtn");
+    if (scrollBtn) {
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 400) {
+          scrollBtn.classList.add("visible");
+        } else {
+          scrollBtn.classList.remove("visible");
+        }
+      });
+      scrollBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
   }
 
   // Load header into #header
@@ -176,17 +191,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load footer into #footer
   loadComponent("/shared/components/footer.html", "footer", initFooter);
-
-  // Create contact form placeholder and load it after footer
-  var formPlaceholder = document.getElementById("contact-form-placeholder");
-  if (!formPlaceholder) {
-    formPlaceholder = document.createElement("div");
-    formPlaceholder.id = "contact-form-placeholder";
-    document.body.appendChild(formPlaceholder);
-  }
-  loadComponent("/pages/contactform.html", "contact-form-placeholder", function() {
-    var script = document.createElement("script");
-    script.src = "/shared/js/form-handler.js";
-    document.body.appendChild(script);
-  });
 });
