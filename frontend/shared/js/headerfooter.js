@@ -175,5 +175,10 @@ document.addEventListener("DOMContentLoaded", () => {
   loadComponent("/shared/components/header.html", "header", initHeader);
 
   // Load footer into #footer
-  loadComponent("/shared/components/footer.html", "footer", initFooter);
+  loadComponent("/shared/components/footer.html", "footer", function(placeholder) {
+    initFooter(placeholder);
+    var script = document.createElement("script");
+    script.src = "/shared/js/form-handler.js";
+    document.body.appendChild(script);
+  });
 });
