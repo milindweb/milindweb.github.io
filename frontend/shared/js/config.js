@@ -1,10 +1,10 @@
 const SITE_CONFIG = {
   brand: {
-    name: 'MilindWeb',
-    nameUppercase: 'MILINDWEB',
-    legalName: 'MK9 Solutions',
+    name: 'Aartitechservices',
+    nameUppercase: 'AARTITECHSERVICES',
+    legalName: 'AARTI TECH SERVICES',
     tagline: 'Life should be great rather than long',
-    copyright: '\u00A9 2026 MilindWeb. All rights reserved.',
+    copyright: '\u00A9 2026 AartiTechServices. All rights reserved.',
   },
 
   domain: 'mk9.in',
