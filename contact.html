@@ -304,39 +304,17 @@
   <section class="ct-section" style="padding-top:0">
     <h2 style="text-align:center;font-size:1.6rem;font-weight:700;color:var(--text-primary);margin-bottom:0.5rem">Send Us a Message</h2>
     <p style="text-align:center;color:var(--text-secondary);max-width:500px;margin:0 auto 2rem;line-height:1.6">Fill out the form below and we'll get back to you as soon as possible.</p>
-    <div class="contact-form-wrapper">
-      <form id="contactForm">
-        <div class="form-row">
-          <select id="service" name="service" required>
-            <option value="">Select Service</option>
-            <option>Business Enquiry</option>
-            <option>Digital Engineering</option>
-            <option>Digital Marketing &amp; SEO</option>
-            <option>Electrical &amp; Automobile</option>
-            <option>Graphics Design</option>
-            <option>Student Section</option>
-            <option>Feedback</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <input type="text" id="name" name="name" placeholder="Your Name" required>
-        </div>
-        <div class="form-row">
-          <input type="email" id="email" name="email" placeholder="Your Email" required>
-        </div>
-        <div class="form-row">
-          <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" placeholder="Mobile No." required>
-        </div>
-        <div id="phoneError" class="error-msg">Please enter a valid 10-digit Indian mobile number starting with 6-9.</div>
-        <div class="form-row">
-          <textarea id="message" name="message" maxlength="500" placeholder="Your Message" required></textarea>
-        </div>
-        <button type="submit" class="form-submit-btn">Submit <i class="fas fa-arrow-right"></i></button>
-      </form>
-      <div id="response"></div>
-    </div>
-    <script src="/js/contact-form.js"></script>
+    <div id="form-container"></div>
+    <script>
+      fetch("/components/contactform.html")
+        .then(res => res.text())
+        .then(html => {
+          document.getElementById("form-container").innerHTML = html;
+          const script = document.createElement("script");
+          script.src = "/js/contact-form.js";
+          document.body.appendChild(script);
+        });
+    </script>
   </section>
 
   <!-- Footer Placeholder -->

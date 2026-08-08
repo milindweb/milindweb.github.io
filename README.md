@@ -192,7 +192,7 @@ Safe to re-run — matching rows are updated, not duplicated.
 | Contact | `contact.gs` | existing contact form (updated) | ✅ live |
 | Hospital | `hospital.gs` (from `apps-script/Code.gs`) | existing `hospital/` pages | 🔨 planned |
 | Seniority | `seniority.gs` | existing `seniority/` pages | 🔨 planned |
-| Finance | `finance.gs` + `finance-seed.gs` (from PFMS engine) | `finance/index.html` at `/finance` | ✅ live |
+| Finance | `finance.gs` + `finance-seed.gs` (from PFMS engine) | `finance/index.html` at `/finance` | 🔨 code ready — **not deployed yet** (files not pasted into Apps Script; `setupFinanceSeed()` not run) |
 
 ---
 

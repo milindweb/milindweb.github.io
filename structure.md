@@ -15,7 +15,7 @@ Milindweb.github.io/
 ├── about.html                        [SHARED] About page
 ├── blog.html                         [SHARED] Blog index
 ├── contact.html                      [SHARED] Contact page
-├── contactform.html                  [SHARED] Contact form partial (injected)
+
 ├── links.html                        [LEGACY] Links page (kept)
 ├── calculator.html                   [LEGACY] Calculator tool (kept)
 ├── calendar.html                     [LEGACY] Calendar tool (kept)
@@ -78,6 +78,7 @@ Milindweb.github.io/
 
 ```
 ├── components/
+│   ├── contactform.html              [SHARED] Contact form partial (injected by 6 pages)
 │   ├── header.html                   [SHARED] Header ({{PLACEHOLDER}} template) — gets Login/Logout
 │   └── footer.html                   [SHARED] Footer
 ├── css/

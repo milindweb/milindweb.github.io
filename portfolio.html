@@ -230,7 +230,7 @@
 
   <div id="form-container"></div>
   <script>
-    fetch("/contactform.html")
+    fetch("/components/contactform.html")
       .then(res => res.text())
       .then(html => {
         document.getElementById("form-container").innerHTML = html;
