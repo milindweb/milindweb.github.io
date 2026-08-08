@@ -1,1 +1,56 @@
-[]
+[
+  {
+    "title": "एल निनोमुळे २०२७ मध्ये पाणीटंचाईचा इशारा — आधीच पाणी वाचवा",
+    "url": "/blog/save-water-2027-el-nino",
+    "category": "News",
+    "date": "2026-08-08",
+    "author": "ItsMakk",
+    "excerpt": "एल निनोचा अंदाज, पुढील वर्षी पाणीटंचाईचा इशारा आणि शेतकरी व ग्रामस्थांसाठी पाणी वाचवण्याचे उपयुक्त उपाय.",
+    "tags": ["marathi", "news", "water", "climate"]
+  },
+  {
+    "title": "एल निनो आणि ला निना म्हणजे काय? भारतातील शेतीवर त्याचा परिणाम",
+    "url": "/blog/el-nino-la-nina",
+    "category": "Learning and Innovation",
+    "date": "2026-08-08",
+    "author": "ItsMakk",
+    "excerpt": "एल निनो आणि ला निना म्हणजे काय, भारताच्या पावसाळ्यावर त्याचा परिणाम आणि शेतकऱ्यांसाठी उपयुक्त सल्ला — सोप्या मराठीत.",
+    "tags": ["marathi", "weather", "farming", "climate"]
+  },
+  {
+    "title": "What is AI and How to Use It in Your Daily Life",
+    "url": "/blog/what-is-ai",
+    "category": "AI & Data Science",
+    "date": "2026-08-08",
+    "author": "ItsMakk",
+    "excerpt": "A simple explanation of what artificial intelligence is, plus practical everyday uses — writing, learning, work, health, money and more.",
+    "tags": ["ai", "beginner", "productivity"]
+  },
+  {
+    "title": "Need a Website for Your Business? I Can Build It",
+    "url": "/blog/website-for-your-business",
+    "category": "Full Stack Developer",
+    "date": "2026-08-08",
+    "author": "ItsMakk",
+    "excerpt": "Business website development in English, Hindi and Marathi. Mobile-friendly, fast, SEO-ready and secure websites for your business. Free consultation.",
+    "tags": ["webdev", "business", "website", "services"]
+  },
+  {
+    "title": "The Modern Full Stack Ecosystem Map (2026)",
+    "url": "/blog/modern-full-stack-ecosystem",
+    "category": "Full Stack Developer",
+    "date": "2026-08-08",
+    "author": "ItsMakk",
+    "excerpt": "A visual map of the modern full stack ecosystem in 2026 — tools for frontend, backend, database, auth, storage, deployment, infrastructure and monitoring.",
+    "tags": ["fullstack", "tools", "architecture"]
+  },
+  {
+    "title": "What is a Full Stack Developer? A Beginner's Guide",
+    "url": "/blog/what-is-full-stack-developer",
+    "category": "Full Stack Developer",
+    "date": "2026-08-08",
+    "author": "ItsMakk",
+    "excerpt": "Learn what a full stack developer does — frontend, backend, database, authentication and deployment explained in simple words, with a beginner-friendly architecture overview.",
+    "tags": ["fullstack", "beginner", "career"]
+  }
+]

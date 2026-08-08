@@ -9,8 +9,9 @@
 /seniority        /seniority/seniority-list.html          200
 /seniority/manage /seniority/seniority-management.html    200
 
-# Blog — /blog serves blog.html (blog/ folder holds post files only)
-/blog             /blog.html                               200
+# Blog — /blog serves blog/index.html (directory index; the blog/ folder holds post files)
+# NOTE: /blog must NOT also have a blog.html file — the blog.html + blog/ folder
+# collision makes Cloudflare redirect-loop (308 -> 308) on /blog.
 
 # Blog posts — /blog/:slug -> /blog/posts/:slug.html
 # (slug is stored in data/posts.json; drop a post file into blog/posts/)

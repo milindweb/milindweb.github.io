@@ -3,6 +3,7 @@
 
   let allPosts = [];
   let filteredPosts = [];
+  let categoryList = [];
   let currentPage = 1;
   const postsPerPage = 6;
 
@@ -17,9 +18,14 @@
 
   if (!containers.posts) return;
 
-  fetch('/data/posts.json')
-    .then(function (res) { return res.json(); })
-    .then(function (data) {
+  Promise.all([
+    fetch('/data/posts.json').then(function (res) { return res.json(); }),
+    fetch('/data/categories.json').then(function (res) { return res.json(); }).catch(function () { return []; })
+  ])
+    .then(function (results) {
+      var data = results[0];
+      categoryList = results[1] || [];
+
       allPosts = data.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
       filteredPosts = allPosts.slice();
 
@@ -103,7 +109,11 @@
       if (p.tags) allTags = allTags.concat(p.tags);
     });
 
-    var sortedCats = Object.keys(categories).sort();
+    var sortedCats = categoryList.slice();
+    Object.keys(categories).forEach(function (cat) {
+      if (sortedCats.indexOf(cat) === -1) sortedCats.push(cat);
+    });
+
     containers.categories.innerHTML = '';
     sortedCats.forEach(function (cat) {
       var li = document.createElement('li');

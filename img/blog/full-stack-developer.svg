@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="540" viewBox="0 0 800 540" role="img" aria-label="Full Stack Developer layers: Frontend, Backend, Database, Authentication, Deployment">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="540" fill="#0f0f14"/>
+  <text x="400" y="34" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Full Stack Developer Stack</text>
+
+  <g>
+    <rect x="110" y="50" width="580" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="110" y="50" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="140" y="82" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">1. FRONTEND</text>
+    <text x="140" y="106" fill="#9ca3af" font-family="Arial, sans-serif" font-size="13">What users see and interact with — React, Next.js</text>
+  </g>
+  <path d="M400 126 L400 146" stroke="#4b5563" stroke-width="2" fill="none"/>
+  <path d="M395 142 L400 150 L405 142" fill="#4b5563"/>
+
+  <g>
+    <rect x="110" y="148" width="580" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="110" y="148" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="140" y="180" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">2. BACKEND</text>
+    <text x="140" y="204" fill="#9ca3af" font-family="Arial, sans-serif" font-size="13">Business logic and APIs — Node.js, NestJS, FastAPI, Laravel</text>
+  </g>
+  <path d="M400 224 L400 244" stroke="#4b5563" stroke-width="2" fill="none"/>
+  <path d="M395 240 L400 248 L405 240" fill="#4b5563"/>
+
+  <g>
+    <rect x="110" y="246" width="580" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="110" y="246" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="140" y="278" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">3. DATABASE</text>
+    <text x="140" y="302" fill="#9ca3af" font-family="Arial, sans-serif" font-size="13">Stores permanent data — PostgreSQL, MySQL, MongoDB</text>
+  </g>
+  <path d="M400 322 L400 342" stroke="#4b5563" stroke-width="2" fill="none"/>
+  <path d="M395 338 L400 346 L405 338" fill="#4b5563"/>
+
+  <g>
+    <rect x="110" y="344" width="580" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="110" y="344" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="140" y="376" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">4. AUTHENTICATION</text>
+    <text x="140" y="400" fill="#9ca3af" font-family="Arial, sans-serif" font-size="13">Login and user management — Better Auth, Authentik</text>
+  </g>
+  <path d="M400 420 L400 440" stroke="#4b5563" stroke-width="2" fill="none"/>
+  <path d="M395 436 L400 444 L405 436" fill="#4b5563"/>
+
+  <g>
+    <rect x="110" y="442" width="580" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="110" y="442" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="140" y="474" fill="#ffffff" font-family="Arial, sans-serif" font-size="18" font-weight="bold">5. DEPLOYMENT</text>
+    <text x="140" y="498" fill="#9ca3af" font-family="Arial, sans-serif" font-size="13">Putting the application online — Coolify, Vercel, Docker</text>
+  </g>
+</svg>

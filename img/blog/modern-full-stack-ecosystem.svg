@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="640" viewBox="0 0 800 640" role="img" aria-label="Modern Full Stack Ecosystem Map 2026: Developer Tools, Frontend, Backend, Data & Storage, Auth & Security, Deployment & Infrastructure, Monitoring">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="640" fill="#0f0f14"/>
+  <text x="400" y="36" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle">Modern Full Stack Ecosystem Map (2026)</text>
+
+  <g>
+    <rect x="40" y="56" width="720" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="40" y="56" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="62" y="82" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Developer Tools</text>
+    <text x="62" y="104" fill="#6b7280" font-family="Arial, sans-serif" font-size="11">Code editor + AI + version control</text>
+    <rect x="240" y="72" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="315" y="99" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">VS Code</text>
+    <rect x="400" y="72" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="475" y="99" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">AI Tools</text>
+    <rect x="560" y="72" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="635" y="99" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Git &amp; GitHub</text>
+  </g>
+
+  <g>
+    <rect x="40" y="140" width="720" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="40" y="140" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="62" y="166" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Frontend</text>
+    <text x="62" y="188" fill="#6b7280" font-family="Arial, sans-serif" font-size="11">What users see</text>
+    <rect x="240" y="156" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="315" y="183" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">React</text>
+    <rect x="400" y="156" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="475" y="183" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Next.js</text>
+    <rect x="560" y="156" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="635" y="183" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Vue</text>
+  </g>
+
+  <g>
+    <rect x="40" y="224" width="720" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="40" y="224" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="62" y="250" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Backend</text>
+    <text x="62" y="272" fill="#6b7280" font-family="Arial, sans-serif" font-size="11">Business logic and APIs</text>
+    <rect x="240" y="240" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="315" y="267" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">NestJS</text>
+    <rect x="400" y="240" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="475" y="267" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">FastAPI</text>
+    <rect x="560" y="240" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="635" y="267" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Laravel</text>
+  </g>
+
+  <g>
+    <rect x="40" y="308" width="720" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="40" y="308" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="62" y="334" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Data &amp; Storage</text>
+    <text x="62" y="356" fill="#6b7280" font-family="Arial, sans-serif" font-size="11">Database, cache, files</text>
+    <rect x="240" y="324" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="315" y="351" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">PostgreSQL</text>
+    <rect x="400" y="324" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="475" y="351" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Redis</text>
+    <rect x="560" y="324" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="635" y="351" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">MinIO</text>
+  </g>
+
+  <g>
+    <rect x="40" y="392" width="720" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="40" y="392" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="62" y="418" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Auth &amp; Security</text>
+    <text x="62" y="440" fill="#6b7280" font-family="Arial, sans-serif" font-size="11">Login, SSL, DNS, protection</text>
+    <rect x="240" y="408" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="315" y="435" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Better Auth</text>
+    <rect x="400" y="408" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="475" y="435" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Authentik</text>
+    <rect x="560" y="408" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="635" y="435" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Cloudflare</text>
+  </g>
+
+  <g>
+    <rect x="40" y="476" width="720" height="74" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="40" y="476" width="8" height="74" rx="4" fill="url(#g)"/>
+    <text x="62" y="502" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Deploy &amp; Infra</text>
+    <text x="62" y="524" fill="#6b7280" font-family="Arial, sans-serif" font-size="11">Server, containers, hosting</text>
+    <rect x="240" y="492" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="315" y="519" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Docker</text>
+    <rect x="400" y="492" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="475" y="519" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Coolify</text>
+    <rect x="560" y="492" width="150" height="42" rx="10" fill="#22222c" stroke="#33334a"/>
+    <text x="635" y="519" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13" text-anchor="middle">Ubuntu</text>
+  </g>
+
+  <g>
+    <rect x="40" y="560" width="720" height="64" rx="14" fill="#17171f" stroke="#2a2a3a" stroke-width="1.5"/>
+    <rect x="40" y="560" width="8" height="64" rx="4" fill="url(#g)"/>
+    <text x="62" y="598" fill="#ffffff" font-family="Arial, sans-serif" font-size="15" font-weight="bold">Monitoring</text>
+    <text x="240" y="598" fill="#e5e7eb" font-family="Arial, sans-serif" font-size="13">Grafana + Prometheus + Loki — health, CPU, RAM, disk, logs</text>
+  </g>
+</svg>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>
+    const PAGE_CONFIG = {
+      type: 'article',
+      title: 'What is a Full Stack Developer? A Beginner\'s Guide',
+      description: 'Learn what a full stack developer does — frontend, backend, database, authentication and deployment explained in simple words, with a beginner-friendly architecture overview.',
+      canonical: '/blog/what-is-full-stack-developer',
+      date: '2026-08-08',
+      author: 'ItsMakk',
+      tags: ["fullstack", "beginner", "career"],
+    };
+  </script>
+  <script src="/js/seo-injector.js"></script>
+
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/fonts/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/blog-sidebar.css">
+
+  <style>
+    .bp-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .bp-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .bp-meta .bp-badge { background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .bp-container h1 { font-size: 2rem; font-weight: 800; margin: 0 0 1.5rem; color: var(--text-primary); line-height: 1.3; }
+    .bp-container h2 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--text-primary); }
+    .bp-container h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    .bp-container p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; }
+    .bp-container ul, .bp-container ol { color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; padding-left: 1.5rem; }
+    .bp-container li { margin-bottom: 0.3rem; }
+    .bp-container img { max-width: 100%; border-radius: 12px; margin: 1.5rem 0; }
+    .bp-container code { background: var(--secondary-bg); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+    .bp-container pre { background: var(--secondary-bg); padding: 1rem; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); margin: 1rem 0; }
+    .bp-container pre code { background: none; padding: 0; }
+    .bp-container blockquote { border-left: 4px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: var(--secondary-bg); border-radius: 0 8px 8px 0; color: var(--text-secondary); }
+    .bp-back { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: var(--transition); }
+    .bp-back:hover { gap: 10px; }
+    .bp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .bp-tags span { font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg); border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); }
+
+    @media (max-width: 600px) {
+      .bp-container h1 { font-size: 1.5rem; }
+      .bp-container { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/js/blog-sidebar.js" defer></script>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <main class="bp-layout">
+    <div class="bp-container">
+    <a href="/blog" class="bp-back"><i class="bi bi-arrow-left"></i> Back to Blog</a>
+
+    <div class="bp-meta">
+      <span><i class="bi bi-calendar3"></i> <time datetime="2026-08-08">August 8, 2026</time></span>
+      <span class="bp-badge">Full Stack Developer</span>
+    </div>
+
+    <h1>What is a Full Stack Developer? A Beginner's Guide</h1>
+
+    <p>If you are new to web development, you have probably seen the job title <strong>"Full Stack Developer"</strong> and wondered what it actually means. In simple words: a full stack developer can create a complete website or software application from start to finish — without depending on other developers for each part.</p>
+
+    <p>Let's break down exactly what a full stack developer does, one layer at a time.</p>
+
+    <img src="/img/blog/full-stack-developer.svg" alt="Full Stack Developer stack diagram: frontend, backend, database, authentication, deployment" loading="lazy" width="800" height="540">
+
+    <h2>The Simple Definition</h2>
+    <p>A Full Stack Developer is a person who can build and manage an <strong>entire web application</strong>. They work on:</p>
+    <ul>
+      <li><strong>Frontend</strong> — what users see</li>
+      <li><strong>Backend</strong> — application logic</li>
+      <li><strong>Database</strong> — where data is stored</li>
+      <li><strong>Authentication</strong> — the login system</li>
+      <li><strong>Deployment</strong> — putting the application online</li>
+      <li><strong>Server Management</strong> — keeping it running</li>
+    </ul>
+    <blockquote>In simple words: a Full Stack Developer can create a complete website or software application from start to finish.</blockquote>
+
+    <h2>1. Frontend — What Users See</h2>
+    <p>The frontend is the part of the application the user sees and interacts with in the browser. Buttons, forms, menus, and everything visual are frontend work.</p>
+    <p>Popular options include <strong>React</strong> and <strong>Next.js</strong> (the most widely used today), <strong>Vue</strong> and <strong>Nuxt</strong>, or lighter alternatives like <strong>Svelte</strong>.</p>
+
+    <h2>2. Backend — Business Logic and APIs</h2>
+    <p>The backend runs on a server and handles the rules of your application: processing requests, calling the database, and sending responses back to the frontend. It also handles authentication and business logic.</p>
+    <ul>
+      <li><strong>JavaScript / TypeScript:</strong> Node.js, Express, NestJS</li>
+      <li><strong>Python:</strong> FastAPI, Django</li>
+      <li><strong>PHP:</strong> Laravel</li>
+      <li><strong>Java:</strong> Spring Boot</li>
+    </ul>
+    <p>Today the most commonly used backend frameworks are <strong>NestJS</strong>, <strong>Laravel</strong>, and <strong>FastAPI</strong>.</p>
+
+    <h2>3. Database — Where Data Lives</h2>
+    <p>The database stores permanent data — users, orders, inventory, transactions, and reports. Every time something needs to be remembered, it goes into a database.</p>
+    <ul>
+      <li><strong>SQL (recommended):</strong> PostgreSQL, MySQL, MariaDB</li>
+      <li><strong>NoSQL:</strong> MongoDB, CouchDB</li>
+    </ul>
+    <p>For most new projects, <strong>PostgreSQL</strong> is the recommended default.</p>
+
+    <h2>4. Authentication — The Login System</h2>
+    <p>Every real application needs to know who its users are. Authentication handles login, signup, Google/GitHub login, and two-factor authentication (MFA).</p>
+    <ul>
+      <li><strong>Single app:</strong> Better Auth, Auth.js, Supabase Auth</li>
+      <li><strong>Multiple apps / enterprise:</strong> Authentik, Keycloak (with SSO)</li>
+    </ul>
+
+    <h2>5. Deployment — Putting It Online</h2>
+    <p>Deployment means taking your code and making it available on the internet for real users. Options range from cloud platforms to self-hosting on your own server.</p>
+    <ul>
+      <li><strong>Cloud (startup friendly):</strong> Vercel, Render, Railway, Netlify</li>
+      <li><strong>Self-hosted:</strong> Coolify, Dokploy, CapRover on Ubuntu + Docker</li>
+    </ul>
+
+    <h2>6. Server Management and Infrastructure</h2>
+    <p>Behind every application is a server. Full stack developers who also handle servers are essentially doing <em>DevOps</em>. This includes the operating system (<strong>Ubuntu</strong>), containers (<strong>Docker</strong>), reverse proxies (<strong>Nginx</strong>, <strong>Traefik</strong>, <strong>Caddy</strong>), and security/DNS (<strong>Cloudflare</strong>).</p>
+
+    <h2>Do You Need to Master Everything at Once?</h2>
+    <p>No. Most senior developers start simple. The typical growth path looks like this:</p>
+    <ol>
+      <li><strong>Stage 1:</strong> Frontend + Backend + Database</li>
+      <li><strong>Stage 2:</strong> + Redis for caching (when things get slow)</li>
+      <li><strong>Stage 3:</strong> + MinIO for file storage (when users upload files)</li>
+      <li><strong>Stage 4:</strong> + Authentik for multi-app login</li>
+      <li><strong>Stage 5:</strong> + Monitoring (Grafana, Prometheus)</li>
+    </ol>
+    <p>For a single application, many developers intentionally avoid the extra complexity and start with just <strong>frontend, backend, database, and auth</strong> — adding tools only when the application actually needs them.</p>
+
+    <h2>The Developer's Daily Workflow</h2>
+    <p>Most full stack developers work with: <strong>VS Code</strong> for editing code, <strong>Git + GitHub</strong> for version control, and <strong>AI tools</strong> (ChatGPT, Claude, Cursor) to generate code and fix bugs faster.</p>
+
+    <h2>How to Start Learning</h2>
+    <ul>
+      <li>Pick one path — the JavaScript ecosystem (Next.js + Node/NestJS) is the easiest to start with.</li>
+      <li>Learn HTML, CSS, and JavaScript fundamentals first.</li>
+      <li>Build one complete project: a simple app with login and a database.</li>
+      <li>Deploy it for free on Vercel or GitHub Pages to learn deployment.</li>
+      <li>Add one layer at a time — never try to learn everything at once.</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+    <p>Being a full stack developer is about understanding the whole picture: what users see, the logic that powers it, the data it stores, how users log in, and how it goes live. You do not need to be an expert in every tool — you need to understand the layers and add complexity only when your project asks for it.</p>
+    <p>Start small, build one thing end to end, and grow from there.</p>
+
+    <div class="bp-tags">
+      <span>fullstack</span>
+      <span>beginner</span>
+      <span>career</span>
+    </div>
+    <aside class="bp-sidebar" id="bp-sidebar"></aside>
+  </main>
+
+  <div id="footer"></div>
+
+</body>
+</html>

@@ -6,9 +6,14 @@
 
   var currentSlug = window.location.pathname.replace('/blog/posts/', '/blog/').replace('/blog/', '').replace(/\/$/, '').replace(/\.html$/, '');
 
-  fetch('/data/posts.json')
-    .then(function (res) { return res.json(); })
-    .then(function (allPosts) {
+  Promise.all([
+    fetch('/data/posts.json').then(function (res) { return res.json(); }),
+    fetch('/data/categories.json').then(function (res) { return res.json(); }).catch(function () { return []; })
+  ])
+    .then(function (results) {
+      var allPosts = results[0];
+      var categoryList = results[1] || [];
+
       allPosts.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
 
       var categories = {};
@@ -19,7 +24,10 @@
         if (p.tags) allTags = allTags.concat(p.tags);
       });
 
-      var sortedCats = Object.keys(categories).sort();
+      var sortedCats = categoryList.slice();
+      Object.keys(categories).forEach(function (cat) {
+        if (sortedCats.indexOf(cat) === -1) sortedCats.push(cat);
+      });
       var uniqueTags = [...new Set(allTags)].sort();
 
       var html = '';

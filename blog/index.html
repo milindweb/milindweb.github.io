@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Blog', description: 'Explore articles, tutorials, tips, and more. Milind Web Blog with categories, tags, and latest posts.', canonical: '/blog' };</script>
+  <script src="/js/seo-injector.js"></script>
+
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="/fonts/bootstrap-icons/font/bootstrap-icons.css">
+
+  <style>
+    .bl-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+    .bl-header { text-align: center; margin-bottom: 3rem; }
+    .bl-header h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 0.5rem; color: var(--text-primary); }
+    .bl-header h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .bl-header p { color: var(--text-secondary); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+    .bl-layout { display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem; align-items: start; }
+
+    .bl-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .bl-card {
+      background: var(--card-bg); border-radius: 16px; padding: 1.5rem 2rem;
+      box-shadow: var(--shadow); border: 1px solid var(--border); transition: var(--transition);
+    }
+    .bl-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .bl-card-meta {
+      display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;
+    }
+    .bl-card-meta .bl-badge {
+      background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+    }
+    .bl-card h2 { font-size: 1.3rem; font-weight: 700; margin: 0 0 0.5rem; color: var(--text-primary); }
+    .bl-card h2 a { color: inherit; text-decoration: none; }
+    .bl-card h2 a:hover { color: var(--accent); }
+    .bl-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 1rem; }
+    .bl-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .bl-card-tags span {
+      font-size: 0.78rem; padding: 0.2rem 0.6rem; background: var(--secondary-bg);
+      border-radius: 6px; color: var(--text-secondary); border: 1px solid var(--border); cursor: pointer; transition: var(--transition);
+    }
+    .bl-card-tags span:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .bl-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+    .bl-widget {
+      background: var(--card-bg); border-radius: 16px; padding: 1.5rem;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+    }
+    .bl-widget h3 { font-size: 1rem; font-weight: 700; margin: 0 0 1rem; color: var(--text-primary); }
+    .bl-widget ul { list-style: none; padding: 0; margin: 0; }
+    .bl-widget ul li { padding: 0.4rem 0; font-size: 0.9rem; color: var(--text-secondary); border-bottom: 1px solid var(--border); }
+    .bl-widget ul li:last-child { border-bottom: none; }
+    .bl-widget ul li::before { content: '> '; color: var(--accent); font-weight: 700; }
+    .bl-widget ul li a { color: var(--text-secondary); text-decoration: none; transition: var(--transition); }
+    .bl-widget ul li a:hover { color: var(--accent); }
+    .bl-count { font-size: 0.8rem; color: var(--text-secondary); }
+    .bl-tag-cloud { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .bl-tag-cloud span {
+      font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg);
+      border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); cursor: pointer; transition: var(--transition);
+    }
+    .bl-tag-cloud span:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .bl-contact-wrap { max-width: 640px; margin: 3rem auto 0; }
+
+    .bl-search-wrap { margin-bottom: 1rem; }
+    .bl-search-wrap input {
+      width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 0.9rem; background: var(--card-bg); color: var(--text-primary); outline: none; box-sizing: border-box;
+    }
+    .bl-search-wrap input:focus { border-color: var(--accent); }
+
+    .bl-pagination {
+      display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem;
+    }
+    .bl-pagination span {
+      width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; border: 1px solid var(--border); font-size: 0.9rem; color: var(--text-secondary);
+      background: var(--card-bg); cursor: pointer; transition: var(--transition); user-select: none;
+    }
+    .bl-pagination span:hover:not(.active):not(.disabled) { border-color: var(--accent); color: var(--accent); }
+    .bl-pagination .active { background: var(--gradient); color: #fff; border-color: transparent; cursor: default; }
+    .bl-pagination .disabled { opacity: 0.4; cursor: default; }
+
+    @media (max-width: 900px) {
+      .bl-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .bl-header h1 { font-size: 1.6rem; }
+    }
+  </style>
+
+  <!-- JS -->
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/js/blog.js" defer></script>
+</head>
+<body>
+
+  <!-- Global Header -->
+  <div id="header"></div>
+
+  <!-- =====================
+       Blog Content
+  ====================== -->
+  <main class="bl-container">
+    <div class="bl-header">
+      <h1>OUR <span>BLOG</span></h1>
+      <p>Latest articles, tutorials, projects, and tips on web development, business automation, technology, and more.</p>
+    </div>
+
+    <div class="bl-layout">
+
+      <!-- Posts -->
+      <section class="bl-grid">
+        <div class="bl-widget bl-search-wrap">
+          <input type="text" id="bl-search" placeholder="Search posts..." aria-label="Search posts">
+        </div>
+        <div id="bl-posts"></div>
+      </section>
+
+      <!-- Sidebar -->
+      <aside class="bl-sidebar">
+
+        <div class="bl-widget">
+          <h3><i class="bi bi-folder"></i> Categories</h3>
+          <ul id="bl-categories"></ul>
+        </div>
+
+        <div class="bl-widget">
+          <h3><i class="bi bi-tags"></i> Tags</h3>
+          <div class="bl-tag-cloud" id="bl-tags"></div>
+        </div>
+
+        <div class="bl-widget">
+          <h3><i class="bi bi-clock"></i> Recent Posts</h3>
+          <ul id="bl-recent"></ul>
+        </div>
+
+      </aside>
+    </div>
+
+    <!-- Pagination -->
+    <div class="bl-pagination" id="bl-pagination"></div>
+
+    <!-- Contact Form -->
+    <div class="bl-contact-wrap">
+      <section class="contact-intro">
+        <h2>Stay Connected</h2>
+        <p>Have questions or want to discuss a topic? We'd love to hear your thoughts. Reach out anytime.</p>
+      </section>
+      <div id="form-container"></div>
+      <script>
+        fetch("/contactform.html")
+          .then(res => res.text())
+          .then(html => {
+            document.getElementById("form-container").innerHTML = html;
+            const script = document.createElement("script");
+            script.src = "/js/contact-form.js";
+            document.body.appendChild(script);
+          });
+      </script>
+    </div>
+  </main>
+
+  <!-- Global Footer -->
+  <div id="footer"></div>
+
+</body>
+</html>
