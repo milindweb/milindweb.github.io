@@ -10,6 +10,14 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Contact backend: dual-write (master + per-site sheets)
+
+- `apps-script-v2/contact.gs` — `contactSubmit_` now writes each enquiry **twice**: always to the master sheet (`General`, holds every site's data) and to a **per-site sheet** auto-created from the `site` field. Added `sanitizeSheetName_()` (valid sheet names only). Headers now `['datetime','site','module','name','mobile','email','subject','message','ip','status']`. ⚠️ Re-paste this file into Apps Script + redeploy (New version).
+- `apps-script-v2/config.gs` — added `contact.masterSheet: 'General'`; `sheets` map kept as legacy fallback (site now takes priority). ⚠️ Re-paste + redeploy.
+- `js/config.js` — added `contact.siteName: 'MilindWeb'` — the single per-site setting.
+- `js/contact-form.js` — payload now sends `site` from `SITE_CONFIG.contact.siteName` (default `General`).
+- `CONTACT-FORM-SETUP.md` — rewritten as a reuse guide: shared backend, change `siteName` per site, sheets auto-create.
+
 ## 2026-08-08 — Contact privacy: remove contact info from all pages except Contact page
 
 - **Domain** — website is now `aartitechservices.pages.dev` (updated `js/config.js` domain/url/primaryDomain/primaryUrl and `.env.original` SITE_URL). Schema.org JSON-LD still references `cfg.url` (domain) via seo-injector.

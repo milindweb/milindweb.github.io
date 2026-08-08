@@ -16,6 +16,7 @@ const SITE_CONFIG = {
   locale: 'en_IN',
 
   contact: {
+    siteName: 'MilindWeb',
     emailUser: 'kmi9',
     emailDomain: 'pm.me',
     waHandle: 'makhandare',

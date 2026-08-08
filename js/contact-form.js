@@ -28,10 +28,11 @@ function initForm() {
 
     var module = (form.module && form.module.value) ? form.module.value.toLowerCase() : "general";
 
-    // contact.gs expects: module, name, mobile, email, subject, message
+    // contact.gs expects: module, site, name, mobile, email, subject, message
     var payload = {
       action: "contactSubmit",
       module: module,
+      site: (window.SITE_CONFIG && SITE_CONFIG.contact && SITE_CONFIG.contact.siteName) ? SITE_CONFIG.contact.siteName : "General",
       name: form.name ? form.name.value : "",
       mobile: form.phone ? form.phone.value : "",
       email: form.email ? form.email.value : "",
