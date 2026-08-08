@@ -9,13 +9,11 @@
 /seniority        /seniority/seniority-list.html          200
 /seniority/manage /seniority/seniority-management.html    200
 
-# Blog — /blog serves blog/index.html (directory index; the blog/ folder holds post files)
-# NOTE: /blog must NOT also have a blog.html file — the blog.html + blog/ folder
-# collision makes Cloudflare redirect-loop (308 -> 308) on /blog.
-
-# Blog posts — /blog/:slug -> /blog/posts/:slug.html
-# (slug is stored in data/posts.json; drop a post file into blog/posts/)
-/blog/*           /blog/posts/*.html                      200
+# Blog — /blog serves blog/index.html (directory index).
+# Posts live directly in blog/ and are served at clean URLs automatically
+# (e.g. /blog/what-is-ai -> blog/what-is-ai.html). NO wildcard rule here —
+# a /blog/* rewrite also matches /blog/, /blog/index.html and post files,
+# causing rewrite loops -> 404.
 
 # Favicon
 /favicon.ico      /img/favicon.png                        200
