@@ -1,5 +1,32 @@
 [
   {
+    "category": "💼 Projects",
+    "items": [
+      {
+        "title": "CSMA Ticket Management",
+        "desc": "Auditorium ticket booking and event management system.",
+        "icon": "fas fa-ticket-alt",
+        "link": "https://csma.pages.dev",
+        "status": ["free"]
+      },
+      {
+        "title": "NAD Society Management",
+        "desc": "Cooperative society operations — members, loans, recovery, reports.",
+        "icon": "fas fa-building",
+        "link": "https://nadsociety.vercel.app",
+        "status": ["free"]
+      },
+      {
+        "title": "Dr. Akanksha Website",
+        "desc": "Responsive professional clinic website.",
+        "icon": "fas fa-stethoscope",
+        "link": "https://drakanksha.pages.dev",
+        "status": ["free"]
+      }
+    ]
+  },
+
+  {
     "category": "🏠 My Tools",
     "items": [
       {

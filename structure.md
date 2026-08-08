@@ -21,7 +21,6 @@ Milindweb.github.io/
 ├── calendar.html                     [LEGACY] Calendar tool (kept)
 ├── mp.html                           [LEGACY] My Portal — Drive/Sheet search (kept)
 ├── myphoto.html                      [LEGACY] Photo album viewer (kept)
-├── portfolio.html                    [SHARED] Portfolio page
 ├── privacy.html                      [SHARED] Privacy policy
 ├── terms.html                        [SHARED] Terms
 ├── Seniariity_List.html              [LEGACY] Old seniority list page

@@ -72,7 +72,7 @@
     </section>
 
     <!-- Modules (auth-aware) -->
-    <section class="l-section">
+    <section class="l-section" id="moduleSection">
       <h2><i class="fas fa-cubes"></i> Modules <span id="moduleStatus"></span></h2>
       <div class="module-grid" id="moduleGrid">
         <a class="module-card" id="card-hospital" href="/hospital/dashboard">
@@ -113,7 +113,7 @@
       <div class="module-grid cols-4">
         <a class="module-card" href="/about"><i class="fas fa-circle-info"></i><h3>About</h3><p>Learn more about Milind Web.</p></a>
         <a class="module-card" href="/blog"><i class="fas fa-blog"></i><h3>Blog</h3><p>Articles, tutorials and updates.</p></a>
-        <a class="module-card" href="/portfolio"><i class="fas fa-briefcase"></i><h3>Portfolio</h3><p>Projects and past work.</p></a>
+        <a class="module-card" href="/links"><i class="fas fa-briefcase"></i><h3>Portfolio</h3><p>Projects and past work.</p></a>
         <a class="module-card" href="/links"><i class="fas fa-link"></i><h3>Links</h3><p>Important links and resources.</p></a>
         <a class="module-card" href="/contact"><i class="fas fa-envelope"></i><h3>Contact</h3><p>Get in touch with us.</p></a>
         <a class="module-card" href="/privacy"><i class="fas fa-shield-halved"></i><h3>Privacy</h3><p>Privacy policy.</p></a>
@@ -134,37 +134,41 @@
         if (!window.Auth) return;
         var user = window.Auth.user();
         var loggedIn = !!user;
+        var isAdmin = window.Auth.isAdmin();
+
+        // Module cards: show only modules granted in the Users sheet
+        var MODULES = ['hospital', 'seniority', 'finance'];
+        var grantedCount = 0;
+        MODULES.forEach(function (mod) {
+          var card = document.getElementById('card-' + mod);
+          var tag = document.getElementById('tag-' + mod);
+          if (!card || !tag) return;
+          var hasAccess = window.Auth.hasModule(mod);
+          if (hasAccess) grantedCount++;
+          card.style.display = hasAccess ? '' : 'none';
+          card.classList.remove('locked');
+          tag.textContent = 'MODULE';
+        });
+
+        // Hide the whole Modules section when logged out or no access granted
+        var moduleSection = document.getElementById("moduleSection");
+        var showModules = loggedIn && (isAdmin || grantedCount > 0);
+        if (moduleSection) moduleSection.style.display = showModules ? "" : "none";
 
         if (chip) {
           if (loggedIn) {
-            chip.innerHTML = 'Signed in as <strong>' + escapeHtml(user.username) + '</strong> (' + escapeHtml(user.role) + ')';
+            if (showModules) {
+              chip.innerHTML = 'Signed in as <strong>' + escapeHtml(user.username) + '</strong> (' + escapeHtml(user.role) + ')';
+            } else {
+              chip.innerHTML = 'Signed in as <strong>' + escapeHtml(user.username) + '</strong>. No module access yet — contact admin to grant access.';
+            }
           } else {
             chip.innerHTML = '<a href="/login">Login</a> or <a href="/register">Register</a> to access modules';
           }
         }
 
-        // Module cards: lock if the user has no access
-        ['hospital', 'seniority', 'finance'].forEach(function (mod) {
-          var card = document.getElementById('card-' + mod);
-          var tag = document.getElementById('tag-' + mod);
-          if (!card || !tag) return;
-          if (window.Auth.hasModule(mod)) {
-            card.classList.remove('locked');
-            tag.textContent = 'MODULE';
-          } else {
-            card.classList.add('locked');
-            if (loggedIn) {
-              card.setAttribute('href', '/contact');
-              tag.textContent = 'NO ACCESS';
-            } else {
-              card.setAttribute('href', '/login');
-              tag.textContent = 'LOGIN REQUIRED';
-            }
-          }
-        });
-
         if (status) {
-          status.textContent = loggedIn ? '' : 'Login to unlock';
+          status.textContent = '';
         }
       }
 

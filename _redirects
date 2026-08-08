@@ -17,3 +17,6 @@
 
 # Favicon
 /favicon.ico      /img/favicon.png                        200
+
+# Portfolio merged into Links
+/portfolio        /links                                   308
