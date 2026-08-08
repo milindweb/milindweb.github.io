@@ -10,6 +10,12 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Legal pages + 404 (professional)
+
+- `privacy.html` — rewritten: badge header, table of contents, 12 sections (info, usage, legal basis, sharing, storage, security, rights, cookies, children, third-party, changes, contact), consistent card styling.
+- `terms.html` — rewritten: badge header, table of contents, 13 sections (acceptance, eligibility, accounts, access, acceptable use, IP, user content, privacy, disclaimers, liability, termination, changes, contact), links to privacy policy.
+- `404.html` — rewritten: gradient 404, Go Home + Contact buttons, popular sections quick links.
+
 ## 2026-08-08 — Backend initial build (v1)
 
 Created `apps-script-v2/` — modular backend:
