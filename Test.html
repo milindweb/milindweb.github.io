@@ -3,23 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="js/config.js"></script>
+<script>const PAGE_CONFIG = { title: 'Contact Us', description: 'Send us a message through the contact form.', canonical: '/Test' };</script>
+<script src="js/seo-injector.js"></script>
 <title>Contact Us</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/headerfooter.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="js/headerfooter.js" defer></script>
 
 <style>
 /* ====== FORM CONTAINER ====== */
 body {
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--secondary-bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
+.t-wrap { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 3rem 1rem; }
 
 .contact-form {
   max-width: 500px;
-  margin: 50px auto;
+  width: 100%;
+  margin: 0;
   padding: 25px;
   border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
+
+.contact-form h2 { text-align: center; margin: 0 0 20px; color: var(--text-primary); }
 
 /* ====== INPUTS ====== */
 .form-group {
@@ -31,14 +48,17 @@ body {
   width: 100%;
   padding: 12px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   transition: 0.3s;
   font-size: 14px;
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  box-sizing: border-box;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: #007bff;
+  border-color: var(--accent);
   outline: none;
 }
 
@@ -48,15 +68,16 @@ button {
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #007bff;
+  background: var(--gradient);
   color: white;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
+  font-size: 1rem;
 }
 
 button:hover {
-  background: #0056b3;
+  opacity: 0.92;
 }
 
 /* ====== STATUS ====== */
@@ -70,37 +91,42 @@ button:hover {
 </head>
 
 <body>
+  <div id="header"></div>
 
-<form id="contactForm" class="contact-form">
+  <div class="t-wrap">
+    <form id="contactForm" class="contact-form">
 
-  <h2 style="text-align:center;margin-bottom:20px;">Contact Us</h2>
+      <h2><i class="fas fa-envelope"></i> Contact Us</h2>
 
-  <div class="form-group">
-    <input type="text" name="name" placeholder="Your Name" required>
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Your Name" required>
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Your Email" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="subject" placeholder="Subject" required>
+      </div>
+
+      <div class="form-group">
+        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      </div>
+
+      <!-- Web3Forms Hidden Fields -->
+      <input type="hidden" name="access_key" value="b85bd332-4aec-4a7f-9852-c092d282d461">
+      <input type="hidden" name="from_name" value="Your Website">
+      <input type="checkbox" name="botcheck" style="display:none;">
+
+      <button type="submit" id="submitBtn">Send Message</button>
+
+      <p id="formStatus"></p>
+
+    </form>
   </div>
 
-  <div class="form-group">
-    <input type="email" name="email" placeholder="Your Email" required>
-  </div>
-
-  <div class="form-group">
-    <input type="text" name="subject" placeholder="Subject" required>
-  </div>
-
-  <div class="form-group">
-    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-  </div>
-
-  <!-- Web3Forms Hidden Fields -->
-  <input type="hidden" name="access_key" value="b85bd332-4aec-4a7f-9852-c092d282d461">
-  <input type="hidden" name="from_name" value="Your Website">
-  <input type="checkbox" name="botcheck" style="display:none;">
-
-  <button type="submit" id="submitBtn">Send Message</button>
-
-  <p id="formStatus"></p>
-
-</form>
+  <div id="footer"></div>
 
 <script>
 const form = document.getElementById('contactForm');

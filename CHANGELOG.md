@@ -10,6 +10,19 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Theme consistency: legacy pages now match modern design
+
+All legacy pages updated to the modern theme (css/style.css CSS variables + light/dark mode via `js/headerfooter.js` toggle):
+
+- `Seniariity_List.html` — added style.css + config/seo-injector; hardcoded colors → CSS variables; dark overrides for table/filter/scrollbar.
+- `Seniarity_Management.html` — added modern theme + styled card layout (search, suggestions, employee details table); highlight uses accent.
+- `calculator.html` — added style.css; cards/inputs/results/tables → CSS variables; dark overrides.
+- `links.html` — removed old Poppins `:root`; now uses theme variables; dark mode works.
+- `myphoto.html` — added style.css; album cards/controls/actions → CSS variables.
+- `mp.html` — fully rebuilt: added shared header/footer, modern card UI, dark mode; errors use theme class.
+- `Test.html` — fully rebuilt: added shared header/footer, modern card form, dark mode.
+- `calendar.html` — design kept; added style.css + `.dark-mode` overrides so it follows the theme toggle.
+
 ## 2026-08-08 — Fix: logout crash (querySelector '#')
 
 - `js/headerfooter.js` — smooth-scroll handlers now skip links with `href="#"` (the LOGOUT buttons). Previously `document.querySelector("#")` threw `DOMException: '#' is not a valid selector` when clicking LOGOUT.

@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/config.js"></script>
+    <script>const PAGE_CONFIG = { title: 'Financial Calculators', description: 'SIP, EMI, FD, RD, tax and loan calculators for your financial planning.', canonical: '/calculator' };</script>
+    <script src="js/seo-injector.js"></script>
     <title>Financial Calculators Hub</title>
 <!------- Favicon -------->
     <link rel="icon" type="image/png" href="img/favicon.png">
 
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/headerfooter.css">
     <style>
         :root {
@@ -14,12 +18,12 @@
             --secondary: #3a0ca3;
             --accent1: #f72585;
             --accent2: #4cc9f0;
-            --light: #f8f9fa;
-            --dark: #212529;
+            --light: var(--secondary-bg);
+            --dark: var(--text-primary);
             --success: #4bb543;
             --warning: #ffcc00;
             --danger: #dc3545;
-            --gray: #6c757d;
+            --gray: var(--text-secondary);
         }
 
         * {
@@ -30,7 +34,7 @@
         }
 
         body {
-            background-color: #f5f7ff;
+            background-color: var(--secondary-bg);
             color: var(--dark);
             line-height: 1.6;
         }
@@ -52,7 +56,7 @@
         }
 
         .category {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -75,7 +79,7 @@
         }
 
         .calc-item {
-            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            background: var(--secondary-bg);
             margin: 10px 0;
             padding: 12px 15px;
             border-radius: 8px;
@@ -84,12 +88,13 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            color: var(--text-primary);
         }
 
         .calc-item:hover {
             transform: translateY(-3px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(to right, #e9ecef, #dee2e6);
+            background: var(--card-bg);
         }
 
         .calc-item i {
@@ -100,11 +105,12 @@
         /* Calculator View */
         .calculator-view {
             display: none;
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             padding: 25px;
             margin-top: 20px;
+            color: var(--text-primary);
         }
 
         .calc-header {
@@ -152,9 +158,11 @@
         .input-group input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ced4da;
+            border: 1px solid var(--border);
             border-radius: 5px;
             font-size: 1rem;
+            background: var(--primary-bg);
+            color: var(--text-primary);
         }
 
         .calculate-btn {
@@ -177,10 +185,11 @@
 
         .results {
             flex: 1 1 300px;
-            background: #f8f9fa;
+            background: var(--secondary-bg);
             padding: 20px;
             border-radius: 8px;
             margin-top: 20px;
+            color: var(--text-primary);
         }
 
         .results h3 {
@@ -193,7 +202,7 @@
             justify-content: space-between;
             margin-bottom: 10px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 1px solid var(--border);
         }
 
         .result-value {
@@ -219,11 +228,20 @@
             margin-top: 20px;
         }
 
+        .container h1 { color: var(--text-primary); }
+        .container p { color: var(--text-secondary); }
+
+        /* Dark mode overrides */
+        .dark-mode .back-button { background: #334155; color: #f1f5f9; }
+        .dark-mode .back-button:hover { background: #475569; }
+        .dark-mode .input-group label { color: var(--text-primary); }
+
         .amortization-table th, 
         .amortization-table td {
             padding: 10px;
             text-align: center;
-            border: 1px solid #dee2e6;
+            border: 1px solid var(--border);
+            color: var(--text-primary);
         }
 
         .amortization-table th {
@@ -232,7 +250,7 @@
         }
 
         .amortization-table tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: var(--secondary-bg);
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

@@ -3,28 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Wedding Album', description: 'Browse and download photos from our wedding album.', canonical: '/myphoto' };</script>
+  <script src="js/seo-injector.js"></script>
   <title>Wedding Album</title>
 
   <!-- Header/Footer Styles -->
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/headerfooter.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f7f7f7; }
+    body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--secondary-bg); color: var(--text-primary); }
     .album-container { max-width: 1300px; margin: auto; padding: 20px; }
 
     .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
     .controls input, .controls select {
-      padding: 8px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.95rem;
+      padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-size: 0.95rem;
+      background: var(--card-bg); color: var(--text-primary);
     }
 
     .album { margin-bottom: 40px; }
     .album h2 {
       margin: 15px 0;
       font-size: 1.8rem;
-      color: #0077cc;
-      border-left: 5px solid #0077cc;
+      color: var(--accent);
+      border-left: 5px solid var(--accent);
       padding-left: 10px;
     }
     .photo-grid {
@@ -35,26 +40,27 @@
 
     .photo-card {
       flex: 1 1 calc(25% - 15px);
-      background: #fff;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow);
       transition: transform 0.2s;
     }
     .photo-card:hover { transform: scale(1.03); }
     .photo-card img {
       display: block;
       width: 100%;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--border);
       cursor: pointer;
     }
     .photo-actions {
       padding: 8px;
       text-align: center;
-      background: #fafafa;
+      background: var(--secondary-bg);
     }
     .photo-actions a {
-      color: #0077cc;
+      color: var(--accent);
       font-size: 0.9rem;
       text-decoration: none;
     }
@@ -102,15 +108,17 @@
     .lightbox-download {
       margin-top: 15px;
       text-decoration: none;
-      background: #0077cc;
+      background: var(--accent);
       color: #fff;
       padding: 8px 16px;
       border-radius: 6px;
       font-size: 0.9rem;
     }
     .lightbox-download:hover {
-      background: #005fa3;
+      background: var(--accent-light);
     }
+
+    #albums p { color: var(--text-secondary); }
 
     @media (max-width: 992px) {
       .photo-card { flex: 1 1 calc(33.3% - 15px); }

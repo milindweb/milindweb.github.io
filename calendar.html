@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Calendar Year', description: 'Yearly calendar with holidays and special days.', canonical: '/calendar' };</script>
+  <script src="js/seo-injector.js"></script>
   <title>Milindweb - Calendar Year</title>
 <!------- Favicon -------->
     <link rel="icon" type="image/png" href="img/favicon.png">
 
   <!-- Shared Header + Footer CSS -->
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/headerfooter.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -161,6 +165,48 @@
       .cy-holiday-column {
         flex: 1 1 22%; /* 4 columns on bigger screen */
       }
+    }
+
+    /* === Dark Mode Overrides (keeps original design, theme-aware) === */
+    .dark-mode .cy-container {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    .dark-mode .cy-controls select, .dark-mode .cy-controls button {
+      background: #1e293b;
+      border-color: #334155;
+      color: #e2e8f0;
+    }
+    .dark-mode .cy-container h1 {
+      color: #f1f5f9;
+    }
+    .dark-mode .cy-month {
+      border-color: #334155;
+      background: #1e293b;
+    }
+    .dark-mode .cy-month h2 {
+      color: #0f172a; /* month headers keep their pastel block colors */
+    }
+    .dark-mode .cy-month td {
+      color: #e2e8f0;
+    }
+    .dark-mode .cy-month th {
+      color: #94a3b8;
+    }
+    .dark-mode .cy-sunday,
+    .dark-mode .cy-weekend,
+    .dark-mode .cy-holiday {
+      color: #f87171;
+    }
+    .dark-mode .cy-holiday-list {
+      border-color: #334155;
+      background: #0f172a;
+    }
+    .dark-mode .cy-holiday-item:hover {
+      background: #1e293b;
+    }
+    .dark-mode .cy-holiday-date {
+      color: #93c5fd;
     }
   </style>
 
