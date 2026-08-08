@@ -79,7 +79,6 @@
   }
 
   var sameAs = [
-    cfg.social.whatsapp,
     cfg.social.instagram,
     cfg.social.facebook,
     cfg.social.twitter,
@@ -94,7 +93,6 @@
     'logo': cfg.url + cfg.ogImage,
     'contactPoint': {
       '@type': 'ContactPoint',
-      'telephone': cfg.organization.telephone,
       'contactType': cfg.organization.contactType,
       'areaServed': cfg.organization.areaServed,
       'availableLanguage': 'English'

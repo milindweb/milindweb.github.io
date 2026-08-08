@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/js/config.js"></script>
-  <script>const PAGE_CONFIG = { title: 'Contact Us', description: 'Contact Milind Web for digital marketing, web development, business automation, projects training, and all technical services. Reach out via phone, email, or our enquiry form.', canonical: '/contact' };</script>
+  <script>const PAGE_CONFIG = { title: 'Contact Us', description: 'Contact Milind Web for digital marketing, web development, business automation, projects training, and all technical services. Reach out via our enquiry form.', canonical: '/contact' };</script>
   <script src="/js/seo-injector.js"></script>
 
   <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
@@ -35,7 +35,7 @@
 
     .ct-info-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin-bottom: 2rem;
     }
@@ -50,6 +50,27 @@
     .ct-info-item i { font-size: 1.5rem; color: var(--accent); margin-bottom: 0.5rem; display: block; }
     .ct-info-item strong { display: block; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.25rem; }
     .ct-info-item span { font-size: 0.85rem; color: var(--text-secondary); }
+    .ct-reveal-btn {
+      font-size: 0.85rem;
+      color: var(--accent);
+      background: none;
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      padding: 4px 14px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .ct-reveal-btn:hover { background: var(--accent); color: #fff; }
+    .ct-reveal-link { font-size: 0.85rem; color: var(--accent); word-break: break-all; }
+    .ct-reveal-inline {
+      font: inherit;
+      color: var(--accent);
+      background: none;
+      border: none;
+      border-bottom: 1px dashed var(--accent);
+      padding: 0;
+      cursor: pointer;
+    }
 
     .ct-card {
       background: var(--card-bg);
@@ -102,6 +123,9 @@
       margin: 2.5rem 0;
     }
 
+    @media (max-width: 700px) {
+      .ct-info-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 600px) {
       .ct-info-grid { grid-template-columns: 1fr; }
       .ct-hero h1 { font-size: 1.6rem; }
@@ -122,14 +146,19 @@
   <section class="ct-section">
     <div class="ct-info-grid">
       <div class="ct-info-item">
-        <i class="fas fa-phone"></i>
-        <strong>Phone</strong>
-        <span id="ct-phone"></span>
+        <i class="fab fa-whatsapp"></i>
+        <strong>WhatsApp</strong>
+        <button class="ct-reveal-btn" id="ct-wa" type="button" data-type="wa">Show WhatsApp</button>
+      </div>
+      <div class="ct-info-item">
+        <i class="fab fa-telegram"></i>
+        <strong>Telegram</strong>
+        <button class="ct-reveal-btn" id="ct-tg" type="button" data-type="tg">Show Telegram</button>
       </div>
       <div class="ct-info-item">
         <i class="fas fa-envelope"></i>
         <strong>Email</strong>
-        <span id="ct-email"></span>
+        <button class="ct-reveal-btn" id="ct-email" type="button" data-type="email">Show Email</button>
       </div>
       <div class="ct-info-item">
         <i class="fas fa-map-marker-alt"></i>
@@ -142,14 +171,43 @@
   <script>
     (function() {
       var c = SITE_CONFIG.contact;
-      if (c) {
-        var el = function(id) { return document.getElementById(id); };
-        if (el('ct-phone')) el('ct-phone').textContent = c.phoneDisplay || c.phone;
-        if (el('ct-email')) el('ct-email').textContent = c.email;
-        if (el('ct-location')) el('ct-location').textContent = c.location;
-        if (el('ct-email-pp')) el('ct-email-pp').textContent = c.email;
-        if (el('ct-email-fb')) el('ct-email-fb').textContent = c.email;
+      if (!c) return;
+      var el = function(id) { return document.getElementById(id); };
+      if (el('ct-location')) el('ct-location').textContent = c.location;
+
+      function contactData() {
+        return {
+          email: c.emailUser + '@' + c.emailDomain,
+          wa: c.waHandle,
+          tg: c.tgHandle
+        };
       }
+      function reveal(btnId, type) {
+        var btn = el(btnId);
+        if (!btn) return;
+        btn.addEventListener('click', function() {
+          var data = contactData();
+          var label = type === 'wa' ? '@' + data.wa : (type === 'tg' ? '@' + data.tg : data.email);
+          var href = type === 'wa' ? 'https://wa.me/' + data.wa
+                   : type === 'tg' ? 'https://t.me/' + data.tg
+                   : 'mailto:' + data.email;
+          btn.outerHTML = '<a class="ct-reveal-link" href="' + href + '"' + (type !== 'email' ? ' target="_blank" rel="noopener"' : '') + '>' + label + '</a>';
+        });
+      }
+      reveal('ct-wa', 'wa');
+      reveal('ct-tg', 'tg');
+      reveal('ct-email', 'email');
+
+      function revealInline(id) {
+        var span = el(id);
+        if (!span) return;
+        span.addEventListener('click', function() {
+          var data = contactData();
+          span.outerHTML = '<a href="mailto:' + data.email + '">' + data.email + '</a>';
+        });
+      }
+      revealInline('ct-email-pp');
+      revealInline('ct-email-fb');
     })();
   </script>
 
@@ -194,7 +252,7 @@
         <p>We retain your personal information only as long as necessary to fulfill the purposes described in this policy or as required by applicable law. If you request service from us, your information may be retained for the duration of the service engagement and for a reasonable period thereafter for record-keeping and legal compliance. After this period, your data is securely deleted or anonymized.</p>
 
         <h3>Your Rights</h3>
-        <p>You have the right to request access to the personal data we hold about you, request correction of any inaccurate information, ask for deletion of your data where applicable, and withdraw consent for data processing at any time. To exercise any of these rights, please contact us at <span id="ct-email-pp">Aartitechservices@gmail.com</span>. We will respond to your request within a reasonable timeframe as per applicable data protection laws.</p>
+        <p>You have the right to request access to the personal data we hold about you, request correction of any inaccurate information, ask for deletion of your data where applicable, and withdraw consent for data processing at any time. To exercise any of these rights, please contact us at <button class="ct-reveal-inline" id="ct-email-pp" type="button">show email</button>. We will respond to your request within a reasonable timeframe as per applicable data protection laws.</p>
       </div>
     </div>
 
@@ -264,7 +322,7 @@
       <div class="ct-card-body">
         <p>Your ideas and opinions are invaluable to us. Whether you have a suggestion for improving our services, an idea for a new offering, feedback on your experience with Milind Web, or just want to share your thoughts — we are always eager to listen. Every piece of feedback helps us refine our platform, enhance user experience, and serve you better.</p>
         <p>We especially welcome feedback on our website usability, service quality, communication responsiveness, and content relevance. If you encountered any issues, have feature requests, or want to report a problem, please don't hesitate to reach out. Your input directly influences how we grow and improve.</p>
-        <p>You can share your feedback using the contact form below, or send us an email directly at <strong id="ct-email-fb">Aartitechservices@gmail.com</strong>. We read every message and strive to respond within 24&ndash;48 business hours. Thank you for helping us make Milind Web better, every day.</p>
+        <p>You can share your feedback using the contact form below, or send us an email directly at <button class="ct-reveal-inline" id="ct-email-fb" type="button">show email</button>. We read every message and strive to respond within 24&ndash;48 business hours. Thank you for helping us make Milind Web better, every day.</p>
       </div>
     </div>
 
@@ -276,7 +334,7 @@
   <!-- CONTACT FORM -->
   <section class="ct-section" style="padding-top:0">
     <h2 style="text-align:center;font-size:1.6rem;font-weight:700;color:var(--text-primary);margin-bottom:0.5rem">Send Us a Message</h2>
-    <p style="text-align:center;color:var(--text-secondary);max-width:500px;margin:0 auto 2rem;line-height:1.6">Fill out the form below and we'll get back to you as soon as possible. For urgent inquiries, please contact us directly via phone or WhatsApp.</p>
+    <p style="text-align:center;color:var(--text-secondary);max-width:500px;margin:0 auto 2rem;line-height:1.6">Fill out the form below and we'll get back to you as soon as possible.</p>
     <div class="contact-form-wrapper">
       <form id="contactForm">
         <div class="form-row">

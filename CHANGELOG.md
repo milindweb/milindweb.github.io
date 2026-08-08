@@ -10,6 +10,18 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Contact privacy: remove contact info from all pages except Contact page
+
+- **Domain** — website is now `aartitechservices.pages.dev` (updated `js/config.js` domain/url/primaryDomain/primaryUrl and `.env.original` SITE_URL). Schema.org JSON-LD still references `cfg.url` (domain) via seo-injector.
+- `js/config.js` — removed `contact.phone/phoneDisplay/phoneWA`; email replaced with obfuscated parts `emailUser: 'kmi9'` + `emailDomain: 'pm.me'` (reassembled only in JS, never in HTML source); WhatsApp `waHandle: 'makhandare'`, Telegram `tgHandle: 'itsmakk'`. `social.whatsapp/telegram` URLs updated accordingly. Removed `organization.telephone`.
+- `components/footer.html` — removed the CONTACT INFO column (phone/email/location/hours) and the WhatsApp/Telegram social icons from the footer so no contact details leak on any page.
+- `css/headerfooter.css` — `.hf-footer-grid` changed to `repeat(3, 1fr)` for the remaining 3 footer columns.
+- `js/headerfooter.js` — dropped `{{PHONE}}`, `{{PHONE_RAW}}`, `{{PHONE_WA}}`, `{{EMAIL}}`, `{{SOCIAL_WA}}`, `{{SOCIAL_TELEGRAM}}` from the replacement map.
+- `js/seo-injector.js` — removed `cfg.social.whatsapp` from `sameAs` and `organization.telephone` from the Organization schema so bots/schema scrapers don't find the handles.
+- `privacy.html`, `terms.html` — Contact Us sections now link to `/contact` instead of listing email/phone.
+- `blog/posts/website-for-your-business.html` — CTA box now links to `/contact` instead of phone/email/wa.me.
+- `contact.html` — **only page that reveals contact info**: WhatsApp, Telegram, Email shown as click-to-reveal buttons (`@makhandare`, `@itsmakk`, `kmi9@pm.me`), plus Location. Inline email links in Privacy/Feedback cards are click-to-reveal buttons too. Info grid is now 4 columns (2 on tablet, 1 on mobile). Contact details exist only in `js/config.js` (split into parts) and are assembled client-side.
+
 ## 2026-08-08 — Calendar: grid layout matching holiday border
 
 - `calendar.html` — replaced flex-wrap with a CSS grid: `repeat(4, 1fr)` up to 1000px so each month box fills the row edge-to-edge and always lines up with the holiday-list border. Responsive: 3 cols ≤900px, 2 cols ≤700px, 1 col ≤480px.
