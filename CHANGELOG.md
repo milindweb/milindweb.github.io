@@ -17,6 +17,12 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 - `apps-script-v2/auth.gs` — `authRegister_` validates email/mobile, rejects duplicate email/mobile, and stores them. `Users` sheet header is now `username | password | role | modules | name | email | mobile`. ⚠️ Re-paste this file into Apps Script + redeploy (New version).
 - `README.md` — updated `Users` sheet docs to the 7-column table.
 
+## 2026-08-08 — Domain fix: this site is milindweb.pages.dev
+
+- `js/config.js` / `.env.original` — domain/url/primaryDomain/primaryUrl corrected back to **`milindweb.pages.dev`** (this repo is the MilindWeb site). The `aartitechservices.pages.dev` domain belongs to the *other* website that will reuse the shared contact form.
+- `js/config.js` — `contact.siteName: 'MilindWeb'` stays; the shared backend auto-creates a `MilindWeb` sheet for this site (and an `AartiTechServices` sheet when the other site submits with its own `siteName`).
+- `CONTACT-FORM-SETUP.md` — added a working example block with the live shared URL and `siteName` for the AartiTechServices site.
+
 ## 2026-08-08 — Contact backend: new deployment URL
 
 - `js/config.js` / `.env.original` — `appsScriptUrl` updated to the new deployment: `https://script.google.com/macros/s/AKfycbyO87cybPXuwXOGBMj7OdMf8VXNPtNFW8055qcTzizXHpwIvbD_9kSBFZQIBXFHGzMs/exec`. Verified `contactSubmit` returns ok (dual-write to General + per-site sheet).

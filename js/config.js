@@ -9,10 +9,10 @@ const SITE_CONFIG = {
     copyright: '\u00A9 2026 MilindWeb. All rights reserved.',
   },
 
-  domain: 'aartitechservices.pages.dev',
-  url: 'https://aartitechservices.pages.dev',
-  primaryDomain: 'aartitechservices.pages.dev',
-  primaryUrl: 'https://aartitechservices.pages.dev',
+  domain: 'milindweb.pages.dev',
+  url: 'https://milindweb.pages.dev',
+  primaryDomain: 'milindweb.pages.dev',
+  primaryUrl: 'https://milindweb.pages.dev',
   locale: 'en_IN',
 
   contact: {

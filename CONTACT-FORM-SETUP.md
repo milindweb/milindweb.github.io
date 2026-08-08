@@ -6,6 +6,12 @@ Google Apps Script backend. No new backend, no server, no database.
 > This guide is generic. The backend is shared, so the only thing you edit per
 > site is the `siteName` value in the config (which names the site's own sheet).
 
+> **Working example (AartiTechServices):** the shared backend is live at
+> `https://script.google.com/macros/s/AKfycbyO87cybPXuwXOGBMj7OdMf8VXNPtNFW8055qcTzizXHpwIvbD_9kSBFZQIBXFHGzMs/exec`
+> and the MilindWeb site (this repo) uses `siteName: "MilindWeb"`. To add the
+> form to `aartitechservices.pages.dev`, set `siteName: "AartiTechServices"` —
+> that sheet is created automatically on the first submission.
+
 ---
 
 ## 1. How it works
