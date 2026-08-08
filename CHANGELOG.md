@@ -10,6 +10,10 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Fix: CORS preflight (OPTIONS 405) on POST
+
+- `js/api-client.js`, `js/contact-form.js`, `js/hospital-api.js` — changed `Content-Type: application/json` → `text/plain;charset=utf-8`. Google Apps Script does not answer CORS preflight OPTIONS, so `application/json` was blocked in the browser ("CORS header Access-Control-Allow-Origin missing"). `text/plain` is a simple request, no preflight, and the JSON body still parses server-side.
+
 ## 2026-08-08 — Fix: footer 4th column wrapping
 
 - `css/headerfooter.css` — `.hf-footer-grid` changed from `repeat(3, 1fr)` to `repeat(4, 1fr)` so the CONTACT INFO column stays on the same row (footer has 4 columns).
