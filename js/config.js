@@ -2,10 +2,10 @@ const SITE_CONFIG = {
   version: 'v1.0.2',
 
   brand: {
-    name: 'Milind Web',
-    nameUppercase: 'MILIND WEB',
+    name: 'MILINDWEB',
+    nameUppercase: 'MILINDWEB',
     legalName: 'MK9 Solutions',
-    tagline: "Let's Build &amp; Grow business Together",
+    tagline: "Life should be great rather than long",
     copyright: '\u00A9 2026 MilindWeb. All rights reserved.',
   },
 
