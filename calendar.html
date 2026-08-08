@@ -57,9 +57,8 @@
 
     /* === Calendar layout === */
     .cy-calendar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       padding: 10px;
       max-width: 1000px;   /* match the holiday list width below */
@@ -67,8 +66,7 @@
       box-sizing: border-box;
     }
     .cy-month {
-      flex: 1 1 230px;
-      min-width: 230px;
+      min-width: 0;
       border: 1px solid #999;   /* border around each month box */
       border-radius: 4px;
       overflow: hidden;
@@ -158,6 +156,15 @@
     }
 
     /* === Responsive Rules === */
+    @media (max-width: 900px) {
+      .cy-calendar { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .cy-calendar { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .cy-calendar { grid-template-columns: 1fr; }
+    }
     @media (max-width: 768px) {
       .cy-holiday-list {
         flex-direction: column;

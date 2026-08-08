@@ -10,6 +10,10 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Calendar: grid layout matching holiday border
+
+- `calendar.html` — replaced flex-wrap with a CSS grid: `repeat(4, 1fr)` up to 1000px so each month box fills the row edge-to-edge and always lines up with the holiday-list border. Responsive: 3 cols ≤900px, 2 cols ≤700px, 1 col ≤480px.
+
 ## 2026-08-08 — Theme fixes: dark-mode contrast + calendar width
 
 - `calendar.html` — `.cy-month` no longer capped at `max-width: 250px`; now `min-width: 230px` with `flex-grow`, so month columns stretch to fill the full 1000px row width and align with the holiday-list border (also at 3 columns).
