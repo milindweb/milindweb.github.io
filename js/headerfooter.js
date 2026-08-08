@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     '{{COPYRIGHT}}': cfg.brand ? cfg.brand.copyright : '',
     '{{LOCATION}}': cfg.contact ? cfg.contact.location : '',
     '{{HOURS}}': cfg.contact ? cfg.contact.workingHours : '',
+    '{{PHONE}}': cfg.contact ? cfg.contact.phone : '',
+    '{{EMAIL}}': cfg.contact ? (cfg.contact.emailUser + '@' + cfg.contact.emailDomain) : '',
     '{{DOMAIN}}': cfg.domain || '',
     '{{URL}}': cfg.url || '',
     '{{SOCIAL_INSTA}}': cfg.social ? cfg.social.instagram : '',

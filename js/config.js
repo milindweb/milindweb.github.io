@@ -17,11 +17,12 @@ const SITE_CONFIG = {
 
   contact: {
     siteName: 'MilindWeb',
+    phone: '+91 9869787S7S',
     emailUser: 'kmi9',
     emailDomain: 'pm.me',
     waHandle: 'makhandare',
     tgHandle: 'itsmakk',
-    location: 'Uran, Navi Mumbai MH',
+    location: 'Nanded MH',
     workingHours: 'Mon to Fri 10:00 - 18:00 Hrs',
   },
 
