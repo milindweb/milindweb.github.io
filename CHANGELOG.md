@@ -10,6 +10,12 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Theme fixes: dark-mode contrast + calendar width
+
+- `Seniariity_List.html` — `--gray` was mapped to `var(--text-secondary)` (light in dark mode) but used as button/tag *background* with white text → invisible. Now fixed `#6c757d`; dark overrides for `.filter-tag`, `.filter-tag-inactive`, `.clear-filter-btn`, text colors, and `tr:hover`.
+- `calculator.html` — same `--gray` fix for `.back-button`; dark overrides for headings, results, calc-item icons, borders.
+- `calendar.html` — `.cy-calendar`, `.cy-controls`, and headings now capped at `max-width: 1000px` to match the holiday-list border, so calendar months no longer overflow past the holiday list boundary.
+
 ## 2026-08-08 — Theme consistency: legacy pages now match modern design
 
 All legacy pages updated to the modern theme (css/style.css CSS variables + light/dark mode via `js/headerfooter.js` toggle):

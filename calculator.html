@@ -23,7 +23,7 @@
             --success: #4bb543;
             --warning: #ffcc00;
             --danger: #dc3545;
-            --gray: var(--text-secondary);
+            --gray: #6c757d;
         }
 
         * {
@@ -232,9 +232,13 @@
         .container p { color: var(--text-secondary); }
 
         /* Dark mode overrides */
-        .dark-mode .back-button { background: #334155; color: #f1f5f9; }
-        .dark-mode .back-button:hover { background: #475569; }
+        .dark-mode .back-button { background: #475569; color: #f1f5f9; }
+        .dark-mode .back-button:hover { background: #5a6268; }
         .dark-mode .input-group label { color: var(--text-primary); }
+        .dark-mode .results h3 { color: var(--accent); }
+        .dark-mode .category h2 { color: var(--accent); border-bottom-color: var(--border); }
+        .dark-mode .calc-item i { color: var(--accent); }
+        .dark-mode .calc-header { border-bottom-color: var(--border); }
 
         .amortization-table th, 
         .amortization-table td {

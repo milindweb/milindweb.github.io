@@ -27,11 +27,12 @@
 
     /* === Year navigation controls (Prev, Year dropdown, Next) === */
     .cy-controls {
-      margin: 10px;
+      margin: 10px auto;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px;
+      max-width: 1000px;   /* match the holiday list width below */
     }
     .cy-controls select, .cy-controls button {
       padding: 6px 12px;
@@ -43,9 +44,15 @@
 
     /* === Calendar Year heading === */
     .cy-container h1 {
-      margin: 10px 0 20px 0;
+      margin: 10px auto 20px auto;
       font-size: 1.8rem;
       color: #333;
+      max-width: 1000px;
+    }
+    .cy-container h2 {
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* === Calendar layout === */
@@ -55,6 +62,9 @@
       justify-content: center;
       gap: 10px;
       padding: 10px;
+      max-width: 1000px;   /* match the holiday list width below */
+      margin: 0 auto;
+      box-sizing: border-box;
     }
     .cy-month {
       flex: 1 1 230px;

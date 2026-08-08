@@ -27,7 +27,7 @@
             --success: #28a745;
             --warning: #ffc107;
             --danger: #dc3545;
-            --gray: var(--text-secondary);
+            --gray: #6c757d;
             --light-gray: var(--border);
             --filter-active: #e3f2fd;
         }
@@ -274,7 +274,7 @@
         }
         
         tr:hover {
-            background-color: var(--accent-light);
+            background-color: var(--secondary-bg);
             color: var(--text-primary);
         }
         
@@ -361,6 +361,12 @@
             gap: 8px;
             font-size: 0.85rem;
         }
+        
+        .filter-tag-inactive {
+            background-color: var(--gray);
+            font-style: italic;
+        }
+        .dark-mode .filter-tag-inactive { background-color: #475569; }
         
         .filter-tag .remove {
             cursor: pointer;
@@ -485,6 +491,12 @@
         .dark-mode .filter-header h4 { color: var(--accent); }
         .dark-mode ::-webkit-scrollbar-track { background: #0f172a; }
         .dark-mode ::-webkit-scrollbar-thumb { background: #334155; }
+        .dark-mode .seniority-header p,
+        .dark-mode .no-data,
+        .dark-mode .loading { color: var(--text-secondary); }
+        .dark-mode .filter-tag { background-color: #475569; }
+        .dark-mode .clear-filter-btn { background-color: #475569; }
+        .dark-mode .clear-filter-btn:hover { background-color: #5a6268; }
     </style>
 </head>
 <body>
@@ -521,7 +533,7 @@
             </div>
             
             <div class="active-filters" id="active-filters">
-                <div class="filter-tag" style="background-color: var(--gray);">No active filters</div>
+                <div class="filter-tag filter-tag-inactive">No active filters</div>
             </div>
             
             <div class="table-container">
@@ -665,7 +677,7 @@
                     ${activeFiltersHTML}
                 `;
             } else {
-                activeFiltersHTML = '<div class="filter-tag" style="background-color: var(--gray);">No active filters</div>';
+                activeFiltersHTML = '<div class="filter-tag filter-tag-inactive">No active filters</div>';
             }
             
             activeFiltersContainer.innerHTML = activeFiltersHTML;
