@@ -1,0 +1,61 @@
+<!-- header.html -->
+<link rel="stylesheet" href="/css/headerfooter.css">
+
+<header class="hf-header">
+    <nav class="hf-nav-container">
+        <!-- Logo Section -->
+        <div class="hf-logo-section">
+            <div class="hf-logo-icon">{{LOGO_ICON}}</div>
+            <div class="hf-logo-text">
+                <a href="/" class="hf-logo">{{SITE_NAME}}</a>
+                <p class="hf-tagline">{{TAGLINE}}</p>
+            </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <ul class="hf-nav-menu">
+            <li class="hf-nav-item"><a href="/hospital/dashboard" class="hf-nav-link">HOSPITAL</a></li>
+            <li class="hf-nav-item"><a href="/seniority" class="hf-nav-link">SENIORITY</a></li>
+            <li class="hf-nav-item"><a href="/blog" class="hf-nav-link">BLOG</a></li>
+            <li class="hf-nav-item"><a href="/about" class="hf-nav-link">ABOUT</a></li>
+            <li class="hf-nav-item"><a href="/contact" class="hf-nav-link">CONTACT</a></li>
+            <li class="hf-nav-item hf-auth">
+                <a href="/login" class="hf-nav-link" data-auth="login">LOGIN</a>
+                <a href="#" class="hf-nav-link" data-auth="logout" style="display:none;">LOGOUT</a>
+            </li>
+        </ul>
+
+        <!-- Theme Toggle -->
+        <div class="hf-theme-toggle" title="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <div class="hf-mobile-toggle">
+            <div class="hf-hamburger-line"></div>
+            <div class="hf-hamburger-line"></div>
+            <div class="hf-hamburger-line"></div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="hf-mobile-menu">
+        <ul class="hf-mobile-nav-list">
+            <li><a href="/hospital/dashboard" class="hf-mobile-nav-link">HOSPITAL</a></li>
+            <li><a href="/seniority" class="hf-mobile-nav-link">SENIORITY</a></li>
+            <li><a href="/blog" class="hf-mobile-nav-link">BLOG</a></li>
+            <li><a href="/about" class="hf-mobile-nav-link">ABOUT</a></li>
+            <li><a href="/contact" class="hf-mobile-nav-link">CONTACT</a></li>
+            <li class="hf-mobile-auth">
+                <a href="/login" class="hf-mobile-nav-link" data-auth="login">LOGIN</a>
+                <a href="#" class="hf-mobile-nav-link" data-auth="logout" style="display:none;">LOGOUT</a>
+            </li>
+            <li class="hf-mobile-nav-link hf-mobile-theme-toggle">
+                <i class="fas fa-moon"></i> <span>Toggle Theme</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="hf-mobile-overlay"></div>
+</header>

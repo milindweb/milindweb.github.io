@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Patient List', description: 'Search and manage hospital patients' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <script src="/js/hospital-api.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/hospital/js/hospital-nav.js" defer></script>
+  <link rel="stylesheet" href="/hospital/css/hospital.css">
+  <style>
+    .patient-list-page { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+    .search-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .search-bar input { flex: 1; min-width: 200px; padding: 10px 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; }
+    .search-bar select { padding: 10px 16px; border: 1px solid var(--border); border-radius: 8px; }
+    .table-wrap { background: var(--card-bg); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: var(--light); padding: 12px 16px; text-align: left; font-size: 0.8rem; text-transform: uppercase; color: var(--gray); letter-spacing: 0.5px; }
+    td { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 0.9rem; }
+    tr:hover { background: var(--light); }
+    .clickable { color: var(--accent); cursor: pointer; font-weight: 600; }
+    .clickable:hover { text-decoration: underline; }
+    .pagination { display: flex; justify-content: center; gap: 8px; padding: 20px; }
+    .pagination button { padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); cursor: pointer; }
+    .pagination button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <div id="hospitalNav"></div>
+  <div class="patient-list-page" id="app">
+    <h1 style="margin-bottom:24px;"><i class="fas fa-users"></i> Patient List</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by name, UHID, or mobile..." oninput="debounceSearch()">
+      <select id="genderFilter" onchange="loadPatients(1)"><option value="">All Genders</option><option>Male</option><option>Female</option><option>Other</option></select>
+      <button class="btn btn-primary" onclick="window.location.href='/hospital/new-visit'"><i class="fas fa-plus"></i> New Patient</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>UHID</th><th>Name</th><th>Gender</th><th>Age</th><th>Mobile</th><th>Visits</th><th>Last Visit</th></tr></thead>
+        <tbody id="patientTableBody"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">Loading...</td></tr></tbody>
+      </table>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script>
+    let currentPage = 1, totalPages = 1, pageSize = 20;
+    let searchTimer;
+
+    function debounceSearch() { clearTimeout(searchTimer); searchTimer = setTimeout(() => loadPatients(1), 300); }
+
+    async function loadPatients(page) {
+      currentPage = page;
+      const q = document.getElementById('searchInput').value.trim();
+      const gender = document.getElementById('genderFilter').value;
+      const tbody = document.getElementById('patientTableBody');
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">Loading...</td></tr>';
+
+      try {
+        const res = await HospitalAPI.listPatients({ page, limit: pageSize, q: (gender ? gender + ' ' : '') + q });
+        const data = res.rows || [];
+        totalPages = res.pages || 1;
+
+        if (data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">No patients found.</td></tr>';
+        } else {
+          tbody.innerHTML = data.map(p => {
+            const age = p.date_of_birth ? Math.floor((new Date() - new Date(p.date_of_birth)) / (365.25 * 86400000)) : '—';
+            return `<tr>
+              <td class="clickable" onclick="window.location='/hospital/patient-profile?id=${p.uhid}'">#${p.uhid}</td>
+              <td><strong>${p.full_name}</strong></td>
+              <td>${p.gender || '—'}</td>
+              <td>${age}</td>
+              <td>${p.mobile || '—'}</td>
+              <td>${p.visit_count || 0}</td>
+              <td>${p.last_visit ? new Date(p.last_visit).toLocaleDateString() : '—'}</td>
+            </tr>`;
+          }).join('');
+        }
+
+        const pg = document.getElementById('pagination');
+        pg.innerHTML = '';
+        if (totalPages > 1) {
+          pg.innerHTML += `<button onclick="loadPatients(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}><i class="fas fa-chevron-left"></i></button>`;
+          for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+            pg.innerHTML += `<button class="${i === currentPage ? 'active' : ''}" onclick="loadPatients(${i})">${i}</button>`;
+          }
+          pg.innerHTML += `<button onclick="loadPatients(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right"></i></button>`;
+        }
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--danger);">${err.message}</td></tr>`;
+      }
+    }
+    loadPatients(1);
+  </script>
+</body>
+</html>

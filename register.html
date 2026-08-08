@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Register', description: 'Create a free account to access Milind Web modules.', canonical: '/register' };</script>
+  <script src="/js/seo-injector.js"></script>
+
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <!-- Order matters: api-client → auth → headerfooter -->
+  <script src="/js/api-client.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+  <script src="/js/headerfooter.js" defer></script>
+
+  <style>
+    .auth-wrap {
+      max-width: 420px;
+      margin: 4rem auto;
+      padding: 0 1rem;
+    }
+    .auth-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 1.75rem;
+      box-shadow: var(--shadow);
+    }
+    .auth-card h1 { font-size: 1.6rem; margin: 0 0 0.25rem; text-align: center; color: var(--text-primary); }
+    .auth-card .auth-sub { text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .auth-note {
+      font-size: 0.8rem; color: var(--text-secondary); background: var(--secondary-bg);
+      border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.75rem; margin-bottom: 1.25rem;
+    }
+    .auth-field { margin-bottom: 1rem; }
+    .auth-field label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-primary); }
+    .auth-field input {
+      width: 100%; padding: 0.65rem 0.8rem; font-size: 0.95rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: var(--primary-bg); color: var(--text-primary);
+    }
+    .auth-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
+    .auth-btn {
+      width: 100%; padding: 0.7rem; font-size: 1rem; font-weight: 600; color: #fff;
+      background: var(--gradient); border: none; border-radius: 8px; cursor: pointer;
+      transition: var(--transition);
+    }
+    .auth-btn:hover { opacity: 0.92; }
+    .auth-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .auth-msg { margin-top: 1rem; font-size: 0.9rem; text-align: center; }
+    .auth-msg.ok { color: var(--success, #28a745); }
+    .auth-msg.err { color: var(--danger, #dc3545); }
+    .auth-alt { text-align: center; margin-top: 1.25rem; font-size: 0.9rem; color: var(--text-secondary); }
+    .auth-alt a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .auth-pw-toggle { position: relative; }
+    .auth-pw-toggle i { position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <div class="auth-wrap" id="app">
+    <div class="auth-card">
+      <h1><i class="fas fa-user-plus"></i> Register</h1>
+      <p class="auth-sub">Create your free account</p>
+
+      <div class="auth-note">
+        <i class="fas fa-info-circle"></i> New accounts get <strong>no module access</strong> by default.
+        Contact the admin to enable Hospital, Seniority, Finance, etc. for your account.
+      </div>
+
+      <form id="registerForm" novalidate>
+        <div class="auth-field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" autocomplete="username" minlength="3" required>
+        </div>
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <div class="auth-pw-toggle">
+            <input type="password" id="password" name="password" autocomplete="new-password" minlength="4" required>
+            <i class="fas fa-eye" id="pwToggle"></i>
+          </div>
+        </div>
+        <div class="auth-field">
+          <label for="confirm">Confirm Password</label>
+          <input type="password" id="confirm" name="confirm" autocomplete="new-password" minlength="4" required>
+        </div>
+        <button type="submit" class="auth-btn" id="registerBtn">Register</button>
+        <div class="auth-msg" id="authMsg"></div>
+      </form>
+
+      <div class="auth-alt">
+        Already have an account? <a href="/login">Login</a>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var form = document.getElementById("registerForm");
+      var btn = document.getElementById("registerBtn");
+      var msg = document.getElementById("authMsg");
+
+      var pwInput = document.getElementById("password");
+      var pwToggle = document.getElementById("pwToggle");
+      if (pwToggle) {
+        pwToggle.addEventListener("click", function () {
+          var show = pwInput.type === "password";
+          pwInput.type = show ? "text" : "password";
+          pwToggle.className = show ? "fas fa-eye-slash" : "fas fa-eye";
+        });
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var username = document.getElementById("username").value.trim();
+        var password = document.getElementById("password").value;
+        var confirm = document.getElementById("confirm").value;
+
+        if (username.length < 3) {
+          msg.className = "auth-msg err";
+          msg.textContent = "Username must be at least 3 characters.";
+          return;
+        }
+        if (password.length < 4) {
+          msg.className = "auth-msg err";
+          msg.textContent = "Password must be at least 4 characters.";
+          return;
+        }
+        if (password !== confirm) {
+          msg.className = "auth-msg err";
+          msg.textContent = "Passwords do not match.";
+          return;
+        }
+
+        msg.className = "auth-msg";
+        msg.textContent = "Creating account...";
+        btn.disabled = true;
+
+        window.Auth.register(username, password)
+          .then(function (res) {
+            msg.className = "auth-msg ok";
+            msg.textContent = res.message || "Registered successfully!";
+            setTimeout(function () { window.location.href = "/login"; }, 1200);
+          })
+          .catch(function (err) {
+            msg.className = "auth-msg err";
+            msg.textContent = err.message || "Registration failed. Try again.";
+            btn.disabled = false;
+          });
+      });
+    });
+  </script>
+</body>
+</html>

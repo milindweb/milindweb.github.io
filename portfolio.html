@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Portfolio', description: 'Explore our portfolio of web development projects, business automation systems, and digital solutions including CSMA ticket system, NAD society management, and Dr. Akanksha website.', canonical: '/portfolio' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css" />
+  <script src="/js/headerfooter.js" defer></script>
+  <style>
+    main { max-width: 1000px; margin: 0 auto; padding: 3rem 1rem; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.6rem; margin: 3rem 0 1rem; color: var(--accent); }
+    h3 { font-size: 1.2rem; margin: 1.5rem 0 0.75rem; }
+    p { line-height: 1.8; color: var(--text-secondary); margin-bottom: 1rem; }
+    hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+    .project-card { background: var(--card-bg); padding: 2rem; border-radius: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); margin-bottom: 2rem; transition: all 0.3s ease; }
+    .project-card:hover { transform: translateY(-4px); border-color: var(--accent-light); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+    .project-card .status { display: inline-block; background: var(--accent); color: #fff; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 20px; margin-bottom: 1rem; }
+    .project-card ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+    .project-card li { color: var(--text-secondary); margin-bottom: 0.4rem; line-height: 1.6; }
+    .project-card .tech { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    .project-card .tech strong { color: var(--text-primary); }
+    .project-card .preview-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-weight: 600; text-decoration: none; transition: transform 0.3s ease, filter 0.3s ease; }
+    .project-card .preview-link:hover { transform: scale(1.06); filter: brightness(1.15); }
+    .expertise-grid, .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .expertise-card, .tech-card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .expertise-card h3, .tech-card h3 { color: var(--accent); margin: 0 0 0.5rem; font-size: 1.05rem; }
+    .expertise-card p, .tech-card p { font-size: 0.95rem; margin: 0; }
+    .tech-card ul { padding-left: 1rem; margin: 0; list-style: none; }
+    .tech-card li { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .tech-card li::before { content: "• "; color: var(--accent); }
+    .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .screenshot-grid img { width: 100%; border-radius: 10px; border: 1px solid var(--border); cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .screenshot-grid img:hover { transform: scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .cta-section { text-align: center; padding: 3rem 1rem; margin: 3rem 0; background: var(--secondary-bg); border-radius: 14px; border: 1px solid var(--border); }
+    .cta-section h2 { margin-top: 0; }
+    .cta-section p { max-width: 600px; margin: 0 auto 1.5rem; }
+    .partner-list { list-style: none; padding: 0; margin: 0; }
+    .partner-list li { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.3rem; }
+    .partner-list li::before { content: "• "; color: var(--accent); }
+    @media (max-width: 768px) { h1 { font-size: 1.6rem; } h2 { font-size: 1.3rem; } }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <main>
+    <h1>Portfolio</h1>
+    <h2>Delivering Practical Digital Solutions</h2>
+    <p>At Milind Web, we transform ideas into reliable digital solutions. Our portfolio includes business websites, custom web applications, business automation systems, and technology-driven projects designed to improve efficiency and user experience.</p>
+    <p>Each project reflects our commitment to quality, scalability, security, and long-term maintainability.</p>
+
+    <hr />
+
+    <h2>Featured Projects</h2>
+
+    <div class="project-card">
+      <div class="status">In Development</div>
+      <h3>CSMA – Chhatrapati Shivaji Maharaj Auditorium Ticket Management System</h3>
+      <p>A modern web-based ticket booking and management system developed for auditorium event management.</p>
+      <h4>Key Features</h4>
+      <ul>
+        <li>Online Event Booking</li>
+        <li>Seat Management</li>
+        <li>QR Code Ticket Validation</li>
+        <li>Secure Authentication</li>
+        <li>Admin Dashboard</li>
+        <li>Payment Gateway Integration</li>
+        <li>Mobile Responsive Design</li>
+      </ul>
+      <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • PostgreSQL • Cloudflare • Razorpay</p>
+      <a class="preview-link" href="https://csma.pages.dev" target="_blank">Live Preview <i class="fas fa-external-link-alt"></i></a>
+    </div>
+
+    <div class="project-card">
+      <div class="status">Production Development</div>
+      <h3>NAD Society Management System</h3>
+      <p>A comprehensive web application developed for managing the operations of a cooperative credit society.</p>
+      <h4>Modules</h4>
+      <ul>
+        <li>Member Management</li>
+        <li>Loan Management</li>
+        <li>Recovery Management</li>
+        <li>Demand Generation</li>
+        <li>Reports</li>
+        <li>User Authentication</li>
+        <li>Administrative Dashboard</li>
+      </ul>
+      <p>Designed to replace manual processes with a secure and efficient digital workflow.</p>
+      <p class="tech"><strong>Technologies</strong><br />PostgreSQL • JavaScript • Cloudflare • GitHub</p>
+      <a class="preview-link" href="https://nadsociety.vercel.app" target="_blank">Live Preview <i class="fas fa-external-link-alt"></i></a>
+    </div>
+
+    <div class="project-card">
+      <div class="status">Live</div>
+      <h3>Dr. Akanksha Portfolio Website</h3>
+      <p>A responsive professional website developed to establish a modern online presence.</p>
+      <h4>Features</h4>
+      <ul>
+        <li>Responsive Design</li>
+        <li>Professional Profile</li>
+        <li>Contact Integration</li>
+        <li>Performance Optimized</li>
+        <li>SEO Friendly</li>
+      </ul>
+      <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • Cloudflare Pages</p>
+      <a class="preview-link" href="https://drakanksha.pages.dev" target="_blank">Live Preview <i class="fas fa-external-link-alt"></i></a>
+    </div>
+
+    <div class="project-card">
+      <div class="status">Live</div>
+      <h3>Society Calculator</h3>
+      <p>A comprehensive loan management system for cooperative societies featuring loan sanction calculation with EMI amortization, final settlement, and fixed deposit management.</p>
+      <p>Includes configurable interest rates, loan limits, and CD/Share percentage settings with full amortization schedule generation and data persistence.</p>
+      <h4>Features</h4>
+      <ul>
+        <li>Maintenance Fee Calculation</li>
+        <li>Bill Generation</li>
+        <li>Expense Tracking</li>
+        <li>Member Management</li>
+        <li>Payment Records</li>
+      </ul>
+      <p class="tech"><strong>Technologies</strong><br />HTML • CSS • JavaScript • PostgreSQL • Cloudflare Pages</p>
+      <div class="screenshot-grid">
+        <img src="/img/SocCal01.png" alt="Society Calculator Screenshot 1" loading="lazy" />
+        <img src="/img/SocCal02.png" alt="Society Calculator Screenshot 2" loading="lazy" />
+        <img src="/img/SocCal03.png" alt="Society Calculator Screenshot 3" loading="lazy" />
+        <img src="/img/SocCal04.png" alt="Society Calculator Screenshot 4" loading="lazy" />
+      </div>
+    </div>
+
+    <hr />
+
+    <h2>Core Expertise</h2>
+    <div class="expertise-grid">
+      <div class="expertise-card">
+        <h3>Digital Engineering</h3>
+        <p>Building scalable websites, web applications, business software, APIs, and cloud-based solutions.</p>
+      </div>
+      <div class="expertise-card">
+        <h3>Digital Marketing</h3>
+        <p>SEO, Local SEO, Technical SEO, Google Ads, and online business growth strategies.</p>
+      </div>
+      <div class="expertise-card">
+        <h3>Learning & Innovation</h3>
+        <p>College projects, industrial training, IoT, embedded systems, AI, and technical workshops.</p>
+      </div>
+      <div class="expertise-card">
+        <h3>Strategic Partners</h3>
+        <p>Delivering specialized solutions through trusted partners in:</p>
+        <ul class="partner-list">
+          <li>Graphics & Branding</li>
+          <li>Photography</li>
+          <li>Electrical Services</li>
+          <li>Automotive Solutions</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr />
+
+    <h2>Technologies We Work With</h2>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h3>Frontend</h3>
+        <ul>
+          <li>HTML5</li>
+          <li>CSS3</li>
+          <li>JavaScript</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h3>Backend</h3>
+        <ul>
+          <li>PostgreSQL</li>
+          <li>REST APIs</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h3>Cloud & DevOps</h3>
+        <ul>
+          <li>Cloudflare Pages</li>
+          <li>AWS</li>
+          <li>Docker</li>
+          <li>Coolify</li>
+          <li>VPS Deployment</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h3>Version Control</h3>
+        <ul>
+          <li>Git</li>
+          <li>GitHub</li>
+          <li>GitHub Actions</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h3>Payment & Integration</h3>
+        <ul>
+          <li>Razorpay</li>
+          <li>Email Integration</li>
+          <li>Authentication Systems</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr />
+
+    <h2>Development Approach</h2>
+    <p>Every solution is built with a focus on:</p>
+    <div class="tech-grid">
+      <div class="tech-card"><p>Clean Architecture</p></div>
+      <div class="tech-card"><p>Responsive Design</p></div>
+      <div class="tech-card"><p>Performance Optimization</p></div>
+      <div class="tech-card"><p>SEO Best Practices</p></div>
+      <div class="tech-card"><p>Secure Authentication</p></div>
+      <div class="tech-card"><p>Scalable Development</p></div>
+      <div class="tech-card"><p>Maintainable Code</p></div>
+      <div class="tech-card"><p>Long-Term Support</p></div>
+    </div>
+
+    <div class="cta-section">
+      <h2>Let's Build Your Next Project</h2>
+      <p>Whether you need a business website, custom software, business automation, or a complete digital transformation, we're ready to help.</p>
+      <p><strong>Let's discuss your project and create something exceptional together.</strong></p>
+    </div>
+  </main>
+
+  <div id="form-container"></div>
+  <script>
+    fetch("/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/js/contact-form.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
+  <div id="footer"></div>
+</body>
+</html>

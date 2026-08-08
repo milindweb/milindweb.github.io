@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>
+    const PAGE_CONFIG = {
+      type: 'article',
+      title: 'Post Title Here',
+      description: 'Short excerpt for SEO and social sharing.',
+      canonical: '/blog/post-slug',
+      date: 'YYYY-MM-DD',
+      author: 'Milind Web',
+      tags: ["Tag1", "Tag2"],
+    };
+  </script>
+  <script src="/js/seo-injector.js"></script>
+
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/fonts/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="/css/blog-sidebar.css">
+
+  <style>
+    .bp-container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .bp-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .bp-meta .bp-badge { background: var(--gradient); color: #fff; padding: 0.2rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .bp-container h1 { font-size: 2rem; font-weight: 800; margin: 0 0 1.5rem; color: var(--text-primary); line-height: 1.3; }
+    .bp-container h2 { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; color: var(--text-primary); }
+    .bp-container h3 { font-size: 1.15rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--text-primary); }
+    .bp-container p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; }
+    .bp-container ul, .bp-container ol { color: var(--text-secondary); line-height: 1.8; margin: 0 0 1rem; padding-left: 1.5rem; }
+    .bp-container li { margin-bottom: 0.3rem; }
+    .bp-container img { max-width: 100%; border-radius: 12px; margin: 1.5rem 0; }
+    .bp-container code { background: var(--secondary-bg); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; }
+    .bp-container pre { background: var(--secondary-bg); padding: 1rem; border-radius: 10px; overflow-x: auto; border: 1px solid var(--border); margin: 1rem 0; }
+    .bp-container pre code { background: none; padding: 0; }
+    .bp-container blockquote { border-left: 4px solid var(--accent); padding: 0.5rem 1rem; margin: 1rem 0; background: var(--secondary-bg); border-radius: 0 8px 8px 0; color: var(--text-secondary); }
+    .bp-back { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 2rem; transition: var(--transition); }
+    .bp-back:hover { gap: 10px; }
+    .bp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .bp-tags span { font-size: 0.8rem; padding: 0.3rem 0.7rem; background: var(--secondary-bg); border-radius: 20px; color: var(--text-secondary); border: 1px solid var(--border); }
+
+    @media (max-width: 600px) {
+      .bp-container h1 { font-size: 1.5rem; }
+      .bp-container { padding: 1.5rem 1rem 3rem; }
+    }
+  </style>
+
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/js/blog-sidebar.js" defer></script>
+</head>
+<body>
+
+  <div id="header"></div>
+
+  <main class="bp-layout">
+    <div class="bp-container">
+    <a href="/blog" class="bp-back"><i class="bi bi-arrow-left"></i> Back to Blog</a>
+
+    <div class="bp-meta">
+      <span><i class="bi bi-calendar3"></i> <time datetime="2026-07-01">July 1, 2026</time></span>
+      <span class="bp-badge">Category</span>
+    </div>
+
+    <h1>Your Post Title</h1>
+
+    <p>Introduction paragraph goes here. This is where the article content starts.</p>
+
+    <h2>Section Heading</h2>
+    <p>Content for this section goes here.</p>
+
+    <h3>Subsection</h3>
+    <p>More detailed content.</p>
+
+    <ul>
+      <li>Point one</li>
+      <li>Point two</li>
+      <li>Point three</li>
+    </ul>
+
+    <h2>Conclusion</h2>
+    <p>Wrap up the article here.</p>
+
+    <div class="bp-tags">
+      <span>tag1</span>
+      <span>tag2</span>
+      <span>tag3</span>
+    </div>
+    <aside class="bp-sidebar" id="bp-sidebar"></aside>
+  </main>
+
+  <div id="footer"></div>
+
+</body>
+</html>

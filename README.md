@@ -1,70 +1,204 @@
-# MilindWeb (MK9)
+# Milind Web — Static Site + Modular Google Apps Script Backend
 
-Multi-service business portal with static HTML/CSS/JS frontend, Supabase backend, and Cloudflare Pages hosting.
+A free, self-hosted site with a **modular backend built on Google Apps Script + Google Sheets**.
 
-## Tech Stack
+- **Hosting:** Cloudflare Pages (free) — or any static host (GitHub Pages, Netlify, etc.)
+- **Database:** Google Sheets (free), one spreadsheet **per module**
+- **Backend:** ONE Google Apps Script web app with one `.gs` file per module
+- **No backend server, no Supabase, no paid services**
+- **Auth:** simple username/password login with persistent sessions + per-module access
 
-- **Frontend:** HTML5, CSS3 (custom properties, dark/light mode), JavaScript (ES6 modules)
-- **Hosting:** Cloudflare Pages (static, no build step)
-- **Backend:** Supabase Edge Functions (TypeScript/Deno)
-- **Database:** Supabase PostgreSQL with Row Level Security
-- **Auth:** Supabase Auth (email/password, magic link, OAuth)
-- **Storage:** Supabase Storage
-- **CDN:** Font Awesome 6.4, PapaParse, SheetJS, jsPDF, jsPDF-AutoTable
+> ⚠️ `.env.original` holds all spreadsheet IDs, script URLs and passwords.
+> It is **local-only** (see `.gitignore`) — never commit it to GitHub.
 
-## Project Structure
+---
+
+## Architecture
 
 ```
-├── frontend/              # Static website (Cloudflare Pages)
-│   ├── index.html         # Homepage
-│   ├── pages/             # Site pages
-│   │   ├── blog.html
-│   │   ├── contact.html
-│   │   └── services/      # 8 service pages
-│   ├── modules/           # Business domain modules
-│   │   └── seniority/     # Seniority management
-│   ├── services/          # API service classes
-│   └── shared/            # Shared components, CSS, JS, assets
-│       └── js/
-│           ├── config.js        # Centralized site config (brand, domain, contact)
-│           └── seo-injector.js  # Dynamic SEO meta tag injection
-├── backend/               # Database schema & configuration
-│   ├── schema/            # Full DB schema, RLS policies, docs
-│   └── seed/              # Seed data
-├── supabase/
-│   └── functions/         # Edge Functions
-│       └── blog-posts/    # Blog CRUD API
+        Static site (Cloudflare Pages)
+        ┌───────────┬───────────┬───────────┬───────────┐
+        │  Hospital │ Seniority │  Finance  │  Contact  │   ...future modules
+        └─────┬─────┴─────┬─────┴─────┬─────┴─────┬─────┘
+              │           │           │           │
+              └───── ONE Google Apps Script web app ─────┐
+                    config.gs  utils.gs  auth.gs  api.gs
+                    hospital.gs  seniority.gs  finance.gs  contact.gs
+              ┌──────────┼──────────┼──────────┼──────────┐
+        Google Sheets:   │          │          │          │
+        Milind-Auth  Milind-Hospital Milind-Seniority Milind-Finance Milind-Contacts
 ```
 
-## Features
+- **One spreadsheet per module** (Auth, Hospital, Seniority, Finance, Contacts).
+- **One Apps Script project** attached to the Auth spreadsheet, containing all module files.
+- Shared code lives in `config.gs` (settings/IDs), `utils.gs` (helpers), `auth.gs` (login/sessions/roles), and `api.gs` (router + auth guard).
+- Each module file (e.g. `hospital.gs`) contains **only** that module's business logic.
+- **Adding a future module** = create one new sheet + one new `.gs` file + one route line. Auth/sessions/errors/logging are reused automatically.
 
-### Implemented
-- **Homepage** with hero, service cards, premium services, team section
-- **6 Service Pages:** Digital Marketing & SEO, Web & Software Development, College Projects & Training, Graphics/Photography & Branding, Electrical, Automotive
-- **Centralized Configuration** (`shared/js/config.js`) — brand name, domain, contact, social links in one file
-- **Dynamic SEO Injection** — titles, meta, OG/Twitter tags, JSON-LD generated from config at runtime
-- **Blog System** with Supabase-powered listing, search, categories, tags
-- **Seniority Management** module with CSV/Excel/PDF export
-- **Contact Form** integrated with Google Apps Script, dynamically loaded per-page (no labels, placeholders only)
-- **Shared component classes** (`p-*`) in `style.css` — consistent dark gradient hero, white cards, blue gradient icons across all service pages
-- **Dark/Light Theme** toggle with localStorage persistence
-- **Responsive Design** with mobile hamburger navigation
-- **SEO:** robots.txt, sitemap.xml, dynamic Open Graph / JSON-LD
+---
 
-### Planned
-- Full blog CRUD with comments
-- Hospital management (departments, doctors, appointments)
-- Society management (groups, members, events)
-- Admin panel (settings, audit logs, user management)
-- Authentication (login, register, password reset)
-- Additional Supabase Edge Functions (auth, comments, hospital, society, etc.)
-- Automated sitemap generation
+## Spreadsheets (the database)
 
-## Getting Started
+| Spreadsheet | Sheets auto-created by code |
+|---|---|
+| **Milind-Auth** | `Users` (username, password, role, modules), `Sessions` (token, username, role, created) |
+| **Milind-Hospital** | `patients`, `visits`, `appointments`, `departments`, `doctors`, `billing_items`, … + `_meta` |
+| **Milind-Seniority** | `employees` (or imported list), `_meta` |
+| **Milind-Finance** | `Users`-independent; `Salary_Monthly`, `Salary_Verify`, `FinYear_Summary`, `Loans_Insurance`, `Major_Transactions`, `Settings` |
+| **Milind-Contacts** | one sheet **per module**: `Hospital`, `Seniority`, `Finance`, `General` |
 
-1. Clone the repo
-2. Edit `frontend/shared/js/config.js` with your brand name, domain, and contact info
-3. Configure `backend/.env.example` with your Supabase project credentials
-4. Run `backend/schema/schema.sql` against your Supabase database
-5. Deploy the `frontend/` directory to Cloudflare Pages
-6. Deploy Edge Functions from `supabase/functions/`
+Leave spreadsheets **blank** — the code creates sheets and headers on first use.
+
+---
+
+## What's inside
+
+```
+├── index.html                      Landing page (access-aware module cards)
+├── login.html  register.html       Auth pages (planned)
+├── hospital/                       Hospital Management module
+│   ├── dashboard.html  new-visit.html  patient-list.html
+│   ├── patient-profile.html  appointments.html
+│   ├── components/hospital-nav.html  js/hospital-nav.js  css/hospital.css
+│   └── data/masters.json           Fallback departments + doctors
+├── seniority/                      Seniority module pages
+│   ├── seniority-list.html
+│   └── seniority-management.html
+├── apps-script/                    ⚙️ Old combined Code.gs (reference/base for hospital.gs)
+├── js/
+│   ├── config.js                   ⚙️ ALL branding + appsScriptUrl (frontend config)
+│   ├── hospital-api.js             Client for the Apps Script backend
+│   ├── headerfooter.js             Loads shared header/footer + theme toggle
+│   ├── seo-injector.js             Title/description/canonical injection
+│   ├── contact-form.js         Contact form → Apps Script
+│   ├── blog.js  blog-sidebar.js
+├── components/header.html  footer.html   Shared header + footer ({{PLACEHOLDER}})
+├── css/  fonts/  img/  data/       Shared assets + static JSON data
+├── blog/                           Blog posts + template
+├── calculator.html  calendar.html  links.html  mp.html  myphoto.html
+│   ├── Seniariity_List.html  Seniarity_Management.html  Test.html   (legacy pages)
+├── _redirects  _headers           Clean URLs + security headers
+├── sitemap.xml  robots.txt
+└── .env.original                  ⚙️ LOCAL ONLY — all IDs/URLs/passwords (gitignored)
+```
+
+---
+
+## Setup — new backend (one-time)
+
+### 1. Create the spreadsheets in Google Drive
+Create 5 empty Google Sheets: `Milind-Auth`, `Milind-Hospital`, `Milind-Seniority`, `Milind-Finance`, `Milind-Contacts`.
+Copy their IDs (from URL: `/spreadsheets/d/<ID>/edit`) into `.env.original`.
+
+### 2. Create ONE Apps Script project
+1. Open **Milind-Auth** → **Extensions → Apps Script**.
+2. Add 8 files via **+ → Script**: `config.gs`, `utils.gs`, `auth.gs`, `api.gs`, `hospital.gs`, `seniority.gs`, `finance.gs`, `contact.gs`.
+3. Paste the corresponding code into each (from `apps-script-v2/` in this repo — generated during the build).
+
+### 3. Configure `config.gs`
+```js
+var CONFIG = {
+  authSheetId:      '<Milind-Auth ID>',
+  hospitalSheetId:  '<Milind-Hospital ID>',
+  senioritySheetId: '<Milind-Seniority ID>',
+  financeSheetId:   '<Milind-Finance ID>',
+  contactSheetId:   '<Milind-Contacts ID>',
+};
+```
+
+### 4. Deploy the web app
+1. **Deploy → New deployment → Web app**
+   - Execute as: **Me**
+   - Who has access: **Anyone**
+2. Copy the **/exec** URL.
+3. Paste it into `js/config.js` → `appsScriptUrl`.
+
+---
+
+## Auth & roles (simple)
+
+- **Login** → server checks `Users` sheet → issues a **session token** (stored in `Sessions` sheet).
+- **Browser** keeps only the token (localStorage) — no password stored client-side.
+- **Persistent:** once logged in on a PC, stays logged in until **Logout** (which invalidates the token).
+- **Register:** creates a `user` with **no module access** (can browse the general site).
+
+### Manage roles — no coding, just edit the sheet
+
+1. Open the **Milind-Auth** spreadsheet → **`Users`** tab.
+2. It's a 4-column table:
+
+| username | password | role   | modules                                   |
+|----------|----------|--------|-------------------------------------------|
+| admin    | admin123 | admin  | hospital, seniority, finance, contact     |
+| rahul    | rahul123 | user   | hospital:admin, seniority                  |
+| priya    | priya123 | user   | finance:admin, hospital:admin              |
+| sonam    | sonam123 | user   | hospital, seniority, finance, contact      |
+
+| Column | What to type | Example |
+|---|---|---|
+| `username` | login name | `rahul` |
+| `password` | login password (plain) | `rahul123` |
+| `role` | `admin` = everything, or `user` = only what's in `modules` | `user` |
+| `modules` | comma-separated module list | `hospital:admin, seniority` |
+
+### `modules` column cheat sheet
+
+| You type in `modules` | User gets |
+|---|---|
+| *(empty)* | **No module access** (only general site) |
+| `hospital` | Read Hospital |
+| `hospital, seniority` | Read Hospital + Seniority |
+| `hospital:admin` | **Admin** of Hospital (read + write) |
+| `finance:admin, hospital:admin` | **Admin of 2 modules** |
+| `hospital:admin, seniority, finance` | Admin of Hospital, read Seniority + Finance |
+
+- `module` = **read only**
+- `module:admin` = **read + write** (manage that module)
+- `role = admin` = **global**, sees everything (the `modules` column is then ignored)
+
+### Everyday tasks (manual edits)
+
+- **Make a user a Hospital admin:** edit their `modules` cell → type `hospital:admin`
+- **Give 3 modules with 1 admin:** `seniority:admin, hospital, finance`
+- **Remove all access:** clear the `modules` cell (empty) — they can still browse the site
+- **Make someone global admin:** change `role` from `user` → `admin`
+
+### Important notes
+
+- Changes take effect **immediately** — access is re-checked on every API call. No redeploy, no logout needed.
+- **Registration always creates** `role=user` + empty `modules` → new users get nothing until you edit their row.
+- The **`Sessions`** tab is auto-managed by the code (tokens) — **do not edit it**.
+
+---
+
+## Module build status
+
+| Module | Backend (.gs) | Frontend | Status |
+|---|---|---|---|
+| Auth | `auth.gs` + `api.gs` | `login.html`, `register.html`, header buttons | 🔨 planned |
+| Contact | `contact.gs` | existing contact form (updated) | 🔨 planned |
+| Hospital | `hospital.gs` (from `apps-script/Code.gs`) | existing `hospital/` pages | 🔨 planned |
+| Seniority | `seniority.gs` | existing `seniority/` pages | 🔨 planned |
+| Finance | `finance.gs` (from old PFMS engine) | new `finance/` pages | 🔨 planned |
+
+---
+
+## Legacy pages (kept, independent)
+
+- `calculator.html`, `calendar.html`, `links.html`, `mp.html`, `myphoto.html`
+- `Seniariity_List.html`, `Seniarity_Management.html`, `Test.html`
+- Old apps-script backups live in `my old app scripts /` (gitignored — contains real sheet IDs and passwords)
+
+These are separate from the new modular backend and work as-is.
+
+---
+
+## Editing branding / contact details
+
+Everything is in `js/config.js`: site name, tagline, phone, email, social links, domain and the Apps Script URL.
+
+## Notes
+
+- The Apps Script web app is public by design (access = Anyone). Auth tokens gate module data; treat the endpoint like a public API and avoid storing highly sensitive data.
+- Tables are sheets; a `_meta` sheet holds ID counters. Patient UHIDs auto-generate as `PAT-YYYY-####`.
+- Designed for easy future migration to Supabase/MySQL: each module's data access is isolated in its own `.gs` file behind a common API layer.

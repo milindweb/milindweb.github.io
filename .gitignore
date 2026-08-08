@@ -1,0 +1,17 @@
+# ── Local secrets & references (never push to GitHub) ──────────────
+.env.original
+.env
+.env.*.local
+*.secret
+*_KEY.json
+# config.gs contains the real spreadsheet IDs — generated from .env.original
+apps-script-v2/config.gs
+
+# ── Old apps-script backups (contain real sheet IDs & passwords) ────
+my old app scripts\ 
+
+# ── Local tooling ───────────────────────────────────────────────────
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

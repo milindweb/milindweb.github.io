@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'About Us', description: 'Learn about Milind Web — a freelance digital marketing consultancy and technical services provider based in Uran, Navi Mumbai. Meet our team and discover our mission.', canonical: '/about' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css" />
+  <script src="/js/headerfooter.js" defer></script>
+  <style>
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 1rem; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--accent); }
+    p { line-height: 1.8; color: var(--text-secondary); margin-bottom: 1rem; }
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .team-card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .team-card h3 { margin: 0 0 0.25rem; color: var(--accent); }
+    .team-card .role { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 0.75rem; }
+    .team-card p { font-size: 0.95rem; margin: 0; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <main>
+    <h1>About Milind Web</h1>
+    <p>We are a freelance digital marketing consultancy and technical services provider based in Uran, Navi Mumbai. We help businesses grow online with SEO, social media, and technical digital solutions — affordable and ROI-focused for startups and small businesses.</p>
+
+    <h2>Our Mission</h2>
+    <p>To empower small and medium businesses with modern digital tools and technical expertise — enabling them to compete, grow, and succeed in the digital age.</p>
+
+    <h2>Our Team</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <h3>Er. Aarti</h3>
+        <div class="role">CEO & Founder</div>
+        <p>Er. Aarti is a Diploma in Electrical Engineering (DEE) and Bachelor of Engineering (B.E.) in Electrical Engineering graduate with expertise in Full Stack Web Development, Website Design, SEO, Digital Marketing, Business Automation, and Software Solutions. With 2+ years of professional experience, she has helped businesses build a strong digital presence through modern, responsive websites, search engine optimization (SEO), performance marketing, and innovative technology solutions. She also completed 6 months of industrial training at a power plant, gaining hands-on experience in PLC, SCADA, DCS, relay logic, and industrial automation systems. Combining a strong engineering foundation with digital innovation, she is committed to delivering scalable, user-centric, and results-driven solutions that empower businesses to grow and succeed in the digital era.</p>
+      </div>
+    </div>
+  </main>
+
+  <div id="form-container"></div>
+  <script>
+    fetch("/contactform.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("form-container").innerHTML = html;
+        const script = document.createElement("script");
+        script.src = "/js/contact-form.js";
+        document.body.appendChild(script);
+      });
+  </script>
+
+  <div id="footer"></div>
+</body>
+</html>

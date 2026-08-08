@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Hospital Dashboard', description: 'Hospital management dashboard' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <script src="/js/hospital-api.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/hospital/js/hospital-nav.js" defer></script>
+  <link rel="stylesheet" href="/hospital/css/hospital.css">
+</head>
+<body>
+  <div id="header"></div>
+  <div id="hospitalNav"></div>
+  <div class="hosp-dashboard" id="app">
+    <h1><i class="fas fa-hospital"></i> Hospital Dashboard</h1>
+
+    <div class="hosp-stat-grid">
+      <div class="hosp-card hosp-stat-card"><div class="hosp-stat-icon"><i class="fas fa-users"></i></div><div class="hosp-stat-value" id="totalPatients">—</div><div class="hosp-stat-label">Total Patients</div></div>
+      <div class="hosp-card hosp-stat-card"><div class="hosp-stat-icon"><i class="fas fa-calendar-check"></i></div><div class="hosp-stat-value" id="todayVisits">—</div><div class="hosp-stat-label">Today's Visits</div></div>
+      <div class="hosp-card hosp-stat-card"><div class="hosp-stat-icon"><i class="fas fa-clock"></i></div><div class="hosp-stat-value" id="pendingVisits">—</div><div class="hosp-stat-label">Pending</div></div>
+      <div class="hosp-card hosp-stat-card"><div class="hosp-stat-icon"><i class="fas fa-calendar-alt"></i></div><div class="hosp-stat-value" id="todayAppointments">—</div><div class="hosp-stat-label">Appointments</div></div>
+    </div>
+
+    <div class="hosp-quick-actions">
+      <a href="/hospital/new-visit" class="hosp-quick-action"><i class="fas fa-plus-circle"></i> New Visit</a>
+      <a href="/hospital/patient-list" class="hosp-quick-action"><i class="fas fa-search"></i> Search Patients</a>
+      <a href="/hospital/appointments" class="hosp-quick-action"><i class="fas fa-calendar-plus"></i> Appointments</a>
+    </div>
+
+    <div class="hosp-recent-section">
+      <h3><i class="fas fa-history"></i> Recent Visits</h3>
+      <div id="recentVisits"><p style="color:var(--hosp-text-secondary);">Loading...</p></div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script>
+    async function loadDashboard() {
+      const data = await HospitalAPI.dashboard();
+      const stats = data.stats || {};
+
+      document.getElementById('totalPatients').textContent = stats.totalPatients || 0;
+      document.getElementById('todayVisits').textContent = stats.todayVisits || 0;
+      document.getElementById('pendingVisits').textContent = stats.pendingVisits || 0;
+      document.getElementById('todayAppointments').textContent = stats.todayAppointments || 0;
+
+      const container = document.getElementById('recentVisits');
+      const recent = data.recent || [];
+      if (recent.length === 0) {
+        container.innerHTML = '<p style="color:var(--gray);">No recent visits.</p>';
+      } else {
+        container.innerHTML = recent.map(v => `
+          <div class="hosp-visit-row">
+            <div>
+              <div class="hosp-patient-name">${v.patient_name || 'Unknown'} <span class="hosp-visit-meta">#${v.opd_number}</span></div>
+              <div class="hosp-visit-meta">${new Date(v.visit_date).toLocaleString()} · ${v.visit_type}</div>
+            </div>
+            <span class="hosp-badge hosp-badge-${v.visit_status === 'active' ? 'active' : 'completed'}">${v.visit_status}</span>
+          </div>
+        `).join('');
+      }
+    }
+    loadDashboard();
+  </script>
+</body>
+</html>

@@ -1,209 +1,237 @@
-/* =========================================================
-   BLOG ENGINE (MilindWeb)
-   Loads /data/posts.json and builds blog index dynamically
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-  const postsContainer = document.getElementById("bg-posts");
-  const categoriesList = document.getElementById("bg-categories");
-  const tagsContainer = document.getElementById("bg-tags");
-  const recentList = document.getElementById("bg-recent");
-  const searchInput = document.getElementById("bg-search");
-  const pagination = document.getElementById("bg-pagination");
+(function () {
+  'use strict';
 
   let allPosts = [];
   let filteredPosts = [];
   let currentPage = 1;
   const postsPerPage = 6;
 
-  // Load posts.json
-  fetch("data/posts.json")
-    .then(res => res.json())
-    .then(data => {
-      // Sort posts newest first
-      allPosts = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-      filteredPosts = [...allPosts];
-      renderBlog();
+  const containers = {
+    posts: document.getElementById('bl-posts'),
+    categories: document.getElementById('bl-categories'),
+    tags: document.getElementById('bl-tags'),
+    recent: document.getElementById('bl-recent'),
+    search: document.getElementById('bl-search'),
+    pagination: document.getElementById('bl-pagination'),
+  };
+
+  if (!containers.posts) return;
+
+  fetch('/data/posts.json')
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      allPosts = data.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
+      filteredPosts = allPosts.slice();
+
+      // Apply URL params if present
+      var params = new URLSearchParams(window.location.search);
+      var catParam = params.get('category');
+      var tagParam = params.get('tag');
+      var searchParam = params.get('search');
+
+      if (catParam) {
+        filteredPosts = allPosts.filter(function (p) { return p.category === catParam; });
+      } else if (tagParam) {
+        filteredPosts = allPosts.filter(function (p) { return p.tags && p.tags.indexOf(tagParam) !== -1; });
+      } else if (searchParam) {
+        var q = searchParam.toLowerCase();
+        filteredPosts = allPosts.filter(function (p) {
+          return p.title.toLowerCase().indexOf(q) !== -1 ||
+            (p.excerpt && p.excerpt.toLowerCase().indexOf(q) !== -1) ||
+            (p.tags && p.tags.join(' ').toLowerCase().indexOf(q) !== -1);
+        });
+      }
+
+      render();
       renderSidebar();
+
+      // Highlight active filter category in sidebar
+      if (catParam && containers.categories) {
+        containers.categories.querySelectorAll('a').forEach(function (a) {
+          if (a.dataset.blCat === catParam) {
+            a.style.fontWeight = '700';
+            a.style.color = 'var(--accent)';
+          }
+        });
+      }
     })
-    .catch(err => {
-      postsContainer.innerHTML = `<p style="color:red">Error loading posts.json</p>`;
-      console.error("Error loading posts.json:", err);
+    .catch(function () {
+      containers.posts.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:2rem;">No posts yet.</p>';
     });
 
-  /* ----------------------
-     Render Blog Posts
-  ---------------------- */
-  function renderBlog() {
-    postsContainer.innerHTML = "";
+  function render() {
+    containers.posts.innerHTML = '';
 
-    const start = (currentPage - 1) * postsPerPage;
-    const end = start + postsPerPage;
-    const postsToShow = filteredPosts.slice(start, end);
+    var start = (currentPage - 1) * postsPerPage;
+    var end = start + postsPerPage;
+    var pagePosts = filteredPosts.slice(start, end);
 
-    if (postsToShow.length === 0) {
-      postsContainer.innerHTML = `<p>No posts found.</p>`;
-      pagination.innerHTML = "";
+    if (!pagePosts.length) {
+      containers.posts.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:2rem;">No posts found.</p>';
+      containers.pagination.innerHTML = '';
       return;
     }
 
-    postsToShow.forEach(post => {
-      const card = document.createElement("article");
-      card.className = "bg-card fade-in";
-      card.innerHTML = `
-        <img src="img/${post.image}" alt="${post.title}">
-        <div class="bg-card-body">
-          <small>${formatDate(post.date)} · ${post.category}</small>
-          <h3><a href="${post.url}">${post.title}</a></h3>
-          <p>${post.description}</p>
-          <div class="bg-tags">
-            ${post.tags.map(t => `<span class="bg-tag" data-tag="${t}">${t}</span>`).join("")}
-          </div>
-        </div>
-      `;
-      postsContainer.appendChild(card);
+    pagePosts.forEach(function (post) {
+      var card = document.createElement('article');
+      card.className = 'bl-card';
+      card.innerHTML =
+        '<div class="bl-card-meta">' +
+          '<span><i class="bi bi-calendar3"></i> ' + formatDate(post.date) + '</span>' +
+          '<span class="bl-badge">' + escapeHtml(post.category) + '</span>' +
+        '</div>' +
+        '<h2><a href="' + post.url + '">' + escapeHtml(post.title) + '</a></h2>' +
+        '<p>' + escapeHtml(post.excerpt || post.description || '') + '</p>' +
+        (post.tags && post.tags.length
+          ? '<div class="bl-card-tags">' + post.tags.map(function (t) {
+              return '<span class="bl-tag" data-tag="' + escapeHtml(t) + '">' + escapeHtml(t) + '</span>';
+            }).join('') + '</div>'
+          : '');
+      containers.posts.appendChild(card);
     });
 
     renderPagination();
     attachTagClicks();
   }
 
-  /* ----------------------
-     Render Sidebar
-  ---------------------- */
   function renderSidebar() {
-    // Categories
-    const categories = [...new Set(allPosts.map(p => p.category))].sort();
-    categoriesList.innerHTML = "";
-    categories.forEach(cat => {
-      const count = allPosts.filter(p => p.category === cat).length;
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="#" data-cat="${cat}">${cat} <span class="bg-count">(${count})</span></a>`;
-      categoriesList.appendChild(li);
+    var categories = {};
+    var allTags = [];
+
+    allPosts.forEach(function (p) {
+      categories[p.category] = (categories[p.category] || 0) + 1;
+      if (p.tags) allTags = allTags.concat(p.tags);
     });
 
-    // Tags
-    const tags = [...new Set(allPosts.flatMap(p => p.tags))].sort();
-    tagsContainer.innerHTML = "";
-    tags.forEach(tag => {
-      const span = document.createElement("span");
-      span.className = "bg-tag";
+    var sortedCats = Object.keys(categories).sort();
+    containers.categories.innerHTML = '';
+    sortedCats.forEach(function (cat) {
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="/blog?category=' + encodeURIComponent(cat) + '" data-bl-cat="' + escapeHtml(cat) + '">' + escapeHtml(cat) + ' <span class="bl-count">(' + categories[cat] + ')</span></a>';
+      containers.categories.appendChild(li);
+    });
+
+    var uniqueTags = [...new Set(allTags)].sort();
+    containers.tags.innerHTML = '';
+    uniqueTags.forEach(function (tag) {
+      var span = document.createElement('span');
+      span.className = 'bl-tag';
       span.textContent = tag;
       span.dataset.tag = tag;
-      tagsContainer.appendChild(span);
+      containers.tags.appendChild(span);
     });
 
-    // Recent posts
-    recentList.innerHTML = "";
-    allPosts.slice(0, 5).forEach(p => {
-      const li = document.createElement("li");
-      li.innerHTML = `<a href="${p.url}">${p.title}</a>`;
-      recentList.appendChild(li);
+    containers.recent.innerHTML = '';
+    allPosts.slice(0, 5).forEach(function (p) {
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="' + p.url + '">' + escapeHtml(p.title) + '</a>';
+      containers.recent.appendChild(li);
     });
 
-    // Category click
-    categoriesList.addEventListener("click", e => {
-      if (e.target.dataset.cat) {
+    containers.categories.addEventListener('click', function (e) {
+      var cat = e.target.closest('[data-bl-cat]');
+      if (cat) {
         e.preventDefault();
-        filterByCategory(e.target.dataset.cat);
+        filterByCategory(cat.dataset.blCat);
+        history.pushState(null, '', '/blog?category=' + encodeURIComponent(cat.dataset.blCat));
       }
     });
 
-    // Tag click (sidebar)
-    tagsContainer.addEventListener("click", e => {
-      if (e.target.dataset.tag) {
-        filterByTag(e.target.dataset.tag);
+    containers.tags.addEventListener('click', function (e) {
+      var tag = e.target.closest('[data-tag]');
+      if (tag) {
+        filterByTag(tag.dataset.tag);
+        history.pushState(null, '', '/blog?tag=' + encodeURIComponent(tag.dataset.tag));
       }
     });
 
-    // Search
-    searchInput.addEventListener("input", () => {
-      filterBySearch(searchInput.value.trim().toLowerCase());
-    });
+    if (containers.search) {
+      containers.search.addEventListener('input', function () {
+        filterBySearch(containers.search.value.trim().toLowerCase());
+        var q = containers.search.value.trim();
+        if (q) {
+          history.pushState(null, '', '/blog?search=' + encodeURIComponent(q));
+        } else {
+          history.pushState(null, '', '/blog');
+        }
+      });
+    }
   }
 
-  /* ----------------------
-     Filters
-  ---------------------- */
   function filterByCategory(cat) {
-    filteredPosts = allPosts.filter(p => p.category === cat);
+    filteredPosts = allPosts.filter(function (p) { return p.category === cat; });
     currentPage = 1;
-    renderBlog();
+    render();
   }
 
   function filterByTag(tag) {
-    filteredPosts = allPosts.filter(p => p.tags.includes(tag));
+    filteredPosts = allPosts.filter(function (p) { return p.tags && p.tags.indexOf(tag) !== -1; });
     currentPage = 1;
-    renderBlog();
+    render();
   }
 
   function filterBySearch(query) {
-    filteredPosts = allPosts.filter(p =>
-      p.title.toLowerCase().includes(query) ||
-      p.description.toLowerCase().includes(query) ||
-      p.tags.join(" ").toLowerCase().includes(query)
-    );
+    if (!query) { filteredPosts = allPosts.slice(); currentPage = 1; render(); return; }
+    filteredPosts = allPosts.filter(function (p) {
+      return p.title.toLowerCase().indexOf(query) !== -1 ||
+        (p.excerpt && p.excerpt.toLowerCase().indexOf(query) !== -1) ||
+        (p.description && p.description.toLowerCase().indexOf(query) !== -1) ||
+        (p.tags && p.tags.join(' ').toLowerCase().indexOf(query) !== -1);
+    });
     currentPage = 1;
-    renderBlog();
+    render();
   }
 
-  /* ----------------------
-     Pagination
-  ---------------------- */
   function renderPagination() {
-    pagination.innerHTML = "";
-
-    const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+    containers.pagination.innerHTML = '';
+    var totalPages = Math.ceil(filteredPosts.length / postsPerPage);
     if (totalPages <= 1) return;
 
-    const prevBtn = document.createElement("button");
-    prevBtn.textContent = "« Prev";
-    prevBtn.disabled = currentPage === 1;
-    prevBtn.addEventListener("click", () => {
-      currentPage--;
-      renderBlog();
+    var prev = document.createElement('span');
+    prev.textContent = '\u00AB Prev';
+    if (currentPage === 1) prev.classList.add('disabled');
+    prev.addEventListener('click', function () {
+      if (currentPage > 1) { currentPage--; render(); }
     });
-    pagination.appendChild(prevBtn);
+    containers.pagination.appendChild(prev);
 
-    for (let i = 1; i <= totalPages; i++) {
-      const btn = document.createElement("button");
+    for (var i = 1; i <= totalPages; i++) {
+      var btn = document.createElement('span');
       btn.textContent = i;
-      if (i === currentPage) btn.classList.add("active");
-      btn.addEventListener("click", () => {
-        currentPage = i;
-        renderBlog();
-      });
-      pagination.appendChild(btn);
+      if (i === currentPage) btn.classList.add('active');
+      btn.addEventListener('click', (function (page) {
+        return function () { currentPage = page; render(); };
+      })(i));
+      containers.pagination.appendChild(btn);
     }
 
-    const nextBtn = document.createElement("button");
-    nextBtn.textContent = "Next »";
-    nextBtn.disabled = currentPage === totalPages;
-    nextBtn.addEventListener("click", () => {
-      currentPage++;
-      renderBlog();
+    var next = document.createElement('span');
+    next.textContent = 'Next \u00BB';
+    if (currentPage === totalPages) next.classList.add('disabled');
+    next.addEventListener('click', function () {
+      if (currentPage < totalPages) { currentPage++; render(); }
     });
-    pagination.appendChild(nextBtn);
-  }
-
-  /* ----------------------
-     Utility
-  ---------------------- */
-  function formatDate(dateStr) {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric"
-    });
+    containers.pagination.appendChild(next);
   }
 
   function attachTagClicks() {
-    document.querySelectorAll(".bg-tag").forEach(tagEl => {
-      tagEl.addEventListener("click", e => {
-        const tag = e.target.dataset.tag;
+    document.querySelectorAll('.bl-tag').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        var tag = e.target.dataset.tag;
         if (tag) filterByTag(tag);
       });
     });
   }
-});
+
+  function formatDate(dateStr) {
+    var d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+})();

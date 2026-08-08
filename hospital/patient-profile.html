@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Patient Profile', description: 'Patient profile and visit history' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <script src="/js/hospital-api.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/hospital/js/hospital-nav.js" defer></script>
+  <link rel="stylesheet" href="/hospital/css/hospital.css">
+  <style>
+    .profile-header { background: var(--hosp-card); border-radius: 12px; padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; gap: 24px; align-items: start; flex-wrap: wrap; margin-bottom: 24px; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--hosp-bg); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--hosp-primary); }
+    .profile-info h2 { font-size: 1.4rem; }
+    .profile-info .meta { color: var(--hosp-text-secondary); font-size: 0.9rem; margin-top: 4px; }
+    .profile-info .meta span { margin-right: 16px; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    .detail-item label { font-size: 0.75rem; color: var(--hosp-text-secondary); display: block; }
+    .detail-item span { font-size: 0.9rem; }
+    .drug-allergy { display: inline-block; background: #fce4ec; color: #c62828; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin: 2px; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <div id="hospitalNav"></div>
+  <div class="hosp-container" id="app">
+    <div id="profileContent">
+      <p style="color:var(--hosp-text-secondary);">Loading patient...</p>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const patientId = params.get('id');
+
+    (async function() {
+      if (!patientId) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">No patient ID provided.</p>'; return; }
+
+      const data = await HospitalAPI.profile(patientId);
+      const patient = data.row;
+      const visits = data.visits || [];
+      if (!patient) { document.getElementById('profileContent').innerHTML = '<p style="color:var(--danger);">Patient not found.</p>'; return; }
+
+      const age = patient.date_of_birth ? Math.floor((new Date() - new Date(patient.date_of_birth)) / (365.25 * 86400000)) : '—';
+      const allergyBadges = patient.drug_allergies?.length
+        ? patient.drug_allergies.map(a => `<span class="drug-allergy">${a}</span>`).join(' ')
+        : '';
+
+      let html = `
+        <div class="profile-header">
+          <div class="profile-avatar"><i class="fas fa-user"></i></div>
+          <div class="profile-info">
+            <h2>${patient.full_name}</h2>
+            <div class="meta">
+              <span><i class="fas fa-id-card"></i> UHID: #${patient.uhid}</span>
+              <span><i class="fas fa-venus-mars"></i> ${patient.gender || '—'}</span>
+              <span><i class="fas fa-birthday-cake"></i> ${age} yrs</span>
+              <span><i class="fas fa-phone"></i> ${patient.mobile || '—'}</span>
+              <span><i class="fas fa-envelope"></i> ${patient.email || '—'}</span>
+            </div>
+            ${allergyBadges ? `<div class="meta" style="margin-top:8px;"><strong>Allergies:</strong> ${allergyBadges}</div>` : ''}
+            <div class="meta">${patient.address || ''}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:24px;">
+          <a href="/hospital/new-visit?clear=1" class="hosp-btn hosp-btn-primary"><i class="fas fa-plus"></i> New Visit</a>
+        </div>
+        <h3 style="margin-bottom:16px;">Visit History (${visits.length})</h3>`;
+
+      if (visits.length === 0) {
+        html += '<p style="color:var(--hosp-text-secondary);">No visits recorded yet.</p>';
+      } else {
+        for (const v of visits) {
+          const vitals = (v.vitals && v.vitals[0]) || {};
+          const complaints = v.complaints || [];
+          const diagnoses = v.diagnoses || [];
+          const prescriptions = v.prescriptions || [];
+          const procedures = v.procedures || [];
+          const followups = (v.followups && v.followups[0]) || {};
+          const billing = (v.billing_summary && v.billing_summary[0]) || {};
+          html += `
+            <div class="hosp-visit-card">
+              <div class="hosp-visit-header" onclick="toggleVisit('visit${v.id}')">
+                <div>
+                  <h4>${new Date(v.visit_date).toLocaleDateString()} · OPD #${v.opd_number}</h4>
+                  <span style="font-size:0.85rem;color:var(--hosp-text-secondary);">${v.department_name || '—'} · ${v.doctor_name || '—'} · ${v.visit_type}</span>
+                </div>
+                <i class="fas fa-chevron-down" style="color:var(--hosp-text-secondary);"></i>
+              </div>
+              <div class="hosp-visit-body" id="visit${v.id}">
+                <div class="detail-grid">
+                  ${Object.keys(vitals).length ? `
+                    <div class="detail-item"><label>Vitals</label><span>BP: ${vitals.bp_systolic||'—'}/${vitals.bp_diastolic||'—'} | Pulse: ${vitals.pulse_rate||'—'} | Temp: ${vitals.temperature||'—'}°F | SpO₂: ${vitals.spo2||'—'}%</span></div>
+                  ` : ''}
+                  ${complaints.length ? `
+                    <div class="detail-item"><label>Complaints</label><span>${complaints.map(c => c.symptom + (c.duration ? ' ('+c.duration+')' : '')).join(', ')}</span></div>
+                  ` : ''}
+                  ${diagnoses.length ? `
+                    <div class="detail-item"><label>Diagnosis</label><span>${diagnoses.map(d => `<strong>${d.diagnosis_type}:</strong> ${d.diagnosis_text}`).join('<br>')}</span></div>
+                  ` : ''}
+                  ${prescriptions.length ? `
+                    <div class="detail-item"><label>Prescriptions (${prescriptions.length})</label><span>${prescriptions.map(p => p.medicine_name + ' ' + (p.frequency||'')).join(', ')}</span></div>
+                  ` : ''}
+                  ${procedures.length ? `
+                    <div class="detail-item"><label>Procedures</label><span>${procedures.map(p => p.procedure_name).join(', ')}</span></div>
+                  ` : ''}
+                  ${Object.keys(followups).length ? `
+                    <div class="detail-item"><label>Follow-up</label><span>${followups.treatment_response||'—'} · ${followups.followup_date||'—'}</span></div>
+                  ` : ''}
+                  ${billing.grand_total ? `
+                    <div class="detail-item"><label>Billing</label><span>₹${billing.grand_total} (${billing.payment_status})</span></div>
+                  ` : ''}
+                </div>
+              </div>
+            </div>`;
+        }
+      }
+
+      document.getElementById('profileContent').innerHTML = html;
+    })();
+
+    function toggleVisit(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

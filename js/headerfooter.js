@@ -1,6 +1,36 @@
 // js/headerfooter.js
 // Load header and footer dynamically + initialize functionality
 document.addEventListener("DOMContentLoaded", () => {
+  var cfg = typeof SITE_CONFIG !== 'undefined' ? SITE_CONFIG : {};
+
+  var REPLACE_MAP = {
+    '{{SITE_NAME}}': cfg.brand ? cfg.brand.name : '',
+    '{{SITE_NAME_UPPER}}': cfg.brand ? cfg.brand.nameUppercase : '',
+    '{{TAGLINE}}': cfg.brand ? cfg.brand.tagline : '',
+    '{{LOGO_ICON}}': cfg.brand ? (cfg.brand.logoIcon || cfg.brand.name.charAt(0)) : '',
+    '{{COPYRIGHT}}': cfg.brand ? cfg.brand.copyright : '',
+    '{{PHONE}}': cfg.contact ? cfg.contact.phoneDisplay : '',
+    '{{PHONE_RAW}}': cfg.contact ? cfg.contact.phone : '',
+    '{{PHONE_WA}}': cfg.contact ? cfg.contact.phoneWA : '',
+    '{{EMAIL}}': cfg.contact ? cfg.contact.email : '',
+    '{{LOCATION}}': cfg.contact ? cfg.contact.location : '',
+    '{{HOURS}}': cfg.contact ? cfg.contact.workingHours : '',
+    '{{DOMAIN}}': cfg.domain || '',
+    '{{URL}}': cfg.url || '',
+    '{{SOCIAL_WA}}': cfg.social ? cfg.social.whatsapp : '',
+    '{{SOCIAL_TELEGRAM}}': cfg.social ? cfg.social.telegram : '',
+    '{{SOCIAL_INSTA}}': cfg.social ? cfg.social.instagram : '',
+    '{{SOCIAL_FB}}': cfg.social ? cfg.social.facebook : '',
+    '{{SOCIAL_TWITTER}}': cfg.social ? cfg.social.twitter : '',
+    '{{SOCIAL_LINKEDIN}}': cfg.social ? cfg.social.linkedin : '',
+  };
+
+  function applyReplacements(html) {
+    return html.replace(/{{[A-Z_]+}}/g, function (match) {
+      return REPLACE_MAP[match] !== undefined ? REPLACE_MAP[match] : match;
+    });
+  }
+
   /**
    * Load an external HTML component into a placeholder div
    * @param {string} file - Path to the HTML file
@@ -11,7 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(file);
       if (!response.ok) throw new Error(`Failed to load ${file}`);
-      const html = await response.text();
+      let html = await response.text();
+      html = applyReplacements(html);
 
       const placeholder = document.getElementById(placeholderId);
       if (placeholder) {
@@ -25,6 +56,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * Initialize Theme Toggle
+   */
+  function initThemeToggle(headerRoot) {
+    const toggle = headerRoot.querySelector(".hf-theme-toggle");
+    const mobileToggle = headerRoot.querySelector(".hf-mobile-theme-toggle");
+    if (!toggle) return;
+
+    function applyTheme(theme) {
+      const isDark = theme === "dark";
+      document.documentElement.classList.toggle("dark-mode", isDark);
+      localStorage.setItem("theme", theme);
+      const icon = toggle.querySelector("i");
+      if (icon) icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+      if (mobileToggle) {
+        const mobileIcon = mobileToggle.querySelector("i");
+        if (mobileIcon) mobileIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+      }
+    }
+
+    const saved = localStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(saved || (prefersDark ? "dark" : "light"));
+
+    toggle.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark-mode");
+      applyTheme(isDark ? "light" : "dark");
+    });
+
+    if (mobileToggle) {
+      mobileToggle.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.contains("dark-mode");
+        applyTheme(isDark ? "light" : "dark");
+      });
+    }
+  }
+
+  /**
    * Initialize Header Functionality
    */
   function initHeader(headerRoot) {
@@ -34,6 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const header       = headerRoot.querySelector(".hf-header");
 
     if (!mobileToggle || !mobileMenu || !mobileOverlay || !header) return;
+
+    // Initialize theme toggle
+    initThemeToggle(headerRoot);
 
     // Toggle mobile menu
     mobileToggle.addEventListener("click", () => {
@@ -86,6 +157,37 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /**
+   * Initialize Auth Buttons in the header
+   * Shows LOGIN or LOGOUT depending on the session token.
+   */
+  function initAuthButtons(headerRoot) {
+    if (!window.Auth) return;
+
+    function render() {
+      const loggedIn = window.Auth.isLoggedIn();
+      const loginEls  = headerRoot.querySelectorAll("[data-auth='login']");
+      const logoutEls = headerRoot.querySelectorAll("[data-auth='logout']");
+      loginEls.forEach((el) => { el.style.display = loggedIn ? "none" : ""; });
+      logoutEls.forEach((el) => { el.style.display = loggedIn ? "" : "none"; });
+    }
+
+    var logoutEls = headerRoot.querySelectorAll("[data-auth='logout']");
+    logoutEls.forEach((el) => {
+      el.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.Auth.logout();
+        render();
+        if (window.location.pathname === "/login") window.location.href = "/";
+      });
+    });
+
+    render();
+
+    // Refresh the token against the backend (silent) so module access is current.
+    window.Auth.checkSession().then(render);
+  }
+
+  /**
    * Initialize Footer Functionality
    */
   function initFooter(footerRoot) {
@@ -98,11 +200,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
+
+    // Scroll to Top Button
+    var scrollBtn = document.getElementById("scrollTopBtn");
+    if (scrollBtn) {
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 400) {
+          scrollBtn.classList.add("visible");
+        } else {
+          scrollBtn.classList.remove("visible");
+        }
+      });
+      scrollBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    }
   }
 
   // Load header into #header
-  loadComponent("header.html", "header", initHeader);
+  loadComponent("/components/header.html", "header", function (headerRoot) {
+    initHeader(headerRoot);
+    initAuthButtons(headerRoot);
+  });
 
   // Load footer into #footer
-  loadComponent("footer.html", "footer", initFooter);
+  loadComponent("/components/footer.html", "footer", initFooter);
 });

@@ -1,430 +1,124 @@
-# MK9 PROJECT STRUCTURE
+# Site Structure
 
-## Architecture
+Legend:
+- **[MOD]** = module of the new modular Apps Script backend
+- **[LEGACY]** = kept from the old site, independent of the new backend
+- **[SHARED]** = used by every page
+- **[CFG]** = configuration / credentials
 
-Frontend : GitHub + Cloudflare Pages + mk9.in
-Backend  : Supabase Edge Functions (JavaScript/TypeScript)
-Database : Supabase PostgreSQL (via `backend/schema/` + `backend/migrations/`)
-Storage  : Supabase Storage (via client SDK)
-Auth     : Supabase Auth (Login / Registration / Forgot Password / Reset Password)
+## Root
 
-## Future Subdomains
+```
+Milindweb.github.io/
+├── index.html                        [SHARED] Landing page (access-aware module cards)
+├── 404.html                          [SHARED] Custom 404
+├── about.html                        [SHARED] About page
+├── blog.html                         [SHARED] Blog index
+├── contact.html                      [SHARED] Contact page
+├── contactform.html                  [SHARED] Contact form partial (injected)
+├── links.html                        [LEGACY] Links page (kept)
+├── calculator.html                   [LEGACY] Calculator tool (kept)
+├── calendar.html                     [LEGACY] Calendar tool (kept)
+├── mp.html                           [LEGACY] My Portal — Drive/Sheet search (kept)
+├── myphoto.html                      [LEGACY] Photo album viewer (kept)
+├── portfolio.html                    [SHARED] Portfolio page
+├── privacy.html                      [SHARED] Privacy policy
+├── terms.html                        [SHARED] Terms
+├── Seniariity_List.html              [LEGACY] Old seniority list page
+├── Seniarity_Management.html         [LEGACY] Old seniority management page
+├── Test.html                         [LEGACY] Test page
+├── _headers                          [SHARED] Security + cache headers (Pages)
+├── _redirects                        [SHARED] Clean-URL redirect rules
+├── robots.txt                        [SHARED] Search-engine rules
+├── sitemap.xml                       [SHARED] Sitemap
+├── .env.original                     [CFG] ⚠️ LOCAL ONLY — all IDs/URLs/passwords (gitignored)
+├── .gitignore                        [CFG] Protects secrets from being committed
+├── README.md                         [SHARED] Project overview + setup guide
+└── structure.md                      [SHARED] This file
+```
 
-mk9.in                → Main Portal (deployed from `frontend/`)
-blog.mk9.in           → Blog Module
-society.mk9.in        → Society Management
-seniority.mk9.in      → Seniority Management
-hospital.mk9.in       → Hospital Management
-admin.mk9.in          → Admin Panel
+## Apps Script backend
 
-## Repository Structure
-
-mk9/
+```
+├── apps-script/                      [LEGACY] Old combined backend
+│   └── Code.gs                       Hospital + Seniority in one file (base for hospital.gs)
 │
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
-├── .gitignore
-├── .env.example
-├── .env.local (⚠️ DO NOT COMMIT)
-├── package.json
-├── package-lock.json
+├── apps-script-v2/                   [MOD] 🚧 New modular backend (built during the project)
+│   ├── config.gs                     Sheet IDs + module settings          → paste into Apps Script project
+│   ├── utils.gs                      Shared helpers (responses, sheets, ids, logging)
+│   ├── auth.gs                       Login / logout / session tokens / roles / module access
+│   ├── api.gs                        doGet/doPost router + auth guard
+│   ├── hospital.gs                   Hospital business logic
+│   ├── seniority.gs                  Seniority business logic
+│   ├── finance.gs                    Finance business logic
+│   └── contact.gs                    Unified contact enquiries (one sheet per module)
+```
+
+## Frontend JS
+
+```
+├── js/
+│   ├── config.js                     [SHARED][CFG] Branding + appsScriptUrl (frontend config)
+│   ├── headerfooter.js               [SHARED] Loads header/footer + dark-mode toggle
+│   ├── seo-injector.js               [SHARED] Title/description/canonical injection
+│   ├── contact-form.js               [SHARED] Contact form → Apps Script
+│   ├── hospital-api.js               [MOD] Client for the Apps Script backend (Hospital)
+│   ├── blog.js                       [SHARED] Blog rendering
+│   └── blog-sidebar.js               [SHARED] Blog sidebar rendering
 │
-├── supabase/
-│   │
-│   ├── config.toml
-│   │
-│   └── functions/
-│       │
-│       ├── auth-handler/
-│       │   └── index.ts
-│       │
-│       ├── blog-posts/
-│       │   └── index.ts
-│       │
-│       ├── blog-comments/
-│       │   └── index.ts
-│       │
-│       ├── hospital-appointments/
-│       │   └── index.ts
-│       │
-│       ├── hospital-doctors/
-│       │   └── index.ts
-│       │
-│       ├── society-groups/
-│       │   └── index.ts
-│       │
-│       ├── society-posts/
-│       │   └── index.ts
-│       │
-│       ├── seniority-records/
-│       │   └── index.ts
-│       │
-│       ├── seniority-promotions/
-│       │   └── index.ts
-│       │
-│       ├── admin-audit/
-│       │   └── index.ts
-│       │
-│       └── admin-settings/
-│           └── index.ts
+│   🚧 to be added:
+│   ├── api-client.js                 [MOD] Shared API client (token-aware)
+│   ├── auth.js                       [MOD] Login/logout/session in browser (localStorage token)
+│   └── module-access.js              [MOD] Hides/show module nav by user access
+```
+
+## Shared components & assets
+
+```
+├── components/
+│   ├── header.html                   [SHARED] Header ({{PLACEHOLDER}} template) — gets Login/Logout
+│   └── footer.html                   [SHARED] Footer
+├── css/
+│   ├── style.css                     [SHARED] Base variables + base styles
+│   ├── headerfooter.css              [SHARED] Header/footer styling
+│   ├── nadstyle.css                  [LEGACY] Old NAD-style theme (used by legacy pages)
+│   └── blog-sidebar.css              [SHARED] Blog sidebar styling
+├── fonts/                            [SHARED] Font Awesome, Bootstrap Icons, legacy fonts
+├── img/                              [SHARED] Logos, slides, team, services, blog images
+└── data/                             [SHARED] Static JSON data
+```
+
+## Modules (pages)
+
+```
+├── hospital/                         [MOD] Hospital Management
+│   ├── index.html                    Minimal redirect/landing
+│   ├── dashboard.html                Stats + recent visits
+│   ├── new-visit.html                Full OPD visit form (patient → billing)
+│   ├── patient-list.html             Search + paginated patient list
+│   ├── patient-profile.html          Patient detail + visit history
+│   ├── appointments.html             Book / complete / cancel appointments
+│   ├── components/hospital-nav.html  Hospital sub-nav
+│   ├── js/hospital-nav.js            Injects the sub-nav
+│   ├── css/hospital.css              Module styling
+│   └── data/masters.json             Fallback departments + doctors
 │
-├── docs/
-│   │
-│   ├── SRS/
-│   │   ├── website-srs.md
-│   │   ├── blog-srs.md
-│   │   ├── hospital-srs.md
-│   │   ├── society-srs.md
-│   │   └── seniority-srs.md
-│   │
-│   ├── DATABASE/
-│   │   ├── database-design.md
-│   │   ├── er-diagram.md
-│   │   └── schema-notes.md
-│   │
-│   ├── API/
-│   │   └── api-documentation.md
-│   │
-│   ├── DEPLOYMENT.md
-│   └── ROADMAP.md
+├── seniority/                        [MOD] Seniority Management
+│   ├── seniority-list.html           (served at /seniority)
+│   └── seniority-management.html     (served at /seniority/manage)
 │
-├── frontend/
-│   │
-│   ├── package.json
-│   ├── .env.example
-│   ├── .env.local (⚠️ DO NOT COMMIT)
-│   ├── .htaccess                ↤ Apache security & caching
-│   ├── _headers                 ↤ Cloudflare headers & caching
-│   ├── _redirects               ↤ Cloudflare URL rewrites
-│   │
-│   ├── index.html
-│   │
-│   ├── pages/
-│   │   │
-│   │   ├── about.html
-│   │   ├── contact.html
-│   │   ├── contactform.html
-│   │   ├── blog.html
-│   │   ├── links.html
-│   │   ├── login.html
-│   │   ├── register.html
-│   │   ├── forgot-password.html
-│   │   │
-│   │   └── services/
-│   │       │
-│   │       ├── freelance_seo_consultant.html
-│   │       ├── website-tech-solutions.html
-│   │       ├── project-training.html
-│   │       ├── graphics.html
-│   │       ├── electrical.html
-│   │       ├── automotive.html
-│   │       └── future-services.html
-│   │
-│   ├── modules/
-│   │   │
-│   │   ├── blog/
-│   │   │   ├── pages/
-│   │   │   ├── components/
-│   │   │   ├── css/
-│   │   │   └── js/
-│   │   │
-│   │   ├── hospital/
-│   │   │   ├── pages/
-│   │   │   ├── components/
-│   │   │   ├── css/
-│   │   │   └── js/
-│   │   │
-│   │   ├── society/
-│   │   │   ├── pages/
-│   │   │   ├── components/
-│   │   │   ├── css/
-│   │   │   └── js/
-│   │   │
-│   │   ├── seniority/
-│   │   │   ├── pages/
-│   │   │   ├── components/
-│   │   │   ├── css/
-│   │   │   └── js/
-│   │   │
-│   │   └── admin/
-│   │       ├── pages/
-│   │       ├── components/
-│   │       ├── css/
-│   │       └── js/
-│   │
-│   ├── shared/
-│   │   │
-│   │   ├── components/
-│   │   │   ├── header.html
-│   │   │   ├── footer.html
-│   │   │   ├── navbar.html
-│   │   │   ├── sidebar.html
-│   │   │   └── loader.html
-│   │   │
-│   │   ├── css/
-│   │   │   ├── style.css          # Shared base styles (variables, utilities, cards, buttons, animations) — load before headerfooter.css & page CSS
-│   │   │   ├── headerfooter.css
-│   │   │   ├── variables.css
-│   │   │   └── responsive.css
-│   │   │
-│   │   ├── js/
-│   │   │   ├── config.js           # Centralized site config (brand, domain, contact, social) — one file to rule all
-│   │   │   ├── seo-injector.js     # Reads config + per-page PAGE_CONFIG; injects <title>, meta, OG, Twitter, JSON-LD
-│   │   │   ├── app.js
-│   │   │   ├── auth.js
-│   │   │   ├── navbar.js
-│   │   │   ├── headerfooter.js     # Loads header/footer HTML + replaces {{PLACEHOLDERS}} from config.js
-│   │   │   ├── form-handler.js
-│   │   │   └── utils.js
-│   │   │
-│   │   └── assets/
-│   │       ├── img/
-│   │       │   ├── og-default.svg
-│   │       │   └── graphics/
-│   │       │       ├── birthday.svg
-│   │       │       ├── wedding.svg
-│   │       │       ├── logo.svg
-│   │       │       └── video.svg
-│   │       ├── icons/
-│   │       ├── fonts/
-│   │       └── data/
-│   │
-│   ├── services/
-│   │   │
-│   │   ├── supabaseClient.js
-│   │   ├── api.js
-│   │   ├── authService.js
-│   │   ├── blogService.js
-│   │   ├── hospitalService.js
-│   │   ├── societyService.js
-│   │   ├── seniorityService.js
-│   │   ├── storageService.js
-│   │   └── adminService.js
-│   │
-│   └── config/
-│       ├── supabase.js
-│       ├── env.js
-│       ├── routes.js
-│       └── constants.js
-│
-├── backend/
-│   │
-│   ├── .env.example
-│   ├── .env.local (⚠️ DO NOT COMMIT)
-│   │
-│   ├── schema/
-│   │   ├── schema.sql
-│   │   ├── database-design.md
-│   │   └── rls-policies.sql
-│   │
-│   ├── seed/
-│   │   ├── seed.sql
-│   │   └── seed-data.json
-│   │
-│   ├── migrations/
-│   │   ├── 001_initial_schema.sql
-│   │   ├── 002_blog_module.sql
-│   │   ├── 003_hospital_module.sql
-│   │   ├── 004_society_module.sql
-│   │   ├── 005_seniority_module.sql
-│   │   └── migration-status.md
-│   │
-│   ├── modules/
-│   │   │
-│   │   ├── auth/
-│   │   │   ├── schema/
-│   │   │   │   └── auth-schema.sql
-│   │   │   └── policies/
-│   │   │       └── auth-policies.sql
-│   │   │
-│   │   ├── blog/
-│   │   │   ├── schema/
-│   │   │   │   └── blog-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── blog-policies.sql
-│   │   │   └── seed/
-│   │   │       └── blog-seed.sql
-│   │   │
-│   │   ├── hospital/
-│   │   │   ├── schema/
-│   │   │   │   └── hospital-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── hospital-policies.sql
-│   │   │   └── seed/
-│   │   │       └── hospital-seed.sql
-│   │   │
-│   │   ├── society/
-│   │   │   ├── schema/
-│   │   │   │   └── society-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── society-policies.sql
-│   │   │   └── seed/
-│   │   │       └── society-seed.sql
-│   │   │
-│   │   ├── seniority/
-│   │   │   ├── schema/
-│   │   │   │   └── seniority-schema.sql
-│   │   │   ├── policies/
-│   │   │   │   └── seniority-policies.sql
-│   │   │   └── seed/
-│   │   │       └── seniority-seed.sql
-│   │   │
-│   │   └── admin/
-│   │       ├── schema/
-│   │       │   └── admin-schema.sql
-│   │       └── policies/
-│   │           └── admin-policies.sql
-│   │
-│   ├── shared/
-│   │   │
-│   │   ├── config/
-│   │   │   ├── supabase-config.ts
-│   │   │   └── constants.ts
-│   │   │
-│   │   ├── middleware/
-│   │   │   ├── auth-middleware.ts
-│   │   │   ├── rate-limit.ts
-│   │   │   └── error-handler.ts
-│   │   │
-│   │   ├── utils/
-│   │   │   ├── validators.ts
-│   │   │   ├── formatters.ts
-│   │   │   ├── logger.ts
-│   │   │   └── helpers.ts
-│   │   │
-│   │   └── types/
-│   │       ├── index.ts
-│   │       ├── database.ts
-│   │       └── api.ts
-│   │
-│   └── scripts/
-│       ├── backup.sh
-│       ├── deploy.sh
-│       ├── setup.sh
-│       └── reset-db.sh
-│
-├── storage/
-│   │
-│   ├── blog/
-│   │   └── featured/
-│   ├── hospital/
-│   │   ├── documents/
-│   │   └── prescriptions/
-│   ├── society/
-│   ├── seniority/
-│   ├── documents/
-│   ├── reports/
-│   └── templates/
-│
-├── .github/
-│   └── workflows/
-│       ├── deploy-frontend.yml
-│       └── deploy-functions.yml
-│
-└── (scripts/ at root removed — use backend/scripts/ instead)
+└── finance/                          [MOD] 🚧 planned
+    └── dashboard.html  salary.html  loans.html  …  (from old PFMS engine)
+```
 
-## Key Files & Configuration
+## Old apps-script backups (NOT part of the site)
 
-### Root Level
-- **package.json** - Project dependencies & scripts (includes `supabase` CLI)
-- **.env.example** - Template for environment variables (version control safe)
-- **.env.local** - Actual secrets & keys (⚠️ add to .gitignore)
-- **.gitignore** - Prevent node_modules, .env.local, build files from repo
-
-### Supabase (Edge Functions)
-- **supabase/config.toml** - Project ID, function settings, auth config
-- **supabase/functions/<name>/index.ts** - Each Edge Function as a standalone module
-- Functions are named `{module}-{entity}` (e.g., `blog-posts`)
-- Deploy with: `supabase functions deploy <name>`
-
-### Cloudflare Pages
-- **frontend/_redirects** - URL rewrites for clean paths (see file for full rules)
-- **frontend/_headers** - Security headers and cache control
-  ```
-  /           /pages/index.html   200
-  /about      /pages/about.html   200
-  /contact    /pages/contact.html 200
-  /blog       /pages/blog.html    200
-  /login      /pages/login.html   200
-  /seo-digital-marketing  /pages/services/freelance_seo_consultant.html  200
-  /website-development    /pages/services/website-tech-solutions.html    200
-  /project-training       /pages/services/project-training.html          200
-  /graphics-branding      /pages/services/graphics.html                 200
-  /electrical             /pages/services/electrical.html                200
-  /automotive             /pages/services/automotive.html                200
-  /workshop.html          /pages/services/project-training.html          301
-  ...
-  ```
-- Publish directory: `frontend/`
-- No build step required for static HTML
-
-### Site Configuration (Centralized)
-- **frontend/shared/js/config.js** — Single source of truth: brand name, domain, contact info, social links, OG image path
-- **frontend/shared/js/seo-injector.js** — Reads `SITE_CONFIG` + per-page `PAGE_CONFIG`; dynamically generates `<title>`, all meta/OG/Twitter tags, canonical URL, and JSON-LD (Organization + BreadcrumbList)
-- **Each HTML page** defines only a small `PAGE_CONFIG = { title, description, canonical }` block — no hardcoded meta tags
-- **header.html / footer.html** — Use `{{PLACEHOLDER}}` syntax (e.g., `{{SITE_NAME_UPPER}}`, `{{PHONE}}`, `{{SOCIAL_WA}}`); replaced at runtime by `headerfooter.js` using values from `config.js`
-- Change brand name, domain, phone, email, or social links in **one file** (`config.js`) and it propagates to every page, header, footer, and JSON-LD automatically
-- Static XML/text files (`sitemap.xml`, `robots.txt`) still require manual domain updates
-
-### Frontend Config
-- **frontend/config/supabase.js** - Supabase client initialization with ANON_KEY
-- **frontend/services/authService.js** - Auth operations (login, register, logout)
-- **frontend/services/supabaseClient.js** - Shared Supabase client instance
-
-### Backend Schema
-- **backend/schema/schema.sql** - Core tables, indexes, RLS policies
-- **backend/schema/rls-policies.sql** - Detailed row-level security documentation
-- **backend/seed/seed.sql** - Initial data for categories, departments, groups
-- **backend/migrations/** - Versioned database changes
-
-## Navigation Menu
-
-Home
-About
-Services
-Blog
-Login
-
-## Services Menu
-
-Digital Marketing & SEO
-Website & Software Development
-College Projects & Training
-Graphics, Photography & Branding
-Electrical Services
-Automotive Services
-
-## Future Services
-
-Any future service should be added as a new page inside:
-
-frontend/pages/services/
-
-No CSS modification should be required.
-The service card layout must be reusable and data-driven.
-
-## Future Modules
-
-Blog Module
-Hospital Management
-Society Management
-Seniority Management
-Admin Panel
-
-To add a new module:
-
-  1. Create `frontend/modules/<name>/` (pages/, components/, css/, js/)
-  2. Create `supabase/functions/<name>-*/index.ts` for each edge function
-  3. Create `backend/modules/<name>/` (schema/, policies/, seed/)
-  4. Add migration file in `backend/migrations/`
-  5. Register routes in `frontend/config/routes.js`
-
-All future modules should use:
-
-* Supabase Auth
-* Supabase PostgreSQL
-* Supabase Storage
-* Supabase Edge Functions
-
-without changing the main architecture.
+```
+├── my old app scripts /              [LEGACY] ⚠️ gitignored — contains real sheet IDs & passwords
+│   ├── Contactcform.md               Old contact form doPost
+│   ├── patientdsaat.md               Old patient data script (read/update)
+│   ├── Personal Finance Management System.json   Old PFMS (salary engine to reuse)
+│   ├── DriveFetch.json               Drive + Sheet search API
+│   ├── Wedding Album Script.json     Drive photo album API
+│   └── employeedata.md               Hide-unused-rows helper
+```

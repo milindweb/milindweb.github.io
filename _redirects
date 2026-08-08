@@ -1,0 +1,20 @@
+# Cloudflare Pages redirects
+# Format: source destination status
+#
+# NOTE: Cloudflare Pages automatically serves .html files at clean URLs
+# (e.g. /about.html -> /about) and 308-redirects the .html form. So pages
+# that map 1:1 to a file need NO rule here — adding one causes a redirect loop.
+
+# Seniority — filename differs from clean URL -> keep rewrites
+/seniority        /seniority/seniority-list.html          200
+/seniority/manage /seniority/seniority-management.html    200
+
+# Blog — /blog serves blog.html (blog/ folder holds post files only)
+/blog             /blog.html                               200
+
+# Blog posts — /blog/:slug -> /blog/posts/:slug.html
+# (slug is stored in data/posts.json; drop a post file into blog/posts/)
+/blog/*           /blog/posts/*.html                      200
+
+# Favicon
+/favicon.ico      /img/favicon.png                        200

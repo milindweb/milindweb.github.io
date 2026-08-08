@@ -1,63 +1,48 @@
-# Changelog
+# MilindWeb — CHANGELOG
 
-## 2026-06-11 — Page consolidation & CSS overhaul
+> Tracks all changes to this project (site + backend).
+>
+> **Backend rule:** whenever a `.gs` file in `apps-script-v2/` changes, re-paste
+> it into your Google Apps Script project (Milind-Auth → Extensions → Apps Script)
+> and re-deploy (Deploy → Manage deployments → Edit → New version → Deploy).
 
-### Added
-- Shared `p-*` component classes (`p-hero`, `p-section`, `p-card`, `p-card-icon`, `p-grid-3/4`, `p-stat-num`, `p-badge`, `p-cta`) in `style.css`
-- Contact form heading + subtitle on all service pages (`contact-intro` section)
-- Scroll-to-top button in footer (appears after 400px scroll)
-- Expanded legal content (Privacy Policy, Terms of Use, Disclaimer, Feedback) on `contact.html`
+Format: `YYYY-MM-DD — [Area] File: what changed`
 
-### Changed
-- Pages rewritten: `graphics.html`, `website-tech-solutions.html`, `project-training.html` — now use shared `p-*` classes instead of per-page CSS
-- Gradient changed from blue→purple (`#2563eb`→`#7c3aed`) to blue→blue (`#2563eb`→`#3b82f6`) matching M logo color
-- Stat numbers changed from solid blue to plain text color
-- All section headings uppercased
-- Team avatar background from gradient to solid `#3b82f6`
-- Contact info softcoded from `config.js` (no hardcoded phone/email in HTML)
-- CTA sections removed from service pages (redundant above contact form)
-- Footer top gradient line removed
-- README updated with consolidated service list
+---
 
-### Fixed
-- Accordion bug on `contact.html` — missing CSS rule `ct-card.active .ct-card-body { display: block }`
-- Missing `</section>` close tags on service pages
-- `var(--p-secondary)` replaced with `var(--accent)` across all pages
+## 2026-08-08 — Backend initial build (v1)
 
-### Removed
-- `business-automation.html` — merged into `website-tech-solutions.html`
-- `photography.html` — merged into `graphics.html`
+Created `apps-script-v2/` — modular backend:
 
-## 2026-06-11 — Contact form fix
+| File | Purpose | In your Apps Script project? |
+|---|---|---|
+| `config.gs` | 5 spreadsheet IDs + module settings | ✅ pasted |
+| `utils.gs` | Shared helpers (json, sheets, CRUD, IDs, logging) | 🔧 paste |
+| `auth.gs` | Login, register, session tokens, roles | 🔧 paste |
+| `api.gs` | doGet/doPost router + auth guard | 🔧 paste |
+| `contact.gs` | Public contact form handler | 🔧 paste |
+| `seed.gs` | One-time admin setup (`setupSeed`) | 🔧 paste + run once |
 
-### Fixed
-- Contact form not submitting — scripts inside dynamically loaded HTML are ignored by browsers. Moved contact form out of `footer.html` into its own component.
-- `headerfooter.js` now loads `contact-form.html` dynamically into a placeholder at the end of `<body>`, then appends `form-handler.js` which polls for the form element and attaches the submit handler.
+Setup notes:
+- `hospital.gs`, `seniority.gs`, `finance.gs` not yet created — module logic comes later. Keep empty (comment only) in your project.
+- Delete the default `Code.gs` — only `api.gs` should contain `doGet`/`doPost`.
+- After pasting: run `setupSeed()` once, then Deploy (Execute as: Me, Access: Anyone).
 
-### Changed
-- `headerfooter.js` — removed inline `initForm()`, now loads contact form component + handler script
-- `form-handler.js` — restored as standalone file with polling init
+## 2026-08-08 — Frontend: auth + index + contact
 
-## 2026-06-10 — Centralized Configuration
+- `js/api-client.js` — new shared API client (token-aware, IIFE pattern).
+- `js/auth.js` — new browser session handler (token in localStorage, login/register/logout/checkSession/hasModule).
+- `login.html`, `register.html` — new auth pages.
+- `index.html` — rewritten: links to all pages + auth-aware module cards.
+- `components/header.html` — added LOGIN/LOGOUT buttons (desktop + mobile).
+- `js/headerfooter.js` — session-aware login/logout buttons + silent token refresh.
+- `js/contact-form.js` — renamed from `form-handler.js`; now posts to new backend (`contactSubmit`, no login).
+- `README.md` — rewritten for modular backend + roles guide.
+- `structure.md` — new; documents full site layout.
+- `.env.original` — expanded reference; `APPS_SCRIPT_URL` set.
+- `.gitignore` — new; protects `.env.original`, old scripts folder, `apps-script-v2/config.gs`.
+- `js/config.js` — `appsScriptUrl` set to deployed URL.
 
-### Added
-- `frontend/shared/js/config.js` — Single source of truth for brand name, domain, contact info, social links
-- `frontend/shared/js/seo-injector.js` — Dynamic injection of `<title>`, OG/Twitter meta tags, canonical URL, and JSON-LD from config
+---
 
-### Changed
-- All 14 HTML pages — removed hardcoded title, meta, OG, Twitter, JSON-LD; now use `config.js` + per-page `PAGE_CONFIG`
-- `header.html` — logo, brand name, tagline driven by config placeholders (`{{SITE_NAME_UPPER}}`, `{{TAGLINE}}`)
-- `footer.html` — phone, email, location, hours, social links, copyright driven by config placeholders
-- `headerfooter.js` — now replaces `{{PLACEHOLDERS}}` with values from `config.js` at runtime
-- `sitemap.xml` / `robots.txt` — added comments noting manual domain update requirement
-
-### Fixed
-- `blog.html` OG url was pointing to `milindweb.pages.dev` (wrong domain) — now correctly uses domain from config
-- `contact.html` used `Milindweb` (inconsistent lowercase) — now consistent from config
-- `seniority-list.html` used `Milindweb` (inconsistent lowercase) — now consistent from config
-
-### Documentation
-- `README.md` — updated structure, features, and getting started to reflect centralized config
-- `structure.md` — added config.js, seo-injector.js to file tree; new Site Configuration section
-- `docs/DEPLOYMENT.md` — created with deployment steps and config notes
-- `docs/ROADMAP.md` — created with completed/in-progress/planned items
+*Add new entries above this line with the date + files changed.*

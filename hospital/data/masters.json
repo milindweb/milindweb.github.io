@@ -1,0 +1,40 @@
+{
+  "departments": [
+    { "code": "MED", "name": "General Medicine" },
+    { "code": "CARD", "name": "Cardiology" },
+    { "code": "CASUALTY", "name": "Emergency / Casualty" },
+    { "code": "CHEST/TB", "name": "Pulmonology" },
+    { "code": "DENT", "name": "Dental" },
+    { "code": "DERM", "name": "Dermatology" },
+    { "code": "ENDO", "name": "Endocrinology" },
+    { "code": "ENT", "name": "Ear, Nose & Throat" },
+    { "code": "EYE", "name": "Ophthalmology" },
+    { "code": "GASTRO", "name": "Gastroenterology" },
+    { "code": "NEPH", "name": "Nephrology" },
+    { "code": "NEURO", "name": "Neurology" },
+    { "code": "NSURG", "name": "Neurosurgery" },
+    { "code": "OBG/GYN", "name": "Obstetrics & Gynecology" },
+    { "code": "ONCO", "name": "Oncology" },
+    { "code": "ORTHO", "name": "Orthopedics" },
+    { "code": "PAEDS", "name": "Pediatrics" },
+    { "code": "PMR", "name": "Physical Medicine & Rehabilitation" },
+    { "code": "PSY", "name": "Psychiatry" },
+    { "code": "SURG", "name": "General Surgery" },
+    { "code": "URO", "name": "Urology" },
+    { "code": "PHYSIO", "name": "Physiotherapy" }
+  ],
+  "doctors": [
+    "Dr. Girkar",
+    "Dr. Nerekar",
+    "Dr. Sathe",
+    "Dr. Hajari",
+    "Dr. Gargi Hospital",
+    "Dr. Gitai Hospital",
+    "Dr. Shyamnagar Hospital",
+    "Dr. INHS Sandhani",
+    "Dr. Terna Hospital",
+    "Dr. JJ Hospital",
+    "Dr. KEM Hospital",
+    "Dr. Unknown"
+  ]
+}

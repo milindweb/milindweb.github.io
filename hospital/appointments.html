@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Appointments', description: 'Manage hospital appointments' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <script src="/js/hospital-api.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <script src="/js/headerfooter.js" defer></script>
+  <script src="/hospital/js/hospital-nav.js" defer></script>
+  <link rel="stylesheet" href="/hospital/css/hospital.css">
+  <style>
+    .appt-page { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    .date-nav-wrap { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; background: var(--hosp-card); border-radius: 12px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 20px; }
+    .date-nav-wrap input { padding: 8px 12px; border: 1px solid var(--hosp-border); border-radius: 6px; background: var(--hosp-bg); color: var(--hosp-text); }
+    .date-nav-wrap input:focus { outline: none; border-color: var(--hosp-primary); box-shadow: 0 0 0 2px rgba(26,115,232,0.15); }
+    .dark-mode .date-nav-wrap input:focus { box-shadow: 0 0 0 2px rgba(96,165,250,0.2); }
+    .appt-card { background: var(--hosp-card); border-radius: 12px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; transition: box-shadow 0.2s; }
+    .appt-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    .appt-card .patient-info h4 { margin-bottom: 2px; font-size: 0.95rem; color: var(--hosp-text); }
+    .appt-card .patient-info .meta { font-size: 0.82rem; color: var(--hosp-text-secondary); }
+    .appt-empty { text-align: center; padding: 60px 20px; color: var(--hosp-text-secondary); }
+    .appt-empty i { font-size: 3rem; margin-bottom: 12px; opacity: 0.4; }
+    .hosp-modal-content label { font-size: 0.8rem; font-weight: 600; color: var(--hosp-text-secondary); margin-bottom: 4px; display: block; }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <div id="hospitalNav"></div>
+  <div class="appt-page" id="app">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
+      <h1 style="margin:0;"><i class="fas fa-calendar-alt"></i> Appointments</h1>
+      <button class="hosp-btn hosp-btn-primary" onclick="openModal()"><i class="fas fa-plus"></i> New Appointment</button>
+    </div>
+
+    <div class="date-nav-wrap">
+      <button class="hosp-btn hosp-btn-sm" onclick="changeDate(-1)"><i class="fas fa-chevron-left"></i></button>
+      <input type="date" id="apptDate" onchange="loadAppointments()">
+      <button class="hosp-btn hosp-btn-sm" onclick="changeDate(1)"><i class="fas fa-chevron-right"></i></button>
+      <button class="hosp-btn hosp-btn-sm hosp-btn-primary" onclick="setToday()">Today</button>
+    </div>
+
+    <div id="appointmentsList">
+      <p style="color:var(--hosp-text-secondary);">Loading...</p>
+    </div>
+  </div>
+
+  <!-- New Appointment Modal -->
+  <div class="hosp-modal" id="apptModal">
+    <div class="hosp-modal-content">
+      <h3 style="margin-bottom:16px;"><i class="fas fa-calendar-plus"></i> New Appointment</h3>
+      <div class="hosp-row">
+        <div class="hosp-group"><label>Patient Name *</label><input class="hosp-input" type="text" id="newApptName" placeholder="Search or type name"></div>
+      </div>
+      <div class="hosp-row">
+        <div class="hosp-group"><label>Mobile</label><input class="hosp-input" type="tel" id="newApptMobile"></div>
+        <div class="hosp-group"><label>Department</label><select class="hosp-select" id="newApptDept" onchange="loadModalDoctors()"><option value="">Select</option></select></div>
+        <div class="hosp-group"><label>Doctor</label><select class="hosp-select" id="newApptDoctor"><option value="">Select</option></select></div>
+      </div>
+      <div class="hosp-row">
+        <div class="hosp-group"><label>Date *</label><input class="hosp-input" type="date" id="newApptDate"></div>
+        <div class="hosp-group"><label>Time</label><input class="hosp-input" type="time" id="newApptTime"></div>
+      </div>
+      <div class="hosp-group"><label>Notes</label><textarea class="hosp-textarea" id="newApptNotes" rows="2"></textarea></div>
+      <div style="display:flex;justify-content:flex-end;gap:12px;margin-top:16px;">
+        <button class="hosp-btn" onclick="closeModal()">Cancel</button>
+        <button class="hosp-btn hosp-btn-primary" onclick="saveAppointment()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+  <script>
+    document.getElementById('apptDate').value = new Date().toISOString().split('T')[0];
+
+    (async () => {
+      try {
+        const res = await HospitalAPI.list('departments', { limit: 100 });
+        const depts = res.rows || [];
+        const sel = document.getElementById('newApptDept');
+        if (depts.length > 0) {
+          depts.forEach(d => { sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+        } else {
+          throw new Error('No departments');
+        }
+      } catch (e) {
+        console.warn('Using fallback departments:', e);
+        const res = await fetch('/hospital/data/masters.json');
+        const data = await res.json();
+        const sel = document.getElementById('newApptDept');
+        data.departments.forEach(d => { sel.innerHTML += `<option value="${d.code}">${d.name}</option>`; });
+      }
+    })();
+
+    async function loadModalDoctors() {
+      const sel = document.getElementById('newApptDoctor');
+      sel.innerHTML = '<option value="">Select</option>';
+      try {
+        const res = await HospitalAPI.list('doctors', { limit: 100 });
+        const data = res.rows || [];
+        if (data.length > 0) {
+          data.forEach(d => { sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; });
+        } else {
+          throw new Error('No doctors');
+        }
+      } catch (e) {
+        console.warn('Using fallback doctors:', e);
+        const res = await fetch('/hospital/data/masters.json');
+        const json = await res.json();
+        json.doctors.forEach(dr => { sel.innerHTML += `<option value="${dr}">${dr}</option>`; });
+      }
+    }
+
+    function changeDate(delta) {
+      const d = new Date(document.getElementById('apptDate').value);
+      d.setDate(d.getDate() + delta);
+      document.getElementById('apptDate').value = d.toISOString().split('T')[0];
+      loadAppointments();
+    }
+    function setToday() {
+      document.getElementById('apptDate').value = new Date().toISOString().split('T')[0];
+      loadAppointments();
+    }
+
+    async function loadAppointments() {
+      const date = document.getElementById('apptDate').value;
+      const container = document.getElementById('appointmentsList');
+      container.innerHTML = '<p style="color:var(--hosp-text-secondary);">Loading...</p>';
+
+      try {
+        const data = (await HospitalAPI.listAppointments(date)).rows || [];
+
+        const statusMap = { scheduled: 'pending', confirmed: 'active', cancelled: 'cancelled', completed: 'completed' };
+        if (data.length === 0) {
+          container.innerHTML = `<div class="appt-empty"><i class="far fa-calendar"></i><p>No appointments for this date.</p></div>`;
+        } else {
+          container.innerHTML = data.map(a => {
+            const st = statusMap[a.status] || 'pending';
+            const time = a.appointment_date ? new Date(a.appointment_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
+            return `<div class="appt-card">
+              <div class="patient-info">
+                <h4>${a.patient_name || 'Unknown'}</h4>
+                <div class="meta">${a.patient_mobile || '—'} · #${a.patient_uhid || '—'}</div>
+                <div class="meta">${a.department_name || '—'} · ${a.doctor_name || '—'} · ${time}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span class="hosp-badge hosp-badge-${st}">${a.status}</span>
+                ${a.status === 'scheduled' ? `<button class="hosp-btn hosp-btn-sm hosp-btn-success" onclick="updateStatus('${a.id}','completed')" title="Mark completed"><i class="fas fa-check"></i></button> <button class="hosp-btn hosp-btn-sm hosp-btn-danger" onclick="updateStatus('${a.id}','cancelled')" title="Cancel"><i class="fas fa-times"></i></button>` : ''}
+              </div>
+            </div>`;
+          }).join('');
+        }
+      } catch (err) {
+        container.innerHTML = `<p style="color:var(--hosp-danger);">${err.message}</p>`;
+      }
+    }
+    loadAppointments();
+
+    async function updateStatus(id, status) {
+      await HospitalAPI.update('appointments', id, { status });
+      loadAppointments();
+    }
+
+    function openModal() {
+      document.getElementById('apptModal').classList.add('open');
+      document.getElementById('newApptDate').value = document.getElementById('apptDate').value;
+    }
+    function closeModal() { document.getElementById('apptModal').classList.remove('open'); }
+
+    async function saveAppointment() {
+      const name = document.getElementById('newApptName').value.trim();
+      if (!name) { alert('Patient name is required.'); return; }
+      const dt = document.getElementById('newApptDate').value + 'T' + (document.getElementById('newApptTime').value || '09:00');
+
+      let patientId;
+      const existing = await HospitalAPI.list('patients', { q: name, limit: 1 });
+      const match = (existing.rows || []).find(p => String(p.full_name).toLowerCase() === name.toLowerCase());
+      if (match) {
+        patientId = match.id;
+      } else {
+        const np = await HospitalAPI.insert('patients', {
+          full_name: name,
+          mobile: document.getElementById('newApptMobile').value || '',
+        });
+        patientId = np.id;
+      }
+
+      const doctorId = document.getElementById('newApptDoctor').value;
+      const deptId = document.getElementById('newApptDept').value;
+
+      await HospitalAPI.insert('appointments', {
+        patient_id: patientId,
+        doctor_id: doctorId || '',
+        department_id: deptId || '',
+        appointment_date: dt,
+        status: 'scheduled',
+        notes: document.getElementById('newApptNotes').value,
+      });
+
+      closeModal();
+      loadAppointments();
+    }
+  </script>
+</body>
+</html>
