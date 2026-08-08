@@ -10,6 +10,17 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Registration: add Name, Email & Mobile No. fields
+
+- `register.html` — added **Name**, **Email** and **Mobile No.** fields with client-side validation (valid email; valid 10-digit Indian mobile starting 6-9).
+- `js/auth.js` — `Auth.register()` now sends `name`, `email`, `mobile` to the backend.
+- `apps-script-v2/auth.gs` — `authRegister_` validates email/mobile, rejects duplicate email/mobile, and stores them. `Users` sheet header is now `username | password | role | modules | name | email | mobile`. ⚠️ Re-paste this file into Apps Script + redeploy (New version).
+- `README.md` — updated `Users` sheet docs to the 7-column table.
+
+## 2026-08-08 — Contact backend: new deployment URL
+
+- `js/config.js` / `.env.original` — `appsScriptUrl` updated to the new deployment: `https://script.google.com/macros/s/AKfycbyO87cybPXuwXOGBMj7OdMf8VXNPtNFW8055qcTzizXHpwIvbD_9kSBFZQIBXFHGzMs/exec`. Verified `contactSubmit` returns ok (dual-write to General + per-site sheet).
+
 ## 2026-08-08 — Contact backend: dual-write (master + per-site sheets)
 
 - `apps-script-v2/contact.gs` — `contactSubmit_` now writes each enquiry **twice**: always to the master sheet (`General`, holds every site's data) and to a **per-site sheet** auto-created from the `site` field. Added `sanitizeSheetName_()` (valid sheet names only). Headers now `['datetime','site','module','name','mobile','email','subject','message','ip','status']`. ⚠️ Re-paste this file into Apps Script + redeploy (New version).

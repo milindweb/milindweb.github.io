@@ -37,7 +37,7 @@ const SITE_CONFIG = {
   ogImage: '/img/og-default.svg',
   logoIcon: 'M',
 
-  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbysdDk8EclvGbwb1Wd2bTnwmyaTiNOIPPxDALK6bxxeHzGvx13oDDQrThF7nXTktFjI/exec',
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbyO87cybPXuwXOGBMj7OdMf8VXNPtNFW8055qcTzizXHpwIvbD_9kSBFZQIBXFHGzMs/exec',
 
   organization: {
     contactType: 'customer service',
