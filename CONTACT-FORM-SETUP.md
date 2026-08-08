@@ -62,7 +62,7 @@ That's it. The spreadsheet and Apps Script already exist.
 
   <input type="text" id="name" name="name" placeholder="Your Name" required>
   <input type="email" id="email" name="email" placeholder="Your Email" required>
-  <input type="tel" id="phone" name="phone" pattern="^[0-9]{7,15}$" placeholder="Mobile No." required>
+  <input type="tel" id="phone" name="phone" pattern="^[6-9][0-9]{9}$" placeholder="Mobile No." required>
   <textarea id="message" name="message" placeholder="Your Message" required></textarea>
 
   <button type="submit">Send</button>
@@ -114,7 +114,7 @@ The `Site` column in the master sheet shows the source site for each row.
 ## 5. Customization
 
 - **Success message** — change the string in `contact-form.js`.
-- **Phone format** — update the regex `^[0-9]{7,15}$` (HTML pattern + JS) for other countries.
+- **Phone format** — update the regex `^[6-9][0-9]{9}$` (HTML pattern + JS) for other countries.
 - **Services list** — edit the `<option>` elements in the form HTML.
 - **Spam honeypot** — add a hidden empty field and reject submissions where it
   is filled (in the backend's `contactSubmit_`).

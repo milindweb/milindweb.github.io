@@ -10,6 +10,9 @@ apps-script-v2/config.gs
 # ── Old apps-script backups (contain real sheet IDs & passwords) ────
 my old app scripts\ 
 
+# ── Standalone PFMS prototype (superseded by the finance module) ────
+PFMS/
+
 # ── Local tooling ───────────────────────────────────────────────────
 node_modules/
 .DS_Store

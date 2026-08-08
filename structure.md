@@ -50,7 +50,8 @@ Milindweb.github.io/
 │   ├── api.gs                        doGet/doPost router + auth guard
 │   ├── hospital.gs                   Hospital business logic
 │   ├── seniority.gs                  Seniority business logic
-│   ├── finance.gs                    Finance business logic
+│   ├── finance.gs                    Finance business logic (ported from PFMS, uses Milind-Finance)
+│   ├── finance-seed.gs               One-time CSV import (setupFinanceSeed) for Finance sheets
 │   └── contact.gs                    Unified contact enquiries (one sheet per module)
 ```
 
@@ -63,6 +64,7 @@ Milindweb.github.io/
 │   ├── seo-injector.js               [SHARED] Title/description/canonical injection
 │   ├── contact-form.js               [SHARED] Contact form → Apps Script
 │   ├── hospital-api.js               [MOD] Client for the Apps Script backend (Hospital)
+│   ├── finance-api.js                [MOD] Client for the Finance module (token + module guard)
 │   ├── blog.js                       [SHARED] Blog rendering
 │   └── blog-sidebar.js               [SHARED] Blog sidebar rendering
 │
@@ -107,8 +109,8 @@ Milindweb.github.io/
 │   ├── seniority-list.html           (served at /seniority)
 │   └── seniority-management.html     (served at /seniority/manage)
 │
-└── finance/                          [MOD] 🚧 planned
-    └── dashboard.html  salary.html  loans.html  …  (from old PFMS engine)
+└── finance/                          [MOD] Finance Management (served at /finance)
+    └── index.html                    Full PFMS-style SPA: salary, fin-year, loans, transactions, reports
 ```
 
 ## Old apps-script backups (NOT part of the site)

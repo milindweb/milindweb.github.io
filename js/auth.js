@@ -62,8 +62,15 @@
       });
   }
 
-  function register(username, password) {
-    return window.API.post({ action: 'authRegister', username: username, password: password })
+  function register(username, password, name, email, mobile) {
+    return window.API.post({
+      action: 'authRegister',
+      username: username,
+      password: password,
+      name: name,
+      email: email,
+      mobile: mobile
+    })
       .then(function (res) {
         if (!res.ok) throw new Error(res.error || 'Registration failed');
         return res;

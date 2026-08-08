@@ -64,10 +64,14 @@ Leave spreadsheets **blank** — the code creates sheets and headers on first us
 ├── seniority/                      Seniority module pages
 │   ├── seniority-list.html
 │   └── seniority-management.html
+├── finance/                        Finance Management module (served at /finance)
+│   └── index.html                  PFMS-style SPA: monthly salary, fin-year, loans & insurance, transactions
 ├── apps-script/                    ⚙️ Old combined Code.gs (reference/base for hospital.gs)
 ├── js/
 │   ├── config.js                   ⚙️ ALL branding + appsScriptUrl (frontend config)
+│   ├── api-client.js  auth.js      Shared API client + browser session (token in localStorage)
 │   ├── hospital-api.js             Client for the Apps Script backend
+│   ├── finance-api.js              Client for the Finance module (token + module guard)
 │   ├── headerfooter.js             Loads shared header/footer + theme toggle
 │   ├── seo-injector.js             Title/description/canonical injection
 │   ├── contact-form.js         Contact form → Apps Script
@@ -92,7 +96,7 @@ Copy their IDs (from URL: `/spreadsheets/d/<ID>/edit`) into `.env.original`.
 
 ### 2. Create ONE Apps Script project
 1. Open **Milind-Auth** → **Extensions → Apps Script**.
-2. Add 8 files via **+ → Script**: `config.gs`, `utils.gs`, `auth.gs`, `api.gs`, `hospital.gs`, `seniority.gs`, `finance.gs`, `contact.gs`.
+2. Add 9 files via **+ → Script**: `config.gs`, `utils.gs`, `auth.gs`, `api.gs`, `hospital.gs`, `seniority.gs`, `finance.gs`, `finance-seed.gs`, `contact.gs`.
 3. Paste the corresponding code into each (from `apps-script-v2/` in this repo — generated during the build).
 
 ### 3. Configure `config.gs`
@@ -113,6 +117,12 @@ var CONFIG = {
 2. Copy the **/exec** URL.
 3. Paste it into `js/config.js` → `appsScriptUrl`.
 
+### 5. Seed the Finance data (once)
+Run `setupFinanceSeed()` from the Apps Script editor (**Run ▶ setupFinanceSeed**).
+It creates the `Milind-Finance` sheets and imports the legacy PFMS data
+(salary slips, loans & insurance, major transactions, financial year summaries).
+Safe to re-run — matching rows are updated, not duplicated.
+
 ---
 
 ## Auth & roles (simple)
@@ -125,14 +135,14 @@ var CONFIG = {
 ### Manage roles — no coding, just edit the sheet
 
 1. Open the **Milind-Auth** spreadsheet → **`Users`** tab.
-2. It's a 4-column table:
+2. It's a 7-column table:
 
-| username | password | role   | modules                                   |
-|----------|----------|--------|-------------------------------------------|
-| admin    | admin123 | admin  | hospital, seniority, finance, contact     |
-| rahul    | rahul123 | user   | hospital:admin, seniority                  |
-| priya    | priya123 | user   | finance:admin, hospital:admin              |
-| sonam    | sonam123 | user   | hospital, seniority, finance, contact      |
+| username | password | role   | modules                                   | name | email | mobile |
+|----------|----------|--------|-------------------------------------------|------|-------|--------|
+| admin    | admin123 | admin  | hospital, seniority, finance, contact     | Admin | admin@example.com | 98xxxxxx75 |
+| rahul    | rahul123 | user   | hospital:admin, seniority                  | Rahul | rahul@example.com | 98xxxxxx76 |
+| priya    | priya123 | user   | finance:admin, hospital:admin              | Priya | priya@example.com | 98xxxxxx77 |
+| sonam    | sonam123 | user   | hospital, seniority, finance, contact      | Sonam | sonam@example.com | 98xxxxxx78 |
 
 | Column | What to type | Example |
 |---|---|---|
@@ -140,6 +150,9 @@ var CONFIG = {
 | `password` | login password (plain) | `rahul123` |
 | `role` | `admin` = everything, or `user` = only what's in `modules` | `user` |
 | `modules` | comma-separated module list | `hospital:admin, seniority` |
+| `name` | full name (filled at registration) | `Rahul` |
+| `email` | email address (filled at registration) | `rahul@example.com` |
+| `mobile` | 10-digit mobile number (filled at registration) | `9876543210` |
 
 ### `modules` column cheat sheet
 
@@ -175,11 +188,11 @@ var CONFIG = {
 
 | Module | Backend (.gs) | Frontend | Status |
 |---|---|---|---|
-| Auth | `auth.gs` + `api.gs` | `login.html`, `register.html`, header buttons | 🔨 planned |
-| Contact | `contact.gs` | existing contact form (updated) | 🔨 planned |
+| Auth | `auth.gs` + `api.gs` | `login.html`, `register.html`, header buttons | ✅ live |
+| Contact | `contact.gs` | existing contact form (updated) | ✅ live |
 | Hospital | `hospital.gs` (from `apps-script/Code.gs`) | existing `hospital/` pages | 🔨 planned |
 | Seniority | `seniority.gs` | existing `seniority/` pages | 🔨 planned |
-| Finance | `finance.gs` (from old PFMS engine) | new `finance/` pages | 🔨 planned |
+| Finance | `finance.gs` + `finance-seed.gs` (from PFMS engine) | `finance/index.html` at `/finance` | ✅ live |
 
 ---
 

@@ -87,11 +87,11 @@
           <p>Employee seniority lists, search, sanctioned posts, and report generation.</p>
           <span class="card-tag" id="tag-seniority">MODULE</span>
         </a>
-        <a class="module-card coming" id="card-finance" href="#">
+        <a class="module-card" id="card-finance" href="/finance">
           <i class="fas fa-chart-line"></i>
           <h3>Finance Management</h3>
-          <p>Salary, loans, insurance, transactions and financial-year summaries. Coming soon.</p>
-          <span class="card-tag">COMING SOON</span>
+          <p>Salary slips, financial year summaries, loans &amp; insurance and major transactions.</p>
+          <span class="card-tag" id="tag-finance">MODULE</span>
         </a>
       </div>
     </section>
@@ -115,22 +115,9 @@
         <a class="module-card" href="/blog"><i class="fas fa-blog"></i><h3>Blog</h3><p>Articles, tutorials and updates.</p></a>
         <a class="module-card" href="/portfolio"><i class="fas fa-briefcase"></i><h3>Portfolio</h3><p>Projects and past work.</p></a>
         <a class="module-card" href="/links"><i class="fas fa-link"></i><h3>Links</h3><p>Important links and resources.</p></a>
-      </div>
-      <div class="module-grid cols-4">
         <a class="module-card" href="/contact"><i class="fas fa-envelope"></i><h3>Contact</h3><p>Get in touch with us.</p></a>
         <a class="module-card" href="/privacy"><i class="fas fa-shield-halved"></i><h3>Privacy</h3><p>Privacy policy.</p></a>
         <a class="module-card" href="/terms"><i class="fas fa-file-contract"></i><h3>Terms</h3><p>Terms of use.</p></a>
-        <a class="module-card" href="/404"><i class="fas fa-exclamation-triangle"></i><h3>404</h3><p>Page not found example.</p></a>
-      </div>
-    </section>
-
-    <!-- Legacy -->
-    <section class="l-section">
-      <h2><i class="fas fa-archive"></i> Legacy Pages <span>older tools, kept as-is</span></h2>
-      <div class="module-grid cols-4">
-        <a class="module-card" href="/seniariity-list.html"><i class="fas fa-list-ol"></i><h3>Seniority List</h3><p>Legacy seniority list page.</p></a>
-        <a class="module-card" href="/seniarity-management.html"><i class="fas fa-user-gear"></i><h3>Seniority Manage</h3><p>Legacy seniority management page.</p></a>
-        <a class="module-card" href="/test.html"><i class="fas fa-vial"></i><h3>Test</h3><p>Test page.</p></a>
       </div>
     </section>
   </div>
@@ -157,7 +144,7 @@
         }
 
         // Module cards: lock if the user has no access
-        ['hospital', 'seniority'].forEach(function (mod) {
+        ['hospital', 'seniority', 'finance'].forEach(function (mod) {
           var card = document.getElementById('card-' + mod);
           var tag = document.getElementById('tag-' + mod);
           if (!card || !tag) return;

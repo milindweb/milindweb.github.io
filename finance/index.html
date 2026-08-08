@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finance — MilindWeb</title>
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Finance', description: 'Milind Web Finance — monthly salary slips, financial year summaries, loans & insurance, and major transactions. Data stored in Google Sheets.', canonical: '/finance' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <!-- Order matters: api-client → auth → finance-api (sync) → headerfooter (defer) -->
+  <script src="/js/api-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/finance-api.js"></script>
+  <script src="/js/headerfooter.js" defer></script>
+  <style>
+    /* Offset the fixed PFMS sidebar below the site's sticky header */
+    #app .sidebar { top: 64px; bottom: 0; height: auto; }
+    #loginScreen { min-height: calc(100vh - 64px); }
+  </style>
+
+    <style>
+      .mcard { background:#fff; border-radius:10px; padding:14px 16px; box-shadow:0 1px 3px rgba(0,0,0,0.06); border-top:3px solid var(--accent); }
+      .mcard .mlabel { font-size:11px; color:var(--text-light); font-weight:500; text-transform:uppercase; letter-spacing:0.5px; }
+      .mcard .mvalue { font-size:20px; font-weight:700; color:var(--text); margin-top:4px; }
+      .mcard .mpct { font-size:11px; margin-top:2px; font-weight:500; }
+      .mcard.gross { border-top-color:#0f3460; }
+      .mcard.ded { border-top-color:#e94560; }
+      .mcard.net { border-top-color:#27ae60; }
+      .mcard.home { border-top-color:#f39c12; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #f0f2f5;
+      --sidebar: #1a1a2e;
+      --sidebar-hover: #16213e;
+      --accent: #0f3460;
+      --primary: #e94560;
+      --card: #fff;
+      --text: #333;
+      --text-light: #666;
+      --border: #e0e0e0;
+      --success: #27ae60;
+      --warning: #f39c12;
+      --danger: #e74c3c;
+      --info: #3498db;
+    }
+    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+
+    /* LOGIN */
+    #loginScreen {
+      display: flex; align-items: center; justify-content: center;
+      height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    #loginScreen .login-box {
+      background: white; padding: 40px; border-radius: 12px; width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    #loginScreen h1 { font-size: 24px; margin-bottom: 5px; color: var(--accent); }
+    #loginScreen p { color: var(--text-light); margin-bottom: 25px; font-size: 14px; }
+    #loginScreen input { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; transition: border 0.2s; }
+    #loginScreen input:focus { outline: none; border-color: var(--primary); }
+    #loginScreen button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+    #loginScreen button:hover { opacity: 0.9; }
+    #loginError { color: var(--danger); font-size: 13px; margin-top: 10px; text-align: center; display: none; }
+    .login-footer { margin-top: 20px; text-align: center; font-size: 12px; color: var(--text-light); }
+
+    /* APP LAYOUT */
+    #app { display: none; height: 100vh; }
+    .sidebar {
+      width: 240px; background: var(--sidebar); color: white; position: fixed; top: 0; left: 0; bottom: 0;
+      display: flex; flex-direction: column; z-index: 100; transition: transform 0.3s;
+    }
+    .sidebar-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .sidebar-header h2 { font-size: 18px; letter-spacing: 0.5px; }
+    .sidebar-header span { font-size: 11px; color: rgba(255,255,255,0.5); }
+    .sidebar-nav { flex: 1; overflow-y: auto; padding: 10px 0; }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: rgba(255,255,255,0.7);
+      text-decoration: none; font-size: 14px; transition: all 0.2s; cursor: pointer; border-left: 3px solid transparent;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active { background: rgba(255,255,255,0.08); color: white; }
+    .sidebar-nav a.active { border-left-color: var(--primary); background: rgba(233,69,96,0.1); }
+    .sidebar-nav a .icon { width: 20px; text-align: center; font-size: 16px; }
+
+    .main-content { margin-left: 240px; padding: 20px 30px; min-height: 100vh; }
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border);
+    }
+    .top-bar h1 { font-size: 22px; font-weight: 700; }
+    .top-bar .user-info { font-size: 13px; color: var(--text-light); display: flex; align-items: center; gap: 15px; }
+    .top-bar .user-info button { padding: 6px 14px; background: none; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 13px; }
+    .top-bar .user-info button:hover { background: var(--bg); }
+
+    /* CARDS */
+    .card { background: var(--card); border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 20px; }
+    .card h3 { font-size: 16px; margin-bottom: 15px; color: var(--accent); }
+
+    /* GRID */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+    @media (max-width: 900px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+    /* STAT CARDS */
+    .stat-card {
+      background: var(--card); border-radius: 10px; padding: 18px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid var(--accent);
+    }
+    .stat-card .label { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-card .value { font-size: 22px; font-weight: 700; margin-top: 5px; }
+    .stat-card.loan { border-left-color: var(--warning); }
+    .stat-card.lic { border-left-color: var(--info); }
+    .stat-card.ins { border-left-color: var(--success); }
+    .stat-card.tx { border-left-color: var(--danger); }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    th { background: #f8f9fa; font-weight: 600; color: var(--text-light); font-size: 12px; text-transform: uppercase; letter-spacing: 0.3px; position: sticky; top: 0; }
+    tr:hover { background: #f8f9fa; }
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .text-danger { color: var(--danger); }
+    .text-success { color: var(--success); }
+    .text-warning { color: var(--warning); }
+
+    /* FORM */
+    .form-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 15px; }
+    .form-group { display: flex; flex-direction: column; }
+    .form-group label { font-size: 11px; color: var(--text-light); margin-bottom: 3px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; transition: border 0.2s; width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
+    .form-group input.readonly { background: #f5f5f5; color: var(--text-light); }
+    .form-section-title { font-size: 14px; font-weight: 600; color: var(--accent); margin: 20px 0 10px; padding-bottom: 5px; border-bottom: 2px solid var(--accent); }
+
+    /* BUTTONS */
+    .btn {
+      padding: 8px 18px; border: none; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-danger:hover { opacity: 0.9; }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { opacity: 0.9; }
+    .btn-warning { background: var(--warning); color: white; }
+    .btn-warning:hover { opacity: 0.9; }
+    .btn-sm { padding: 5px 12px; font-size: 12px; }
+    .btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+    .btn-outline { background: none; border: 1px solid var(--border); color: var(--text); }
+    .btn-outline:hover { background: var(--bg); }
+
+    /* MISC */
+    .hidden { display: none !important; }
+    .text-muted { color: var(--text-light); font-size: 12px; }
+    .mb-10 { margin-bottom: 10px; }
+    .mb-20 { margin-bottom: 20px; }
+    .mt-10 { margin-top: 10px; }
+    .flex { display: flex; }
+    .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    .flex-center { display: flex; align-items: center; gap: 10px; }
+    .gap-10 { gap: 10px; }
+    .w-full { width: 100%; }
+    .chart-container { position: relative; height: 250px; }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500;
+    }
+    .badge-success { background: #d4edda; color: #155724; }
+    .badge-warning { background: #fff3cd; color: #856404; }
+    .badge-danger { background: #f8d7da; color: #721c24; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    .toast {
+      position: fixed; top: 20px; right: 20px; padding: 14px 24px; border-radius: 8px; color: white; font-size: 14px;
+      z-index: 9999; opacity: 0; transform: translateY(-20px); transition: all 0.3s; max-width: 400px;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast-success { background: var(--success); }
+    .toast-error { background: var(--danger); }
+    .toast-info { background: var(--info); }
+
+    /* Visual Stat Cards */
+    .stat-card { position: relative; overflow: hidden; }
+    .stat-card .bar-wrap { margin-top: 8px; height: 4px; background: #e9ecef; border-radius: 2px; overflow: hidden; }
+    .stat-card .bar-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+    .stat-card .bar-label { font-size: 10px; color: var(--text-light); margin-top: 4px; }
+    .stat-card .mini-chart { margin-top: 6px; height: 20px; display: flex; gap: 1px; align-items: flex-end; }
+    .stat-card .mini-chart .bar { flex: 1; border-radius: 1px 1px 0 0; min-height: 2px; }
+    .vsc { border-left: 4px solid var(--accent); }
+    .vsc.earn { border-left-color: #0f3460; }
+    .vsc.ded { border-left-color: #e94560; }
+    .vsc.net { border-left-color: #27ae60; }
+    .vsc.home { border-left-color: #f39c12; }
+    .vsc.rec { border-left-color: #e67e22; }
+    .vsc.nps { border-left-color: #8e44ad; }
+    .vsc.ot { border-left-color: #1abc9c; }
+    .vsc.loan { border-left-color: #2c3e50; }
+
+    /* Chart container fix */
+    .chart-wrap { position: relative; width: 100%; }
+    .chart-wrap canvas { width: 100% !important; height: 100% !important; }
+
+    /* Total row */
+    .total-row { font-weight: 700; background: #e8f4f8 !important; }
+    .total-row td { border-top: 2px solid var(--accent); }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 15px 0; }
+
+    /* Scrollable table container */
+    .table-scroll { max-height: 400px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); width: 280px; }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { margin-left: 0; padding: 15px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>Finance</h1>
+    <p>Milind Web — Payroll &amp; Financial Management</p>
+    <div id="gateLoading" style="text-align:center;color:var(--text-light);font-size:14px;padding:10px 0;">Checking access&hellip;</div>
+    <div id="gateDenied" style="display:none;text-align:center;">
+      <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">You do not have access to the Finance module yet.</p>
+      <a href="/contact" style="display:inline-block;padding:10px 20px;background:var(--primary);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Contact Admin</a>
+      <div class="login-footer" style="margin-top:18px;"><a href="/" style="color:var(--accent);text-decoration:none;">&larr; Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>Finance</h2>
+      <span>Payroll &amp; Financial Mgmt</span>
+    </div>
+    <div class="sidebar-nav">
+      <a class="active" onclick="showView('dashboard')"><span class="icon">&#9632;</span> Dashboard</a>
+      <a onclick="showView('salary')"><span class="icon">&#36;</span> Monthly Salary</a>
+      <a onclick="showView('finyear')"><span class="icon">&#9733;</span> Fin. Year Summary</a>
+      <a onclick="showView('loans')"><span class="icon">&#9762;</span> Loans &amp; Insurance</a>
+      <a onclick="showView('transactions')"><span class="icon">&#8644;</span> Major Transactions</a>
+      <a onclick="showView('reports')"><span class="icon">&#128196;</span> Reports</a>
+      <a onclick="showView('settings')"><span class="icon">&#9881;</span> Settings</a>
+      <a href="/" style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;"><span class="icon">&#8592;</span> Back to Home</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="top-bar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="user-info">
+        <span id="userDisplay"></span>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view">
+      <div class="flex-between" style="margin-bottom:12px;">
+        <div style="font-size:18px;font-weight:700;color:var(--accent);">Dashboard</div>
+        <div class="flex-center gap-8">
+          <select id="dashMonth" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
+            <option value="">All Months</option>
+            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
+            <option>May</option><option>Jun</option><option>Jul</option><option>Aug</option>
+            <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+          </select>
+          <select id="dashYear" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
+            <option value="">All Years</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="statCards" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px;"></div>
+
+      <div class="grid-2" style="margin-bottom:0;">
+        <div class="card" style="padding:16px;">
+          <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text);">Breakdown</h3>
+          <div class="chart-wrap" style="height:200px;"><canvas id="chartDonut"></canvas></div>
+        </div>
+        <div class="card" style="padding:16px;">
+          <div class="flex-between" style="margin-bottom:12px;">
+            <h3 style="font-size:14px;font-weight:600;color:var(--text);">Financial Year Trend</h3>
+            <select id="fyChartYear" onchange="renderFinYearChart()" style="padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:11px;background:#fff;">
+              <option value="">All</option>
+            </select>
+          </div>
+          <div id="fyChartNoData" style="display:none;padding:25px;text-align:center;color:var(--text-light);font-size:13px;">No salary data for selected year.</div>
+          <div class="chart-wrap" style="height:200px;"><canvas id="chartFinYear"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALARY -->
+    <div id="view-salary" class="view hidden">
+      <div class="flex-between mb-10">
+        <div class="flex-center gap-10">
+          <select id="salaryYearSelect" onchange="loadSalary()" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;"></select>
+        </div>
+        <button class="btn btn-primary" onclick="openSalaryForm()">+ Add Month</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="salaryTableWrap"></div>
+      </div>
+      <div class="card hidden" id="salaryFormCard">
+        <div class="flex-between mb-10"><h3 id="salaryFormTitle">Add Monthly Salary</h3><button class="btn btn-sm btn-outline" onclick="closeSalaryForm()">&#10005; Close</button></div>
+        <div style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Fields with <strong>bold labels</strong> auto-calculate. Enter Month &amp; Year first.</div>
+        <div class="form-row">
+          <div class="form-group"><label>Month</label>
+            <select id="field-Month" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
+              <option value="">--</option><option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
+              <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Year</label><input type="number" id="field-Year" placeholder="e.g. 2025" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;"></div>
+        </div>
+        <div class="form-section-title">Earnings</div>
+        <div class="form-row" id="earningsFields"></div>
+        <div class="form-section-title">Deductions</div>
+        <div class="form-row" id="deductionsFields"></div>
+        <div class="form-section-title">Recoveries</div>
+        <div class="form-row" id="recoveriesFields"></div>
+        <div class="form-section-title">OT</div>
+        <div class="form-row" id="otFields"></div>
+        <div class="form-section-title">Summary</div>
+        <div class="form-row" id="summaryFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveSalary()">Save</button><button class="btn btn-outline" onclick="closeSalaryForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- FIN YEAR -->
+    <div id="view-finyear" class="view hidden">
+      <button class="btn btn-primary mb-10" onclick="openFinYearForm()">+ Add Year</button>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="finyearTableWrap"></div>
+      </div>
+      <div class="card hidden" id="finyearFormCard">
+        <div class="flex-between mb-10">
+          <h3 id="finyearFormTitle">Add Financial Year</h3>
+          <button class="btn btn-sm btn-outline" onclick="closeFinYearForm()">&#10005; Close</button>
+        </div>
+        <div id="finyearAutoSection">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Assessment Year</label>
+              <select id="finyearYearSelect" onchange="autoFillFinYear()" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;">
+                <option value="">-- Select Year --</option>
+              </select>
+            </div>
+            <div class="form-group" style="justify-content:flex-end;">
+              <button class="btn btn-primary" onclick="autoFillFinYear()" style="margin-top:18px;">&#8635; Auto-Fill from Data</button>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Select assessment year and click Auto-Fill to populate from monthly salary, loans &amp; transactions data.</div>
+        </div>
+        <div id="finyearNoData" class="hidden" style="font-size:13px;color:#856404;margin-bottom:10px;padding:10px;background:#fff3cd;border-radius:6px;">No monthly salary data found for this assessment year. Add salary entries first.</div>
+        <div class="form-row" id="finyearFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveFinYear()">Save</button><button class="btn btn-outline" onclick="closeFinYearForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- LOANS -->
+    <div id="view-loans" class="view hidden">
+      <button class="btn btn-primary mb-10" onclick="openLoanForm()">+ Add Entry</button>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="loanTableWrap"></div>
+      </div>
+      <div class="card hidden" id="loanFormCard">
+        <div class="flex-between mb-10"><h3 id="loanFormTitle">Add Loan / Insurance</h3><button class="btn btn-sm btn-outline" onclick="closeLoanForm()">&#10005; Close</button></div>
+        <div class="form-row" id="loanFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveLoan()">Save</button><button class="btn btn-outline" onclick="closeLoanForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- TRANSACTIONS -->
+    <div id="view-transactions" class="view hidden">
+      <button class="btn btn-primary mb-10" onclick="openTxForm()">+ Add Transaction</button>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="txTableWrap"></div>
+      </div>
+      <div class="card hidden" id="txFormCard">
+        <div class="flex-between mb-10"><h3 id="txFormTitle">Add Transaction</h3><button class="btn btn-sm btn-outline" onclick="closeTxForm()">&#10005; Close</button></div>
+        <div class="form-row" id="txFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveTx()">Save</button><button class="btn btn-outline" onclick="closeTxForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="view-reports" class="view hidden">
+      <div class="card">
+        <h3>Export Data</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Sheet</label><select id="exportSheet" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;">
+            <option value="Salary_Monthly">Monthly Salary</option>
+            <option value="FinYear_Summary">Financial Year Summary</option>
+            <option value="Loans_Insurance">Loans &amp; Insurance</option>
+            <option value="Major_Transactions">Major Transactions</option>
+          </select></div>
+        </div>
+        <button class="btn btn-primary" onclick="exportCSV()">Export as CSV</button>
+      </div>
+      <div class="card">
+        <h3>Import Data</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Sheet</label><select id="importSheet" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;">
+            <option value="Salary_Monthly">Monthly Salary</option>
+            <option value="FinYear_Summary">Financial Year Summary</option>
+            <option value="Loans_Insurance">Loans &amp; Insurance</option>
+            <option value="Major_Transactions">Major Transactions</option>
+          </select></div>
+        </div>
+        <div class="form-group mb-10"><label>Paste CSV data</label><textarea id="importCSVText" rows="8" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:monospace;font-size:12px;"></textarea></div>
+        <button class="btn btn-warning" onclick="importCSV()">Import CSV</button>
+      </div>
+      <div class="card">
+        <h3>Initialize App</h3>
+        <p class="text-muted mb-10">Create all required sheets and default data (safe to run multiple times).</p>
+        <button class="btn btn-success" onclick="initApp()">Initialize Sheets</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="view-settings" class="view hidden">
+      <div class="card">
+        <h3>App Settings</h3>
+        <div class="form-row" id="settingsFields"></div>
+        <button class="btn btn-primary mt-10" onclick="saveSettings()">Save Settings</button>
+      </div>
+      <div class="card">
+        <h3>Account</h3>
+        <p class="text-muted mb-10">Your MilindWeb login controls access to this module. Password and access are managed from your account.</p>
+        <a class="btn btn-outline" href="/">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer"></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+// ===================== STATE =====================
+var currentUser = null;
+var currentView = 'dashboard';
+var salaryFormMode = 'add';
+var salaryFormId = null;
+var finyearFormMode = 'add';
+var finyearFormId = null;
+var loanFormMode = 'add';
+var loanFormId = null;
+var txFormMode = 'add';
+var txFormId = null;
+
+var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// ===================== TOAST =====================
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast toast-' + type + ' show';
+  setTimeout(function(){ t.className = 'toast'; }, 3000);
+}
+
+// ===================== ACCESS GATE / SITE AUTH =====================
+// Bridge the PFMS UI's google.script.run calls to the MilindWeb backend.
+window.google = window.google || {};
+window.google.script = window.google.script || {};
+window.google.script.run = window.FinanceAPI.run;
+
+function logout() {
+  currentUser = null;
+  if (window.Auth) window.Auth.logout();
+  window.location.href = '/';
+}
+
+// ===================== NAVIGATION =====================
+function showView(name) {
+  currentView = name;
+  document.querySelectorAll('.sidebar-nav a').forEach(function(a) { a.classList.remove('active'); });
+  document.querySelectorAll('.sidebar-nav a').forEach(function(a) {
+    if (a.getAttribute('onclick').indexOf(name) >= 0) a.classList.add('active');
+  });
+  loadView(name);
+}
+
+function loadView(name) {
+  var titles = { dashboard:'Dashboard', salary:'Monthly Salary', finyear:'Financial Year Summary', loans:'Loans & Insurance', transactions:'Major Transactions', reports:'Reports & Utilities', settings:'Settings' };
+  document.getElementById('pageTitle').textContent = titles[name] || name;
+  document.querySelectorAll('.view').forEach(function(v) { v.classList.add('hidden'); });
+  document.getElementById('view-' + name).classList.remove('hidden');
+  if (name === 'dashboard') loadDashboard();
+  else if (name === 'salary') loadSalary();
+  else if (name === 'finyear') loadFinYear();
+  else if (name === 'loans') loadLoans();
+  else if (name === 'transactions') loadTx();
+  else if (name === 'reports') {}
+  else if (name === 'settings') loadSettings();
+}
+
+// ===================== DASHBOARD =====================
+var _dashData = null;
+var _salaryRecords = [];
+
+function loadDashboard() {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      _dashData = data;
+      renderDashboard();
+    })
+    .getDashboardData();
+  google.script.run
+    .withSuccessHandler(function(years) {
+      var sel = document.getElementById('fyChartYear');
+      sel.innerHTML = '<option value="">-- All --</option>';
+      years.forEach(function(y) { sel.innerHTML += '<option value="' + y + '">' + y + '</option>'; });
+      var ysel = document.getElementById('dashYear');
+      ysel.innerHTML = '<option value="">All Years</option>';
+      years.forEach(function(y) { ysel.innerHTML += '<option value="' + y + '">' + y + '</option>'; });
+    })
+    .getAvailableAssessmentYears();
+  google.script.run
+    .withSuccessHandler(function(records) {
+      _salaryRecords = records || [];
+    })
+    .getMonthlySalary();
+}
+
+function renderDashboard() {
+  if (!_dashData) return;
+  var month = document.getElementById('dashMonth').value;
+  var year = document.getElementById('dashYear').value;
+  if (month && year && _salaryRecords.length) {
+    var record = null;
+    for (var i = 0; i < _salaryRecords.length; i++) {
+      var r = _salaryRecords[i];
+      if (r.Month === month && String(r.Year) === year) { record = r; break; }
+    }
+    if (record) {
+      renderMonthCards(record);
+      renderPerMonthDonut(record);
+      renderFinYearChart();
+      return;
+    }
+  }
+  renderStatCards(_dashData);
+  renderAllCharts(_dashData);
+}
+
+function onDashFilterChange() { renderDashboard(); }
+
+function mcard(label, value, cls, pct) {
+  var pctHtml = pct !== undefined ? '<div class="mpct" style="color:' + (pct < 30 ? '#e94560' : '#27ae60') + ';">' + pct.toFixed(1) + '%</div>' : '';
+  return '<div class="mcard ' + cls + '"><div class="mlabel">' + label + '</div><div class="mvalue">' + value + '</div>' + pctHtml + '</div>';
+}
+
+function renderStatCards(data) {
+  var s = data.salary || {};
+  var g = Number(s.totalGross) || 1;
+  document.getElementById('statCards').innerHTML =
+    mcard('Total Gross', fmt(s.totalGross), 'gross') +
+    mcard('Total Deductions', fmt(s.totalDeduction), 'ded', (s.totalDeduction/g)*100) +
+    mcard('Net Pay', fmt(s.totalNetPay), 'net', (s.totalNetPay/g)*100) +
+    mcard('Home Pay', fmt(s.totalHomePay), 'home', (s.totalHomePay/g)*100);
+}
+
+function renderMonthCards(r) {
+  var g = Number(r.GROSS_EARN) || 0;
+  var d = Number(r.DEDUCTION_TOTAL) || 0;
+  var n = Number(r.NET_PAY) || 0;
+  var h = Number(r.HOME_PAY) || 0;
+  document.getElementById('statCards').innerHTML =
+    mcard('Gross', fmt(g), 'gross') +
+    mcard('Deduction', fmt(d), 'ded', g ? (d/g)*100 : 0) +
+    mcard('Net Pay', fmt(n), 'net', g ? (n/g)*100 : 0) +
+    mcard('Home Pay', fmt(h), 'home', g ? (h/g)*100 : 0);
+}
+
+function renderPerMonthDonut(r) {
+  drawDonutChart('chartDonut', [
+    { label: 'Home Pay', value: Number(r.HOME_PAY) || 0, color: '#27ae60' },
+    { label: 'Recovery', value: Number(r.RECOVERY_TOTAL) || 0, color: '#f39c12' },
+    { label: 'Deductions', value: Number(r.DEDUCTION_TOTAL) || 0, color: '#e94560' }
+  ]);
+}
+
+function renderAllCharts(data) {
+  var s = data.salary || {};
+  drawDonutChart('chartDonut', [
+    { label: 'Home Pay', value: Number(s.totalHomePay) || 0, color: '#27ae60' },
+    { label: 'Recovery', value: Number(s.totalRecovery) || 0, color: '#f39c12' },
+    { label: 'Deductions', value: Number(s.totalDeduction) || 0, color: '#e94560' }
+  ]);
+  renderFinYearChart();
+}
+
+function renderFinYearChart() {
+  var year = document.getElementById('fyChartYear').value;
+  var noDataEl = document.getElementById('fyChartNoData');
+  if (noDataEl) noDataEl.style.display = 'none';
+
+  var canvas = document.getElementById('chartFinYear');
+  if (canvas) {
+    var ctx = canvas.getContext('2d');
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  google.script.run
+    .withSuccessHandler(function(data) {
+      if (!data || data.length === 0) {
+        if (noDataEl) noDataEl.style.display = 'block';
+        return;
+      }
+      var labels = data.map(function(r){ return r.month ? r.month.substr(0,3) : ''; });
+      var grossD = data.map(function(r){ return r.gross; });
+      var netD = data.map(function(r){ return r.netPay; });
+      var homeD = data.map(function(r){ return r.homePay; });
+      drawLineChart('chartFinYear', labels, [
+        { label: 'Gross', data: grossD, color: '#0f3460', fill: 'rgba(15,52,96,0.08)' },
+        { label: 'Net Pay', data: netD, color: '#e94560', fill: 'rgba(233,69,96,0.08)' },
+        { label: 'Home Pay', data: homeD, color: '#27ae60', fill: 'rgba(39,174,96,0.08)' }
+      ]);
+    })
+    .getFinYearMonthlyData(year);
+}
+
+// ===================== CANVAS 2D CHARTS =====================
+
+function resizeCanvas(canvasId) {
+  var canvas = document.getElementById(canvasId);
+  if (!canvas) return null;
+  var rect = canvas.parentElement.getBoundingClientRect();
+  var dpr = window.devicePixelRatio || 1;
+  var W = rect.width || 200;
+  var H = rect.height || 200;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return { ctx: ctx, W: W, H: H };
+}
+
+function drawLineChart(canvasId, labels, datasets) {
+  var r = resizeCanvas(canvasId);
+  if (!r) return;
+  var ctx = r.ctx, W = r.W, H = r.H;
+  var pad = { top: 15, right: 15, bottom: 45, left: 55 };
+  var plotW = W - pad.left - pad.right;
+  var plotH = H - pad.top - pad.bottom;
+  var numPoints = labels.length;
+  if (numPoints < 2 || !datasets.length) return;
+
+  var maxVal = 0;
+  datasets.forEach(function(ds) { ds.data.forEach(function(v) { if (v > maxVal) maxVal = v; }); });
+  if (maxVal === 0) maxVal = 1000;
+  var range = maxVal;
+
+  function xPos(i) { return pad.left + (i / (numPoints - 1)) * plotW; }
+  function yPos(v) { return pad.top + plotH - (v / range) * plotH; }
+
+  ctx.clearRect(0, 0, W, H);
+
+  ctx.strokeStyle = '#e8e8e8';
+  ctx.lineWidth = 1;
+  for (var g = 0; g <= 5; g++) {
+    var y = pad.top + (g / 5) * plotH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+  }
+
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#999';
+  ctx.font = '10px sans-serif';
+  for (var g = 0; g <= 5; g++) {
+    var y = pad.top + (g / 5) * plotH;
+    ctx.fillText(fmtShort(maxVal - (g / 5) * maxVal), pad.left - 5, y + 3);
+  }
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#666';
+  ctx.font = '9px sans-serif';
+  for (var i = 0; i < numPoints; i++) {
+    ctx.fillText(labels[i], xPos(i), H - pad.bottom + 15);
+  }
+
+  datasets.forEach(function(ds) {
+    if (!ds.fill) return;
+    ctx.fillStyle = ds.fill;
+    ctx.beginPath();
+    ctx.moveTo(xPos(0), pad.top + plotH);
+    for (var i = 0; i < numPoints; i++) ctx.lineTo(xPos(i), yPos(ds.data[i]));
+    ctx.lineTo(xPos(numPoints - 1), pad.top + plotH);
+    ctx.closePath();
+    ctx.fill();
+  });
+
+  datasets.forEach(function(ds) {
+    ctx.strokeStyle = ds.color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (var i = 0; i < numPoints; i++) {
+      if (i === 0) ctx.moveTo(xPos(i), yPos(ds.data[i]));
+      else ctx.lineTo(xPos(i), yPos(ds.data[i]));
+    }
+    ctx.stroke();
+  });
+
+  datasets.forEach(function(ds) {
+    ctx.fillStyle = ds.color;
+    for (var i = 0; i < numPoints; i++) {
+      ctx.beginPath(); ctx.arc(xPos(i), yPos(ds.data[i]), 3, 0, Math.PI * 2); ctx.fill();
+    }
+  });
+
+  var lx = pad.left;
+  ctx.textAlign = 'left';
+  ctx.font = '10px sans-serif';
+  datasets.forEach(function(ds) {
+    ctx.fillStyle = ds.color;
+    ctx.fillRect(lx, H - 10, 12, 3);
+    ctx.fillStyle = '#333';
+    ctx.fillText(ds.label, lx + 16, H - 4);
+    lx += ctx.measureText(ds.label).width + 28;
+  });
+}
+
+function drawDonutChart(canvasId, segments) {
+  var r = resizeCanvas(canvasId);
+  if (!r) return;
+  var ctx = r.ctx, W = r.W, H = r.H;
+
+  var total = 0;
+  segments.forEach(function(s) { total += Math.max(0, s.value); });
+  if (total === 0) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#ccc';
+    ctx.font = '14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('No data', W/2, H/2);
+    return;
+  }
+
+  ctx.clearRect(0, 0, W, H);
+
+  var cx = W / 2;
+  var cy = H / 2 - 10;
+  var outerR = Math.min(W, H) / 2 - 15;
+  var innerR = outerR * 0.55;
+  var startAngle = -Math.PI / 2;
+
+  segments.forEach(function(s) {
+    var value = Math.max(0, s.value);
+    var angle = (value / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, outerR, startAngle, startAngle + angle);
+    ctx.arc(cx, cy, innerR, startAngle + angle, startAngle, true);
+    ctx.closePath();
+    ctx.fillStyle = s.color;
+    ctx.fill();
+    startAngle += angle;
+  });
+
+  ctx.fillStyle = '#333';
+  ctx.font = 'bold 15px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(fmtShort(total), cx, cy - 5);
+  ctx.font = '9px sans-serif';
+  ctx.fillStyle = '#999';
+  ctx.fillText('Total', cx, cy + 9);
+
+  var lx = 10;
+  var ly = H - 8;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  ctx.font = '9px sans-serif';
+  segments.forEach(function(s) {
+    var pct = ((s.value / total) * 100).toFixed(1);
+    var label = s.label + ' ' + pct + '%';
+    var tw = ctx.measureText(label).width;
+    if (lx + tw + 30 > W) { lx = 10; ly -= 14; }
+    ctx.fillStyle = s.color;
+    ctx.fillRect(lx, ly - 7, 9, 9);
+    ctx.fillStyle = '#333';
+    ctx.fillText(label, lx + 13, ly);
+    lx += tw + 22;
+  });
+}
+
+// ===================== SALARY =====================
+var SALARY_FIELDS = {
+  earnings: [
+    {key:'BASIC', label:'BASIC'}, {key:'DA', label:'DA'}, {key:'TPTA', label:'TPTA'},
+    {key:'TPTADA', label:'TPTADA'}, {key:'SOT', label:'SOT'}, {key:'DOT', label:'DOT'},
+    {key:'NPS_GC_EARN', label:'NPS GC'}, {key:'TADA', label:'TADA'}, {key:'AO_PA', label:'A/O P&A'},
+    {key:'AO_TPTADA', label:'A/O TPTA&DA'}, {key:'OTARRS', label:'OTARRS'}, {key:'BONUS', label:'BONUS'},
+    {key:'EXTRA_EARN', label:'EXTRA'}
+  ],
+  deductions: [
+    {key:'NPS', label:'NPS'}, {key:'NPS_GC_DED', label:'NPS GC'}, {key:'CGHS', label:'CGHS'},
+    {key:'CGEIS', label:'CGEIS'}, {key:'LFEE', label:'LFEE'}, {key:'ELWC', label:'ELWC'},
+    {key:'LATE', label:'LATE'}, {key:'IT', label:'IT'}, {key:'CESS', label:'CESS'},
+    {key:'ABSCENT', label:'ABSCENT'}, {key:'R_OT', label:'R/OT'}, {key:'EXTRA_DED', label:'EXTRA'}
+  ],
+  recoveries: [
+    {key:'NADKSF', label:'NADKSF'}, {key:'DCRB', label:'DCRB'}, {key:'NCHCF', label:'NCHCF'},
+    {key:'NDCB', label:'NDCB'}, {key:'LWFL', label:'LWFL'}, {key:'RCOURT', label:'RCOURT'},
+    {key:'EXTRA_REC', label:'EXTRA'}
+  ],
+  ot: [
+    {key:'SINGLE_OT', label:'SINGLE OT'}, {key:'DOUBLE_OT', label:'DOUBLE OT'}
+  ],
+  summary: [
+    {key:'GROSS_EARN', label:'GROSS', readonly:true},
+    {key:'DEDUCTION_TOTAL', label:'DEDUCTION', readonly:true},
+    {key:'NET_PAY', label:'NET PAY', readonly:true},
+    {key:'RECOVERY_TOTAL', label:'RECOVERY', readonly:true},
+    {key:'HOME_PAY', label:'HOME PAY', readonly:true},
+    {key:'REMARK', label:'REMARK'}
+  ]
+};
+
+function loadSalary() {
+  var sel = document.getElementById('salaryYearSelect');
+  google.script.run
+    .withSuccessHandler(function(years) {
+      var cur = sel.value;
+      sel.innerHTML = '<option value="">All Years</option>';
+      years.forEach(function(y) { sel.innerHTML += '<option value="' + y + '">' + y + '</option>'; });
+      if (cur) sel.value = cur;
+      renderSalaryTable(sel.value);
+    })
+    .getSalaryYears();
+}
+
+function renderSalaryTable(year) {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      if (year) data = data.filter(function(r) { return String(r.Year) === String(year); });
+      var html = '<table><thead><tr><th>Month</th><th>Year</th><th>BASIC</th><th>DA</th><th>TPTA</th><th>SOT</th><th>DOT</th><th>GROSS</th><th>DED</th><th>NET</th><th>REC</th><th>HOME</th><th>Remark</th><th>Actions</th></tr></thead><tbody>';
+      var totalGross = 0, totalDed = 0, totalNet = 0, totalHome = 0;
+      data.forEach(function(r) {
+        var g = Number(r.GROSS_EARN)||0, d = Number(r.DEDUCTION_TOTAL)||0, n = Number(r.NET_PAY)||0, h = Number(r.HOME_PAY)||0;
+        totalGross += g; totalDed += d; totalNet += n; totalHome += h;
+        html += '<tr>';
+        html += '<td>' + (r.Month||'') + '</td><td>' + (r.Year||'') + '</td>';
+        html += '<td class="text-right">' + (r.BASIC||'') + '</td>';
+        html += '<td class="text-right">' + (r.DA||'') + '</td>';
+        html += '<td class="text-right">' + (r.TPTA||'') + '</td>';
+        html += '<td class="text-right">' + (r.SOT||'') + '</td>';
+        html += '<td class="text-right">' + (r.DOT||'') + '</td>';
+        html += '<td class="text-right">' + fmt(g) + '</td>';
+        html += '<td class="text-right">' + fmt(d) + '</td>';
+        html += '<td class="text-right">' + fmt(n) + '</td>';
+        html += '<td class="text-right">' + (r.RECOVERY_TOTAL||'') + '</td>';
+        html += '<td class="text-right">' + fmt(h) + '</td>';
+        html += '<td>' + (r.REMARK||'') + '</td>';
+        html += '<td><button class="btn btn-sm btn-primary" onclick="editSalary(' + r.ID + ')">Edit</button> <button class="btn btn-sm btn-danger" onclick="deleteSalary(' + r.ID + ')">Del</button></td>';
+        html += '</tr>';
+      });
+      html += '<tr class="total-row"><td colspan="6"><strong>TOTAL</strong></td><td class="text-right">' + fmt(totalGross) + '</td><td class="text-right">' + fmt(totalDed) + '</td><td class="text-right">' + fmt(totalNet) + '</td><td></td><td class="text-right">' + fmt(totalHome) + '</td><td></td><td></td></tr>';
+      html += '</tbody></table>';
+      document.getElementById('salaryTableWrap').innerHTML = html;
+    })
+    .getMonthlySalary(year);
+}
+
+function buildSlipFields(containerId, defs, data) {
+  var html = '';
+  defs.forEach(function(fd) {
+    var key = fd.key;
+    var val = (data && data[key] !== undefined && data[key] !== null) ? data[key] : '';
+    var ro = fd.readonly ? 'readonly class="readonly"' : '';
+    html += '<div class="form-group"><label>' + fd.label + '</label><input type="text" id="field-' + key + '" value="' + val + '" ' + ro + '></div>';
+  });
+  document.getElementById(containerId).innerHTML = html;
+}
+
+function openSalaryForm(data) {
+  document.getElementById('salaryFormCard').classList.remove('hidden');
+  buildSlipFields('earningsFields', SALARY_FIELDS.earnings, data);
+  buildSlipFields('deductionsFields', SALARY_FIELDS.deductions, data);
+  buildSlipFields('recoveriesFields', SALARY_FIELDS.recoveries, data);
+  buildSlipFields('otFields', SALARY_FIELDS.ot, data);
+  buildSlipFields('summaryFields', SALARY_FIELDS.summary, data);
+
+  if (data && data.ID) {
+    document.getElementById('field-Month').value = data.Month || '';
+    document.getElementById('field-Year').value = data.Year || '';
+    salaryFormMode = 'edit'; salaryFormId = data.ID;
+    document.getElementById('salaryFormTitle').textContent = 'Edit Salary - ' + (data.Month||'') + ' ' + (data.Year||'');
+  } else {
+    salaryFormMode = 'add'; salaryFormId = null;
+    document.getElementById('salaryFormTitle').textContent = 'Add Monthly Salary';
+  }
+  addCalcListeners();
+  recalcSalary();
+}
+
+function addCalcListeners() {
+  var allKeys = [];
+  SALARY_FIELDS.earnings.forEach(function(fd) { if (!fd.readonly) allKeys.push(fd.key); });
+  SALARY_FIELDS.deductions.forEach(function(fd) { if (!fd.readonly) allKeys.push(fd.key); });
+  SALARY_FIELDS.recoveries.forEach(function(fd) { if (!fd.readonly) allKeys.push(fd.key); });
+  allKeys.forEach(function(k) {
+    var el = document.getElementById('field-' + k);
+    if (el) el.addEventListener('input', recalcSalary);
+  });
+}
+
+function recalcSalary() {
+  function sumKeys(keys) {
+    var t = 0;
+    keys.forEach(function(f) {
+      var el = document.getElementById('field-' + f);
+      t += Number(el ? el.value : 0) || 0;
+    });
+    return t;
+  }
+
+  var earnKeys = ['BASIC','DA','TPTA','TPTADA','SOT','DOT','NPS_GC_EARN','TADA','AO_PA','AO_TPTADA','OTARRS','BONUS','EXTRA_EARN'];
+  var dedKeys = ['NPS','NPS_GC_DED','CGHS','CGEIS','LFEE','ELWC','LATE','IT','CESS','ABSCENT','R_OT','EXTRA_DED'];
+  var recKeys = ['NADKSF','DCRB','NCHCF','NDCB','LWFL','RCOURT','EXTRA_REC'];
+
+  var gross = sumKeys(earnKeys);
+  var ded = sumKeys(dedKeys);
+  var rec = sumKeys(recKeys);
+  var net = gross - ded;
+  var home = net - rec;
+
+  var setVal = function(key, val) {
+    var el = document.getElementById('field-' + key);
+    if (el) el.value = val;
+  };
+
+  setVal('GROSS_EARN', gross);
+  setVal('DEDUCTION_TOTAL', ded);
+  setVal('RECOVERY_TOTAL', rec);
+  setVal('NET_PAY', net);
+  setVal('HOME_PAY', home);
+}
+
+function collectSalaryForm() {
+  var allKeys = ['Month','Year'];
+  SALARY_FIELDS.earnings.forEach(function(fd) { allKeys.push(fd.key); });
+  SALARY_FIELDS.deductions.forEach(function(fd) { allKeys.push(fd.key); });
+  SALARY_FIELDS.recoveries.forEach(function(fd) { allKeys.push(fd.key); });
+  SALARY_FIELDS.ot.forEach(function(fd) { allKeys.push(fd.key); });
+  SALARY_FIELDS.summary.forEach(function(fd) { allKeys.push(fd.key); });
+  allKeys = allKeys.filter(function(v,i,a) { return a.indexOf(v) === i; });
+
+  var data = {};
+  allKeys.forEach(function(f) {
+    var el = document.getElementById('field-' + f);
+    data[f] = el ? el.value : '';
+  });
+  if (salaryFormId) data.ID = salaryFormId;
+  return data;
+}
+
+function saveSalary() {
+  var data = collectSalaryForm();
+  if (!data.Month || !data.Year) { showToast('Month and Year are required', 'error'); return; }
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res.success) {
+        showToast('Salary ' + res.action + ' successfully', 'success');
+        closeSalaryForm();
+        loadSalary();
+      }
+    })
+    .saveMonthlySalary(data);
+}
+
+function editSalary(id) {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      if (data) openSalaryForm(data);
+      else showToast('Record not found', 'error');
+    })
+    .getMonthlySalaryById(id);
+}
+
+function deleteSalary(id) {
+  if (!confirm('Delete this salary record?')) return;
+  google.script.run
+    .withSuccessHandler(function() {
+      showToast('Record deleted', 'info');
+      loadSalary();
+    })
+    .deleteMonthlySalary(id);
+}
+
+function closeSalaryForm() {
+  document.getElementById('salaryFormCard').classList.add('hidden');
+  salaryFormMode = 'add'; salaryFormId = null;
+}
+
+// ===================== FIN YEAR =====================
+function loadFinYear() {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      var html = '<table><thead><tr><th>Period</th><th>Assessment Year</th><th>Excel Gross</th><th>Form16</th><th>Home Pay</th><th>NPS</th><th>EMI Total</th><th>Actions</th></tr></thead><tbody>';
+      data.forEach(function(r) {
+        html += '<tr><td>' + (r.Period||'') + '</td><td>' + (r.Assessment_Year||'') + '</td>';
+        html += '<td class="text-right">' + fmt(r.Excel_Gross_Salary) + '</td><td class="text-right">' + fmt(r.Form16_Gross_Salary) + '</td>';
+        html += '<td class="text-right">' + fmt(r.Home_Pay_Salary) + '</td><td class="text-right">' + fmt(r.NPS) + '</td>';
+        html += '<td class="text-right">' + fmt(r.Total_EMI_Loan_Insurance_Major) + '</td>';
+        html += '<td><button class="btn btn-sm btn-primary" onclick="editFinYear(' + r.ID + ')">Edit</button> <button class="btn btn-sm btn-success" onclick="recalcFinYear(' + r.ID + ')">&#8635;</button> <button class="btn btn-sm btn-danger" onclick="deleteFinYear(' + r.ID + ')">Del</button></td></tr>';
+      });
+      html += '</tbody></table>';
+      document.getElementById('finyearTableWrap').innerHTML = html;
+    })
+    .getFinYearSummary();
+}
+
+function openFinYearForm(data) {
+  document.getElementById('finyearFormCard').classList.remove('hidden');
+  document.getElementById('finyearAutoSection').style.display = 'block';
+  document.getElementById('finyearNoData').classList.add('hidden');
+
+  var fields = [
+    'Period','Assessment_Year','Excel_Gross_Salary','Cumulative_Gross_Salary','Form16_Gross_Salary','Home_Pay_Salary',
+    'NPS','NPS_GC','Karanja_Society','Dockyard_Bank','DCRB','ELWC','Over_Time',
+    'Amount_Paid_Credited','Amount_Tax_Deducted','Amount_Tax_Deposited','Claimed_Amount','Returned_Amount',
+    'LIC','Term_Insurance','Health_Insurance','Loan','Other','Major_Transactions',
+    'Total_EMI_Loan_Insurance_Major','Bulk_Other_Income','Home_Pay_Minus_EMI_Loan_Kharcha'
+  ];
+
+  if (data && data.ID) {
+    finyearFormMode = 'edit'; finyearFormId = data.ID;
+    document.getElementById('finyearFormTitle').textContent = 'Edit Financial Year';
+    document.getElementById('finyearAutoSection').style.display = 'none';
+    buildFinYearFields(fields, data);
+  } else {
+    finyearFormMode = 'add'; finyearFormId = null;
+    document.getElementById('finyearFormTitle').textContent = 'Add Financial Year';
+    buildFinYearFields(fields, null);
+    google.script.run
+      .withSuccessHandler(function(years) {
+        var sel = document.getElementById('finyearYearSelect');
+        sel.innerHTML = '<option value="">-- Select Year --</option>';
+        years.forEach(function(y) { sel.innerHTML += '<option value="' + y + '">' + y + '</option>'; });
+      })
+      .getAvailableAssessmentYears();
+  }
+}
+
+function buildFinYearFields(fields, data) {
+  var html = '';
+  fields.forEach(function(f) {
+    var val = (data && data[f] !== undefined && data[f] !== null) ? data[f] : '';
+    html += '<div class="form-group"><label>' + f.replace(/_/g,' ') + '</label><input type="text" id="ffield-' + f + '" value="' + val + '"></div>';
+  });
+  document.getElementById('finyearFields').innerHTML = html;
+}
+
+function autoFillFinYear() {
+  var year = document.getElementById('finyearYearSelect').value;
+  if (!year) { showToast('Select an assessment year first', 'error'); return; }
+  document.getElementById('finyearNoData').classList.add('hidden');
+  google.script.run
+    .withSuccessHandler(function(computed) {
+      var hasSalaryData = computed.Excel_Gross_Salary > 0 || computed.Home_Pay_Salary > 0;
+      if (!hasSalaryData) {
+        document.getElementById('finyearNoData').classList.remove('hidden');
+      }
+      var fields = [
+        'Period','Assessment_Year','Excel_Gross_Salary','Cumulative_Gross_Salary','Form16_Gross_Salary','Home_Pay_Salary',
+        'NPS','NPS_GC','Karanja_Society','Dockyard_Bank','DCRB','ELWC','Over_Time',
+        'Amount_Paid_Credited','Amount_Tax_Deducted','Amount_Tax_Deposited','Claimed_Amount','Returned_Amount',
+        'LIC','Term_Insurance','Health_Insurance','Loan','Other','Major_Transactions',
+        'Total_EMI_Loan_Insurance_Major','Bulk_Other_Income','Home_Pay_Minus_EMI_Loan_Kharcha'
+      ];
+      fields.forEach(function(f) {
+        var el = document.getElementById('ffield-' + f);
+        if (el) el.value = (computed[f] !== undefined && computed[f] !== null) ? computed[f] : '';
+      });
+      showToast('Auto-filled from salary, loans & transactions data', 'info');
+    })
+    .autoComputeFinYear(year);
+}
+
+function collectFinYearForm() {
+  var fields = [
+    'Period','Assessment_Year','Excel_Gross_Salary','Cumulative_Gross_Salary','Form16_Gross_Salary','Home_Pay_Salary',
+    'NPS','NPS_GC','Karanja_Society','Dockyard_Bank','DCRB','ELWC','Over_Time',
+    'Amount_Paid_Credited','Amount_Tax_Deducted','Amount_Tax_Deposited','Claimed_Amount','Returned_Amount',
+    'LIC','Term_Insurance','Health_Insurance','Loan','Other','Major_Transactions',
+    'Total_EMI_Loan_Insurance_Major','Bulk_Other_Income','Home_Pay_Minus_EMI_Loan_Kharcha'
+  ];
+  var data = {};
+  fields.forEach(function(f) {
+    var el = document.getElementById('ffield-' + f);
+    data[f] = el ? el.value : '';
+  });
+  if (finyearFormId) data.ID = finyearFormId;
+  return data;
+}
+
+function saveFinYear() {
+  var data = collectFinYearForm();
+  if (!data.Period && !data.Assessment_Year) { showToast('Assessment Year is required', 'error'); return; }
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res.success) { showToast('Fin Year ' + res.action, 'success'); closeFinYearForm(); loadFinYear(); }
+    })
+    .saveFinYearSummary(data);
+}
+
+function recalcFinYear(id) {
+  if (!confirm('Recalculate this record from current data?')) return;
+  google.script.run
+    .withSuccessHandler(function(all) {
+      var record = null;
+      for (var i = 0; i < all.length; i++) { if (Number(all[i].ID) === Number(id)) { record = all[i]; break; } }
+      if (!record) { showToast('Not found', 'error'); return; }
+      google.script.run
+        .withSuccessHandler(function(computed) {
+          var fields = [
+            'Period','Assessment_Year','Excel_Gross_Salary','Cumulative_Gross_Salary','Form16_Gross_Salary','Home_Pay_Salary',
+            'NPS','NPS_GC','Karanja_Society','Dockyard_Bank','DCRB','ELWC','Over_Time',
+            'Amount_Paid_Credited','Amount_Tax_Deducted','Amount_Tax_Deposited','Claimed_Amount','Returned_Amount',
+            'LIC','Term_Insurance','Health_Insurance','Loan','Other','Major_Transactions',
+            'Total_EMI_Loan_Insurance_Major','Bulk_Other_Income','Home_Pay_Minus_EMI_Loan_Kharcha'
+          ];
+          var merged = {};
+          fields.forEach(function(f) {
+            if (computed[f] !== undefined && computed[f] !== null && computed[f] !== 0) {
+              merged[f] = computed[f];
+            } else {
+              merged[f] = (record[f] !== undefined && record[f] !== null) ? record[f] : '';
+            }
+          });
+          merged.ID = id;
+          google.script.run
+            .withSuccessHandler(function(res) {
+              showToast('Recalculated', 'success');
+              loadFinYear();
+            })
+            .saveFinYearSummary(merged);
+        })
+        .autoComputeFinYear(record.Assessment_Year);
+    })
+    .getFinYearSummary();
+}
+
+function editFinYear(id) {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      for (var i = 0; i < data.length; i++) { if (Number(data[i].ID) === Number(id)) { openFinYearForm(data[i]); return; } }
+      showToast('Not found','error');
+    })
+    .getFinYearSummary();
+}
+
+function deleteFinYear(id) {
+  if (!confirm('Delete this record?')) return;
+  google.script.run
+    .withSuccessHandler(function() { showToast('Deleted','info'); loadFinYear(); })
+    .deleteFinYearSummary(id);
+}
+
+function closeFinYearForm() {
+  document.getElementById('finyearFormCard').classList.add('hidden');
+  finyearFormMode = 'add'; finyearFormId = null;
+}
+
+// ===================== LOANS =====================
+function loadLoans() {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      var html = '<table><thead><tr><th>Type</th><th>Amount</th><th>Start Date</th><th>End Date</th><th>Notes</th><th>Actions</th></tr></thead><tbody>';
+      var total = 0;
+      data.forEach(function(r) {
+        var amt = Number(r.Amount) || 0;
+        total += amt;
+        html += '<tr><td><span class="badge ' + (r.Type==='LIC'?'badge-info':r.Type==='Loan'?'badge-warning':'badge-success') + '">' + (r.Type||'') + '</span></td>';
+        html += '<td class="text-right">' + fmt(amt) + '</td>';
+        html += '<td>' + (r.Start_Date||'') + '</td><td>' + (r.End_Date||'') + '</td><td>' + (r.Notes||'') + '</td>';
+        html += '<td><button class="btn btn-sm btn-primary" onclick="editLoan(' + r.ID + ')">Edit</button> <button class="btn btn-sm btn-danger" onclick="deleteLoan(' + r.ID + ')">Del</button></td></tr>';
+      });
+      html += '<tr class="total-row"><td><strong>TOTAL</strong></td><td class="text-right">' + fmt(total) + '</td><td></td><td></td><td></td><td></td></tr>';
+      html += '</tbody></table>';
+      document.getElementById('loanTableWrap').innerHTML = html;
+    })
+    .getLoansInsurance();
+}
+
+function openLoanForm(data) {
+  document.getElementById('loanFormCard').classList.remove('hidden');
+  var types = ['LIC','Term_Insurance','Health_Insurance','Loan','Other'];
+  var html = '';
+  html += '<div class="form-group"><label>Type</label><select id="lfield-Type">';
+  types.forEach(function(t) {
+    var sel = (data && data.Type === t) ? 'selected' : '';
+    html += '<option value="' + t + '" ' + sel + '>' + t.replace(/_/g,' ') + '</option>';
+  });
+  html += '</select></div>';
+  html += '<div class="form-group"><label>Amount</label><input type="text" id="lfield-Amount" value="' + ((data && data.Amount) || '') + '"></div>';
+  html += '<div class="form-group"><label>Start Date</label><input type="date" id="lfield-Start_Date" value="' + formatDateForInput(data && data.Start_Date) + '"></div>';
+  html += '<div class="form-group"><label>End Date</label><input type="date" id="lfield-End_Date" value="' + formatDateForInput(data && data.End_Date) + '"></div>';
+  html += '<div class="form-group"><label>Notes</label><input type="text" id="lfield-Notes" value="' + ((data && data.Notes) || '') + '"></div>';
+  document.getElementById('loanFields').innerHTML = html;
+  if (data && data.ID) {
+    loanFormMode = 'edit'; loanFormId = data.ID;
+    document.getElementById('loanFormTitle').textContent = 'Edit Entry';
+  } else {
+    loanFormMode = 'add'; loanFormId = null;
+    document.getElementById('loanFormTitle').textContent = 'Add Loan / Insurance';
+  }
+}
+
+function collectLoanForm() {
+  var data = {};
+  data.Type = document.getElementById('lfield-Type') ? document.getElementById('lfield-Type').value : '';
+  ['Amount','Start_Date','End_Date','Notes'].forEach(function(f) {
+    var el = document.getElementById('lfield-' + f);
+    data[f] = el ? el.value : '';
+  });
+  if (loanFormId) data.ID = loanFormId;
+  return data;
+}
+
+function saveLoan() {
+  var data = collectLoanForm();
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res.success) { showToast('Entry ' + res.action, 'success'); closeLoanForm(); loadLoans(); }
+      else { showToast(res.message || 'Error', 'error'); }
+    })
+    .saveLoanInsurance(data);
+}
+
+function editLoan(id) {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      for (var i = 0; i < data.length; i++) { if (Number(data[i].ID) === Number(id)) { openLoanForm(data[i]); return; } }
+      showToast('Not found','error');
+    })
+    .getLoansInsurance();
+}
+
+function deleteLoan(id) {
+  if (!confirm('Delete this entry?')) return;
+  google.script.run
+    .withSuccessHandler(function() { showToast('Deleted','info'); loadLoans(); })
+    .deleteLoanInsurance(id);
+}
+
+function closeLoanForm() {
+  document.getElementById('loanFormCard').classList.add('hidden');
+  loanFormMode = 'add'; loanFormId = null;
+}
+
+// ===================== TRANSACTIONS =====================
+function loadTx() {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      var html = '<table><thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Category</th><th>Notes</th><th>Actions</th></tr></thead><tbody>';
+      var total = 0;
+      data.forEach(function(r) {
+        var amt = Number(r.Amount) || 0;
+        total += amt;
+        html += '<tr><td>' + (r.Date||'') + '</td><td>' + (r.Description||'') + '</td><td class="text-right">' + fmt(amt) + '</td><td>' + (r.Category||'') + '</td><td>' + (r.Notes||'') + '</td>';
+        html += '<td><button class="btn btn-sm btn-primary" onclick="editTx(' + r.ID + ')">Edit</button> <button class="btn btn-sm btn-danger" onclick="deleteTx(' + r.ID + ')">Del</button></td></tr>';
+      });
+      html += '<tr class="total-row"><td colspan="2"><strong>TOTAL</strong></td><td class="text-right">' + fmt(total) + '</td><td></td><td></td><td></td></tr>';
+      html += '</tbody></table>';
+      document.getElementById('txTableWrap').innerHTML = html;
+    })
+    .getMajorTransactions();
+}
+
+function openTxForm(data) {
+  document.getElementById('txFormCard').classList.remove('hidden');
+  var html = '';
+  html += '<div class="form-group"><label>Date</label><input type="date" id="tfield-Date" value="' + formatDateForInput(data && data.Date) + '"></div>';
+  html += '<div class="form-group"><label>Description</label><input type="text" id="tfield-Description" value="' + ((data && data.Description) || '') + '"></div>';
+  html += '<div class="form-group"><label>Amount</label><input type="text" id="tfield-Amount" value="' + ((data && data.Amount) || '') + '"></div>';
+  html += '<div class="form-group"><label>Category</label><input type="text" id="tfield-Category" value="' + ((data && data.Category) || '') + '"></div>';
+  html += '<div class="form-group"><label>Notes</label><input type="text" id="tfield-Notes" value="' + ((data && data.Notes) || '') + '"></div>';
+  document.getElementById('txFields').innerHTML = html;
+  if (data && data.ID) {
+    txFormMode = 'edit'; txFormId = data.ID;
+    document.getElementById('txFormTitle').textContent = 'Edit Transaction';
+  } else {
+    txFormMode = 'add'; txFormId = null;
+    document.getElementById('txFormTitle').textContent = 'Add Transaction';
+  }
+}
+
+function collectTxForm() {
+  var data = {};
+  ['Date','Description','Amount','Category','Notes'].forEach(function(f) {
+    var el = document.getElementById('tfield-' + f);
+    data[f] = el ? el.value : '';
+  });
+  if (txFormId) data.ID = txFormId;
+  return data;
+}
+
+function saveTx() {
+  var data = collectTxForm();
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res.success) { showToast('Transaction ' + res.action, 'success'); closeTxForm(); loadTx(); }
+      else { showToast(res.message || 'Error', 'error'); }
+    })
+    .saveMajorTransaction(data);
+}
+
+function editTx(id) {
+  google.script.run
+    .withSuccessHandler(function(data) {
+      for (var i = 0; i < data.length; i++) { if (Number(data[i].ID) === Number(id)) { openTxForm(data[i]); return; } }
+      showToast('Not found','error');
+    })
+    .getMajorTransactions();
+}
+
+function deleteTx(id) {
+  if (!confirm('Delete this transaction?')) return;
+  google.script.run
+    .withSuccessHandler(function() { showToast('Deleted','info'); loadTx(); })
+    .deleteMajorTransaction(id);
+}
+
+function closeTxForm() {
+  document.getElementById('txFormCard').classList.add('hidden');
+  txFormMode = 'add'; txFormId = null;
+}
+
+// ===================== REPORTS =====================
+function exportCSV() {
+  var sheet = document.getElementById('exportSheet').value;
+  google.script.run
+    .withSuccessHandler(function(csv) {
+      var blob = new Blob([csv], { type: 'text/csv' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = sheet + '_export.csv'; a.click();
+      URL.revokeObjectURL(url);
+      showToast('Exported ' + sheet, 'success');
+    })
+    .exportSheetAsCSV(sheet);
+}
+
+function importCSV() {
+  var sheet = document.getElementById('importSheet').value;
+  var csv = document.getElementById('importCSVText').value;
+  if (!csv.trim()) { showToast('Paste CSV data first', 'error'); return; }
+  google.script.run
+    .withSuccessHandler(function(res) {
+      if (res.success) { showToast('Imported ' + res.count + ' rows', 'success'); document.getElementById('importCSVText').value = ''; }
+      else { showToast(res.message || 'Import failed', 'error'); }
+    })
+    .importCSV(sheet, csv);
+}
+
+function initApp() {
+  if (!confirm('Initialize sheets? This will create any missing sheets and default data.')) return;
+  google.script.run
+    .withSuccessHandler(function(msg) {
+      showToast(msg, 'success');
+    })
+    .setupSheets();
+}
+
+// ===================== SETTINGS =====================
+function loadSettings() {
+  google.script.run
+    .withSuccessHandler(function(settings) {
+      var fields = ['app_name','current_year','current_assessment_year'];
+      var html = '';
+      fields.forEach(function(f) {
+        var val = settings[f] || '';
+        html += '<div class="form-group"><label>' + f.replace(/_/g,' ') + '</label><input type="text" id="sfield-' + f + '" value="' + val + '"></div>';
+      });
+      document.getElementById('settingsFields').innerHTML = html;
+    })
+    .getSettings();
+}
+
+function saveSettings() {
+  var fields = ['app_name','current_year','current_assessment_year'];
+  var count = 0;
+  fields.forEach(function(f) {
+    var el = document.getElementById('sfield-' + f);
+    if (el) {
+      google.script.run
+        .withSuccessHandler(function() { count++; if (count === fields.length) showToast('Settings saved', 'success'); })
+        .saveSetting(f, el.value);
+    }
+  });
+}
+
+function changePwd() {
+  showToast('Password is managed from your MilindWeb account', 'info');
+}
+
+// ===================== UTILITIES =====================
+function fmt(n) {
+  if (n === undefined || n === null || n === '') return '0';
+  var num = Number(n);
+  if (isNaN(num)) return '0';
+  return num.toLocaleString('en-IN');
+}
+
+function fmtShort(n) {
+  var num = Number(n);
+  if (isNaN(num)) return '0';
+  if (num >= 100000) return (num / 100000).toFixed(1) + 'L';
+  if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+  return num.toString();
+}
+
+function formatDateForInput(d) {
+  if (!d) return '';
+  if (d instanceof Date) return d.toISOString().split('T')[0];
+  var s = String(d).trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  var parts = s.split(/[/\-]/);
+  if (parts.length === 3) {
+    if (parts[0].length === 4) return parts[0] + '-' + parts[1].padStart(2,'0') + '-' + parts[2].padStart(2,'0');
+    if (parts[2].length === 4) return parts[2] + '-' + parts[1].padStart(2,'0') + '-' + parts[0].padStart(2,'0');
+  }
+  return s;
+}
+
+// ===================== AUTO INIT (site auth gate) =====================
+function showFinanceApp(user) {
+  currentUser = user.username;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('userDisplay').textContent = 'Signed in as ' + currentUser + (user.role ? ' (' + user.role + ')' : '');
+  loadView('dashboard');
+  // Ensure sheets exist (idempotent — safe to run every load)
+  window.FinanceAPI.call('setupSheets', []).catch(function() {});
+}
+
+function showFinanceDenied() {
+  document.getElementById('gateLoading').style.display = 'none';
+  document.getElementById('gateDenied').style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // config/api-client/auth/finance-api loaded synchronously in <head>.
+  if (!window.Auth || !window.Auth.isLoggedIn()) {
+    window.location.href = '/login?next=/finance';
+    return;
+  }
+  var user = window.Auth.user();
+  if (window.Auth.hasModule('finance')) {
+    showFinanceApp(user);
+    return;
+  }
+  // Stale cache? Refresh the session once before denying access.
+  showFinanceDenied();
+  window.Auth.checkSession().then(function (ok) {
+    if (ok && window.Auth.hasModule('finance')) showFinanceApp(window.Auth.user());
+    else if (!ok) window.location.href = '/login?next=/finance';
+  }).catch(function () {});
+});
+</script>
+</body>
+</html>

@@ -13,7 +13,7 @@
 
 function usersSheet_() {
   var sh = getSheet_(ss_(CONFIG.authSheetId), CONFIG.auth.usersSheet);
-  ensureHeader_(sh, ['username', 'password', 'role', 'modules']);
+  ensureHeader_(sh, ['username', 'password', 'role', 'modules', 'name', 'email', 'mobile']);
   return sh;
 }
 
@@ -50,13 +50,25 @@ function authLogin_(body) {
 function authRegister_(body) {
   var username = String(body.username || '').trim();
   var password = String(body.password || '');
+  var name = String(body.name || '').trim();
+  var email = String(body.email || '').trim().toLowerCase();
+  var mobile = String(body.mobile || '').trim();
 
   if (username.length < 3) return fail_('Username must be at least 3 characters');
   if (password.length < 4) return fail_('Password must be at least 4 characters');
+  if (!name) return fail_('Name is required');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail_('Enter a valid email address');
+  if (!/^[6-9]\d{9}$/.test(mobile)) return fail_('Enter a valid 10-digit mobile number');
   if (findUser_(username)) return fail_('Username already exists');
 
+  var rows = rowsToObjects_(usersSheet_());
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].email && String(rows[i].email).toLowerCase() === email) return fail_('Email already registered');
+    if (rows[i].mobile && String(rows[i].mobile) === mobile) return fail_('Mobile number already registered');
+  }
+
   // New users get role=user and NO module access by default.
-  usersSheet_().appendRow([username, password, 'user', '']);
+  usersSheet_().appendRow([username, password, 'user', '', name, email, mobile]);
   return json_({ ok: true, message: 'Registered. Contact admin to grant module access.' });
 }
 

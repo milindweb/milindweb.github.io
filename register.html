@@ -78,6 +78,18 @@
           <input type="text" id="username" name="username" autocomplete="username" minlength="3" required>
         </div>
         <div class="auth-field">
+          <label for="fullname">Name</label>
+          <input type="text" id="fullname" name="fullname" autocomplete="name" required>
+        </div>
+        <div class="auth-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="auth-field">
+          <label for="mobile">Mobile No.</label>
+          <input type="tel" id="mobile" name="mobile" autocomplete="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" required>
+        </div>
+        <div class="auth-field">
           <label for="password">Password</label>
           <div class="auth-pw-toggle">
             <input type="password" id="password" name="password" autocomplete="new-password" minlength="4" required>
@@ -118,12 +130,33 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         var username = document.getElementById("username").value.trim();
+        var name = document.getElementById("fullname").value.trim();
+        var email = document.getElementById("email").value.trim();
+        var mobile = document.getElementById("mobile").value.trim();
         var password = document.getElementById("password").value;
         var confirm = document.getElementById("confirm").value;
+
+        var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var mobileRe = /^[6-9]\d{9}$/;
 
         if (username.length < 3) {
           msg.className = "auth-msg err";
           msg.textContent = "Username must be at least 3 characters.";
+          return;
+        }
+        if (!name) {
+          msg.className = "auth-msg err";
+          msg.textContent = "Please enter your full name.";
+          return;
+        }
+        if (!emailRe.test(email)) {
+          msg.className = "auth-msg err";
+          msg.textContent = "Please enter a valid email address.";
+          return;
+        }
+        if (!mobileRe.test(mobile)) {
+          msg.className = "auth-msg err";
+          msg.textContent = "Please enter a valid 10-digit mobile number.";
           return;
         }
         if (password.length < 4) {
@@ -141,7 +174,7 @@
         msg.textContent = "Creating account...";
         btn.disabled = true;
 
-        window.Auth.register(username, password)
+        window.Auth.register(username, password, name, email, mobile)
           .then(function (res) {
             msg.className = "auth-msg ok";
             msg.textContent = res.message || "Registered successfully!";

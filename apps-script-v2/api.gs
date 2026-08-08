@@ -17,6 +17,10 @@
  *   POST { token, module:'hospital', action:'update', table, id, row }
  *   POST { token, module:'hospital', action:'delete', table, id }
  *   ... same for seniority / finance / contact admin.
+ *
+ * Finance module (module:'finance') is handled by financeRoutePost_ in
+ * finance.gs — POST { module:'finance', fn, args } mirrors the PFMS
+ * google.script.run API (e.g. fn:'getDashboardData').
  */
 
 // ---------- GET ----------
@@ -88,6 +92,9 @@ function doPost(e) {
     if (!module) return fail_('Missing module');
     var denied = requireModule_(body.token, module);
     if (denied) return json_({ ok: false, error: denied.error }, denied.code);
+
+    // Finance uses a dedicated router (see finance.gs) mirroring the PFMS API.
+    if (String(module).toLowerCase() === 'finance') return financeRoutePost_(body);
 
     return routeModulePost_(module, body);
   } catch (err) {
