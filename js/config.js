@@ -36,7 +36,7 @@ const SITE_CONFIG = {
   ogImage: '/img/og-default.svg',
   logoIcon: 'M',
 
-  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbzE31GzoMixOZ6HuIqGu3UAx5byHxUJUFZDOMw_wVVssmP6HFN2AEO_GE7u_yV529oL/exec',
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbysdDk8EclvGbwb1Wd2bTnwmyaTiNOIPPxDALK6bxxeHzGvx13oDDQrThF7nXTktFjI/exec',
 
   organization: {
     telephone: '+91-9869787575',
