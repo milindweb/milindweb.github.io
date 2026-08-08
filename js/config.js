@@ -49,3 +49,5 @@ const SITE_CONFIG = {
     description: 'Freelance digital marketing consultant and technical service provider. SEO, web development, business automation, projects, training, and branding.',
   },
 };
+
+window.SITE_CONFIG = SITE_CONFIG;

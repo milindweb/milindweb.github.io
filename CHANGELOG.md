@@ -10,6 +10,10 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-08 — Fix: SITE_CONFIG not exposed on window
+
+- `js/config.js` — added `window.SITE_CONFIG = SITE_CONFIG;`. Fixes "API: SITE_CONFIG.appsScriptUrl is not set" error — `const` declarations don't attach to `window`, breaking `api-client.js`, `contact-form.js`, and `hospital-api.js`.
+
 ## 2026-08-08 — Legal pages + 404 (professional)
 
 - `privacy.html` — rewritten: badge header, table of contents, 12 sections (info, usage, legal basis, sharing, storage, security, rights, cookies, children, third-party, changes, contact), consistent card styling.
