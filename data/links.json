@@ -61,47 +61,6 @@
   },
 
   {
-    "category": "🌐 Site Pages",
-    "items": [
-      {
-        "title": "About",
-        "desc": "Learn more about Milind Web and our team.",
-        "icon": "fas fa-circle-info",
-        "link": "/about",
-        "status": ["free"]
-      },
-      {
-        "title": "Blog",
-        "desc": "Articles, tutorials, tips and updates.",
-        "icon": "fas fa-blog",
-        "link": "/blog",
-        "status": ["free"]
-      },
-      {
-        "title": "Contact",
-        "desc": "Get in touch with us for any enquiry.",
-        "icon": "fas fa-envelope",
-        "link": "/contact",
-        "status": ["free"]
-      },
-      {
-        "title": "Privacy",
-        "desc": "Privacy policy on the contact page.",
-        "icon": "fas fa-shield-halved",
-        "link": "/contact#privacy",
-        "status": ["free"]
-      },
-      {
-        "title": "Terms",
-        "desc": "Terms of use on the contact page.",
-        "icon": "fas fa-file-contract",
-        "link": "/contact#terms",
-        "status": ["free"]
-      }
-    ]
-  },
-
-  {
     "category": "🤖 AI Chat & LLM",
     "items": [
       {
