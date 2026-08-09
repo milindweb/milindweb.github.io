@@ -21,6 +21,9 @@
  * Finance module (module:'finance') is handled by financeRoutePost_ in
  * finance.gs — POST { module:'finance', fn, args } mirrors the PFMS
  * google.script.run API (e.g. fn:'getDashboardData').
+ *
+ * Seniority module (module:'seniority') is handled by seniorityRoutePost_ in
+ * seniority.gs — POST { module:'seniority', fn, args } (e.g. fn:'getEmployees').
  */
 
 // ---------- GET ----------
@@ -95,6 +98,9 @@ function doPost(e) {
 
     // Finance uses a dedicated router (see finance.gs) mirroring the PFMS API.
     if (String(module).toLowerCase() === 'finance') return financeRoutePost_(body);
+
+    // Seniority uses a dedicated router (see seniority.gs).
+    if (String(module).toLowerCase() === 'seniority') return seniorityRoutePost_(body);
 
     return routeModulePost_(module, body);
   } catch (err) {

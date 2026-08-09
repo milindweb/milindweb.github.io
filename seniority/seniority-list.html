@@ -7,13 +7,17 @@
     <script>const PAGE_CONFIG = { title: 'NAD Seniority Management', description: 'NAD Seniority Management system. View, search, and manage employee seniority records, generate reports, and export data.', canonical: '/seniority' };</script>
     <script src="/js/seo-injector.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
       <!-- Header + Footer CSS -->
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/css/headerfooter.css">
+  <!-- Order matters: api-client → auth → seniority-api → seniority-init (all sync) -->
+  <script src="/js/api-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/seniority-api.js"></script>
+  <script src="/js/seniority-init.js"></script>
   <!-- JS to load header/footer -->
   <script src="/js/headerfooter.js" defer></script>
     <style>
@@ -491,12 +495,36 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent);
         }
+
+        /* Auth gate */
+        #loginScreen { display: flex; align-items: center; justify-content: center; min-height: calc(100vh - 64px); }
+        #loginScreen .login-box { background: var(--light); padding: 40px; border-radius: 12px; width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        #loginScreen h1 { font-size: 24px; margin-bottom: 5px; color: var(--accent); }
+        #loginScreen p { color: var(--gray); margin-bottom: 25px; font-size: 14px; }
+        #loginScreen input { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; transition: border 0.2s; }
+        #loginScreen input:focus { outline: none; border-color: var(--primary); }
+        #loginScreen button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+        #loginScreen button:hover { opacity: 0.9; }
+        .login-footer { margin-top: 20px; text-align: center; font-size: 12px; color: var(--gray); }
     </style>
 </head>
 <body>
     <!-- Main Content -->
     <!-- load header from page header.html - Header Placeholder -->
     <div id="header"></div>
+    <div id="loginScreen">
+      <div class="login-box">
+        <h1>Seniority</h1>
+        <p>NAD Employee Seniority Management</p>
+        <div id="gateLoading" style="text-align:center;color:var(--gray);font-size:14px;padding:10px 0;">Checking access&hellip;</div>
+        <div id="gateDenied" style="display:none;text-align:center;">
+          <p style="color:var(--gray);font-size:14px;margin-bottom:16px;">You do not have access to the Seniority module yet.</p>
+          <a href="/contact" style="display:inline-block;padding:10px 20px;background:var(--primary);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Contact Admin</a>
+          <div class="login-footer" style="margin-top:18px;"><a href="/" style="color:var(--accent);text-decoration:none;">&larr; Back to Home</a></div>
+        </div>
+      </div>
+    </div>
+    <div id="seniorityApp" style="display:none;">
     <div class="seniority-container">
         <div class="seniority-header">
             <h1><i class="fas fa-users"></i> NAD Seniority Management System</h1>
@@ -538,11 +566,9 @@
             </div>
         </div>
     </div>
+    </div>
 
     <script>
-        // Configuration
-        const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1_qwciFgPC98jL9-4j4p7qLTK639xF0Gkrddp9E4bGQo/export?format=csv";
-        
         // Data structure
         let allEmployees = [];
         let filteredEmployees = [];
@@ -557,18 +583,16 @@
         
         // Initialize the application
         function init() {
-            // Load data
-            loadData();
+            // Only load data once the auth gate has granted access.
+            if (window.Auth && window.Auth.isLoggedIn() && window.Auth.hasModule('seniority')) {
+                loadData();
+            }
         }
         
-        // Load data from Google Sheets
+        // Load data from the backend (apps-script-v2/seniority.gs)
         function loadData() {
-            Papa.parse(GOOGLE_SHEET_CSV_URL, {
-                download: true,
-                header: true,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    allEmployees = results.data.filter(function (emp) {
+            window.SeniorityAPI.call('getEmployees', []).then(function (data) {
+                    allEmployees = (data || []).filter(function (emp) {
                         return emp && Object.values(emp).some(function (v) { return String(v).trim() !== ''; });
                     });
                     filteredEmployees = [...allEmployees];
@@ -581,12 +605,10 @@
                     
                     // Render UI components
                     renderTable();
-                },
-                error: function(error) {
+                }).catch(function (error) {
                     console.error("Error loading data:", error);
                     tableContainer.innerHTML = '<div class="no-data"><i class="fas fa-exclamation-triangle"></i><p>Error loading data. Please try again later.</p></div>';
-                }
-            });
+                });
         }
         
         // Initialize column filters
