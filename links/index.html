@@ -15,6 +15,7 @@
 <!-- Header + Footer -->
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/headerfooter.css">
+<link rel="stylesheet" href="/css/accordion.css">
 <script src="/js/headerfooter.js" defer></script>
 
 <style>
@@ -80,136 +81,8 @@ h2 {
   align-items:start;
 }
 
-.card {
-  background:var(--card-bg);
-  border-radius:var(--border-radius, 12px);
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  transition:var(--transition);
-}
-
-.card-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:0.75rem;
-  font-size:0.95rem;
-  font-weight:600;
-  color:var(--accent);
-  padding:0.6rem 1rem;
-  cursor:pointer;
-  user-select:none;
-  transition:background var(--transition);
-}
-
-.card-header:hover {
-  background:rgba(0,0,0,0.03);
-}
-
-.card-header .card-title {
-  display:flex;
-  align-items:center;
-  gap:0.75rem;
-}
-
-.card-header i {
-  font-size:1.2rem;
-  min-width:24px;
-  text-align:center;
-}
-
-.card-toggle {
-  font-size:0.85rem;
-  transition:transform 0.25s ease;
-  color:var(--text-secondary);
-}
-
-.card.collapsed .card-toggle {
-  transform:rotate(-90deg);
-}
-
-.card.collapsed .card-body {
-  display:none;
-}
-
-.card-body {
-  display:flex;
-  flex-direction:column;
-  border-top:1px solid var(--border);
-}
-
-.card-item {
-  display:flex;
-  align-items:center;
-  gap:0.6rem;
-  padding:0.5rem 1rem;
-  text-decoration:none;
-  color:var(--text-primary);
-  transition:background var(--transition);
-}
-
-.card-item:nth-child(even) {
-  background:rgba(0,0,0,0.03);
-}
-
-.dark-mode .card-header:hover {
-  background:rgba(255,255,255,0.04);
-}
-
-.dark-mode .card-item:nth-child(even) {
-  background:rgba(255,255,255,0.04);
-}
-
-.card-item:hover {
-  background:var(--accent);
-  color:#fff;
-}
-
-.card-item i {
-  font-size:0.95rem;
-  min-width:20px;
-  text-align:center;
-  color:var(--accent);
-}
-
-.card-item:hover i {
-  color:#fff;
-}
-
-.card-item .card-item-info {
-  display:flex;
-  flex-direction:column;
-  gap:0.1rem;
-  min-width:0;
-}
-
-.card-item .card-item-title {
-  font-weight:600;
-  font-size:0.88rem;
-}
-
-.card-item .card-item-desc {
-  font-size:0.78rem;
-  color:var(--text-secondary);
-  line-height:1.4;
-}
-
-.card-item:hover .card-item-desc {
-  color:rgba(255,255,255,0.85);
-}
-
-.card-item .card-item-arrow {
-  margin-left:auto;
-  color:var(--text-secondary);
-  font-size:0.8rem;
-  opacity:0;
-  transition:opacity var(--transition);
-}
-
-.card-item:hover .card-item-arrow {
-  opacity:1;
-  color:#fff;
+.container .acc {
+  margin-bottom:0;
 }
 
 .loading,
@@ -287,37 +160,37 @@ function renderLinks(filterText = "") {
     if (visibleItems.length === 0) return;
 
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = "acc acc-list";
 
     const header = document.createElement("div");
-    header.className = "card-header";
+    header.className = "acc-header";
 
     const title = document.createElement("span");
-    title.className = "card-title";
+    title.className = "acc-title";
     title.textContent = section.category;
 
     const toggle = document.createElement("i");
-    toggle.className = "fas fa-chevron-down card-toggle";
+    toggle.className = "fas fa-chevron-down acc-toggle";
 
     header.appendChild(title);
     header.appendChild(toggle);
 
     const body = document.createElement("div");
-    body.className = "card-body";
+    body.className = "acc-body";
 
     visibleItems.forEach(item => {
       const row = document.createElement("a");
-      row.className = "card-item";
+      row.className = "acc-item";
       row.href = item.link;
       row.target = "_blank";
 
       row.innerHTML = `
         <i class="${item.icon}"></i>
-        <span class="card-item-info">
-          <span class="card-item-title">${item.title}</span>
-          <span class="card-item-desc">${item.desc}</span>
+        <span class="acc-item-info">
+          <span class="acc-item-title">${item.title}</span>
+          <span class="acc-item-desc">${item.desc}</span>
         </span>
-        <i class="fas fa-arrow-right card-item-arrow"></i>
+        <i class="fas fa-arrow-right acc-item-arrow"></i>
       `;
 
       body.appendChild(row);
@@ -328,11 +201,11 @@ function renderLinks(filterText = "") {
     container.appendChild(card);
 
     header.addEventListener("click", function () {
-      card.classList.toggle("collapsed");
+      card.classList.toggle("open");
     });
 
     if (isSearching) {
-      card.classList.remove("collapsed");
+      card.classList.add("open");
     }
 
   });

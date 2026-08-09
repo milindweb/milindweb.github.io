@@ -1,0 +1,186 @@
+/* =====================================================
+   accordion.css — Reusable accordion / collapsible card
+   Styled to match the contact page accordion.
+   Base:    .acc
+   Header:  .acc-header  (title: .acc-title, arrow: .acc-toggle)
+   Body:    .acc-body    (hidden unless .acc.open)
+   State:   .open        → expanded
+   Modifiers:
+     .acc-static  → always visible (body shown, header not clickable)
+     .acc-list    → link-list rows with zebra shading
+===================================================== */
+
+.acc {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.acc:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.acc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--secondary-bg);
+  user-select: none;
+  transition: background var(--transition);
+}
+
+.acc-header .acc-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.acc-header .acc-title i {
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.acc-header .acc-toggle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.acc.open .acc-header .acc-toggle {
+  transform: rotate(180deg);
+}
+
+.acc.open .acc-body {
+  display: block !important;
+}
+
+.acc-static .acc-header {
+  cursor: default;
+  background: var(--card-bg);
+}
+
+.acc-static .acc-body {
+  display: block !important;
+}
+
+.acc-body {
+  padding: 1.5rem;
+  display: none;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Content typography inside an accordion body */
+.acc-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 1.2rem 0 0.4rem;
+}
+
+.acc-body h3:first-child {
+  margin-top: 0;
+}
+
+.acc-body p {
+  margin: 0 0 0.5rem;
+}
+
+.acc-body ul {
+  margin: 0.5rem 0;
+  padding-left: 1.2rem;
+}
+
+.acc-body ul li {
+  margin-bottom: 0.3rem;
+}
+
+.acc-body strong {
+  color: var(--text-primary);
+}
+
+/* Link-list variant: zebra rows (links page) */
+.acc-list .acc-body {
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.acc-list .acc-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: background var(--transition);
+}
+
+.acc-list .acc-item:nth-child(even) {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.dark-mode .acc-list .acc-item:nth-child(even) {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.acc-list .acc-item:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.acc-list .acc-item > i:first-child {
+  font-size: 1.1rem;
+  min-width: 24px;
+  text-align: center;
+  color: var(--accent);
+}
+
+.acc-list .acc-item:hover > i:first-child {
+  color: #fff;
+}
+
+.acc-list .acc-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.acc-list .acc-item-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.acc-list .acc-item-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.acc-list .acc-item:hover .acc-item-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.acc-list .acc-item-arrow {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.acc-list .acc-item:hover .acc-item-arrow {
+  opacity: 1;
+  color: #fff;
+}
