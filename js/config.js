@@ -6,7 +6,7 @@ const SITE_CONFIG = {
     nameUppercase: 'MILINDWEB',
     legalName: 'MK9 Solutions',
     tagline: "Life should be great rather than long",
-    copyright: 'Designed By <a href="https://AartiTechService.pages.dev" target="_blank" rel="noopener">AartiTechServices</a><br>\u00A9 2027 All rights reserved.',
+    copyright: 'Designed By <a href="https://aartitechservices.pages.dev" target="_blank" rel="noopener">AartiTechServices</a><br>\u00A9 2027 All rights reserved.',
   },
 
   domain: 'milindweb.pages.dev',

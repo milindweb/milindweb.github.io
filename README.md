@@ -59,13 +59,15 @@ Leave spreadsheets **blank** — the code creates sheets and headers on first us
 ├── hospital/                       Hospital Management module
 │   ├── dashboard.html  new-visit.html  patient-list.html
 │   ├── patient-profile.html  appointments.html
-│   ├── components/hospital-nav.html  js/hospital-nav.js  css/hospital.css
-│   └── data/masters.json           Fallback departments + doctors
+│   └── js/hospital-nav.js          Injects sub-nav (from /components/hospital-nav.html)
 ├── seniority/                      Seniority module pages
 │   ├── seniority-list.html
 │   └── seniority-management.html
 ├── finance/                        Finance Management module (served at /finance)
-│   └── index.html                  PFMS-style SPA: monthly salary, fin-year, loans & insurance, transactions
+│   ├── index.html                  PFMS-style dashboard
+│   ├── salary.html  finyear.html  loans.html  transactions.html
+│   ├── reports.html  settings.html
+│   └── js/finance-*.js             Split module scripts
 ├── apps-script/                    ⚙️ Old combined Code.gs (reference/base for hospital.gs)
 ├── js/
 │   ├── config.js                   ⚙️ ALL branding + appsScriptUrl (frontend config)
@@ -76,11 +78,11 @@ Leave spreadsheets **blank** — the code creates sheets and headers on first us
 │   ├── seo-injector.js             Title/description/canonical injection
 │   ├── contact-form.js         Contact form → Apps Script
 │   ├── blog.js  blog-sidebar.js
-├── components/header.html  footer.html   Shared header + footer ({{PLACEHOLDER}})
+├── components/                     Shared header/footer/contact-form/nav partials ({{PLACEHOLDER}})
 ├── css/  fonts/  img/  data/       Shared assets + static JSON data
+├── links/                          Links hub + tools (calculator, calendar, mp, myphoto)
 ├── blog/                           Blog posts + template
-├── calculator.html  calendar.html  links.html  mp.html  myphoto.html
-│   ├── Seniariity_List.html  Seniarity_Management.html  Test.html   (legacy pages)
+├── Seniariity_List.html  Seniarity_Management.html  Test.html   (legacy pages)
 ├── _redirects  _headers           Clean URLs + security headers
 ├── sitemap.xml  robots.txt
 └── .env.original                  ⚙️ LOCAL ONLY — all IDs/URLs/passwords (gitignored)
@@ -191,14 +193,14 @@ Safe to re-run — matching rows are updated, not duplicated.
 | Auth | `auth.gs` + `api.gs` | `login.html`, `register.html`, header buttons | ✅ live |
 | Contact | `contact.gs` | existing contact form (updated) | ✅ live |
 | Hospital | `hospital.gs` (from `apps-script/Code.gs`) | existing `hospital/` pages | 🔨 planned |
-| Seniority | `seniority.gs` | existing `seniority/` pages | 🔨 planned |
-| Finance | `finance.gs` + `finance-seed.gs` (from PFMS engine) | `finance/index.html` at `/finance` | 🔨 code ready — **not deployed yet** (files not pasted into Apps Script; `setupFinanceSeed()` not run) |
+| Seniority | `seniority.gs` | `seniority/` pages at `/seniority`, `/seniority/manage` | ✅ frontend live (reads public Google Sheet CSV) |
+| Finance | `finance.gs` + `finance-seed.gs` (from PFMS engine) | `finance/*` pages at `/finance/*` | 🔨 code ready — **not deployed yet** (files not pasted into Apps Script; `setupFinanceSeed()` not run) |
 
 ---
 
 ## Legacy pages (kept, independent)
 
-- `calculator.html`, `calendar.html`, `links.html`, `mp.html`, `myphoto.html`
+- `links/` hub (index + calculator, calendar, mp, myphoto)
 - `Seniariity_List.html`, `Seniarity_Management.html`, `Test.html`
 - Old apps-script backups live in `my old app scripts /` (gitignored — contains real sheet IDs and passwords)
 

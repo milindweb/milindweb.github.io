@@ -10,6 +10,54 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-09 — Copyright link fix + footer polish
+
+- `js/config.js` — copyright credit link corrected to `https://aartitechservices.pages.dev` (was the broken `AartiTechService.pages.dev`).
+- `css/headerfooter.css` — `.hf-copyright` font reduced to `0.75rem` (was 0.9rem), added `.hf-copyright a` styling (slate link, blue hover + underline) with matching dark-mode rules.
+
+## 2026-08-09 — Seniority module: fix blank rows + date parsing
+
+- `seniority/seniority-list.html` — data now filtered to drop comma-only separator rows that `skipEmptyLines:true` misses (the sheet has blank row separators); the table previously showed 4 empty rows (44 → 40 employees). `parseDate()` extended to handle the sheet's `MM/YYYY` and `YYYY` formats so date-column sorting works.
+- `seniority/seniority-management.html` — promotion timeline showed `Retirement → NaN` because dates are `MM/YYYY` (e.g. `06/2026`) or `YYYY` (e.g. `1988`) and `new Date()` can't parse them. Added `parseSeniorityDate()` / `dateValue()` / `yearOf()` helpers; promotion estimates and seniority-list ordering now compute correctly (no unstable NaN sorts).
+
+## 2026-08-09 — Footer: add back WhatsApp/Telegram icons
+
+- `components/footer.html` — re-added WhatsApp + Telegram social icons (were removed during the privacy pass) using `{{SOCIAL_WA}}` / `{{SOCIAL_TELEGRAM}}` placeholders.
+- `js/headerfooter.js` — added `{{SOCIAL_WA}}` and `{{SOCIAL_TELEGRAM}}` to the replacement map (map to `cfg.social.whatsapp` / `cfg.social.telegram`).
+
+## 2026-08-09 — Footer: reorder columns + rebrand copyright
+
+- `components/footer.html` — columns reordered to **QUICK LINKS | LEGAL | CONTACT**.
+- `components/footer.html` + `js/config.js` — copyright rebranded to `Designed By AartiTechServices` + `© 2027`.
+- `contact.html` — WhatsApp/Telegram cards are now clickable without showing the raw handles.
+
+## 2026-08-09 — Index: heading rename, blog button, CTA background
+
+- `index.html` — section headings renamed; "Read the blog" styled as a button; CTA background updated.
+- `css/headerfooter.css` — supporting styles for the above.
+
+## 2026-08-09 — Remove module links from header/links
+
+- `components/header.html` — dropped HOSPITAL/SENIORITY module nav links.
+- `data/links.json` — removed "Site Pages" category and module links; `links.html` content deduped.
+
+## 2026-08-09 — Links hub redesign
+
+- `links/index.html` (was `links.html`) — 2-column card grid layout, one collapsible card per category with zebra rows.
+- `css/accordion.css` — reusable collapsible-card CSS extracted (matches the contact-page accordion look).
+- `links/calculator.html`, `links/calendar.html`, `links/mp.html`, `links/myphoto.html` — moved into `links/` (from root) and converted to absolute asset paths + `/links/*` canonicals.
+
+## 2026-08-09 — Site restructure: shared assets + finance app split
+
+- Moved `finance/css/finance.css` → `css/finance.css`, `hospital/css/hospital.css` → `css/hospital.css`; updated all page references. Both now reuse root design tokens (no duplicate `:root`, no global `*` reset, scoped module variables).
+- Moved `hospital/data/masters.json` → `data/hospital-masters.json` and `hospital/components/hospital-nav.html` → `components/hospital-nav.html`; updated references.
+- Finance SPA split into separate pages (`finance/salary.html`, `finyear.html`, `loans.html`, `transactions.html`, `reports.html`, `settings.html` + split `finance/js/*`) served under `/finance/*`.
+- `css/style.css` — added semantic tokens (`--success`, `--warning`, `--danger`, `--info`) + aliases (`--bg`, `--card`, `--text`, `--text-light`).
+
+---
+
+*Add new entries above this line with the date + files changed.*
+
 ## 2026-08-08 — Registration: add Name, Email & Mobile No. fields
 
 - `register.html` — added **Name**, **Email** and **Mobile No.** fields with client-side validation (valid email; valid 10-digit Indian mobile starting 6-9).
