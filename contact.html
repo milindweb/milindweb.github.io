@@ -65,6 +65,16 @@
     .ct-reveal-btn:hover { background: var(--accent); color: #fff; }
     .ct-reveal-link { font-size: 0.85rem; color: var(--accent); word-break: break-all; }
 
+    .ct-social-link {
+      display: block;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .ct-social-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
     .ct-card {
       background: var(--card-bg);
       border-radius: 16px;
@@ -138,16 +148,16 @@
   <!-- CONTACT INFO -->
   <section class="ct-section">
     <div class="ct-info-grid">
-      <div class="ct-info-item">
+      <a class="ct-info-item ct-social-link" href="https://wa.me/makhandare" target="_blank" rel="noopener">
         <i class="fab fa-whatsapp"></i>
         <strong>WhatsApp</strong>
-        <a class="ct-info-link" id="ct-wa" href="https://wa.me/makhandare" target="_blank" rel="noopener">@makhandare</a>
-      </div>
-      <div class="ct-info-item">
+        <span>Message</span>
+      </a>
+      <a class="ct-info-item ct-social-link" href="https://t.me/itsmakk" target="_blank" rel="noopener">
         <i class="fab fa-telegram"></i>
         <strong>Telegram</strong>
-        <a class="ct-info-link" id="ct-tg" href="https://t.me/itsmakk" target="_blank" rel="noopener">@itsmakk</a>
-      </div>
+        <span>Message</span>
+      </a>
       <div class="ct-info-item">
         <i class="fas fa-envelope"></i>
         <strong>Email</strong>
