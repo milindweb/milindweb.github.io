@@ -10,6 +10,14 @@ Format: `YYYY-MM-DD — [Area] File: what changed`
 
 ---
 
+## 2026-08-09 — Fix: Apps Script backend crashed on every error response
+
+- `apps-script-v2/utils.gs` — `json_()` called `out.setStatusCode(code)`, but `ContentService.TextOutput` has **no** `setStatusCode` method in Apps Script. Any error path (`fail_`, access-denied, login failure, finance errors) threw `TypeError: out.setStatusCode is not a function` and returned an HTML error page instead of JSON — which is why finance/login errored. Removed the call; HTTP status is now carried inside the JSON body (`code`). ⚠️ Re-paste this file into Apps Script + redeploy (New version).
+- `apps-script-v2/api.gs` — the two `json_({...}, denied.code)` access-denied responses updated to embed `code` in the body to match the new signature. ⚠️ Re-paste + redeploy.
+- `apps-script/Code.gs` (legacy reference) — same `json_`/`fail_` fix applied for consistency.
+
+---
+
 ## 2026-08-09 — Copyright link fix + footer polish
 
 - `js/config.js` — copyright credit link corrected to `https://aartitechservices.pages.dev` (was the broken `AartiTechService.pages.dev`).

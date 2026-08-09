@@ -41,7 +41,7 @@ function doGet(e) {
     if (!module) return fail_('Missing module');
 
     var denied = requireModule_(p.token, module);
-    if (denied) return json_({ ok: false, error: denied.error }, denied.code);
+    if (denied) return json_({ ok: false, error: denied.error, code: denied.code });
 
     return routeModuleGet_(module, p);
   } catch (err) {
@@ -91,7 +91,7 @@ function doPost(e) {
     var module = body.module || '';
     if (!module) return fail_('Missing module');
     var denied = requireModule_(body.token, module);
-    if (denied) return json_({ ok: false, error: denied.error }, denied.code);
+    if (denied) return json_({ ok: false, error: denied.error, code: denied.code });
 
     // Finance uses a dedicated router (see finance.gs) mirroring the PFMS API.
     if (String(module).toLowerCase() === 'finance') return financeRoutePost_(body);

@@ -40,15 +40,13 @@ function getSs_() {
   return SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
 }
 
-function json_(obj, code) {
-  var out = ContentService.createTextOutput(JSON.stringify(obj))
+function json_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);
-  if (code) out.setStatusCode(code);
-  return out;
 }
 
 function fail_(msg, code) {
-  return json_({ ok: false, error: String(msg) }, code || 400);
+  return json_({ ok: false, error: String(msg), code: code || 400 });
 }
 
 function getSheet_(ss, name) {
