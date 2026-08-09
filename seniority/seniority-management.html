@@ -95,6 +95,29 @@ let sanctionedPosts = [];
 let headers1 = [];
 let headers2 = [];
 
+// Parse the MM/YYYY, M/YYYY, YYYY, or DD/MM/YYYY date formats used in the sheet.
+function parseSeniorityDate(str) {
+  if (!str) return null;
+  str = String(str).trim();
+  let m = str.match(/^(\d{1,2})\/(\d{4})$/);            // MM/YYYY
+  if (m) return new Date(+m[2], +m[1] - 1, 1);
+  m = str.match(/^(\d{4})$/);                           // YYYY
+  if (m) return new Date(+m[1], 0, 1);
+  m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);     // DD/MM/YYYY
+  if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
+  return null;
+}
+
+function dateValue(str) {
+  const d = parseSeniorityDate(str);
+  return d ? d.getTime() : 0;
+}
+
+function yearOf(str) {
+  const d = parseSeniorityDate(str);
+  return d ? d.getFullYear() : null;
+}
+
 // Robust CSV parser
 function parseCSV(text) {
   const rows = [];
@@ -210,36 +233,38 @@ function promotionTimeline(emp) {
   const idx = rankOrder.indexOf(emp["Rank"]);
   if (idx === -1) return "<p>Rank not in promotion ladder</p>";
 
-  const retirementYear = new Date(emp["Date of Retirement"]).getFullYear();
-  let html = "<ul>";
+    const retirementYear = yearOf(emp["Date of Retirement"]);
+    let html = "<ul>";
 
-  for (let i = idx + 1; i < rankOrder.length; i++) {
-    const nextRank = rankOrder[i];
-    const vacancyInfo = sanctionedPosts.find(p => p["Rank"] === nextRank && p["Post"] === emp["Post"]);
-    const sanctioned = vacancyInfo ? parseInt(vacancyInfo["Sactioned vacancy"]) || 0 : 0;
+    for (let i = idx + 1; i < rankOrder.length; i++) {
+      const nextRank = rankOrder[i];
+      const vacancyInfo = sanctionedPosts.find(p => p["Rank"] === nextRank && p["Post"] === emp["Post"]);
+      const sanctioned = vacancyInfo ? parseInt(vacancyInfo["Sactioned vacancy"]) || 0 : 0;
 
-    let peers = employees.filter(e => e["Post"] === emp["Post"] && e["Rank"] === nextRank);
-    peers.sort((a, b) => new Date(a[`Date of ${nextRank}`]) - new Date(b[`Date of ${nextRank}`]));
+      let peers = employees.filter(e => e["Post"] === emp["Post"] && e["Rank"] === nextRank);
+      peers.sort((a, b) => dateValue(a[`Date of ${nextRank}`]) - dateValue(b[`Date of ${nextRank}`]));
 
-    const position = peers.findIndex(p => p["Tokan No."] === emp["Tokan No."]) + 1;
-    const estimateYear = new Date().getFullYear() + Math.ceil(position / (sanctioned || 1));
+      const position = peers.findIndex(p => p["Tokan No."] === emp["Tokan No."]) + 1;
+      const estimateYear = new Date().getFullYear() + Math.ceil(position / (sanctioned || 1));
 
-    if (estimateYear <= retirementYear) {
-      html += `<li>${nextRank} → Expected: ${estimateYear}</li>`;
-    } else {
-      html += `<li>${nextRank} → Not achievable before retirement (${retirementYear})</li>`;
-      break;
+      if (retirementYear === null) {
+        html += `<li>${nextRank} → Expected: ${estimateYear}</li>`;
+      } else if (estimateYear <= retirementYear) {
+        html += `<li>${nextRank} → Expected: ${estimateYear}</li>`;
+      } else {
+        html += `<li>${nextRank} → Not achievable before retirement (${retirementYear})</li>`;
+        break;
+      }
     }
+    html += `<li>Retirement → ${retirementYear === null ? 'N/A' : retirementYear}</li>`;
+    html += "</ul>";
+    return html;
   }
-  html += `<li>Retirement → ${retirementYear}</li>`;
-  html += "</ul>";
-  return html;
-}
 
 // Seniority List
 function showSeniority(emp) {
   const peers = employees.filter(e => e["Post"] === emp["Post"] && e["Rank"] === emp["Rank"]);
-  peers.sort((a, b) => new Date(a[`Date of ${emp["Rank"]}`]) - new Date(b[`Date of ${emp["Rank"]}`]));
+  peers.sort((a, b) => dateValue(a[`Date of ${emp["Rank"]}`]) - dateValue(b[`Date of ${emp["Rank"]}`]));
 
   let html = "<ol>";
   peers.forEach(p => {

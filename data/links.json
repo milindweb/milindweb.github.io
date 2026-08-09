@@ -30,80 +30,72 @@
     "category": "🏠 My Tools",
     "items": [
       {
-        "title": "All-in-One Calculator",
-        "desc": "Smart and quick calculation tool.",
+        "title": "My Portal",
+        "desc": "Search files in Google Drive and data in Google Sheets.",
+        "icon": "fas fa-folder-open",
+        "link": "/links/mp",
+        "status": ["free"]
+      },
+      {
+        "title": "My Photos",
+        "desc": "Browse photos stored in Google Drive albums.",
+        "icon": "fas fa-images",
+        "link": "/links/myphoto",
+        "status": ["free"]
+      },
+      {
+        "title": "Calculator",
+        "desc": "Quick general-purpose calculator.",
         "icon": "fas fa-calculator",
-        "link": "calculator.html",
+        "link": "/links/calculator",
         "status": ["free"]
       },
       {
-        "title": "Dr Clinic / Hospital Mgmt",
-        "desc": "Clinic website for patient management.",
-        "icon": "fas fa-hospital-user",
-        "link": "https://drakanksha.pages.dev",
-        "status": ["free"]
-      },
-      {
-        "title": "Employee Details",
-        "desc": "Employee ranking and data viewer.",
-        "icon": "fas fa-users",
-        "link": "/Seniarity_Management.html",
-        "status": ["free"]
-      },
-      {
-        "title": "Google Sheet Data Handling",
-        "desc": "Excel and Google Sheet management.",
-        "icon": "fas fa-table",
-        "link": "mp.html",
-        "status": ["free"]
-      },
-      {
-        "title": "My Photo Album",
-        "desc": "Personal gallery collection.",
-        "icon": "fas fa-camera-retro",
-        "link": "myphoto.html",
-        "status": ["free"]
-      },
-      {
-        "title": "NAD Holiday Calendar",
-        "desc": "View NAD holidays and dates.",
+        "title": "Calendar",
+        "desc": "View and manage dates, holidays and events.",
         "icon": "fas fa-calendar-alt",
-        "link": "calendar.html",
+        "link": "/links/calendar",
+        "status": ["free"]
+      }
+    ]
+  },
+
+  {
+    "category": "🌐 Site Pages",
+    "items": [
+      {
+        "title": "About",
+        "desc": "Learn more about Milind Web and our team.",
+        "icon": "fas fa-circle-info",
+        "link": "/about",
         "status": ["free"]
       },
       {
-        "title": "Patient Form",
-        "desc": "Clinic patient form entry.",
-        "icon": "fas fa-notes-medical",
-        "link": "https://milindweb.pages.dev/form.html",
+        "title": "Blog",
+        "desc": "Articles, tutorials, tips and updates.",
+        "icon": "fas fa-blog",
+        "link": "/blog",
         "status": ["free"]
       },
       {
-        "title": "Seniority List",
-        "desc": "Complete seniority list data.",
-        "icon": "fas fa-list",
-        "link": "/Seniariity_List.html",
+        "title": "Contact",
+        "desc": "Get in touch with us for any enquiry.",
+        "icon": "fas fa-envelope",
+        "link": "/contact",
         "status": ["free"]
       },
       {
-        "title": "Snake Game",
-        "desc": "Classic snake game online.",
-        "icon": "fas fa-gamepad",
-        "link": "/snake-game.html",
+        "title": "Privacy",
+        "desc": "Privacy policy on the contact page.",
+        "icon": "fas fa-shield-halved",
+        "link": "/contact#privacy",
         "status": ["free"]
       },
       {
-        "title": "Testing Page (Admin)",
-        "desc": "Experimental code preview page.",
-        "icon": "fas fa-flask",
-        "link": "/Test.html",
-        "status": ["free"]
-      },
-      {
-        "title": "Tic Tac Toe",
-        "desc": "Quick classic game match.",
-        "icon": "fas fa-times-circle",
-        "link": "/tictactoe.html",
+        "title": "Terms",
+        "desc": "Terms of use on the contact page.",
+        "icon": "fas fa-file-contract",
+        "link": "/contact#terms",
         "status": ["free"]
       }
     ]

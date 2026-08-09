@@ -74,8 +74,8 @@ h2 {
 .container {
   width:100%;
   max-width:1100px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  display:flex;
+  flex-direction:column;
   gap:1.2rem;
 }
 
@@ -84,25 +84,32 @@ h2 {
   border-radius:var(--border-radius, 12px);
   border:1px solid var(--border);
   box-shadow:var(--shadow);
-  padding:1rem 1.2rem;
+  overflow:hidden;
   transition:var(--transition);
-  display:flex;
-  flex-direction:column;
-}
-
-.card:hover {
-  transform:translateY(-3px);
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 
 .card-header {
   display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:0.75rem;
   font-size:1rem;
   font-weight:600;
   color:var(--accent);
-  margin-bottom:0.4rem;
+  padding:0.9rem 1.2rem;
+  cursor:pointer;
+  user-select:none;
+  transition:background var(--transition);
+}
+
+.card-header:hover {
+  background:rgba(0,0,0,0.03);
+}
+
+.card-header .card-title {
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
 }
 
 .card-header i {
@@ -111,22 +118,93 @@ h2 {
   text-align:center;
 }
 
-.card-header a {
-  text-decoration:none;
-  color:var(--accent);
-  transition:color var(--transition);
-}
-
-.card-header a:hover {
-  color:var(--accent-light);
-  text-decoration:underline;
-}
-
-.card p {
-  font-size:0.88rem;
+.card-toggle {
+  font-size:1rem;
+  transition:transform 0.25s ease;
   color:var(--text-secondary);
-  margin:0;
+}
+
+.card.collapsed .card-toggle {
+  transform:rotate(-90deg);
+}
+
+.card-body {
+  display:flex;
+  flex-direction:column;
+  border-top:1px solid var(--border);
+}
+
+.card-item {
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+  padding:0.7rem 1.2rem;
+  text-decoration:none;
+  color:var(--text-primary);
+  transition:background var(--transition);
+}
+
+.card-item:nth-child(even) {
+  background:rgba(0,0,0,0.03);
+}
+
+.dark-mode .card-header:hover {
+  background:rgba(255,255,255,0.04);
+}
+
+.dark-mode .card-item:nth-child(even) {
+  background:rgba(255,255,255,0.04);
+}
+
+.card-item:hover {
+  background:var(--accent);
+  color:#fff;
+}
+
+.card-item i {
+  font-size:1.1rem;
+  min-width:24px;
+  text-align:center;
+  color:var(--accent);
+}
+
+.card-item:hover i {
+  color:#fff;
+}
+
+.card-item .card-item-info {
+  display:flex;
+  flex-direction:column;
+  gap:0.1rem;
+  min-width:0;
+}
+
+.card-item .card-item-title {
+  font-weight:600;
+  font-size:0.95rem;
+}
+
+.card-item .card-item-desc {
+  font-size:0.82rem;
+  color:var(--text-secondary);
   line-height:1.4;
+}
+
+.card-item:hover .card-item-desc {
+  color:rgba(255,255,255,0.85);
+}
+
+.card-item .card-item-arrow {
+  margin-left:auto;
+  color:var(--text-secondary);
+  font-size:0.9rem;
+  opacity:0;
+  transition:opacity var(--transition);
+}
+
+.card-item:hover .card-item-arrow {
+  opacity:1;
+  color:#fff;
 }
 
 .loading,
@@ -146,54 +224,6 @@ h2 {
 
 <h2>📁 Useful Links</h2>
 
-<!-- Portal & Tools (shifted from homepage) -->
-<h2 style="font-size:1.2rem;margin:1.5rem 0 0.8rem;text-align:left">🛠️ Portal &amp; Tools</h2>
-<div class="container">
-  <div class="card">
-    <div class="card-header"><i class="fas fa-folder-open"></i><a href="/links/mp">My Portal</a></div>
-    <p>Search files in Google Drive and data in Google Sheets.</p>
-  </div>
-  <div class="card">
-    <div class="card-header"><i class="fas fa-images"></i><a href="/links/myphoto">My Photos</a></div>
-    <p>Browse photos stored in Google Drive albums.</p>
-  </div>
-  <div class="card">
-    <div class="card-header"><i class="fas fa-calculator"></i><a href="/links/calculator">Calculator</a></div>
-    <p>Quick general-purpose calculator.</p>
-  </div>
-  <div class="card">
-    <div class="card-header"><i class="fas fa-calendar-alt"></i><a href="/links/calendar">Calendar</a></div>
-    <p>View and manage dates, holidays and events.</p>
-  </div>
-</div>
-
-<!-- Site Pages (shifted from homepage) -->
-<h2 style="font-size:1.2rem;margin:2rem 0 0.8rem;text-align:left">🌐 Site Pages</h2>
-<div class="container">
-  <div class="card">
-    <div class="card-header"><i class="fas fa-circle-info"></i><a href="/about">About</a></div>
-    <p>Learn more about Milind Web and our team.</p>
-  </div>
-  <div class="card">
-    <div class="card-header"><i class="fas fa-blog"></i><a href="/blog">Blog</a></div>
-    <p>Articles, tutorials, tips and updates.</p>
-  </div>
-  <div class="card">
-    <div class="card-header"><i class="fas fa-envelope"></i><a href="/contact">Contact</a></div>
-    <p>Get in touch with us for any enquiry.</p>
-  </div>
-  <div class="card">
-    <div class="card-header"><i class="fas fa-shield-halved"></i><a href="/contact#privacy">Privacy</a></div>
-    <p>Privacy policy on the contact page.</p>
-  </div>
-  <div class="card">
-    <div class="card-header"><i class="fas fa-file-contract"></i><a href="/contact#terms">Terms</a></div>
-    <p>Terms of use on the contact page.</p>
-  </div>
-</div>
-
-<!-- External / curated links -->
-<h2 style="font-size:1.2rem;margin:2rem 0 0.8rem;text-align:left">🔗 More Resources</h2>
 <div class="search-box">
   <i class="fas fa-search"></i>
   <input type="text" id="searchInput" placeholder="Search tools, AI, games, utilities...">
@@ -240,43 +270,64 @@ async function loadData() {
 function renderLinks(filterText = "") {
   container.innerHTML = "";
   const search = filterText.toLowerCase();
+  const isSearching = filterText.trim() !== "";
 
   linksData.forEach(section => {
 
-    let categoryHasVisibleItems = false;
-    const sectionElements = [];
+    const visibleItems = section.items.filter(item =>
+      item.title.toLowerCase().includes(search) ||
+      item.desc.toLowerCase().includes(search)
+    );
 
-    section.items.forEach(item => {
+    if (visibleItems.length === 0) return;
 
-      if (
-        item.title.toLowerCase().includes(search) ||
-        item.desc.toLowerCase().includes(search)
-      ) {
-        categoryHasVisibleItems = true;
+    const card = document.createElement("div");
+    card.className = "card";
 
-        const card = document.createElement("div");
-        card.className = "card";
+    const header = document.createElement("div");
+    header.className = "card-header";
 
-        card.innerHTML = `
-          <div class="card-header">
-            <i class="${item.icon}"></i>
-            <a href="${item.link}" target="_blank">${item.title}</a>
-          </div>
-          <p>${item.desc}</p>
-        `;
+    const title = document.createElement("span");
+    title.className = "card-title";
+    title.textContent = section.category;
 
-        sectionElements.push(card);
-      }
+    const toggle = document.createElement("i");
+    toggle.className = "fas fa-chevron-down card-toggle";
 
+    header.appendChild(title);
+    header.appendChild(toggle);
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    visibleItems.forEach(item => {
+      const row = document.createElement("a");
+      row.className = "card-item";
+      row.href = item.link;
+      row.target = "_blank";
+
+      row.innerHTML = `
+        <i class="${item.icon}"></i>
+        <span class="card-item-info">
+          <span class="card-item-title">${item.title}</span>
+          <span class="card-item-desc">${item.desc}</span>
+        </span>
+        <i class="fas fa-arrow-right card-item-arrow"></i>
+      `;
+
+      body.appendChild(row);
     });
 
-    if (categoryHasVisibleItems) {
-      const heading = document.createElement("h2");
-      heading.textContent = section.category;
-      heading.style.gridColumn = "1/-1";
-      container.appendChild(heading);
+    card.appendChild(header);
+    card.appendChild(body);
+    container.appendChild(card);
 
-      sectionElements.forEach(el => container.appendChild(el));
+    header.addEventListener("click", function () {
+      card.classList.toggle("collapsed");
+    });
+
+    if (isSearching) {
+      card.classList.remove("collapsed");
     }
 
   });

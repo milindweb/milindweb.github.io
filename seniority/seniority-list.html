@@ -568,7 +568,9 @@
                 header: true,
                 skipEmptyLines: true,
                 complete: function(results) {
-                    allEmployees = results.data;
+                    allEmployees = results.data.filter(function (emp) {
+                        return emp && Object.values(emp).some(function (v) { return String(v).trim() !== ''; });
+                    });
                     filteredEmployees = [...allEmployees];
                     
                     // Initialize column filters
@@ -929,7 +931,9 @@
             // Try different date formats
             const formats = [
                 /(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/, // DD/MM/YYYY or DD-MM-YYYY
-                /(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})/  // YYYY/MM/DD or YYYY-MM-DD
+                /(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})/, // YYYY/MM/DD or YYYY-MM-DD
+                /(\d{1,2})\/(\d{4})/,                  // MM/YYYY
+                /(\d{4})/                               // YYYY
             ];
             
             for (const regex of formats) {
@@ -947,6 +951,16 @@
                         year = parseInt(match[1], 10);
                         month = parseInt(match[2], 10) - 1; // Months are 0-indexed
                         day = parseInt(match[3], 10);
+                    } else if (match[2]) {
+                        // MM/YYYY format
+                        month = parseInt(match[1], 10) - 1;
+                        year = parseInt(match[2], 10);
+                        day = 1;
+                    } else {
+                        // YYYY format
+                        year = parseInt(match[1], 10);
+                        month = 0;
+                        day = 1;
                     }
                     
                     if (year && month !== undefined && day) {
