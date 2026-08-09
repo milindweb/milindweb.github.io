@@ -22,6 +22,8 @@ Date of cleanup: 2026-08-09
 |---|---|---|
 | `Seniariity_List.html` | DELETED | Converted to `seniority/seniority-list.html` (same data, served at `/seniority`) |
 | `Seniarity_Management.html` | DELETED | Converted to `seniority/seniority-management.html` (served at `/seniority/manage`) |
+| `Test.html` | DELETED | Legacy test page — no references |
+| `finance/index.original.html` | DELETED | Pre-split backup — no references |
 
 ### Unused stylesheet
 
@@ -83,15 +85,12 @@ These are still needed later — either data is still being migrated or they are
 
 | File | Status | Why |
 |---|---|---|
-| `apps-script/Code.gs` | KEPT | Old combined backend — source/base for planned `hospital.gs`/`seniority.gs` (backend conversion still in progress) |
-| `apps-script/README.md` | KEPT | Documentation for the legacy backend |
+| `blog/posts/_template.html` | KEPT | Template for creating new blog posts (not linked from any page, needed as reference) |
 | `data/complaint.json` | KEPT | Legacy hospital master data — not yet folded into the new data files |
 | `data/dept.json` | KEPT | Legacy hospital master data — not yet folded into the new data files |
 | `data/drname.json` | KEPT | Legacy hospital master data — not yet folded into the new data files |
 | `data/labtest.json` | KEPT | Legacy hospital master data — not yet folded into the new data files |
 | `data/medlist.json` | KEPT | Legacy hospital master data — not yet folded into the new data files |
-| `finance/index.original.html` | KEPT | Pre-split backup (do not deploy) |
-| `Test.html` | KEPT | Legacy test page |
 
 ---
 
