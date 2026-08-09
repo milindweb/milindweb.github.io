@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="js/config.js"></script>
-  <script>const PAGE_CONFIG = { title: 'Calendar Year', description: 'Yearly calendar with holidays and special days.', canonical: '/calendar' };</script>
-  <script src="js/seo-injector.js"></script>
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Calendar Year', description: 'Yearly calendar with holidays and special days.', canonical: '/links/calendar' };</script>
+  <script src="/js/seo-injector.js"></script>
   <title>Milindweb - Calendar Year</title>
 <!------- Favicon -------->
-    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 
   <!-- Shared Header + Footer CSS -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/headerfooter.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/headerfooter.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
@@ -227,7 +227,7 @@
     }
   </style>
 
-  <script src="js/headerfooter.js" defer></script>
+  <script src="/js/headerfooter.js" defer></script>
 </head>
 <body>
   <div id="header"></div>
@@ -371,7 +371,7 @@
     function cyNextYear(){ cyYearSelect.value = parseInt(cyYearSelect.value)+1; cyUpdateCalendar(); }
 
     // === Load holidays from JSON file ===
-    fetch("data/holidays.json")
+    fetch("/data/holidays.json")
       .then(r=>r.json())
       .then(data=>{ cyHolidays=data; cyUpdateCalendar(); })
       .catch(()=>cyUpdateCalendar());

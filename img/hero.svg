@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.55" stop-color="#1e293b"/>
+      <stop offset="1" stop-color="#172554"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.8" cy="0.3" r="0.6">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <rect width="1200" height="420" fill="url(#glow)"/>
+
+  <!-- Decorative code window -->
+  <rect x="760" y="70" width="360" height="280" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+  <circle cx="790" cy="100" r="6" fill="#f87171"/>
+  <circle cx="812" cy="100" r="6" fill="#fbbf24"/>
+  <circle cx="834" cy="100" r="6" fill="#4ade80"/>
+  <rect x="790" y="130" width="180" height="10" rx="5" fill="rgba(96,165,250,0.55)"/>
+  <rect x="790" y="156" width="260" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+  <rect x="790" y="176" width="220" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+  <rect x="790" y="196" width="250" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+  <rect x="790" y="230" width="140" height="10" rx="5" fill="rgba(139,92,246,0.6)"/>
+  <rect x="790" y="256" width="200" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+  <rect x="790" y="276" width="230" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+  <rect x="790" y="296" width="180" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+  <rect x="790" y="318" width="120" height="8" rx="4" fill="rgba(255,255,255,0.15)"/>
+
+  <!-- Floating dots -->
+  <circle cx="160" cy="360" r="5" fill="#3b82f6" opacity="0.6"/>
+  <circle cx="260" cy="80" r="4" fill="#8b5cf6" opacity="0.5"/>
+  <circle cx="720" cy="360" r="6" fill="#34d399" opacity="0.4"/>
+  <circle cx="1120" cy="60" r="4" fill="#f59e0b" opacity="0.4"/>
+  <circle cx="620" cy="90" r="3" fill="#60a5fa" opacity="0.5"/>
+</svg>

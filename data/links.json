@@ -47,7 +47,7 @@
         "title": "Employee Details",
         "desc": "Employee ranking and data viewer.",
         "icon": "fas fa-users",
-        "link": "Seniarity_Management.html",
+        "link": "/Seniarity_Management.html",
         "status": ["free"]
       },
       {
@@ -82,28 +82,28 @@
         "title": "Seniority List",
         "desc": "Complete seniority list data.",
         "icon": "fas fa-list",
-        "link": "Seniariity_List.html",
+        "link": "/Seniariity_List.html",
         "status": ["free"]
       },
       {
         "title": "Snake Game",
         "desc": "Classic snake game online.",
         "icon": "fas fa-gamepad",
-        "link": "snake-game.html",
+        "link": "/snake-game.html",
         "status": ["free"]
       },
       {
         "title": "Testing Page (Admin)",
         "desc": "Experimental code preview page.",
         "icon": "fas fa-flask",
-        "link": "Test.html",
+        "link": "/Test.html",
         "status": ["free"]
       },
       {
         "title": "Tic Tac Toe",
         "desc": "Quick classic game match.",
         "icon": "fas fa-times-circle",
-        "link": "tictactoe.html",
+        "link": "/tictactoe.html",
         "status": ["free"]
       }
     ]

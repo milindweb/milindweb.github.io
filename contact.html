@@ -196,7 +196,7 @@
   <section class="ct-section" style="padding-top:0">
 
     <!-- Privacy Policy -->
-    <div class="ct-card">
+    <div class="ct-card" id="privacy">
       <div class="ct-card-header">
         <span><i class="fas fa-user-shield"></i> Privacy Policy</span>
         <i class="fas fa-chevron-down toggle"></i>
@@ -226,7 +226,7 @@
     </div>
 
     <!-- Terms of Use -->
-    <div class="ct-card">
+    <div class="ct-card" id="terms">
       <div class="ct-card-header">
         <span><i class="fas fa-gavel"></i> Terms of Use</span>
         <i class="fas fa-chevron-down toggle"></i>
@@ -330,6 +330,18 @@
         });
       }
     });
+
+    function openHashCard() {
+      const id = window.location.hash.replace('#', '');
+      if (!id) return;
+      const card = document.getElementById(id);
+      if (card && !card.classList.contains('always-visible')) {
+        card.classList.add('active');
+        setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      }
+    }
+    window.addEventListener('hashchange', openHashCard);
+    document.addEventListener('DOMContentLoaded', openHashCard);
   </script>
 </body>
 </html>

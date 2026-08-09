@@ -36,9 +36,39 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://milindweb.pages.dev/contactform</loc>
+    <loc>https://milindweb.pages.dev/finance</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/finance/salary</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/finance/finyear</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/finance/loans</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/finance/transactions</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/finance/reports</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/finance/settings</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
   <url>
     <loc>https://milindweb.pages.dev/blog</loc>
@@ -61,13 +91,23 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://milindweb.pages.dev/privacy</loc>
+    <loc>https://milindweb.pages.dev/links/calculator</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://milindweb.pages.dev/terms</loc>
+    <loc>https://milindweb.pages.dev/links/calendar</loc>
     <changefreq>yearly</changefreq>
-    <priority>0.2</priority>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/links/mp</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://milindweb.pages.dev/links/myphoto</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

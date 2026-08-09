@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/css/headerfooter.css">
   <script src="/js/headerfooter.js" defer></script>
   <script src="/hospital/js/hospital-nav.js" defer></script>
-  <link rel="stylesheet" href="/hospital/css/hospital.css">
+  <link rel="stylesheet" href="/css/hospital.css">
   <style>
     .patient-list-page { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
     .search-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
@@ -20,9 +20,9 @@
     .search-bar select { padding: 10px 16px; border: 1px solid var(--border); border-radius: 8px; }
     .table-wrap { background: var(--card-bg); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; }
-    th { background: var(--light); padding: 12px 16px; text-align: left; font-size: 0.8rem; text-transform: uppercase; color: var(--gray); letter-spacing: 0.5px; }
+    th { background: var(--secondary-bg); padding: 12px 16px; text-align: left; font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.5px; }
     td { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 0.9rem; }
-    tr:hover { background: var(--light); }
+    tr:hover { background: var(--secondary-bg); }
     .clickable { color: var(--accent); cursor: pointer; font-weight: 600; }
     .clickable:hover { text-decoration: underline; }
     .pagination { display: flex; justify-content: center; gap: 8px; padding: 20px; }
@@ -43,7 +43,7 @@
     <div class="table-wrap">
       <table>
         <thead><tr><th>UHID</th><th>Name</th><th>Gender</th><th>Age</th><th>Mobile</th><th>Visits</th><th>Last Visit</th></tr></thead>
-        <tbody id="patientTableBody"><tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">Loading...</td></tr></tbody>
+        <tbody id="patientTableBody"><tr><td colspan="7" style="text-align:center;color:var(--text-secondary);padding:40px;">Loading...</td></tr></tbody>
       </table>
       <div class="pagination" id="pagination"></div>
     </div>
@@ -60,7 +60,7 @@
       const q = document.getElementById('searchInput').value.trim();
       const gender = document.getElementById('genderFilter').value;
       const tbody = document.getElementById('patientTableBody');
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">Loading...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-secondary);padding:40px;">Loading...</td></tr>';
 
       try {
         const res = await HospitalAPI.listPatients({ page, limit: pageSize, q: (gender ? gender + ' ' : '') + q });
@@ -68,7 +68,7 @@
         totalPages = res.pages || 1;
 
         if (data.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:40px;">No patients found.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-secondary);padding:40px;">No patients found.</td></tr>';
         } else {
           tbody.innerHTML = data.map(p => {
             const age = p.date_of_birth ? Math.floor((new Date() - new Date(p.date_of_birth)) / (365.25 * 86400000)) : '—';

@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/css/headerfooter.css">
   <script src="/js/headerfooter.js" defer></script>
   <script src="/hospital/js/hospital-nav.js" defer></script>
-  <link rel="stylesheet" href="/hospital/css/hospital.css">
+  <link rel="stylesheet" href="/css/hospital.css">
   <style>
     .visit-form { max-width: 960px; margin: 40px auto; padding: 0 20px; }
     .prescription-entry { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr; gap: 8px; align-items: end; margin-bottom: 8px; }
@@ -122,11 +122,11 @@
     <div class="hosp-section" id="step4" style="display:none;">
       <h3><i class="fas fa-stethoscope"></i> Clinical Details</h3>
 
-      <h4 style="margin:12px 0 8px;font-size:0.9rem;color:var(--gray);">Chief Complaints</h4>
+      <h4 style="margin:12px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Chief Complaints</h4>
       <div id="complaintsList"></div>
       <div class="hosp-add-row" onclick="addComplaint()"><i class="fas fa-plus"></i> Add Complaint</div>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">History</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">History</h4>
       <div class="hosp-row">
         <div class="hosp-group"><label>History of Present Illness</label><textarea id="historyIllness" rows="2"></textarea></div>
         <div class="hosp-group"><label>Past Medical History</label><textarea id="pastMedical" rows="2"></textarea></div>
@@ -139,7 +139,7 @@
         <div class="hosp-group"><label>Family / Personal History</label><textarea id="familyHistory" rows="2"></textarea></div>
       </div>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Examination</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Examination</h4>
       <div class="hosp-row">
         <div class="hosp-group"><label>General Examination</label><textarea id="generalExam" rows="2"></textarea></div>
         <div class="hosp-group"><label>Systemic Examination</label><textarea id="systemicExam" rows="2"></textarea></div>
@@ -149,18 +149,18 @@
         <div class="hosp-group"><label>Lab Findings</label><textarea id="labFindings" rows="2"></textarea></div>
       </div>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Suggested Investigations</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Suggested Investigations</h4>
       <div id="investigationsList"></div>
       <div class="hosp-add-row" onclick="addInvestigation()"><i class="fas fa-plus"></i> Add Investigation</div>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Diagnosis</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Diagnosis</h4>
       <div class="hosp-row">
         <div class="hosp-group"><label>Provisional Diagnosis</label><input type="text" id="provisionalDiagnosis" list="diagnosisList"></div>
         <div class="hosp-group"><label>Final Diagnosis</label><input type="text" id="finalDiagnosis" list="diagnosisList"></div>
       </div>
       <datalist id="diagnosisList"></datalist>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Procedures / Treatment</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Procedures / Treatment</h4>
       <div class="hosp-row">
         <div class="hosp-group">
           <label>Select Procedures</label>
@@ -176,7 +176,7 @@
       </div>
       <div class="hosp-group"><label>Treatment Notes</label><textarea id="treatmentNotes" rows="2"></textarea></div>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Advice & Follow-up</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Advice & Follow-up</h4>
       <div class="hosp-row">
         <div class="hosp-group"><label>Advice</label><textarea id="advice" rows="2" placeholder="Diet, Lifestyle, Rest, Exercise, General Instructions..."></textarea></div>
       </div>
@@ -186,12 +186,12 @@
         <div class="hosp-group"><label>Next Visit Advice</label><input type="text" id="nextVisitAdvice"></div>
       </div>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Special Instructions</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Special Instructions</h4>
       <div class="hosp-row">
         <div class="hosp-group"><label>Special Instructions</label><textarea id="specialInstructions" rows="2" placeholder="Additional instructions not covered above..."></textarea></div>
       </div>
 
-      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--gray);">Doctor Remarks</h4>
+      <h4 style="margin:16px 0 8px;font-size:0.9rem;color:var(--text-secondary);">Doctor Remarks</h4>
       <div class="hosp-row">
         <div class="hosp-group"><label>Remarks</label><textarea id="doctorRemarks" rows="2"></textarea></div>
         <div class="hosp-group"><label>Signature</label><input type="text" id="doctorSignature" placeholder="Doctor name / stamp"></div>
@@ -378,7 +378,7 @@
       if (rows && rows.length > 0) {
         resultsDiv.innerHTML = rows.map(p => `<div class="hosp-result-item" onclick="selectPatient('${p.id}','${p.uhid}','${p.full_name.replace(/'/g,"\\'")}','${p.mobile||''}')">${p.full_name} <small>#${p.uhid} · ${p.mobile||'—'}</small></div>`).join('');
         resultsDiv.style.display = 'block';
-      } else { resultsDiv.innerHTML = '<div class="hosp-result-item" style="color:var(--gray);">No existing patient found. Fill details below to create new.</div>'; resultsDiv.style.display = 'block'; }
+      } else { resultsDiv.innerHTML = '<div class="hosp-result-item" style="color:var(--text-secondary);">No existing patient found. Fill details below to create new.</div>'; resultsDiv.style.display = 'block'; }
     }
     function selectPatient(id, uhid, name, mobile) {
       selectedPatientId = id;
@@ -407,7 +407,7 @@
     async function loadMastersFallback() {
       if (MASTERS_DATA) return MASTERS_DATA;
       try {
-        const res = await fetch('/hospital/data/masters.json');
+        const res = await fetch('/data/hospital-masters.json');
         MASTERS_DATA = await res.json();
       } catch (e) {
         MASTERS_DATA = { departments: [], doctors: [] };

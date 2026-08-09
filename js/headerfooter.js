@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     '{{EMAIL}}': cfg.contact ? (cfg.contact.emailUser + '@' + cfg.contact.emailDomain) : '',
     '{{DOMAIN}}': cfg.domain || '',
     '{{URL}}': cfg.url || '',
+    '{{SOCIAL_WA}}': cfg.social ? cfg.social.whatsapp : '',
+    '{{SOCIAL_TELEGRAM}}': cfg.social ? cfg.social.telegram : '',
     '{{SOCIAL_INSTA}}': cfg.social ? cfg.social.instagram : '',
     '{{SOCIAL_FB}}': cfg.social ? cfg.social.facebook : '',
     '{{SOCIAL_TWITTER}}': cfg.social ? cfg.social.twitter : '',

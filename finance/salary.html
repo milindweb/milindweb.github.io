@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard — MilindWeb</title>
+  <title>Monthly Salary — MilindWeb</title>
   <script src="/js/config.js"></script>
-  <script>const PAGE_CONFIG = { title: 'Dashboard', description: 'Milind Web Finance — monthly salary slips, financial year summaries, loans & insurance, and major transactions. Data stored in Google Sheets.', canonical: '/finance' };</script>
+  <script>const PAGE_CONFIG = { title: 'Monthly Salary', description: 'Milind Web Finance — monthly salary slips, financial year summaries, loans & insurance, and major transactions. Data stored in Google Sheets.', canonical: '/finance/salary' };</script>
   <script src="/js/seo-injector.js"></script>
   <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
@@ -40,8 +40,8 @@
       <span>Payroll &amp; Financial Mgmt</span>
     </div>
     <div class="sidebar-nav">
-      <a class="active" href="index.html"><span class="icon">&#9632;</span> Dashboard</a>
-      <a href="salary.html"><span class="icon">&#36;</span> Monthly Salary</a>
+      <a href="index.html"><span class="icon">&#9632;</span> Dashboard</a>
+      <a class="active" href="salary.html"><span class="icon">&#36;</span> Monthly Salary</a>
       <a href="finyear.html"><span class="icon">&#9733;</span> Fin. Year Summary</a>
       <a href="loans.html"><span class="icon">&#9762;</span> Loans &amp; Insurance</a>
       <a href="transactions.html"><span class="icon">&#8644;</span> Major Transactions</a>
@@ -53,50 +53,50 @@
 
   <div class="main-content">
     <div class="top-bar">
-      <h1 id="pageTitle">Dashboard</h1>
+      <h1 id="pageTitle">Monthly Salary</h1>
       <div class="user-info">
         <span id="userDisplay"></span>
         <button onclick="logout()">Logout</button>
       </div>
     </div>
 
-<div id="view-dashboard" class="view">
-      <div class="flex-between" style="margin-bottom:12px;">
-        <div style="font-size:18px;font-weight:700;color:var(--accent);">Dashboard</div>
-        <div class="flex-center gap-8">
-          <select id="dashMonth" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
-            <option value="">All Months</option>
-            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
-            <option>May</option><option>Jun</option><option>Jul</option><option>Aug</option>
-            <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
-          </select>
-          <select id="dashYear" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
-            <option value="">All Years</option>
-          </select>
+<div id="view-salary" class="view">
+      <div class="flex-between mb-10">
+        <div class="flex-center gap-10">
+          <select id="salaryYearSelect" onchange="loadSalary()" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;"></select>
         </div>
+        <button class="btn btn-primary" onclick="openSalaryForm()">+ Add Month</button>
       </div>
-
-      <div id="statCards" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px;"></div>
-
-      <div class="grid-2" style="margin-bottom:0;">
-        <div class="card" style="padding:16px;">
-          <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text);">Breakdown</h3>
-          <div class="chart-wrap" style="height:200px;"><canvas id="chartDonut"></canvas></div>
-        </div>
-        <div class="card" style="padding:16px;">
-          <div class="flex-between" style="margin-bottom:12px;">
-            <h3 style="font-size:14px;font-weight:600;color:var(--text);">Financial Year Trend</h3>
-            <select id="fyChartYear" onchange="renderFinYearChart()" style="padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:11px;background:#fff;">
-              <option value="">All</option>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="salaryTableWrap"></div>
+      </div>
+      <div class="card hidden" id="salaryFormCard">
+        <div class="flex-between mb-10"><h3 id="salaryFormTitle">Add Monthly Salary</h3><button class="btn btn-sm btn-outline" onclick="closeSalaryForm()">&#10005; Close</button></div>
+        <div style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Fields with <strong>bold labels</strong> auto-calculate. Enter Month &amp; Year first.</div>
+        <div class="form-row">
+          <div class="form-group"><label>Month</label>
+            <select id="field-Month" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
+              <option value="">--</option><option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
+              <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
             </select>
           </div>
-          <div id="fyChartNoData" style="display:none;padding:25px;text-align:center;color:var(--text-light);font-size:13px;">No salary data for selected year.</div>
-          <div class="chart-wrap" style="height:200px;"><canvas id="chartFinYear"></canvas></div>
+          <div class="form-group"><label>Year</label><input type="number" id="field-Year" placeholder="e.g. 2025" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;"></div>
         </div>
+        <div class="form-section-title">Earnings</div>
+        <div class="form-row" id="earningsFields"></div>
+        <div class="form-section-title">Deductions</div>
+        <div class="form-row" id="deductionsFields"></div>
+        <div class="form-section-title">Recoveries</div>
+        <div class="form-row" id="recoveriesFields"></div>
+        <div class="form-section-title">OT</div>
+        <div class="form-row" id="otFields"></div>
+        <div class="form-section-title">Summary</div>
+        <div class="form-row" id="summaryFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveSalary()">Save</button><button class="btn btn-outline" onclick="closeSalaryForm()">Cancel</button></div>
       </div>
     </div>
 
-    <!-- SALARY -->
+    <!-- FIN YEAR -->
   </div>
 </div>
 
@@ -104,7 +104,7 @@
 
 <div id="toast" class="toast"></div>
 
-<script>var FINANCE_PAGE = 'dashboard';</script>
+<script>var FINANCE_PAGE = 'salary';</script>
 <script src="/finance/js/finance-core.js"></script>
 <script src="/finance/js/finance-utils.js"></script>
 <script src="/finance/js/finance-charts.js"></script>

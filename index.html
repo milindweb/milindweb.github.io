@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="/js/config.js"></script>
-  <script>const PAGE_CONFIG = { title: 'Home', description: 'Milind Web — free tools: Hospital Management, Seniority Management, Finance, calculators and more. Data stored in Google Sheets.', canonical: '/' };</script>
+  <script>const PAGE_CONFIG = { title: 'Home', description: 'Milind Web — Web development, software development and app development services, plus free tools: Hospital Management, Seniority Management, Finance, calculators and more.', canonical: '/' };</script>
   <script src="/js/seo-injector.js"></script>
   <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
@@ -14,22 +14,49 @@
   <script src="/js/auth.js" defer></script>
   <script src="/js/headerfooter.js" defer></script>
   <style>
-    .landing { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+    .landing { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; }
 
-    /* Hero */
-    .hero { text-align: center; margin-bottom: 48px; }
-    .hero h1 { font-size: 2.4rem; margin: 0 0 8px; color: var(--text-primary); }
-    .hero .sub { color: var(--text-secondary); font-size: 1.05rem; max-width: 640px; margin: 0 auto; line-height: 1.6; }
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      margin: 30px 0 50px;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      min-height: 300px;
+    }
+    .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+    .hero-content { position: relative; z-index: 2; padding: 46px 44px; flex: 1; }
+    .hero h1 { font-size: 2.5rem; margin: 0 0 10px; font-weight: 800; }
+    .hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero .sub { color: #cbd5e1; font-size: 1.1rem; max-width: 560px; margin: 0 0 22px; line-height: 1.6; }
+    .hero .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 10px; font-weight: 600;
+      text-decoration: none; transition: var(--transition);
+    }
+    .hero .btn-primary { background: var(--gradient); color: #fff; }
+    .hero .btn-primary:hover { transform: translateY(-2px); opacity: 0.92; }
+    .hero .btn-ghost { border: 1px solid rgba(255,255,255,0.35); color: #fff; }
+    .hero .btn-ghost:hover { background: rgba(255,255,255,0.1); }
     .hero .auth-chip {
       display: inline-block; margin-top: 18px; padding: 8px 16px;
-      border: 1px solid var(--border); border-radius: 999px;
-      background: var(--card-bg); color: var(--text-secondary); font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 999px;
+      background: rgba(255,255,255,0.06); color: #cbd5e1; font-size: 0.85rem;
     }
-    .hero .auth-chip a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .hero .auth-chip a { color: #93c5fd; text-decoration: none; font-weight: 600; }
 
-    /* Sections */
-    .l-section { margin-bottom: 44px; }
-    .l-section h2 { font-size: 1.35rem; margin: 0 0 18px; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
+    /* ===== SECTIONS ===== */
+    .l-section { margin-bottom: 48px; }
+    .l-section h2 {
+      font-size: 1.4rem; margin: 0 0 18px; color: var(--text-primary);
+      display: flex; align-items: center; gap: 10px;
+    }
     .l-section h2 i { color: var(--accent); }
     .l-section h2 span { font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); margin-left: auto; }
 
@@ -40,15 +67,26 @@
 
     .module-card {
       background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
-      padding: 28px 22px; text-decoration: none; color: inherit;
+      padding: 24px 22px; color: inherit;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       transition: transform 0.15s, box-shadow 0.15s; display: flex; flex-direction: column; gap: 10px;
     }
     .module-card:hover { transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
-    .module-card i { font-size: 2rem; color: var(--accent); }
+    .module-card i { font-size: 1.9rem; color: var(--accent); }
     .module-card h3 { font-size: 1.1rem; margin: 0; color: var(--text-primary); }
-    .module-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin: 0; flex: 1; }
+    .module-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55; margin: 0; }
     .module-card .card-tag { font-size: 0.75rem; font-weight: 600; color: var(--accent); }
+
+    .module-card .sub-links {
+      margin-top: 6px; padding-top: 12px; border-top: 1px dashed var(--border);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .module-card .sub-links a {
+      font-size: 0.82rem; color: var(--accent); text-decoration: none;
+      display: flex; align-items: center; gap: 8px; transition: color 0.15s;
+    }
+    .module-card .sub-links a:hover { text-decoration: underline; }
+    .module-card .sub-links a i { font-size: 0.7rem; color: var(--accent); }
 
     /* Access-locked module cards */
     .module-card.locked { opacity: 0.75; border-style: dashed; }
@@ -58,6 +96,69 @@
     .module-card.coming { opacity: 0.55; border-style: dashed; pointer-events: none; }
     .module-card.coming i { color: var(--text-secondary); }
     .module-card.coming .card-tag { color: var(--text-secondary); }
+
+    /* ===== SERVICE CARDS (About/Services) ===== */
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    @media (max-width: 900px) { .service-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .service-grid { grid-template-columns: 1fr; } }
+
+    .service-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 22px rgba(0,0,0,0.12); }
+    .service-card img { width: 100%; height: 150px; object-fit: cover; display: block; }
+    .service-card .body { padding: 20px 20px 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .service-card h3 { font-size: 1.15rem; margin: 0; color: var(--text-primary); }
+    .service-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+    .service-card .enquiry-link {
+      margin-top: auto; padding-top: 12px; font-size: 0.85rem; font-weight: 600;
+      color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .service-card .enquiry-link:hover { text-decoration: underline; }
+
+    /* ===== BLOG TEASER ===== */
+    .blog-teaser {
+      display: grid; grid-template-columns: 340px 1fr; gap: 28px; align-items: center;
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+      padding: 26px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .blog-teaser img { width: 100%; border-radius: 12px; object-fit: cover; }
+    .blog-teaser h3 { font-size: 1.3rem; margin: 0 0 10px; color: var(--text-primary); }
+    .blog-teaser p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin: 0 0 16px; }
+    .blog-teaser .topic-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .blog-teaser .topic-chips span {
+      font-size: 0.78rem; padding: 5px 12px; border-radius: 20px;
+      background: var(--secondary-bg); color: var(--accent); border: 1px solid var(--border);
+    }
+    @media (max-width: 760px) { .blog-teaser { grid-template-columns: 1fr; } }
+
+    /* ===== CTA (contact) ===== */
+    .contact-cta {
+      background: var(--gradient); border-radius: 20px; padding: 40px 30px; text-align: center; color: #fff;
+    }
+    .contact-cta h2 { font-size: 1.7rem; margin: 0 0 10px; color: #fff; justify-content: center; }
+    .contact-cta p { color: rgba(255,255,255,0.9); max-width: 620px; margin: 0 auto 22px; line-height: 1.7; font-size: 0.98rem; }
+    .contact-cta .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 13px 30px;
+      background: #fff; color: #2563eb; border-radius: 10px; font-weight: 700;
+      text-decoration: none; transition: var(--transition);
+    }
+    .contact-cta .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+    /* Other links teaser */
+    .other-links {
+      background: var(--secondary-bg); border: 1px solid var(--border); border-radius: 16px;
+      padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .other-links p { margin: 0; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.6; }
+    .other-links .btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px;
+      background: var(--card-bg); color: var(--accent); border: 1px solid var(--accent);
+      border-radius: 10px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: var(--transition);
+    }
+    .other-links .btn:hover { background: var(--accent); color: #fff; }
   </style>
 </head>
 <body>
@@ -66,58 +167,123 @@
   <div class="landing" id="app">
     <!-- Hero -->
     <section class="hero">
-      <h1><i class="fas fa-house"></i> Milind Web</h1>
-      <p class="sub">Free tools that run entirely on static hosting — data stored in Google Sheets.</p>
-      <div class="auth-chip" id="authChip"><a href="/login">Login</a> or <a href="/register">Register</a> to access modules</div>
+      <img class="hero-img" src="/img/hero.svg" alt="" aria-hidden="true">
+      <div class="hero-content">
+        <h1>Build. Automate. <span>Grow.</span></h1>
+        <p class="sub">Milind Web offers web development, software development and app development services, plus free tools that run entirely on static hosting with data in Google Sheets.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="/contact"><i class="fas fa-paper-plane"></i> Get Started</a>
+          <a class="btn btn-ghost" href="/blog"><i class="fas fa-blog"></i> Read Our Blog</a>
+        </div>
+        <div class="auth-chip" id="authChip"><a href="/login">Login</a> or <a href="/register">Register</a> to access modules</div>
+      </div>
+    </section>
+
+    <!-- About / Services -->
+    <section class="l-section">
+      <h2><i class="fas fa-briefcase"></i> About Our Services</h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <img src="/img/services/web-development.svg" alt="Web Development">
+          <div class="body">
+            <h3>Web Development</h3>
+            <p>Modern, responsive websites built with clean code and fast load times. From business sites to web apps, we craft experiences that work on every device.</p>
+            <a class="enquiry-link" href="https://aartitechservices.pages.dev" target="_blank" rel="noopener">Click here for more details <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="/img/services/software-development.svg" alt="Software Development">
+          <div class="body">
+            <h3>Software Development</h3>
+            <p>Custom software to automate your business — from spreadsheets and reports to full management systems. Reliable solutions tailored to your workflow.</p>
+            <a class="enquiry-link" href="https://aartitechservices.pages.dev" target="_blank" rel="noopener">Click here for more details <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+        <div class="service-card">
+          <img src="/img/services/app-development.svg" alt="App Development">
+          <div class="body">
+            <h3>App Development</h3>
+            <p>Mobile-first applications that keep you and your customers connected. Simple, intuitive and built to scale with your business needs.</p>
+            <a class="enquiry-link" href="https://aartitechservices.pages.dev" target="_blank" rel="noopener">Click here for more details <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog -->
+    <section class="l-section">
+      <h2><i class="fas fa-blog"></i> About Our Blog</h2>
+      <div class="blog-teaser">
+        <img src="/img/blog.svg" alt="Blog">
+        <div>
+          <h3>Ideas, guides and stories worth sharing</h3>
+          <p>Our blog covers business growth, new learning, entertainment and practical tips &amp; tricks. Whether you want to grow your business, pick up a new skill, or discover handy shortcuts, there's something here for everyone.</p>
+          <div class="topic-chips">
+            <span><i class="fas fa-store"></i> Business</span>
+            <span><i class="fas fa-graduation-cap"></i> New Learning</span>
+            <span><i class="fas fa-film"></i> Entertainment</span>
+            <span><i class="fas fa-lightbulb"></i> Tips &amp; Tricks</span>
+          </div>
+          <a class="enquiry-link" href="/blog">Read the blog <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
     </section>
 
     <!-- Modules (auth-aware) -->
     <section class="l-section" id="moduleSection">
       <h2><i class="fas fa-cubes"></i> Modules <span id="moduleStatus"></span></h2>
       <div class="module-grid" id="moduleGrid">
-        <a class="module-card" id="card-hospital" href="/hospital/dashboard">
+        <div class="module-card" id="card-hospital">
           <i class="fas fa-hospital"></i>
           <h3>Hospital Management</h3>
-          <p>OPD visits, patient records, appointments, prescriptions, billing and visit history.</p>
+          <p>OPD visits, patient records, appointments, prescriptions, billing and visit history — all in one place.</p>
           <span class="card-tag" id="tag-hospital">MODULE</span>
-        </a>
-        <a class="module-card" id="card-seniority" href="/seniority">
+          <div class="sub-links">
+            <a href="/hospital/dashboard"><i class="fas fa-angle-right"></i> Dashboard</a>
+            <a href="/hospital/new-visit"><i class="fas fa-angle-right"></i> New Visit</a>
+            <a href="/hospital/patient-list"><i class="fas fa-angle-right"></i> Patient List</a>
+            <a href="/hospital/appointments"><i class="fas fa-angle-right"></i> Appointments</a>
+          </div>
+        </div>
+        <div class="module-card" id="card-seniority">
           <i class="fas fa-users"></i>
           <h3>Seniority Management</h3>
-          <p>Employee seniority lists, search, sanctioned posts, and report generation.</p>
+          <p>Employee seniority lists, search, sanctioned posts, and report generation made simple.</p>
           <span class="card-tag" id="tag-seniority">MODULE</span>
-        </a>
-        <a class="module-card" id="card-finance" href="/finance">
+          <div class="sub-links">
+            <a href="/seniority"><i class="fas fa-angle-right"></i> Seniority List</a>
+            <a href="/seniority/manage"><i class="fas fa-angle-right"></i> Manage &amp; Reports</a>
+          </div>
+        </div>
+        <div class="module-card" id="card-finance">
           <i class="fas fa-chart-line"></i>
           <h3>Finance Management</h3>
           <p>Salary slips, financial year summaries, loans &amp; insurance and major transactions.</p>
           <span class="card-tag" id="tag-finance">MODULE</span>
-        </a>
+          <div class="sub-links">
+            <a href="/finance"><i class="fas fa-angle-right"></i> Finance Dashboard</a>
+            <a href="/finance/salary"><i class="fas fa-angle-right"></i> Salary Slips</a>
+            <a href="/finance/loans"><i class="fas fa-angle-right"></i> Loans &amp; Insurance</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Portal & Tools -->
+    <!-- Other Links teaser -->
     <section class="l-section">
-      <h2><i class="fas fa-toolbox"></i> Portal &amp; Tools</h2>
-      <div class="module-grid cols-4">
-        <a class="module-card" href="/mp"><i class="fas fa-folder-open"></i><h3>My Portal</h3><p>Search files in Google Drive and data in Google Sheets.</p></a>
-        <a class="module-card" href="/myphoto"><i class="fas fa-images"></i><h3>My Photos</h3><p>Browse photos stored in Google Drive albums.</p></a>
-        <a class="module-card" href="/calculator"><i class="fas fa-calculator"></i><h3>Calculator</h3><p>Quick general-purpose calculator.</p></a>
-        <a class="module-card" href="/calendar"><i class="fas fa-calendar-alt"></i><h3>Calendar</h3><p>View and manage dates, holidays and events.</p></a>
+      <h2><i class="fas fa-link"></i> Other Links</h2>
+      <div class="other-links">
+        <p>Explore all our tools, calculators, photo albums, portal, games, AI resources and more. Everything is collected in one handy page so you can find it fast.</p>
+        <a class="btn" href="/links">View All Links <i class="fas fa-arrow-right"></i></a>
       </div>
     </section>
 
-    <!-- Site Pages -->
+    <!-- Contact CTA -->
     <section class="l-section">
-      <h2><i class="fas fa-globe"></i> Site</h2>
-      <div class="module-grid cols-4">
-        <a class="module-card" href="/about"><i class="fas fa-circle-info"></i><h3>About</h3><p>Learn more about Milind Web.</p></a>
-        <a class="module-card" href="/blog"><i class="fas fa-blog"></i><h3>Blog</h3><p>Articles, tutorials and updates.</p></a>
-        <a class="module-card" href="/links"><i class="fas fa-briefcase"></i><h3>Portfolio</h3><p>Projects and past work.</p></a>
-        <a class="module-card" href="/links"><i class="fas fa-link"></i><h3>Links</h3><p>Important links and resources.</p></a>
-        <a class="module-card" href="/contact"><i class="fas fa-envelope"></i><h3>Contact</h3><p>Get in touch with us.</p></a>
-        <a class="module-card" href="/privacy"><i class="fas fa-shield-halved"></i><h3>Privacy</h3><p>Privacy policy.</p></a>
-        <a class="module-card" href="/terms"><i class="fas fa-file-contract"></i><h3>Terms</h3><p>Terms of use.</p></a>
+      <div class="contact-cta">
+        <h2>Let's Build Something Together</h2>
+        <p>Have a project idea or need our services? We'd love to hear from you. Reach out today and get a quick, friendly response.</p>
+        <a class="btn" href="/contact"><i class="fas fa-envelope"></i> Contact Us</a>
       </div>
     </section>
   </div>

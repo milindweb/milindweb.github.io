@@ -17,6 +17,16 @@
   --gradient: linear-gradient(135deg, #2563eb, #3b82f6);
   --shadow: 0 4px 14px rgba(0,0,0,0.08);
   --transition: all .3s ease;
+  /* Semantic status colors (shared by all modules) */
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+  --info: #0284c7;
+  /* Generic aliases used by module styles */
+  --bg: var(--secondary-bg);
+  --card: var(--card-bg);
+  --text: var(--text-primary);
+  --text-light: var(--text-secondary);
 }
 
 .dark-mode {
@@ -29,6 +39,10 @@
   --accent-light: #93c5fd;
   --border: #334155;
   --shadow: 0 4px 14px rgba(0,0,0,0.4);
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+  --info: #38bdf8;
 }
 
 /* ===== BODY DEFAULTS ===== */

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const res = await fetch("/hospital/components/hospital-nav.html");
+    const res = await fetch("/components/hospital-nav.html");
     if (!res.ok) throw new Error("Failed to load hospital nav");
     const html = await res.text();
     const el = document.getElementById("hospitalNav");

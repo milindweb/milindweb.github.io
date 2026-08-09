@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finance — MilindWeb</title>
+  <script src="/js/config.js"></script>
+  <script>const PAGE_CONFIG = { title: 'Finance', description: 'Milind Web Finance — monthly salary slips, financial year summaries, loans & insurance, and major transactions. Data stored in Google Sheets.', canonical: '/finance' };</script>
+  <script src="/js/seo-injector.js"></script>
+  <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/headerfooter.css">
+  <link rel="stylesheet" href="/css/finance.css">
+  <!-- Order matters: api-client → auth → finance-api (sync) → headerfooter (defer) -->
+  <script src="/js/api-client.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/finance-api.js"></script>
+  <script src="/js/headerfooter.js" defer></script>
+</head>
+<body>
+
+<div id="header"></div>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <h1>Finance</h1>
+    <p>Milind Web — Payroll &amp; Financial Management</p>
+    <div id="gateLoading" style="text-align:center;color:var(--text-light);font-size:14px;padding:10px 0;">Checking access&hellip;</div>
+    <div id="gateDenied" style="display:none;text-align:center;">
+      <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">You do not have access to the Finance module yet.</p>
+      <a href="/contact" style="display:inline-block;padding:10px 20px;background:var(--primary);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Contact Admin</a>
+      <div class="login-footer" style="margin-top:18px;"><a href="/" style="color:var(--accent);text-decoration:none;">&larr; Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>Finance</h2>
+      <span>Payroll &amp; Financial Mgmt</span>
+    </div>
+    <div class="sidebar-nav">
+      <a class="active" onclick="showView('dashboard')"><span class="icon">&#9632;</span> Dashboard</a>
+      <a onclick="showView('salary')"><span class="icon">&#36;</span> Monthly Salary</a>
+      <a onclick="showView('finyear')"><span class="icon">&#9733;</span> Fin. Year Summary</a>
+      <a onclick="showView('loans')"><span class="icon">&#9762;</span> Loans &amp; Insurance</a>
+      <a onclick="showView('transactions')"><span class="icon">&#8644;</span> Major Transactions</a>
+      <a onclick="showView('reports')"><span class="icon">&#128196;</span> Reports</a>
+      <a onclick="showView('settings')"><span class="icon">&#9881;</span> Settings</a>
+      <a href="/" style="margin-top:10px;border-top:1px solid rgba(255,255,255,0.1);padding-top:14px;"><span class="icon">&#8592;</span> Back to Home</a>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="top-bar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="user-info">
+        <span id="userDisplay"></span>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view">
+      <div class="flex-between" style="margin-bottom:12px;">
+        <div style="font-size:18px;font-weight:700;color:var(--accent);">Dashboard</div>
+        <div class="flex-center gap-8">
+          <select id="dashMonth" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
+            <option value="">All Months</option>
+            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
+            <option>May</option><option>Jun</option><option>Jul</option><option>Aug</option>
+            <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+          </select>
+          <select id="dashYear" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
+            <option value="">All Years</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="statCards" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px;"></div>
+
+      <div class="grid-2" style="margin-bottom:0;">
+        <div class="card" style="padding:16px;">
+          <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text);">Breakdown</h3>
+          <div class="chart-wrap" style="height:200px;"><canvas id="chartDonut"></canvas></div>
+        </div>
+        <div class="card" style="padding:16px;">
+          <div class="flex-between" style="margin-bottom:12px;">
+            <h3 style="font-size:14px;font-weight:600;color:var(--text);">Financial Year Trend</h3>
+            <select id="fyChartYear" onchange="renderFinYearChart()" style="padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:11px;background:#fff;">
+              <option value="">All</option>
+            </select>
+          </div>
+          <div id="fyChartNoData" style="display:none;padding:25px;text-align:center;color:var(--text-light);font-size:13px;">No salary data for selected year.</div>
+          <div class="chart-wrap" style="height:200px;"><canvas id="chartFinYear"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALARY -->
+    <div id="view-salary" class="view hidden">
+      <div class="flex-between mb-10">
+        <div class="flex-center gap-10">
+          <select id="salaryYearSelect" onchange="loadSalary()" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;"></select>
+        </div>
+        <button class="btn btn-primary" onclick="openSalaryForm()">+ Add Month</button>
+      </div>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="salaryTableWrap"></div>
+      </div>
+      <div class="card hidden" id="salaryFormCard">
+        <div class="flex-between mb-10"><h3 id="salaryFormTitle">Add Monthly Salary</h3><button class="btn btn-sm btn-outline" onclick="closeSalaryForm()">&#10005; Close</button></div>
+        <div style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Fields with <strong>bold labels</strong> auto-calculate. Enter Month &amp; Year first.</div>
+        <div class="form-row">
+          <div class="form-group"><label>Month</label>
+            <select id="field-Month" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;">
+              <option value="">--</option><option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option><option>May</option><option>Jun</option>
+              <option>Jul</option><option>Aug</option><option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Year</label><input type="number" id="field-Year" placeholder="e.g. 2025" style="padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;"></div>
+        </div>
+        <div class="form-section-title">Earnings</div>
+        <div class="form-row" id="earningsFields"></div>
+        <div class="form-section-title">Deductions</div>
+        <div class="form-row" id="deductionsFields"></div>
+        <div class="form-section-title">Recoveries</div>
+        <div class="form-row" id="recoveriesFields"></div>
+        <div class="form-section-title">OT</div>
+        <div class="form-row" id="otFields"></div>
+        <div class="form-section-title">Summary</div>
+        <div class="form-row" id="summaryFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveSalary()">Save</button><button class="btn btn-outline" onclick="closeSalaryForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- FIN YEAR -->
+    <div id="view-finyear" class="view hidden">
+      <button class="btn btn-primary mb-10" onclick="openFinYearForm()">+ Add Year</button>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="finyearTableWrap"></div>
+      </div>
+      <div class="card hidden" id="finyearFormCard">
+        <div class="flex-between mb-10">
+          <h3 id="finyearFormTitle">Add Financial Year</h3>
+          <button class="btn btn-sm btn-outline" onclick="closeFinYearForm()">&#10005; Close</button>
+        </div>
+        <div id="finyearAutoSection">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Assessment Year</label>
+              <select id="finyearYearSelect" onchange="autoFillFinYear()" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:14px;">
+                <option value="">-- Select Year --</option>
+              </select>
+            </div>
+            <div class="form-group" style="justify-content:flex-end;">
+              <button class="btn btn-primary" onclick="autoFillFinYear()" style="margin-top:18px;">&#8635; Auto-Fill from Data</button>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Select assessment year and click Auto-Fill to populate from monthly salary, loans &amp; transactions data.</div>
+        </div>
+        <div id="finyearNoData" class="hidden" style="font-size:13px;color:#856404;margin-bottom:10px;padding:10px;background:#fff3cd;border-radius:6px;">No monthly salary data found for this assessment year. Add salary entries first.</div>
+        <div class="form-row" id="finyearFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveFinYear()">Save</button><button class="btn btn-outline" onclick="closeFinYearForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- LOANS -->
+    <div id="view-loans" class="view hidden">
+      <button class="btn btn-primary mb-10" onclick="openLoanForm()">+ Add Entry</button>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="loanTableWrap"></div>
+      </div>
+      <div class="card hidden" id="loanFormCard">
+        <div class="flex-between mb-10"><h3 id="loanFormTitle">Add Loan / Insurance</h3><button class="btn btn-sm btn-outline" onclick="closeLoanForm()">&#10005; Close</button></div>
+        <div class="form-row" id="loanFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveLoan()">Save</button><button class="btn btn-outline" onclick="closeLoanForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- TRANSACTIONS -->
+    <div id="view-transactions" class="view hidden">
+      <button class="btn btn-primary mb-10" onclick="openTxForm()">+ Add Transaction</button>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="txTableWrap"></div>
+      </div>
+      <div class="card hidden" id="txFormCard">
+        <div class="flex-between mb-10"><h3 id="txFormTitle">Add Transaction</h3><button class="btn btn-sm btn-outline" onclick="closeTxForm()">&#10005; Close</button></div>
+        <div class="form-row" id="txFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveTx()">Save</button><button class="btn btn-outline" onclick="closeTxForm()">Cancel</button></div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="view-reports" class="view hidden">
+      <div class="card">
+        <h3>Export Data</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Sheet</label><select id="exportSheet" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;">
+            <option value="Salary_Monthly">Monthly Salary</option>
+            <option value="FinYear_Summary">Financial Year Summary</option>
+            <option value="Loans_Insurance">Loans &amp; Insurance</option>
+            <option value="Major_Transactions">Major Transactions</option>
+          </select></div>
+        </div>
+        <button class="btn btn-primary" onclick="exportCSV()">Export as CSV</button>
+      </div>
+      <div class="card">
+        <h3>Import Data</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Sheet</label><select id="importSheet" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;">
+            <option value="Salary_Monthly">Monthly Salary</option>
+            <option value="FinYear_Summary">Financial Year Summary</option>
+            <option value="Loans_Insurance">Loans &amp; Insurance</option>
+            <option value="Major_Transactions">Major Transactions</option>
+          </select></div>
+        </div>
+        <div class="form-group mb-10"><label>Paste CSV data</label><textarea id="importCSVText" rows="8" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:monospace;font-size:12px;"></textarea></div>
+        <button class="btn btn-warning" onclick="importCSV()">Import CSV</button>
+      </div>
+      <div class="card">
+        <h3>Initialize App</h3>
+        <p class="text-muted mb-10">Create all required sheets and default data (safe to run multiple times).</p>
+        <button class="btn btn-success" onclick="initApp()">Initialize Sheets</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="view-settings" class="view hidden">
+      <div class="card">
+        <h3>App Settings</h3>
+        <div class="form-row" id="settingsFields"></div>
+        <button class="btn btn-primary mt-10" onclick="saveSettings()">Save Settings</button>
+      </div>
+      <div class="card">
+        <h3>Account</h3>
+        <p class="text-muted mb-10">Your MilindWeb login controls access to this module. Password and access are managed from your account.</p>
+        <a class="btn btn-outline" href="/">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer"></div>
+
+<div id="toast" class="toast"></div>
+
+<script src="/finance/js/finance-core.js"></script>
+<script src="/finance/js/finance-utils.js"></script>
+<script src="/finance/js/finance-charts.js"></script>
+<script src="/finance/js/finance-dashboard.js"></script>
+<script src="/finance/js/finance-salary.js"></script>
+<script src="/finance/js/finance-finyear.js"></script>
+<script src="/finance/js/finance-loans.js"></script>
+<script src="/finance/js/finance-transactions.js"></script>
+<script src="/finance/js/finance-reports.js"></script>
+<script src="/finance/js/finance-settings.js"></script>
+<script src="/finance/js/finance-init.js"></script>
+</body>
+</html>

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="js/config.js"></script>
+<script src="/js/config.js"></script>
 <script>const PAGE_CONFIG = { title: 'Useful Links', description: 'Curated collection of tools, AI resources, games and utilities.', canonical: '/links' };</script>
-<script src="js/seo-injector.js"></script>
+<script src="/js/seo-injector.js"></script>
 <title>MilindWeb - Useful Links</title>
 
 <!-- Fonts & Icons -->
@@ -13,9 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Header + Footer -->
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/headerfooter.css">
-<script src="js/headerfooter.js" defer></script>
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/headerfooter.css">
+<script src="/js/headerfooter.js" defer></script>
 
 <style>
 body {
@@ -146,6 +146,54 @@ h2 {
 
 <h2>📁 Useful Links</h2>
 
+<!-- Portal & Tools (shifted from homepage) -->
+<h2 style="font-size:1.2rem;margin:1.5rem 0 0.8rem;text-align:left">🛠️ Portal &amp; Tools</h2>
+<div class="container">
+  <div class="card">
+    <div class="card-header"><i class="fas fa-folder-open"></i><a href="/links/mp">My Portal</a></div>
+    <p>Search files in Google Drive and data in Google Sheets.</p>
+  </div>
+  <div class="card">
+    <div class="card-header"><i class="fas fa-images"></i><a href="/links/myphoto">My Photos</a></div>
+    <p>Browse photos stored in Google Drive albums.</p>
+  </div>
+  <div class="card">
+    <div class="card-header"><i class="fas fa-calculator"></i><a href="/links/calculator">Calculator</a></div>
+    <p>Quick general-purpose calculator.</p>
+  </div>
+  <div class="card">
+    <div class="card-header"><i class="fas fa-calendar-alt"></i><a href="/links/calendar">Calendar</a></div>
+    <p>View and manage dates, holidays and events.</p>
+  </div>
+</div>
+
+<!-- Site Pages (shifted from homepage) -->
+<h2 style="font-size:1.2rem;margin:2rem 0 0.8rem;text-align:left">🌐 Site Pages</h2>
+<div class="container">
+  <div class="card">
+    <div class="card-header"><i class="fas fa-circle-info"></i><a href="/about">About</a></div>
+    <p>Learn more about Milind Web and our team.</p>
+  </div>
+  <div class="card">
+    <div class="card-header"><i class="fas fa-blog"></i><a href="/blog">Blog</a></div>
+    <p>Articles, tutorials, tips and updates.</p>
+  </div>
+  <div class="card">
+    <div class="card-header"><i class="fas fa-envelope"></i><a href="/contact">Contact</a></div>
+    <p>Get in touch with us for any enquiry.</p>
+  </div>
+  <div class="card">
+    <div class="card-header"><i class="fas fa-shield-halved"></i><a href="/contact#privacy">Privacy</a></div>
+    <p>Privacy policy on the contact page.</p>
+  </div>
+  <div class="card">
+    <div class="card-header"><i class="fas fa-file-contract"></i><a href="/contact#terms">Terms</a></div>
+    <p>Terms of use on the contact page.</p>
+  </div>
+</div>
+
+<!-- External / curated links -->
+<h2 style="font-size:1.2rem;margin:2rem 0 0.8rem;text-align:left">🔗 More Resources</h2>
 <div class="search-box">
   <i class="fas fa-search"></i>
   <input type="text" id="searchInput" placeholder="Search tools, AI, games, utilities...">
@@ -169,7 +217,7 @@ const statusMessage = document.getElementById("statusMessage");
 ============================= */
 async function loadData() {
   try {
-    const response = await fetch("data/links.json");
+    const response = await fetch("/data/links.json");
 
     if (!response.ok) {
       throw new Error("Failed to load JSON");

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard — MilindWeb</title>
+  <title>Loans & Insurance — MilindWeb</title>
   <script src="/js/config.js"></script>
-  <script>const PAGE_CONFIG = { title: 'Dashboard', description: 'Milind Web Finance — monthly salary slips, financial year summaries, loans & insurance, and major transactions. Data stored in Google Sheets.', canonical: '/finance' };</script>
+  <script>const PAGE_CONFIG = { title: 'Loans & Insurance', description: 'Milind Web Finance — monthly salary slips, financial year summaries, loans & insurance, and major transactions. Data stored in Google Sheets.', canonical: '/finance/loans' };</script>
   <script src="/js/seo-injector.js"></script>
   <link rel="stylesheet" href="/fonts/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="/css/style.css">
@@ -40,10 +40,10 @@
       <span>Payroll &amp; Financial Mgmt</span>
     </div>
     <div class="sidebar-nav">
-      <a class="active" href="index.html"><span class="icon">&#9632;</span> Dashboard</a>
+      <a href="index.html"><span class="icon">&#9632;</span> Dashboard</a>
       <a href="salary.html"><span class="icon">&#36;</span> Monthly Salary</a>
       <a href="finyear.html"><span class="icon">&#9733;</span> Fin. Year Summary</a>
-      <a href="loans.html"><span class="icon">&#9762;</span> Loans &amp; Insurance</a>
+      <a class="active" href="loans.html"><span class="icon">&#9762;</span> Loans &amp; Insurance</a>
       <a href="transactions.html"><span class="icon">&#8644;</span> Major Transactions</a>
       <a href="reports.html"><span class="icon">&#128196;</span> Reports</a>
       <a href="settings.html"><span class="icon">&#9881;</span> Settings</a>
@@ -53,50 +53,26 @@
 
   <div class="main-content">
     <div class="top-bar">
-      <h1 id="pageTitle">Dashboard</h1>
+      <h1 id="pageTitle">Loans & Insurance</h1>
       <div class="user-info">
         <span id="userDisplay"></span>
         <button onclick="logout()">Logout</button>
       </div>
     </div>
 
-<div id="view-dashboard" class="view">
-      <div class="flex-between" style="margin-bottom:12px;">
-        <div style="font-size:18px;font-weight:700;color:var(--accent);">Dashboard</div>
-        <div class="flex-center gap-8">
-          <select id="dashMonth" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
-            <option value="">All Months</option>
-            <option>Jan</option><option>Feb</option><option>Mar</option><option>Apr</option>
-            <option>May</option><option>Jun</option><option>Jul</option><option>Aug</option>
-            <option>Sep</option><option>Oct</option><option>Nov</option><option>Dec</option>
-          </select>
-          <select id="dashYear" onchange="onDashFilterChange()" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;">
-            <option value="">All Years</option>
-          </select>
-        </div>
+<div id="view-loans" class="view">
+      <button class="btn btn-primary mb-10" onclick="openLoanForm()">+ Add Entry</button>
+      <div class="card">
+        <div class="table-wrap table-scroll" id="loanTableWrap"></div>
       </div>
-
-      <div id="statCards" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px;"></div>
-
-      <div class="grid-2" style="margin-bottom:0;">
-        <div class="card" style="padding:16px;">
-          <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;color:var(--text);">Breakdown</h3>
-          <div class="chart-wrap" style="height:200px;"><canvas id="chartDonut"></canvas></div>
-        </div>
-        <div class="card" style="padding:16px;">
-          <div class="flex-between" style="margin-bottom:12px;">
-            <h3 style="font-size:14px;font-weight:600;color:var(--text);">Financial Year Trend</h3>
-            <select id="fyChartYear" onchange="renderFinYearChart()" style="padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:11px;background:#fff;">
-              <option value="">All</option>
-            </select>
-          </div>
-          <div id="fyChartNoData" style="display:none;padding:25px;text-align:center;color:var(--text-light);font-size:13px;">No salary data for selected year.</div>
-          <div class="chart-wrap" style="height:200px;"><canvas id="chartFinYear"></canvas></div>
-        </div>
+      <div class="card hidden" id="loanFormCard">
+        <div class="flex-between mb-10"><h3 id="loanFormTitle">Add Loan / Insurance</h3><button class="btn btn-sm btn-outline" onclick="closeLoanForm()">&#10005; Close</button></div>
+        <div class="form-row" id="loanFields"></div>
+        <div class="btn-group"><button class="btn btn-success" onclick="saveLoan()">Save</button><button class="btn btn-outline" onclick="closeLoanForm()">Cancel</button></div>
       </div>
     </div>
 
-    <!-- SALARY -->
+    <!-- TRANSACTIONS -->
   </div>
 </div>
 
@@ -104,7 +80,7 @@
 
 <div id="toast" class="toast"></div>
 
-<script>var FINANCE_PAGE = 'dashboard';</script>
+<script>var FINANCE_PAGE = 'loans';</script>
 <script src="/finance/js/finance-core.js"></script>
 <script src="/finance/js/finance-utils.js"></script>
 <script src="/finance/js/finance-charts.js"></script>

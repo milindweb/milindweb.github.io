@@ -20,3 +20,7 @@
 
 # Portfolio merged into Links
 /portfolio        /links                                   308
+
+# Legal pages merged into Contact (privacy + terms accordions)
+/privacy          /contact#privacy                         308
+/terms            /contact#terms                           308
